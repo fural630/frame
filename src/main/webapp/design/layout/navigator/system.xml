@@ -1,0 +1,9 @@
+<navigator> 
+	<system sort_order="3">
+		<account>
+			<user.manage link="/system/userManage">
+				<acl link=""/>
+			</user.manage>
+		</account>
+	</system>
+</navigator>

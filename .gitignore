@@ -1,0 +1,6 @@
+target/
+.mymetadata
+.classpath
+.project
+.settings/
+src/main/webapp/.gitignore
