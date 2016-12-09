@@ -1,4 +1,4 @@
-ï»¿htm, body {
+htm, body {
 	height:100%;	
 }
 dl, dd, dt, ul, li {
@@ -11,18 +11,19 @@ dl, dd, dt, ul, li {
 	width:213px;
 	text-align:left;
 	font-size:12px;
-	background:#f5f5f5;
+	background:#2b303e;
 	height:100%;
 	border-right:1px solid #eeeeee;
 }
 .menutitle {
-	border-bottom:1px solid #dadbde;
+	border-bottom:1px solid #3b3f4d;
 	height:40px;
 	line-height:40px;
 	width:213px;
 	text-align:center;
-	font-family:å¾®è½¯é›…é»‘;
 	font-size:18px;
+	color:#989dac;
+	font-weight: 800;
 }
 .menutitle img {
 	display:inline-block;
@@ -31,15 +32,14 @@ dl, dd, dt, ul, li {
 }
 ul.nav li a {
 	padding:0 10px;
-	color: #000;
+	color: #989dac;
 	display: block;
 	text-decoration: none;
 	font-weight: bolder;
 	height:40px;
 	line-height:40px;
-	border-bottom:1px solid #e8e8e8;
-	border-left:4px solid #f5f5f5;
-	border-right:4px solid #f5f5f5;
+	border-left:4px solid #2b303e;
+	border-right:4px solid #2b303e;
 }
 ul.nav>li {
 	clear:both;
@@ -77,8 +77,8 @@ ul.nav ul li a {
 	border:none;
 	line-height:30px;
 	height:30px;
-	border-left:4px solid #f5f5f5;
-	border-right:4px solid #f5f5f5;
+	border-left:4px solid #2b303e;
+	border-right:4px solid #2b303e;
 }
 ul.nav ul ul li a {
 	color:#919191;
@@ -86,8 +86,8 @@ ul.nav ul ul li a {
 	border:none;
 	line-height:30px;
 	height:30px;
-	border-left:4px solid #f5f5f5;
-	border-right:4px solid #f5f5f5;
+	border-left:4px solid #2b303e;
+	border-right:4px solid #2b303e;
 }
 ul.nav>li>ul>li>a.a_selected, ul.nav>li>ul>li>a.a_hover, ul.nav>li>ul>li>ul>li>a.a_selected, ul.nav>li>ul>li>ul>li>a.a_hover {
 	color:#3999d7;
@@ -101,6 +101,6 @@ ul.nav span {
 	padding: 1px 4px;
 	color: #000;
 	text-shadow: 0px 0px 0px rgba(255, 255, 255, 0.8);
-	font-family: å®‹ä½“;
+	font-family: ËÎÌå;
 	font-weight:bold;
 }

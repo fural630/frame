@@ -14,7 +14,7 @@
   <div class="header_inner">
     <table class="tb_common">
       <Tr>
-        <Td style="width:40%" class="paddingleft_10px td_left"><a href="#" class="logo"> Smart </a></Td>
+        <Td style="width:40%" class="paddingleft_10px td_left"><a href="#" class="logo" style="color:#0099FF"> Smart </a></Td>
         <Td class="paddingright_0 td_right"><div class="top_nav">
             <ul class="clearfix">
               <li class="bg_none paddingright_0"> <a><img src="/design/frame/style/img/exit.png">退出 </a> </li>
