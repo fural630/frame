@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="/design/frame/style/css/table.css"/>
 <link rel="stylesheet" type="text/css" href="/design/frame/style/css/header.css"/>
 </head>
-<body>
+<body style="background:#222222">
 <!-- header start-->
 <div class="header">
   <div class="header_inner">

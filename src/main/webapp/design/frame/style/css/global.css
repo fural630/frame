@@ -7,6 +7,9 @@ a {
 a:hover {
 	text-decoration:none;
 }
+a:focus {
+	outline:none;
+}
 button, input, select, textarea {
 	vertical-align:middle;
 }

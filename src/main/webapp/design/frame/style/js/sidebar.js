@@ -7,14 +7,14 @@
  *
  */
   $(function () {
-            commonClick($("ul.nav>li>a"), "a_selected");
-            commonHover($("ul.nav>li>a"), "a_hover");
+            commonClick($("ul.framenav>li>a"), "a_selected");
+            commonHover($("ul.framenav>li>a"), "a_hover");
 			
-			commonClick($("ul.nav>li>ul>li>a"), "a_selected");
-            commonHover($("ul.nav>li>ul>li>a"), "a_hover");
+			commonClick($("ul.framenav>li>ul>li>a"), "a_selected");
+            commonHover($("ul.framenav>li>ul>li>a"), "a_hover");
 			
-			commonClick($("ul.nav>li>ul>li>ul>li>a"), "a_selected");
-            commonHover($("ul.nav>li>ul>li>ul>li>a"), "a_hover");
+			commonClick($("ul.framenav>li>ul>li>ul>li>a"), "a_selected");
+            commonHover($("ul.framenav>li>ul>li>ul>li>a"), "a_hover");
         });
 //plugin definition
 (function($){

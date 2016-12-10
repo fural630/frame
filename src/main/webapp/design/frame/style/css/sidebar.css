@@ -30,47 +30,42 @@ dl, dd, dt, ul, li {
 	margin-right:5px;
 	margin-top:-2px;
 }
-ul.nav li a {
-	padding:0 10px;
+ul.framenav li a {
+	padding:14px 10px;
 	color: #989dac;
 	display: block;
 	text-decoration: none;
 	font-weight: bolder;
-	height:40px;
-	line-height:40px;
 	border-left:4px solid #2b303e;
 	border-right:4px solid #2b303e;
 }
-ul.nav>li {
+ul.framenav>li {
 	clear:both;
 	overflow: hidden;
 }
-ul.nav>li>a.a_selected, ul.nav>li>a.a_hover {
-	background:#40aaef;
-	color:white;
+ul.framenav>li>a.a_selected, ul.framenav>li>a.a_hover {
+	color:#0099FF;
 	border-left:4px solid #3999d7;
-	border-right:4px solid #3999d7;
 }
-ul.nav li a.a_selected span, ul.nav li a.a_hover span {
+ul.framenav li a.a_selected span, ul.framenav li a.a_hover span {
 	color:#fff;
 }
-ul.nav ul {
+ul.framenav ul {
 	margin: 0;
 	padding:5px 0;
 	display: none;
-	border-bottom:1px solid #e8e8e8;
 	width:100%
 }
-ul.nav ul ul {
+ul.framenav ul ul {
 	padding:0;
 	border-bottom:none;
 }
-ul.nav ul li {
+ul.framenav ul li {
 	margin: 0;
 	padding: 0;
 	clear: both;
 }
-ul.nav ul li a {
+ul.framenav ul li a {
 	padding-left: 2em;
 	font-size: 12px;
 	font-weight: normal;
@@ -80,7 +75,7 @@ ul.nav ul li a {
 	border-left:4px solid #2b303e;
 	border-right:4px solid #2b303e;
 }
-ul.nav ul ul li a {
+ul.framenav ul ul li a {
 	color:#919191;
 	padding-left: 4em;
 	border:none;
@@ -89,18 +84,15 @@ ul.nav ul ul li a {
 	border-left:4px solid #2b303e;
 	border-right:4px solid #2b303e;
 }
-ul.nav>li>ul>li>a.a_selected, ul.nav>li>ul>li>a.a_hover, ul.nav>li>ul>li>ul>li>a.a_selected, ul.nav>li>ul>li>ul>li>a.a_hover {
+ul.framenav>li>ul>li>a.a_selected, ul.framenav>li>ul>li>a.a_hover, ul.framenav>li>ul>li>ul>li>a.a_selected, ul.framenav>li>ul>li>ul>li>a.a_hover {
 	color:#3999d7;
-	background:#fff;
 }
-ul.nav>li>ul>li>a.a_selected span, ul.nav>li>ul>li>a.a_hover span {
+ul.framenav>li>ul>li>a.a_selected span, ul.framenav>li>ul>li>a.a_hover span {
 	color:#000;
 }
-ul.nav span {
+ul.framenav span {
 	float:right;
 	padding: 1px 4px;
-	color: #000;
-	text-shadow: 0px 0px 0px rgba(255, 255, 255, 0.8);
-	font-family: ËÎÌו;
+	color: #989dac;
 	font-weight:bold;
 }

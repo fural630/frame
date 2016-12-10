@@ -1,13 +1,12 @@
 /*top start*/
 .header {
 	width:100%;
-	height:30px;
-	background:#222222;
+	height:40px;
+	background:#2b303e;
 }
 .logo {
 	color:#9D9D9D;
 	font-size:22px;
-	font-family:微软雅黑;
 	margin-left:10px;
 }
 .logo:hover {
@@ -15,7 +14,7 @@
 }
 .header_inner .tb_common td {
 	vertical-align:middle;
-	line-height:20px;
+	line-height:30px;
 	color:#9D9D9D;
 }
 .top_nav {
@@ -42,4 +41,11 @@
 	text-decoration:none;
 }
 
+.menutitle {
+	height:40px;
+	line-height:40px;
+	width:213px;
+	text-align:center;
+	font-size:18px;
+}
 /*top end*/
