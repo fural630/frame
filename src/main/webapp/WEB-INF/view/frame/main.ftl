@@ -15,8 +15,6 @@
 
 <script type="text/javascript" src="/design/frame/style/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="/design/frame/jquery/layout/jquery.layout.js"></script>
-<script type="text/javascript" src="/design/frame/style/js/common.js"></script>
-<script type="text/javascript" src="/design/frame/style/js/sidebar.js"></script>
 <script type="text/javascript" src="/design/frame/zui/js/zui.js"></script>
 
 <script type="text/javascript">
@@ -29,6 +27,17 @@
         	north__spacing_open : 2,
         	togglerContent_open:"<div>&lt;$lt;</div>"
          });
+         
+          $('.menu .nav li:not(".nav-parent") a').click(function() {
+			  var $this = $(this);
+			  $('.menu .nav .active').removeClass('active');
+			  $this.closest('li').addClass('active');
+			  var parent = $this.closest('.nav-parent');
+			  if(parent.length)
+			  {
+				  parent.addClass('active');
+			  }
+		  });
     });
 </script>
 </head>
@@ -39,14 +48,14 @@
 		<div class="header">
 		  <div class="header_inner">
 		    <table class="tb_common">
-		      <Tr>
-		        <Td style="width:40%" class="paddingleft_10px td_left"><a href="#" class="logo" style="color:#0099FF"> Smart </a></Td>
-		        <Td class="paddingright_0 td_right"><div class="top_nav">
+		      <tr>
+		        <td style="width:40%" class="paddingleft_10px td_left"><a href="#" class="logo" style="color:#0099FF"> Smart </a></td>
+		        <td class="paddingright_0 td_right"><div class="top_nav">
 		            <ul class="clearfix">
 		              <li class="bg_none paddingright_0"> <a><img src="/design/frame/style/img/exit.png">退出 </a> </li>
 		            </ul>
-		          </div></Td>
-		      </Tr>
+		          </div></td>
+		      </Ttr>
 		    </table>
 		  </div>
 		</div>
@@ -54,8 +63,7 @@
 	</div>
 	
 	<div class="ui-layout-west">
-		<div style="height:100%">
-		<dd class="menutitle"><img src="/design/frame/style/img/mac.png"/>导 航 菜 单</dd>
+		<dd class="menutitle"><i class="icon icon-laptop"></i> 导 航 菜 单</dd>
 		<nav class="menu" data-toggle="menu" style="width: 100%;">
 		  <ul class="nav nav-primary">
 		  
@@ -85,7 +93,6 @@
 		    
 		  </ul>
 		</nav>
-		</div>
 	</div>
 	<div class="ui-layout-center">
 		<iframe id="mainFrame" height="100%" width="100%" border="0" frameborder="0" src="/frame/blank">
