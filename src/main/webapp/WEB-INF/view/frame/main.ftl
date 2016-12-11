@@ -4,74 +4,39 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>系统</title>
 <link rel="stylesheet" type="text/css" href="/design/frame/zui/css/zui.css"/>
-
-<!--
-<link rel="stylesheet" type="text/css" href="/design/frame/style/css/reset.css"/>
-<link rel="stylesheet" type="text/css" href="/design/frame/style/css/global.css"/>
-<link rel="stylesheet" type="text/css" href="/design/frame/style/css/sidebar.css"/>
-<link rel="stylesheet" type="text/css" href="/design/frame/style/css/table.css"/>
--->
 <link rel="stylesheet" type="text/css" href="/design/frame/style/css/header.css"/>
-
 <script type="text/javascript" src="/design/frame/style/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="/design/frame/jquery/layout/jquery.layout.js"></script>
 <script type="text/javascript" src="/design/frame/zui/js/zui.js"></script>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('body').layout({ 
-        	applyDefaultStyles: true,
-        	west__size : 214,		//左边宽度
-        	west__spacing_open: 8,
-        	north__closable : false,
-        	north__spacing_open : 2,
-        	togglerContent_open:"<div>&lt;$lt;</div>"
-         });
-         
-          $('.menu .nav li:not(".nav-parent") a').click(function() {
-			  var $this = $(this);
-			  $('.menu .nav .active').removeClass('active');
-			  $this.closest('li').addClass('active');
-			  var parent = $this.closest('.nav-parent');
-			  if(parent.length)
-			  {
-				  parent.addClass('active');
-			  }
-		  });
-    });
-</script>
+<script type="text/javascript" src="/design/static/js/app/system/header.js"></script>
 </head>
 <body>
 
 	<div class="ui-layout-north">
 		<!-- header start-->
 		<div class="header">
-		  <div class="header_inner">
-		    <table class="tb_common">
-		      <tr>
-		        <td style="width:40%" class="paddingleft_10px td_left"><a href="#" class="logo" style="color:#0099FF"> Smart </a></td>
-		        <td class="paddingright_0 td_right"><div class="top_nav">
-		            <ul class="clearfix">
-		              <li class="bg_none paddingright_0"> <a><img src="/design/frame/style/img/exit.png">退出 </a> </li>
-		            </ul>
-		          </div></td>
-		      </Ttr>
-		    </table>
-		  </div>
+			<div class="header_inner">
+				<table class="tb_common">
+					<tr>
+						<td><a href="#" class="logo" style="color:#0099FF">Smart</a></td>
+						<td class="loginOut"><a><i class="icon icon-off"></i>&nbsp;退出 </a></td>
+					</tr>
+				</table>
+			</div>
 		</div>
 		<!-- header end-->
 	</div>
 	
 	<div class="ui-layout-west">
-		<dd class="menutitle"><i class="icon icon-laptop"></i> 导 航 菜 单</dd>
+		<dd class="menutitle"><i class="icon icon-desktop"></i> 导 航 菜 单</dd>
 		<nav class="menu" data-toggle="menu" style="width: 100%;">
 		  <ul class="nav nav-primary">
 		  
 		    <li class="nav-parent">
-		      <a href="javascript:;"><i class="icon icon-laptop"></i> 系统管理</a>
+		      <a href="javascript:;"><i class="icon icon-wrench"></i> 系统管理</a>
 		      <ul class="nav">
 		        <li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '/system/userManage')"><i class="icon-user"></i>用户管理</a></li>
-		        <li><a href="javascript:;"><i class="icon icon-group"></i>角色管理</a></li>
+		        <li><a href="javascript:;"  onClick="$('#mainFrame').attr('src', '/system/roleManage')"><i class="icon icon-group"></i>角色管理</a></li>
 		      </ul>
 		    </li>
 		  
