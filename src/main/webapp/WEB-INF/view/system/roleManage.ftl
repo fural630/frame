@@ -8,14 +8,14 @@
   <body>
     <form action="/system/roleManage" id="mainPageForm" method="post">
   	<div class="current_nav_name clearfix"><@s.message "navigator.role.manage"/>
-		<div class="fr small_size"> <a class="btn" onclick="showRoleDialog('<@s.message "add.role"/>')"><img src="/design/frame/style/img/add.png"/><@s.message "add.role"/></a>
+		<div class="fr small_size">
+			<button class="btn btn-sm " type="button" onclick="showRoleDialog('<@s.message "add.role"/>')"><i class="icon icon-plus-sign"></i> <@s.message "add.role"/></button>
 		</div>
 	</div>
 	<#include "../common/page.ftl"/>
 	<div class="mainbody clearfix"> 
 	  <div class="tableview clearfix">
 	    <div class="content">
-	    
 	      <table class="tb_border tb_full stripe" id="roleManageTable" name="pageTable">
 	          <tr>
 	          	<th></th>
@@ -84,39 +84,36 @@
 	          	<td></td>
 	          </tr>
 	          </form>
-	          	<#if collection??>
-	          		<#list collection as obj>
-	      		 <tr>
+		  		 <tr>
 		            <td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="1" onclick="countCheckbox()" /></td>
-		            <td>${obj.name!""}</td>
-		            <td>${obj.username!""}</td>
-		            <td>${obj.email!""}</td>
+		            <td>name</td>
+		            <td>username</td>
+		            <td>email</td>
 		            <td>123</td>
-		            <td><@matchValue key="${obj.status}" optionClass="OpenClose"/></td>
-		            <td>${obj.createTime!""}</td>
+		            <td>fe</td>
+		            <td>createTime</td>
 		            <td>
 		            	<a href="javascript:void(0)" onclick="showLog(this)"><img src="/design/static/images/common/system-log.png"/></a>
 		            	<div class="log_content">
-		            		${obj.log!""}
+		            		log
 		            	</div>
 		            </td>
 		            <td style="width:60px;text-align:center;">
-					 <div class="menu">
-					  <ul>
-					    <li class="option_btn" onmouseover="optionMouserover(this)" onmouseout="optionMouseout(this)"><a class="btn" href="javascript:void(0)">操作</a>
-					      <ul class="menu_ul">
-							<li><a href="javascript:void(0)" onclick="editUserInfo(${obj.id})" >编辑 </a></li>
-					        <li><a href="javascript:void(0)" onclick="deleteUser(${obj.id})" >删除 </a></li>
-					      </ul>
-					    </li>
-					  </ul>
-					</div>
+						<div class="btn-group">
+						  <button type="button" class="btn dropdown-toggle btn-sm" data-toggle="dropdown">
+						  	操作
+						  	<span class="caret"></span>
+						  </button>
+						  <ul class="dropdown-menu pull-right" role="menu">
+						    <li><a href="###">操作</a></li>
+						    <li><a href="###">另一个操作</a></li>
+						    <li class="divider"></li>
+						    <li><a href="###">更多操作</a></li>
+						  </ul>
+						</div>
 		            </td>
 		          </tr>
-		          </#list>
-		  		</#if>
-	      </table>
-	      
+	      		</table>
 			<div class="paging clearfix">
 				<div class="massaction"></div>
 			</div>

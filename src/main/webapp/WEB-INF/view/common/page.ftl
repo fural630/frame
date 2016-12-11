@@ -13,7 +13,8 @@
 			</select>&nbsp;条&nbsp;&nbsp;|&nbsp;&nbsp;共&nbsp;<span id="totalRecord" style="font-weight:bold;">${page.totalRecord}</span>&nbsp;条记录
 		</div>
 		<div class="fr">
-			<a class="btn" onclick="resetAll()">重置查询</a> <a class="btn" onclick="queryMainPage()"><img src="/design/frame/style/img/query.png" />查询</a>
+			<button class="btn btn-sm " type="button" onclick="resetAll()"><i class="icon icon-undo"></i> 重置查询</button>
+			<button class="btn btn-sm " type="button" onclick="queryMainPage()"><i class="icon icon-search"></i></i> 查询</button>
 		</div>
 	</div>
 </div>

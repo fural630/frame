@@ -3,12 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>系统</title>
+<link type="image/x-icon" href="/design/static/images/common/favicon.ico" rel="shortcut icon">
 <link rel="stylesheet" type="text/css" href="/design/frame/zui/css/zui.css"/>
 <link rel="stylesheet" type="text/css" href="/design/frame/style/css/header.css"/>
 <script type="text/javascript" src="/design/frame/style/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="/design/frame/jquery/layout/jquery.layout.js"></script>
 <script type="text/javascript" src="/design/frame/zui/js/zui.js"></script>
-<script type="text/javascript" src="/design/static/js/app/system/header.js"></script>
+<script type="text/javascript" src="/design/frame/style/js/header.js"></script>
 </head>
 <body>
 
@@ -59,6 +60,8 @@
 		  </ul>
 		</nav>
 	</div>
+	
+	
 	<div class="ui-layout-center">
 		<iframe id="mainFrame" height="100%" width="100%" border="0" frameborder="0" src="/frame/blank">
 			浏览器不支持嵌入式框架，或被配置为不显示嵌入式框架。

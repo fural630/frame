@@ -8,7 +8,10 @@
   <body>
     <form action="/system/userManage" id="mainPageForm" method="post">
   	<div class="current_nav_name clearfix"><@s.message "navigator.user.manage"/>
-		<div class="fr small_size"> <a class="btn" onclick="showUserDialog('添加用户')"><img src="/design/frame/style/img/add.png"/>新增</a>
+		<div class="fr small_size"> 
+		<button class="btn btn-sm " type="button" onclick="showUserDialog('<@s.message "add.user"/>')">
+			<i class="icon icon-plus-sign"></i> <@s.message "add.user"/>
+		</button>
 		</div>
 	</div>
 	<#include "../common/page.ftl"/>
@@ -100,17 +103,19 @@
 		            		${obj.log!""}
 		            	</div>
 		            </td>
-		            <td style="width:60px;text-align:center;">
-					 <div class="menu">
-					  <ul>
-					    <li class="option_btn" onmouseover="optionMouserover(this)" onmouseout="optionMouseout(this)"><a class="btn" href="javascript:void(0)">操作</a>
-					      <ul class="menu_ul">
-							<li><a href="javascript:void(0)" onclick="editUserInfo(${obj.id})" >编辑 </a></li>
-					        <li><a href="javascript:void(0)" onclick="deleteUser(${obj.id})" >删除 </a></li>
-					      </ul>
-					    </li>
-					  </ul>
-					</div>
+		            <td class="optionTd" style="width:60px;text-align:center;">
+		            	<div class="btn-group">
+						  <button type="button" class="btn dropdown-toggle btn-sm" data-toggle="dropdown">
+						  	操作
+						  	<span class="caret"></span>
+						  </button>
+						  <ul class="dropdown-menu pull-right" role="menu">
+						    <li><a href="javascript:void(0)" onclick="editUserInfo(${obj.id})" ><i class="icon icon-pencil"></i> 编辑 </a></li>
+						    <li><a href="javascript:void(0)" onclick="deleteUser(${obj.id})" ><i class="icon icon-trash"></i> 删除 </a></li>
+						    <li class="divider"></li>
+						    <li><a href="###">更多操作</a></li>
+						  </ul>
+						</div>
 		            </td>
 		          </tr>
 		          </#list>

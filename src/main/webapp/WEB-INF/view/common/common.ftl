@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="/design/frame/zui/css/zui.css"/>
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="/design/frame/style/css/reset.css"/>
 <link rel="stylesheet" type="text/css" href="/design/frame/style/css/global.css"/>
@@ -7,10 +8,11 @@
 <link rel="stylesheet" type="text/css" href="/design/frame/style/css/mainbody.css"/>
 <link rel="stylesheet" type="text/css" href="/design/frame/style/css/popup.css"/>
 
-<link type="image/x-icon" href="/design/static/images/common/favicon.ico" rel="shortcut icon">
-
 <!-- jquery -->
 <script type="text/javascript" src="/design/frame/style/js/jquery-1.7.1.min.js"></script>
+
+<!-- zui -->
+<script type="text/javascript" src="/design/frame/zui/js/zui.js"></script>
 
 <!-- jquery ui -->
 <link rel="stylesheet" type="text/css" href="/design/frame/jquery/jqueryui/jquery-ui.min.css"/>
@@ -30,7 +32,3 @@
 
 <script src="/design/frame/style/js/common.js"></script>
 <script src="/design/frame/style/js/stripe.js"></script>
-
-<script src="/design/frame/style/js/header.js"></script>
-
-
