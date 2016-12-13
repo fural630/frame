@@ -1,11 +1,13 @@
-$(document).ready(function () {
+$(function () {
     $('body').layout({ 
     	applyDefaultStyles: true,
     	west__size : 214,		//左边宽度
     	west__spacing_open: 8,
+    	west__spacing_closed: 8,
     	north__closable : false,
     	north__spacing_open : 2,
-    	togglerContent_open:"<div>&lt;$lt;</div>"
+    	togglerContent_open:'<i class="icon icon-caret-left" style="margin-left:-3px;"></i>',
+    	togglerContent_closed:'<i class="icon icon-caret-right" style="margin-left:-3px;"></i>'
      });
      
       $('.menu .nav li:not(".nav-parent") a').click(function() {

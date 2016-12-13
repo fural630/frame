@@ -1907,13 +1907,14 @@
 
     $.fn.draggable = function(option) {
         return this.each(function() {
-            var $this = $(this);
-            var data = $this.data('zui.draggable');
-            var options = typeof option == 'object' && option;
-
-            if(!data) $this.data('zui.draggable', (data = new Draggable(this, options)));
-
-            if(typeof option == 'string') data[option]();
+//            var $this = $(this);
+//            console.log(option);
+//            var data = $this.data('zui.draggable');
+//            var options = typeof option == 'object' && option;
+//
+//            if(!data) $this.data('zui.draggable', (data = new Draggable(this, options)));
+//
+//            if(typeof option == 'string') data[option]();
         });
     };
 

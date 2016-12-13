@@ -7,8 +7,8 @@
 <link rel="stylesheet" type="text/css" href="/design/frame/zui/css/zui.css"/>
 <link rel="stylesheet" type="text/css" href="/design/frame/style/css/header.css"/>
 <script type="text/javascript" src="/design/frame/style/js/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="/design/frame/jquery/layout/jquery.layout.js"></script>
 <script type="text/javascript" src="/design/frame/zui/js/zui.js"></script>
+<script type="text/javascript" src="/design/frame/jquery/layout/jquery.layout.js"></script>
 <script type="text/javascript" src="/design/frame/style/js/header.js"></script>
 </head>
 <body>
@@ -37,7 +37,7 @@
 		      <a href="javascript:;"><i class="icon icon-wrench"></i> 系统管理</a>
 		      <ul class="nav">
 		        <li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '/system/userManage')"><i class="icon-user"></i>用户管理</a></li>
-		        <li><a href="javascript:;"  onClick="$('#mainFrame').attr('src', '/system/roleManage')"><i class="icon icon-group"></i>角色管理</a></li>
+		        <li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '/system/roleManage')"><i class="icon icon-group"></i>角色管理</a></li>
 		      </ul>
 		    </li>
 		  
