@@ -57,6 +57,13 @@
 		      </ul>
 		    </li>
 		    
+		    <li class="nav-parent">
+		      <a href="javascript:;"><i class="icon icon-cubes"></i> 产品中心</a>
+		      <ul class="nav">
+		        <li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '/product/productManage')"><i class="icon-user"></i>产品列表</a></li>
+		      </ul>
+		    </li>
+		    
 		  </ul>
 		</nav>
 	</div>
