@@ -58,7 +58,7 @@ function initDialog () {
 				icons : {
 					primary : "ui-icon-heart"
 				},
-				click : function() {
+				click : function() { 
 				}
 			},{
 				text : "保存审批语",
