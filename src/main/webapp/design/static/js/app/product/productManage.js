@@ -1,10 +1,12 @@
 $(function () {
 	initDialog();
 	$( "#tabs" ).tabs();
+	CKEDITOR.replace('description_cn');
+	CKEDITOR.replace('description_en');
 });
 function initDialog () {
 	$("#productDialog").dialog({
-		autoOpen: false,
+		autoOpen: true,
 		modal: true,
 		width: 800,
 		height: 600,

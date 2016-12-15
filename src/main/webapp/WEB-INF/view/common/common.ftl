@@ -19,6 +19,8 @@
 <script type="text/javascript" src="/design/frame/jquery/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/design/frame/jquery/jqueryui/jquery.ui.datepicker-zh-CN.js"></script>
 
+<script src="/design/frame/ckeditor/ckeditor.js"></script>
+
 <!-- blockUI -->
 <script type="text/javascript" src="/design/frame/jquery/jquery.blockUI.js"></script>
 

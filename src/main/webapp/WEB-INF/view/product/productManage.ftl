@@ -210,47 +210,146 @@
 		<input type="hidden" name="id"/>
 		<div id="tabs">
 		  <ul>
-		    <li><a href="#tabs-1">产品基本信息</a></li>
-		    <li><a href="#tabs-2">尺寸信息</a></li>
-		    <li><a href="#tabs-3">视图信息</a></li>
+		    <li><a href="#tabs-1">基本信息</a></li>
+		    <li><a href="#tabs-2">视图信息</a></li>
+		    <li><a href="#tabs-3">采购信息</a></li>
+		    <li><a href="#tabs-4">尺寸信息</a></li>
+		    <li><a href="#tabs-5">描述信息</a></li>
 		  </ul>
 		  <div id="tabs-1">
 		    <table class="popup_tb">
 		 		<tr>
-		 			<td class="title width_100px">账号<i class="star">*</i></td>
-		 			<td><input type="text" class="txt width_50" name="userName" required/></td>
+		 			<td class="title width_100px">SKU<i class="star">*</i></td>
+		 			<td><input type="text" class="txt width_50" name="sku"/></td>
 		 		</tr>
 		 		<tr>
-		 			<td class="title width_100px">密码<i class="star">*</i></td>
-		 			<td><input type="password" class="txt width_50" name="password" required/></td>
+		 			<td class="title width_100px">SPU<i class="star">*</i></td>
+		 			<td><input type="password" class="txt width_50" name="spu"/></td>
 		 		</tr>
 		 		<tr>
-		 			<td class="title width_100px">昵称<i class="star">*</i></td>
-		 			<td><input type="text" class="txt width_50" name="name" required/></td>
+		 			<td class="title width_100px">中文名<i class="star">*</i></td>
+		 			<td><input type="text" class="txt width_98" name=""/></td>
 		 		</tr>
 		 		<tr>
-		 			<td class="title width_100px">邮箱</td>
-		 			<td><input type="email" class="txt width_50" name="email" email/></td>
+		 			<td class="title width_100px">英文名</td>
+		 			<td><input type="text" class="txt width_98" name="" /></td>
 		 		</tr>
 		 		<tr>
-		 			<td class="title width_100px">电话</td>
-		 			<td><input type="text" class="txt width_50" name="phone" /></td>
+		 			<td class="title width_100px">法语名</td>
+		 			<td><input type="text" class="txt width_98" name="" /></td>
 		 		</tr>
 		 		<tr>
-		 			<td class="title width_100px">账号状态<i class="star">*</i></td>
-		 			<td><@select name="status" cssClass="sel width_100px" id="status" selected="1" optionClass="OpenClose"/></td>
+		 			<td class="title width_100px">德语名</td>
+		 			<td><input type="text" class="txt width_98" name="" required/></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">意大利语名</td>
+		 			<td><input type="text" class="txt width_98" name="" required/></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">日语名</td>
+		 			<td><input type="text" class="txt width_98" name="" required/></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">西班牙语名</td>
+		 			<td><input type="text" class="txt width_98" name="" required/></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">中文报关名</td>
+		 			<td><input type="text" class="txt width_98" name="" required/></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">英文报关名</td>
+		 			<td><input type="text" class="txt width_98" name="" required/></td>
 		 		</tr>
 		 	</table>
-		    
-		    
 		  </div>
+		  
 		  <div id="tabs-2">
-		    <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-		  </div>
+		  	<input type="text" class="txt" style="width:80%;" id="imageUrlAddress" placeholder="图片地址/Url"/>
+		  	<button class="btn btn-sm " type="button" onclick="addImageUrlAddress();">
+				<i class="icon icon-plus-sign"></i> 添加
+			</button>
+				<img data-toggle="lightbox" src="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" 
+				data-image="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" data-caption="" class="img-thumbnail" title="点击放大" width="110">
+				<img data-toggle="lightbox" src="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" 
+				data-image="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" data-caption="" class="img-thumbnail" title="点击放大" width="110">
+				<!--
+				<table style="width:100%;text-align:center; margin-top:5px;">
+					<tr>
+						<td>
+							<button class="btn btn-sm " type="button">
+								<i class="icon icon-trash"></i> 删除
+							</button>
+						</td>
+					</tr>
+				</table>
+				-->
+	 	  </div>
+	 	  
 		  <div id="tabs-3">
-		    <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-		    <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+	  		<table class="popup_tb">
+		 		<tr>
+		 			<td class="title width_100px">采购价格</td>
+		 			<td><input type="text" class="txt width_100px" name=""/></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">采购链接</td>
+		 			<td><input type="text" class="txt width_96" name=""/></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">采购备注</td>
+		 			<td><textarea class="txt width_96 remark" id="" name="" placeholder="" style="height:150px;"></textarea></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">销售备注</td>
+		 			<td><textarea class="txt width_96 remark" id="" name="" placeholder="" style="height:150px;"></textarea></td>
+		 		</tr>
+	 		</table>
 		  </div>
+		  
+		  <div id="tabs-4">
+			  <table class="popup_tb">
+		 		<tr>
+		 			<td class="title width_100px">含包装重量(g)</td>
+		 			<td><input type="text" class="txt width_100px" name=""/></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">包装长度(cm)</td>
+		 			<td><input type="text" class="txt width_100px" name=""/></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">包装宽度(cm)</td>
+		 			<td><input type="text" class="txt width_100px" name=""/></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">包装高度(cm)</td>
+		 			<td><input type="text" class="txt width_100px" name=""/></td>
+		 		</tr>
+	 		</table>
+		  </div>
+		  
+		  <div id="tabs-5">
+	  		<table class="popup_tb">
+		 		<tr>
+		 			<td class="title width_100px">中文描述</td>
+		 			<td><textarea id="description_cn" name="description_cn"></textarea></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">英文描述</td>
+		 			<td><textarea id="description_en" name="description_en"></textarea></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">包装宽度(cm)</td>
+		 			<td><input type="text" class="txt width_100px" name=""/></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">包装高度(cm)</td>
+		 			<td><input type="text" class="txt width_100px" name=""/></td>
+		 		</tr>
+	 		</table>
+		  </div>
+		  
 		</div>
 	</div>
 	

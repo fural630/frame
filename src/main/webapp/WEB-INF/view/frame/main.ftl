@@ -64,6 +64,8 @@
 		      </ul>
 		    </li>
 		    
+		    <li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '/product/productManage')"><i class="icon-cubes"></i> 产品列表</a></li>
+		    
 		  </ul>
 		</nav>
 	</div>
