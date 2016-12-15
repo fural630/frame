@@ -13,7 +13,7 @@
 			<i class="icon icon-plus-sign"></i> 添加产品
 		</button>
 		<button class="btn btn-sm " type="button" onclick="showUploadProductDialog('批量导入产品')">
-			<i class="icon icon-plus-sign"></i> 批量导入产品
+			<i class="icon icon-upload-alt"></i> 批量导入产品
 		</button>
 		</div>
 	</div>
@@ -26,11 +26,14 @@
 	          <tr>
 	          	<th></th>
 	            <th>SKU</th>
-	            <th>名称信息</th>
+	            <th>SPU</th>
+	            <th>基本信息</th>
 	            <th>主图</th>
+	            <!--
 	            <th>尺寸信息</th>
-	            <th>价格信息</th>
-	            <th>产品状态</th>
+	            -->
+	            <th>采购信息</th>
+	            <th>审核状态</th>
 	            <th>人员信息</th>
 	            <th>时间信息</th>
 	            <th>日志</th>
@@ -52,6 +55,10 @@
 	          		</ul>
 	          	</td>
 	          	<td>
+	          		<li><input type="text" class="txt width_100px" name="params[name]" value="${page.params.name!''}" /></li>
+          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[nameLike]" <#if page.params.nameLike??> checked </#if>></li>
+	          	</td>
+	          	<td>
 	          		<ul>
 	          			<li>
 	          				<select class="sel width_100px">
@@ -71,6 +78,7 @@
 	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[emailLike]" <#if page.params.emailLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
+	          	<!--
 	          	<td>
 	          		<ul>
 	          			<li>
@@ -79,13 +87,14 @@
 	          			<li></li>
 	          		</ul>
 	          	</td>
+	          	-->
 	          	<td>
 	          		<ul>
 	          			<li>
 	          				<#if page.params.status??> 
-	          					<@select id="status" name="params[status]" selected="${page.params.status}" optionClass="OpenClose"  cssClass="sel width_100px" headerKey="" headerValue=""/>
+	          					<@select id="status" name="params[status]" selected="${page.params.status}" optionClass="OpenClose"  cssClass="sel width_50px" headerKey="" headerValue=""/>
 	          				<#else>
-	          					<@select id="status" name="params[status]"  optionClass="OpenClose"  cssClass="sel width_100px" headerKey="" headerValue=""/>
+	          					<@select id="status" name="params[status]"  optionClass="OpenClose"  cssClass="sel width_50px" headerKey="" headerValue=""/>
 	          				</#if>
 	          			</li>
 	          			<li></li>
@@ -111,7 +120,9 @@
 	      		 <tr>
 		            <td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="1" onclick="countCheckbox()" /></td>
 		            <td>
-		            	SKU:DV7-01<br/>
+		            	SKU:DV7-01
+		            </td>
+		            <td>
 		            	SPU:DV7
 		            </td>
 		            <td>
@@ -119,21 +130,28 @@
 		            	英文名：cooking accessory
 		            </td>
 		            <td><img src="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" width="100" height="100"/></td>
+		            <!--
 		            <td>
 		            	包裹长度：10（cm）<br/>
 		          		包裹宽度：10（cm）<br/>
 		          		包裹高度：5（cm）<br/>
 		          		包裹重量：50（g）<br/>
 		            </td>
-		            <td>采购价：10</td>
+		            -->
+		            <td>
+		            	采购价：10<br/>
+		            	采购链接：<a href="http://detail.1688.com/offer/520381456935.html?spm=0.0.0.0.tfSOcH">打开链接</a><br/>
+		            	采购备注：50单起
+		            </td>
 		            <td>待编辑</td>
 		            <td>
 		            	创建人：张三<br/>
-		            	编辑人：未分配
+		            	编辑人：未分配<br/>
+		            	刊登人：未分配<br/>
 		            </td>
 		            <td>
-		            	创建时间：2016-05-05 10:10:10<br/>
-		            	修改时间：2016-05-05 10:10:10<br/>
+		            	创建时间：<br/>2016-05-05 10:10:10<br/>
+		            	修改时间：<br/>2016-05-05 10:10:10<br/>
 		            </td>
 		            <td>
 		            	<a href="javascript:void(0)" onclick="showLog(this)"><img src="/design/static/images/common/system-log.png"/></a>
@@ -148,11 +166,12 @@
 						  	<span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu pull-right" role="menu">
-						    <li><a href="javascript:void(0)" onclick="editUserInfo(1})" ><i class="icon icon-pencil"></i> 编辑 </a></li>
-						    <li><a href="javascript:void(0)" onclick="deleteUser(1)" ><i class="icon icon-trash"></i> 删除 </a></li>
-						    <li><a href="javascript:void(0)" onclick="reviewAudit(1)" ><i class="icon icon-trash"></i> 查看审核 </a></li>
+						    <li><a href="javascript:void(0)" onclick="editUserInfo(1})"><i class="icon icon-edit"></i> 编辑 </a></li>
+						    <li><a href="javascript:void(0)" onclick="reviewAudit(1)" ><i class="icon icon-check-board"></i> 查看审核 </a></li>
+						    <li><a href="javascript:void(0)" onclick="reviewAudit(1)" ><i class="icon icon-hand-right"></i> 分配编辑人</a></li>
+						    <li><a href="javascript:void(0)" onclick="reviewAudit(1)" ><i class="icon icon-hand-right"></i> 分配刊登人</a></li>
 						    <li class="divider"></li>
-						    <li><a href="###">更多操作</a></li>
+						    <li><a href="javascript:void(0)" onclick="deleteUser(1)" ><i class="icon icon-trash"></i> 删除 </a></li>
 						  </ul>
 						</div>
 		            </td>
@@ -171,10 +190,10 @@
 							<td class="td_right">批量操作&nbsp;&nbsp;
 								<select class="sel" id="batchOptionSelect">
 									<option value="" selected></option>
-									<option value="batchShelvesProduct">上传商品基本信息</option>
-									<option value="batchUploadOffers">上传offers</option>
-									<option value="batchUpdateToWaitPendding">修改为待处理</option>
-									<!--<option value="batchDelete">批量删除</option>-->
+									<option value="batchUploadOffers">批量分配编辑人</option>
+									<option value="batchUpdateToWaitPendding">批量分配刊登人</option>
+									<option value="batchShelvesProduct">批量删除</option>
+									<option value="batchDelete">批量通过审核</option>
 								</select>
 								&nbsp; <button class="btn btn-sm" type="button" onclick="batchOptionSubmit()">提交</button>
 							</td>
@@ -243,7 +262,7 @@
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">模板文件下载<i class="star">*</i></td>
-	 			<td><a>商品导入文件模板下载</a></td>
+	 			<td><a><i class="icon icon-file-excel"></i> 商品导入文件模板下载</a></td>
 	 		</tr>
  		</table>
 		

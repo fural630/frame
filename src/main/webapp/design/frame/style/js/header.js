@@ -1,7 +1,7 @@
 $(function () {
     $('body').layout({ 
     	applyDefaultStyles: true,
-    	west__size : 214,		//左边宽度
+    	west__size : 180,		//左边宽度
     	west__spacing_open: 8,
     	west__spacing_closed: 8,
     	north__closable : false,
