@@ -3,8 +3,10 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <#include "../common/common.ftl"/>
+    <script src="/design/frame/zui/lib/chosen/chosen.min.js"></script>
     <script src="/design/static/js/app/product/productManage.js"></script>
     <link rel="stylesheet" type="text/css" href="/design/static/css/product/productManage.css"/>
+    <link rel="stylesheet" type="text/css" href="/design/frame/zui/lib/chosen/chosen.min.css"/>
   </head>
   <body>
     <form action="/system/userManage" id="mainPageForm" method="post">
@@ -45,10 +47,10 @@
 	          	<td>
 	          		<ul>
 	          			<li>
-	          				<select class="sel width_100px">
-	          					<option></option>
-	          					<option>SKU</option>
-	          					<option>SPU</option>
+	          				<select data-placeholder="选择一个宠物..." class="chosen-select form-control" tabindex="-1" style="display: none;">
+	          					<option value="0"></option>
+	          					<option value="1">SKU</option>
+	          					<option value="2">SPU</option>
 	          				</select>
 	          			</li>
 	          			<li><input type="text" class="txt width_100px" name="params[name]" value="${page.params.name!''}" /></li>
