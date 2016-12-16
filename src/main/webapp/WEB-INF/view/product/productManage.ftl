@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <#include "../common/common.ftl"/>
     <script src="/design/static/js/app/product/productManage.js"></script>
+    <link rel="stylesheet" type="text/css" href="/design/static/css/product/productManage.css"/>
   </head>
   <body>
     <form action="/system/userManage" id="mainPageForm" method="post">
@@ -266,25 +267,49 @@
 		  </div>
 		  
 		  <div id="tabs-2">
-		  	<input type="text" class="txt" style="width:80%;" id="imageUrlAddress" placeholder="图片地址/Url"/>
-		  	<button class="btn btn-sm " type="button" onclick="addImageUrlAddress();">
-				<i class="icon icon-plus-sign"></i> 添加
-			</button>
-				<img data-toggle="lightbox" src="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" 
-				data-image="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" data-caption="" class="img-thumbnail" title="点击放大" width="110">
-				<img data-toggle="lightbox" src="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" 
-				data-image="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" data-caption="" class="img-thumbnail" title="点击放大" width="110">
-				<!--
-				<table style="width:100%;text-align:center; margin-top:5px;">
-					<tr>
-						<td>
-							<button class="btn btn-sm " type="button">
-								<i class="icon icon-trash"></i> 删除
-							</button>
-						</td>
-					</tr>
-				</table>
-				-->
+			  <div class="alert alert-info" style="padding:10px;">
+			   	 第一张图片为主图，拖拽图片可移动图片位置。
+			  </div>
+		  	<table class="width_100">
+		  		<tr>
+		  			<td>
+		  				<input type="text" class="txt" style="width:80%;" id="imageUrlAddress" placeholder="图片地址/Url"/>
+					  	<button class="btn btn-sm " type="button" onclick="addImageUrlAddress();">
+							<i class="icon icon-plus-sign"></i> 添加
+						</button>
+		  			<td>
+		  		</tr>
+		  		<tr>
+		  			<td>
+		  				<ul>
+		  				
+		  					<li>
+		  						<div class='iamge_div' id='iamge_{imageId}'>
+		  							<div>
+		  								<img src="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" 
+											data-image="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" data-caption="" class="img-thumbnail" title="点击放大" width="110">
+		  							</div>
+		  							<div>
+		  								<table style="width:100%;text-align:center; margin-top:5px;">
+											<tr>
+												<td>
+													<a href="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" data-toggle="lightbox" class="btn btn-sm"><i class="icon icon-zoom-in"></i></a>
+												</td>
+												<td>
+													<button class="btn btn-sm " type="button">
+														<i class="icon icon-trash"></i>
+													</button>
+												</td>
+											</tr>
+										</table>
+		  							</div>
+		  						</div>
+		  					</li>
+		  					
+		  				</ul>
+		  			</td>
+		  		</tr>
+		  	</table>
 	 	  </div>
 	 	  
 		  <div id="tabs-3">
