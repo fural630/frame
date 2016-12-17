@@ -26,4 +26,9 @@ public class ProductManageController extends MainPage{
 		model.addAttribute("collection", collection);
 		return "product/productManage";
 	}
+	
+	@RequestMapping("test")
+	public String test() {
+		return "product/test";
+	}
 }

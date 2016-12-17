@@ -63,9 +63,8 @@
 		        <li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '/product/productManage')"><i class="icon-user"></i>产品列表</a></li>
 		      </ul>
 		    </li>
-		    
 		    <li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '/product/productManage')"><i class="icon-cubes"></i> 产品列表</a></li>
-		    
+		  	<li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '/product/test')"><i class="icon-cubes"></i> 测试用例</a></li>
 		  </ul>
 		</nav>
 	</div>

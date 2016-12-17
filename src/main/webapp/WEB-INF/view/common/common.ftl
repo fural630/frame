@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="/design/frame/zui/css/zui.css"/>
+<link rel="stylesheet" type="text/css" href="/design/frame/zui/css/zui.min.css"/>
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="/design/frame/style/css/reset.css"/>
 <link rel="stylesheet" type="text/css" href="/design/frame/style/css/global.css"/>
@@ -9,10 +9,10 @@
 <link rel="stylesheet" type="text/css" href="/design/frame/style/css/popup.css"/>
 
 <!-- jquery -->
-<script type="text/javascript" src="/design/frame/style/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="/design/frame/jquery/jquery-3.1.1.min.js"></script>
 
 <!-- zui -->
-<script type="text/javascript" src="/design/frame/zui/js/zui.js"></script>
+<script type="text/javascript" src="/design/frame/zui/js/zui.min.js"></script>
 
 <!-- jquery ui -->
 <link rel="stylesheet" type="text/css" href="/design/frame/jquery/jqueryui/jquery-ui.min.css"/>

@@ -3,10 +3,10 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <#include "../common/common.ftl"/>
-    <script src="/design/frame/zui/lib/chosen/chosen.min.js"></script>
-    <script src="/design/static/js/app/product/productManage.js"></script>
+    <script type="text/javascript" src="/design/frame/zui/lib/chosen/chosen.min.js"></script>
+    <script type="text/javascript" src="/design/static/js/app/product/productManage.js"></script>
+	<link rel="stylesheet" type="text/css" href="/design/frame/zui/lib/chosen/chosen.css"/>
     <link rel="stylesheet" type="text/css" href="/design/static/css/product/productManage.css"/>
-    <link rel="stylesheet" type="text/css" href="/design/frame/zui/lib/chosen/chosen.min.css"/>
   </head>
   <body>
     <form action="/system/userManage" id="mainPageForm" method="post">
@@ -47,11 +47,25 @@
 	          	<td>
 	          		<ul>
 	          			<li>
-	          				<select data-placeholder="选择一个宠物..." class="chosen-select form-control" tabindex="-1" style="display: none;">
-	          					<option value="0"></option>
-	          					<option value="1">SKU</option>
-	          					<option value="2">SPU</option>
-	          				</select>
+	          				<select id="skuSelect" class="chosen-select form-control width_100px" tabindex="2">
+						        <option value=""></option>
+						        <option value="cat">小猫</option>
+						        <option value="dog">小狗</option>
+						        <option value="fish">金鱼</option>
+						        <option value="dragon">龙</option>
+						        <option value="cat">小猫</option>
+						        <option value="dog">小狗</option>
+						        <option value="fish">金鱼</option>
+						        <option value="dragon">龙</option>
+						        <option value="cat">小猫</option>
+						        <option value="dog">小狗</option>
+						        <option value="fish">金鱼</option>
+						        <option value="dragon">龙</option>
+						        <option value="cat">小猫</option>
+						        <option value="dog">小狗</option>
+						        <option value="fish">金鱼</option>
+						        <option value="dragon">龙</option>
+						      </select>
 	          			</li>
 	          			<li><input type="text" class="txt width_100px" name="params[name]" value="${page.params.name!''}" /></li>
 	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[nameLike]" <#if page.params.nameLike??> checked </#if>></li>
@@ -143,7 +157,7 @@
 		            -->
 		            <td>
 		            	采购价：10<br/>
-		            	采购链接：<a href="http://detail.1688.com/offer/520381456935.html?spm=0.0.0.0.tfSOcH">打开链接</a><br/>
+		            	采购链接：<a href="http://detail.1688.com/offer/520381456935.html?spm=0.0.0.0.tfSOcH" target="_blank" >打开链接</a><br/>
 		            	采购备注：50单起
 		            </td>
 		            <td>待编辑</td>
@@ -171,7 +185,7 @@
 						  <ul class="dropdown-menu pull-right" role="menu">
 						    <li><a href="javascript:void(0)" onclick="editUserInfo(1})"><i class="icon icon-edit"></i> 编辑 </a></li>
 						    <li><a href="javascript:void(0)" onclick="reviewAudit(1)" ><i class="icon icon-check-board"></i> 查看审核 </a></li>
-						    <li><a href="javascript:void(0)" onclick="reviewAudit(1)" ><i class="icon icon-hand-right"></i> 分配编辑人</a></li>
+						    <li><a href="javascript:void(0)" onclick="showDistributionEditUserDialog('分配编辑人')" ><i class="icon icon-hand-right"></i> 分配编辑人</a></li>
 						    <li><a href="javascript:void(0)" onclick="reviewAudit(1)" ><i class="icon icon-hand-right"></i> 分配刊登人</a></li>
 						    <li class="divider"></li>
 						    <li><a href="javascript:void(0)" onclick="deleteUser(1)" ><i class="icon icon-trash"></i> 删除 </a></li>
@@ -269,30 +283,25 @@
 		  </div>
 		  
 		  <div id="tabs-2">
-			  <div class="alert alert-info" style="padding:10px;">
-			   	 第一张图片为主图，拖拽图片可移动图片位置。
-			  </div>
-		  	<table class="width_100">
-		  		<tr>
-		  			<td>
-		  				<input type="text" class="txt" style="width:80%;" id="imageUrlAddress" placeholder="图片地址/Url"/>
-					  	<button class="btn btn-sm " type="button" onclick="addImageUrlAddress();">
-							<i class="icon icon-plus-sign"></i> 添加
-						</button>
-		  			<td>
-		  		</tr>
-		  		<tr>
-		  			<td>
-		  				<ul>
-		  				
-		  					<li>
-		  						<div class='iamge_div' id='iamge_{imageId}'>
-		  							<div>
-		  								<img src="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" 
-											data-image="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" data-caption="" class="img-thumbnail" title="点击放大" width="110">
-		  							</div>
-		  							<div>
-		  								<table style="width:100%;text-align:center; margin-top:5px;">
+			<div class="alert alert-info" style="padding:10px;">
+			 	第一张图片为主图，拖拽图片可移动图片位置。
+			</div>
+			
+			<input type="text" class="txt" style="width:80%;" id="imageUrlAddress" placeholder="图片地址/Url"/>
+		  	<button class="btn btn-sm " type="button" onclick="addImageUrlAddress();">
+				<i class="icon icon-plus-sign"></i> 添加
+			</button>
+			
+			<table class="width_100" style="margin-top:10px;">
+				<tr>
+					<td>
+						<ul id="sortable">
+							<li>
+								<div class="iamge_div" id="iamge_2">
+											<img src="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" 
+										data-image="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" data-caption="" class="img-thumbnail" title="点击放大" width="110">
+									<div>
+										<table class="width_100 image_operating_table">
 											<tr>
 												<td>
 													<a href="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" data-toggle="lightbox" class="btn btn-sm"><i class="icon icon-zoom-in"></i></a>
@@ -304,14 +313,35 @@
 												</td>
 											</tr>
 										</table>
-		  							</div>
-		  						</div>
-		  					</li>
-		  					
-		  				</ul>
-		  			</td>
-		  		</tr>
-		  	</table>
+									</div>
+								</div>
+							</li>
+							
+							<li>
+								<div class="iamge_div" id="iamge_2">
+											<img src="http://www.guphotos.com/images/D/Y/D4187Y/D4187Y-1-a102-klbM.jpg" 
+										data-image="http://www.guphotos.com/images/D/Y/D4187Y/D4187Y-1-a102-klbM.jpg" data-caption="" class="img-thumbnail" title="点击放大" width="110">
+									<div>
+										<table class="width_100 image_operating_table">
+											<tr>
+												<td>
+													<a href="http://www.guphotos.com/images/D/Y/D4187Y/D4187Y-1-a102-klbM.jpg" data-toggle="lightbox" class="btn btn-sm"><i class="icon icon-zoom-in"></i></a>
+												</td>
+												<td>
+													<button class="btn btn-sm " type="button">
+														<i class="icon icon-trash"></i>
+													</button>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</td>
+				</tr>
+			</table>
+			
 	 	  </div>
 	 	  
 		  <div id="tabs-3">
@@ -433,7 +463,33 @@
 		</div>
 	</div>
 	
+	<div id="distributionEditUserDialog">
+		<table class="popup_tb">
+	 		<tr>
+	 			<td class="title width_100px">分配编辑人员<i class="star">*</i></td>
+	 			<td>
+	 				<select id="editUserSelect" class="chosen-select form-control" tabindex="2">
+		            <option value="cat">小猫</option>
+		            <option value="dog">小狗</option>
+		            <option value="fish">金鱼</option>
+		            <option value="dragon">龙</option>
+		            <option value="cat">小猫</option>
+		            <option value="dog">小狗</option>
+		            <option value="fish">金鱼</option>
+		            <option value="dragon">龙</option>
+		            <option value="cat">小猫</option>
+		            <option value="dog">小狗</option>
+		            <option value="fish">金鱼</option>
+		            <option value="dragon">龙</option>
+		            <option value="cat">小猫</option>
+		            <option value="dog">小狗</option>
+		            <option value="fish">金鱼</option>
+		            <option value="dragon">龙</option>
+		          </select>
+	 			</td>
+	 		</tr>
+ 		</table>
+	</div>
 	
-  
   </body>
 </html>

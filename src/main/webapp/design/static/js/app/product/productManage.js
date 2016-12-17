@@ -3,15 +3,20 @@ $(function () {
 	$( "#tabs" ).tabs();
 	CKEDITOR.replace('description_cn');
 	CKEDITOR.replace('description_en');
-	$('select.chosen-select').chosen({
-	    no_results_text: '没有找到',    // 当检索时没有找到匹配项时显示的提示文本
-	    disable_search_threshold: 10, // 10 个以下的选择项则不显示检索框
+	$('#skuSelect').chosen({
+	    disable_search_threshold: 5, // 5 个以下的选择项则不显示检索框
 	    search_contains: true         // 从任意位置开始检索
 	});
+	initSortable();
 });
+
+function initSortable() {
+	$("#sortable").sortable();
+} 
+
 function initDialog () {
 	$("#productDialog").dialog({
-		autoOpen: true,
+		autoOpen: false,
 		modal: true,
 		width: 800,
 		height: 600,
@@ -25,6 +30,14 @@ function initDialog () {
 //					if (validate()) {
 //						saveUser();
 //					}
+				}
+			},{
+				text : "关闭",
+				icons : {
+					primary : "ui-icon-heart"
+				},
+				click : function() {
+					$(this).dialog("close");
 				}
 			}
 		],
@@ -47,6 +60,14 @@ function initDialog () {
 					primary : "ui-icon-heart"
 				},
 				click : function() {
+				}
+			},{
+				text : "关闭",
+				icons : {
+					primary : "ui-icon-heart"
+				},
+				click : function() {
+					$(this).dialog("close");
 				}
 			}
 		],
@@ -81,11 +102,74 @@ function initDialog () {
 				},
 				click : function() {
 				}
+			},{
+				text : "关闭",
+				icons : {
+					primary : "ui-icon-heart"
+				},
+				click : function() {
+					$(this).dialog("close");
+				}
 			}
 		],
 		close: function( event, ui ) {
 		}
 	});
+	
+	$("#distributionEditUserDialog").dialog({
+		autoOpen: false,
+		modal: true,
+		width: 450,
+		height: 420,
+		resizable: false,
+		buttons : [ {
+				text : "保存",
+				icons : {
+					primary : "ui-icon-heart"
+				},
+				click : function() { 
+				}
+			},{
+				text : "关闭",
+				icons : {
+					primary : "ui-icon-heart"
+				},
+				click : function() {
+					$(this).dialog("close");
+				}
+			}
+		],
+		close: function( event, ui ) {
+		}
+	});
+	
+	$("#distributionPublishUserDialog").dialog({
+		autoOpen: false,
+		modal: true,
+		width: 800,
+		height: 600,
+		resizable: false,
+		buttons : [ {
+				text : "保存",
+				icons : {
+					primary : "ui-icon-heart"
+				},
+				click : function() { 
+				}
+			},{
+				text : "关闭",
+				icons : {
+					primary : "ui-icon-heart"
+				},
+				click : function() {
+					$(this).dialog("close");
+				}
+			}
+		],
+		close: function( event, ui ) {
+		}
+	});
+	
 		
 }
 
@@ -102,6 +186,15 @@ function showUploadProductDialog(title) {
 function showProductAuditDialog(title) {
 	$("#auditProductDialog").dialog("option", "title", title);
 	$("#auditProductDialog").dialog("open");
+}
+
+function showDistributionEditUserDialog(title) {
+	$("#distributionEditUserDialog").dialog("option", "title", title);
+	$("#distributionEditUserDialog").dialog("open");
+	$('#editUserSelect').chosen({
+	    disable_search_threshold: 5, // 5 个以下的选择项则不显示检索框
+	    search_contains: true         // 从任意位置开始检索
+	});
 }
 
 function reviewAudit(id) {
