@@ -13,7 +13,7 @@
         	status,
         	log,
         	createTime,
-        	updateTime
+        	role
         ) values(
         	#{userName},
         	#{password},
@@ -23,7 +23,7 @@
         	#{status},
         	#{log},
         	#{createTime},
-        	#{updateTime}
+        	#{role}
         )  
     </insert>  
     
@@ -51,8 +51,8 @@
         		<if test="email !=null and email !=''">
 					email = #{email},
         		</if>
-        		<if test="updateTime !=null and updateTime !=''">
-					updateTime = #{updateTime},
+        		<if test="role !=null and role !=''">
+					role = #{role},
         		</if>
         		<if test="createTime !=null and createTime !=''">
 					createTime = #{createTime},
@@ -69,10 +69,6 @@
         select * from user where id = #{id}  
     </select>
     
-    <select id="getUserByIdAndCreator" resultType="User">
-    	select * from user where id = #{id} and id = #{loginUserId}
-    </select>  
-       
     <select id="findAll" resultType="User">  
         select * from user  
     </select>  
@@ -100,6 +96,9 @@
 					and t.userName = #{params.userName}
 				</when>
 	   		</choose>
+	   		<if test="params.role !=null and params.role !=''">
+	 			and t.role = #{params.role}
+	   		</if>
 	   		<choose>
 				<when test="params.emailLike!=null and params.emailLike!='' ">
 					and t.email like CONCAT('%','${params.email}','%')  
@@ -108,9 +107,6 @@
 					and t.email = #{params.email}
 				</when>
 	   		</choose>
-	   		<if test="params.phone!=null and params.phone !=''">
-	 			and t.phone = #{params.phone}
-	   		</if>
 	   		<if test="params.status!=null and params.status !=''">
 	    		and t.status = #{params.status}
 	   		</if>

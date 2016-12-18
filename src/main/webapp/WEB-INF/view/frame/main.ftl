@@ -37,7 +37,9 @@
 		      <a href="javascript:;"><i class="icon icon-wrench"></i> 系统管理</a>
 		      <ul class="nav">
 		        <li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '/system/userManage')"><i class="icon-user"></i>用户管理</a></li>
-		        <li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '/system/roleManage')"><i class="icon icon-group"></i>角色管理</a></li>
+		        <!--
+		        	<li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '/system/roleManage')"><i class="icon icon-group"></i>角色管理</a></li>
+	        	-->
 		      </ul>
 		    </li>
 		  

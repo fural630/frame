@@ -46,34 +46,15 @@
 	          	<td></td>
 	          	<td>
 	          		<ul>
-	          			<li>
-	          				<select id="skuSelect" class="chosen-select form-control width_100px" tabindex="2">
-						        <option value=""></option>
-						        <option value="cat">小猫</option>
-						        <option value="dog">小狗</option>
-						        <option value="fish">金鱼</option>
-						        <option value="dragon">龙</option>
-						        <option value="cat">小猫</option>
-						        <option value="dog">小狗</option>
-						        <option value="fish">金鱼</option>
-						        <option value="dragon">龙</option>
-						        <option value="cat">小猫</option>
-						        <option value="dog">小狗</option>
-						        <option value="fish">金鱼</option>
-						        <option value="dragon">龙</option>
-						        <option value="cat">小猫</option>
-						        <option value="dog">小狗</option>
-						        <option value="fish">金鱼</option>
-						        <option value="dragon">龙</option>
-						      </select>
-	          			</li>
 	          			<li><input type="text" class="txt width_100px" name="params[name]" value="${page.params.name!''}" /></li>
 	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[nameLike]" <#if page.params.nameLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
 	          	<td>
-	          		<li><input type="text" class="txt width_100px" name="params[name]" value="${page.params.name!''}" /></li>
-          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[nameLike]" <#if page.params.nameLike??> checked </#if>></li>
+	          		<ul>
+	          			<li><input type="text" class="txt width_100px" name="params[name]" value="${page.params.name!''}" /></li>
+          				<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[nameLike]" <#if page.params.nameLike??> checked </#if>></li>
+	          		</ul>
 	          	</td>
 	          	<td>
 	          		<ul>
@@ -108,16 +89,50 @@
 	          	<td>
 	          		<ul>
 	          			<li>
-	          				<#if page.params.status??> 
-	          					<@select id="status" name="params[status]" selected="${page.params.status}" optionClass="OpenClose"  cssClass="sel width_50px" headerKey="" headerValue=""/>
-	          				<#else>
-	          					<@select id="status" name="params[status]"  optionClass="OpenClose"  cssClass="sel width_50px" headerKey="" headerValue=""/>
-	          				</#if>
+	          				<select class="sel width_60px">
+	          					<option></option>
+	          					<option>待分配</option>
+	          					<option>待编辑</option>
+	          					<option>待审核</option>
+	          					<option>已审核</option>
+	          				</select>
 	          			</li>
 	          			<li></li>
 					</ul>	
 	          	</td>
-	          	<td></td>
+	          	<td>
+	          		<ul>
+	          			<li>
+	          				<select class="sel width_100px">
+	          					<option></option>
+	          					<option>创建人</option>
+	          					<option>编辑人</option>
+	          					<option>刊登人</option>
+	          				</select>
+	          			</li>
+	          			<li>
+	          				<select id="skuSelect" class="chosen-select form-control width_100px" tabindex="2">
+						        <option value=""></option>
+						        <option value="cat">小猫</option>
+						        <option value="dog">小狗</option>
+						        <option value="fish">金鱼</option>
+						        <option value="dragon">龙</option>
+						        <option value="cat">小猫</option>
+						        <option value="dog">小狗</option>
+						        <option value="fish">金鱼</option>
+						        <option value="dragon">龙</option>
+						        <option value="cat">小猫</option>
+						        <option value="dog">小狗</option>
+						        <option value="fish">金鱼</option>
+						        <option value="dragon">龙</option>
+						        <option value="cat">小猫</option>
+						        <option value="dog">小狗</option>
+						        <option value="fish">金鱼</option>
+						        <option value="dragon">龙</option>
+						      </select>
+	          			</li>
+	          		<ul>
+	          	</td>
 	          	<td>
 	          		<ul>
 						<li>
@@ -173,7 +188,7 @@
 		            <td>
 		            	<a href="javascript:void(0)" onclick="showLog(this)"><img src="/design/static/images/common/system-log.png"/></a>
 		            	<div class="log_content">
-		            		123
+		            		1: 【于 2016-11-03 21:04:25 由 超级管理员，创建了该条信息】
 		            	</div>
 		            </td>
 		            <td class="optionTd" style="width:60px;text-align:center;">
@@ -390,19 +405,59 @@
 	  		<table class="popup_tb">
 		 		<tr>
 		 			<td class="title width_100px">中文描述</td>
-		 			<td><textarea id="description_cn" name="description_cn"></textarea></td>
+		 			<td><textarea id="descriptionCn" name="descriptionCn"></textarea></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">英文描述</td>
-		 			<td><textarea id="description_en" name="description_en"></textarea></td>
+		 			<td><textarea id="descriptionEn" name="descriptionEn"></textarea></td>
 		 		</tr>
 		 		<tr>
-		 			<td class="title width_100px">包装宽度(cm)</td>
-		 			<td><input type="text" class="txt width_100px" name=""/></td>
+		 			<td class="title width_100px">法语描述</td>
+		 			<td><textarea id="descriptionFr" name="descriptionFr"></textarea></td>
 		 		</tr>
 		 		<tr>
-		 			<td class="title width_100px">包装高度(cm)</td>
-		 			<td><input type="text" class="txt width_100px" name=""/></td>
+		 			<td class="title width_100px">德语描述</td>
+		 			<td><textarea id="descriptionDe" name="descriptionDe"></textarea></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">日语描述</td>
+		 			<td><textarea id="descriptionJp" name="descriptionJp"></textarea></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">西班牙语描述</td>
+		 			<td><textarea id="descriptionEs" name="descriptionEs"></textarea></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">意大利语描述</td>
+		 			<td><textarea id="descriptionIt" name="descriptionIt"></textarea></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">中文简述</td>
+		 			<td><textarea id="briefDescriptionCn" name="briefDescriptionCn"></textarea></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">英文简述</td>
+		 			<td><textarea id="briefDescriptionEn" name="briefDescriptionEn"></textarea></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">法语简述</td>
+		 			<td><textarea id="briefDescriptionFr" name="briefDescriptionFr"></textarea></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">德语简述</td>
+		 			<td><textarea id="briefDescriptionDe" name="briefDescriptionDe"></textarea></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">日语简述</td>
+		 			<td><textarea id="briefDescriptionJp" name="briefDescriptionJp"></textarea></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">西班牙语简述</td>
+		 			<td><textarea id="briefDescriptionEs" name="briefDescriptionEs"></textarea></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">意大利语简述</td>
+		 			<td><textarea id="briefDescriptionIt" name="briefDescriptionIt"></textarea></td>
 		 		</tr>
 	 		</table>
 		  </div>
@@ -463,7 +518,7 @@
 		</div>
 	</div>
 	
-	<div id="distributionEditUserDialog">
+	<div id="distributionEditUserDialog" style="display:none;">
 		<table class="popup_tb">
 	 		<tr>
 	 			<td class="title width_100px">分配编辑人员<i class="star">*</i></td>

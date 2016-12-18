@@ -7,10 +7,10 @@ public class User {
 	private String phone;
 	private String name;
 	private String email;
+	private Integer role;
 	private Integer status;
 	private String log;
 	private String createTime;
-	private String updateTime;
 	
 	public Integer getId() {
 		return id;
@@ -48,12 +48,6 @@ public class User {
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
-	public String getUpdateTime() {
-		return updateTime;
-	}
-	public void setUpdateTime(String updateTime) {
-		this.updateTime = updateTime;
-	}
 	public String getEmail() {
 		return email;
 	}
@@ -71,5 +65,11 @@ public class User {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	public Integer getRole() {
+		return role;
+	}
+	public void setRole(Integer role) {
+		this.role = role;
 	}
 }

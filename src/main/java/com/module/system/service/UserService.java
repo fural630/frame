@@ -40,16 +40,13 @@ public class UserService {
 		MyLocale myLocale = new MyLocale();
 		user.setCreateTime(myDate.getCurrentDateTime());
 		user.setLog(SysRemark.append("", myLocale.getText("at.time.create.user")));
-		user.setUpdateTime(myDate.getCurrentDateTime());
 		user.setPassword(DESEncrypt.DataEncrypt(user.getPassword()));
 		userDao.insertUser(user);
 	}
 	
 	public void updateUser(User user) {
-		MyDate myDate = new MyDate();
 		MyLocale myLocale = new MyLocale();
 		user.setPassword(DESEncrypt.DataEncrypt(user.getPassword()));
-		user.setUpdateTime(myDate.getCurrentDateTime());
 		User oldUser = userDao.getUserById(user.getId());
 		user.setLog(SysRemark.append(oldUser.getLog(), myLocale.getText("at.time.update.user")));
 		userDao.updateUser(user);
