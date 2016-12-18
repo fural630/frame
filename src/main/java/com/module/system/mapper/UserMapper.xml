@@ -106,7 +106,7 @@
 				<when test="params.email!=null and params.email!=''">
 					and t.email = #{params.email}
 				</when>
-	   		</choose>
+	   		</choose> 
 	   		<if test="params.status!=null and params.status !=''">
 	    		and t.status = #{params.status}
 	   		</if>
