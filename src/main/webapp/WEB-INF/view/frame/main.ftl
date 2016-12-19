@@ -33,16 +33,22 @@
 		<nav class="menu" data-toggle="menu" style="width: 100%;">
 		  <ul class="nav nav-primary">
 		  
-		    <li class="nav-parent">
-		      <a href="javascript:;"><i class="icon icon-wrench"></i> 系统管理</a>
-		      <ul class="nav">
-		        <li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '/system/userManage')"><i class="icon-user"></i>用户管理</a></li>
-		        <!-- 
-		        	<li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '/system/roleManage')"><i class="icon icon-group"></i>角色管理</a></li>
-	        	-->
-		      </ul>
-		    </li>
+		  <#if navigatorLists?? && (navigatorLists?size gt 0)>
+		  	<#list navigatorLists as firstNav>
+		  		<li class="nav-parent">
+			      <a href="javascript:;"><i class="${firstNav.iconClass}"></i> ${firstNav.nameCn}</a>
+			      <#if firstNav.navigatorList?? && (firstNav.navigatorList?size gt 0)>
+				      <ul class="nav">
+				      	<#list firstNav.navigatorList as secondNav>
+				      		<li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '${secondNav.url}')"><i class="${secondNav.iconClass}"></i>${secondNav.nameCn}</a></li>
+				      	</#list>
+				      </ul>
+			      </#if>
+			    </li>
+		  	</#list>
+		  </#if>
 		  
+		  <!--
 		    <li class="nav-parent">
 		      <a href="javascript:;"><i class="icon-time"></i> Cdiscount 专区</a>
 		      <ul class="nav">
@@ -67,6 +73,7 @@
 		    </li>
 		    <li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '/product/productManage')"><i class="icon-cubes"></i> 产品列表</a></li>
 		  	<li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '/product/test')"><i class="icon-cubes"></i> 测试用例</a></li>
+		  -->
 		  </ul>
 		</nav>
 	</div>

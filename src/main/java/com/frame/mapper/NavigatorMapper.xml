@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.frame.dao.NavigatorDao">  
+     
+    <insert id="insertNavigator" parameterType="Navigator" useGeneratedKeys="true" keyProperty="id">  
+        insert into navigator (
+        	name,
+        	nameCn,
+        	url,
+        	iconClass,
+        	isParent,
+        	parentId,
+        	sort
+        ) values(
+        	#{name},
+        	#{nameCn},
+        	#{url},
+        	#{iconClass},
+        	#{isParent},
+        	#{parentId},
+        	#{sort}
+        )  
+    </insert>
+    
+    <select id="selectNavigatorByName" resultType="Navigator" parameterType="string">
+    	select * from navigator where name = #{name}
+    </select>
+    
+    <update id="updateNavigator" parameterType="Navigator">  
+        update navigator
+        <set>
+        	<if test="name !=null and name !=''">
+				name = #{name},
+        	</if>
+        	<if test="nameCn !=null and nameCn !=''">
+				nameCn = #{nameCn},
+        	</if>
+        	<if test="url !=null and url !=''">
+				url = #{url},
+        	</if>
+        	<if test="iconClass !=null and iconClass !=''">
+				iconClass = #{iconClass},
+        	</if>
+        	<if test="isParent !=null and isParent !=''">
+				isParent = #{isParent},
+        	</if>
+        	<if test="parentId !=null and parentId !=''">
+				parentId = #{parentId}, 	
+        	</if>
+        	<if test="sort !=null and sort !=''">
+				sort = #{sort}, 	
+        	</if>
+        </set>
+        where id = #{id}
+    </update>  
+    
+    <delete id="deleteNavigatorById" parameterType="int">  
+        delete from navigator where id = #{id}  
+    </delete>  
+       
+    <select id="getNavigatorById" parameterType="int" resultType="Navigator">  
+        select * from navigator where id = #{id}  
+    </select>
+    
+    <select id="getNavigatorByParentId" parameterType="int" resultType="Navigator">  
+        select * from navigator where parentId = #{id}
+    </select>
+    
+    <select id="findAll" resultType="Navigator">  
+        select * from navigator  
+    </select>
+    
+    <select id="getUserNavigator" parameterType="hashMap" resultType="Navigator">
+    	select * from navigator where parentId = #{parentId} and id in 
+    		(select navigatorId from navigator_user where userId = #{userId})
+    </select>
+    
+    
+      
+</mapper>  

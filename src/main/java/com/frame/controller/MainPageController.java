@@ -1,11 +1,15 @@
 package com.frame.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.code.session.UserSingleton;
+import com.frame.model.NavigatorList;
+import com.frame.service.NavigatorService;
 import com.module.system.model.User;
 import com.module.system.service.UserService;
 
@@ -15,6 +19,8 @@ public class MainPageController {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private NavigatorService navigatorService;
 	
 	@RequestMapping("header") 
 	public String goToHeaderPage(Model model) {
@@ -40,6 +46,8 @@ public class MainPageController {
 	public String goToMainPage(Model model) {
 		User user = userService.getUserByUserName("2028");
 		UserSingleton.getInstance().setUser(user);
+		List<NavigatorList> navigatorLists = navigatorService.parasNavigator(user.getId());
+		model.addAttribute("navigatorLists", navigatorLists);
 //		User user = UserSingleton.getInstance().getUser();
 //		model.addAttribute("loginUserName", user.getName());
 //		model.addAttribute("loginUserId", user.getId());

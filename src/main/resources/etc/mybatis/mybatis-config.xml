@@ -6,6 +6,7 @@
     <typeAliases>  
         <typeAlias alias="User" type="com.module.system.model.User" />
         <typeAlias alias="Role" type="com.module.system.model.Role" />
+        <typeAlias alias="Navigator" type="com.frame.model.Navigator" />
         <typeAlias alias="Page" type="com.code.Page" />
     </typeAliases> 
     
@@ -13,5 +14,6 @@
     <mappers>  
         <mapper resource="com/module/system/mapper/UserMapper.xml" />
         <mapper resource="com/module/system/mapper/RoleMapper.xml" />
+        <mapper resource="com/frame/mapper/NavigatorMapper.xml" />
     </mappers> 
 </configuration>    

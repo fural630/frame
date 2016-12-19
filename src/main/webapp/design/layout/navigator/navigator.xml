@@ -1,0 +1,8 @@
+<navigator> 
+	<system.manage icon="icon-wrench" sort="1">
+		<navigator.user.manage link="/system/userManage" icon="icon-user"></navigator.user.manage>
+	</system.manage>
+	<product.center icon="icon-cubes" sort="2">
+		<product.manage link="/product/productManage" icon="icon-cubes"></product.manage>
+	</product.center>
+</navigator>
