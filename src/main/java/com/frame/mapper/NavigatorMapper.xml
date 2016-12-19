@@ -76,6 +76,25 @@
     		(select navigatorId from navigator_user where userId = #{userId})
     </select>
     
+    <select id="loadNavigatorTreeByUserId" parameterType="int" resultType="hashMap">
+    	SELECT
+			t.id AS id,
+			t.parentId AS pId,
+			t.nameCn AS name,
+			IF (tt.navigatorId > 0,'true','false') AS 'checked',
+			IF (t.isParent > 0,'true','false') AS 'open'
+		FROM
+			navigator t
+		LEFT JOIN (
+			SELECT
+				navigatorId
+			FROM
+				navigator_user
+			WHERE
+				userId = #{userId}
+		) tt ON t.id = tt.navigatorId
+    </select>
+    
     
       
 </mapper>  

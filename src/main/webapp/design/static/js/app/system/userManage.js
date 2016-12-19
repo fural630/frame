@@ -26,6 +26,61 @@ function initDialog () {
 			validateFrom.resetForm();
 		}
 	});
+	
+	$("#userNavigatorDialog").dialog({
+		autoOpen: false,
+		modal: true,
+		width: 600,
+		height: 400,
+		resizable: false,
+		buttons : [ {
+				text : "保存",
+				icons : {
+					primary : "ui-icon-heart"
+				},
+				click : function() {
+				}
+			}
+		],
+		close: function( event, ui ) {
+			
+		}
+	});
+}
+
+function loadNavigatorTree(userId) {
+	var setting = {
+		check: {
+			enable: true
+		},
+		data: {
+			simpleData: {
+				enable: true
+			},
+		},
+//		callback : {
+//			onClick : loadDictionary
+//		},
+		async: {
+			enable: true,
+			url:"/system/loadNavigatorTree",
+			dataType : "json",
+			otherParam: {"userId": userId},
+			type: "post",
+		}
+	};
+	
+	$.fn.zTree.init($("#navigatorTree"), setting);
+}
+
+function permissionEdit(userId) {
+	loadNavigatorTree(userId);
+	showUserNavigatorDialog("分配导航权限");
+}
+
+function showUserNavigatorDialog(title) {
+	$("#userNavigatorDialog").dialog("option", "title", title);
+	$("#userNavigatorDialog").dialog("open");
 }
 
 function showUserDialog (title) {

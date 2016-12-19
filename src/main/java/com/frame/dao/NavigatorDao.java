@@ -1,6 +1,7 @@
 package com.frame.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -15,4 +16,5 @@ public interface NavigatorDao {
 	public Navigator getNavigatorByParentId(Integer id);
 	public List<Navigator> findAll();
 	public List<Navigator> getUserNavigator(@Param("userId")Integer userId, @Param("parentId")Integer parentId);
+	public List<Map<String, Object>> loadNavigatorTreeByUserId(Integer userId);
 }

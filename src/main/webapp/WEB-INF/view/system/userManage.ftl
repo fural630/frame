@@ -3,7 +3,10 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <#include "../common/common.ftl"/>
-    <script src="/design/static/js/app/system/userManage.js"></script>
+    <script  type="text/javascript" src="/design/static/js/app/system/userManage.js"></script>
+	<link rel="stylesheet" type="text/css" href="/design/frame/jquery/zTree_v3-master/css/zTreeStyle/zTreeStyle.css"/>
+	<script type="text/javascript" src="/design/frame/jquery/zTree_v3-master/js/jquery.ztree.core.js"></script>
+	<script type="text/javascript" src="/design/frame/jquery/zTree_v3-master/js/jquery.ztree.excheck.min.js"></script>
   </head>
   <body>
     <form action="/system/userManage" id="mainPageForm" method="post">
@@ -119,6 +122,7 @@
 						  </button>
 						  <ul class="dropdown-menu pull-right" role="menu">
 						    <li><a href="javascript:void(0)" onclick="editUserInfo(${obj.id})" ><i class="icon icon-pencil"></i> 编辑 </a></li>
+						    <li><a href="javascript:void(0)" onclick="permissionEdit(${obj.id})" ><i class="icon icon-sitemap"></i> 导航权限设置</a></li>
 						    <li class="divider"></li>
 						    <li><a href="javascript:void(0)" onclick="deleteUser(${obj.id})" ><i class="icon icon-trash"></i> 删除 </a></li>
 						  </ul>
@@ -177,6 +181,10 @@
 	 		</tr>
 	 	</table>
 	 	</form>
+	</div>
+	
+	<div id="userNavigatorDialog" style="display:none;">
+		<div id="navigatorTree" class="ztree"></div>
 	</div>
   
   </body>

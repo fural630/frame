@@ -2,6 +2,7 @@ package com.frame.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,8 +69,11 @@ public class NavigatorService {
 				navigatorLists.add(navigatorList);
 			}
 		}
-		Dumper.dump(navigatorLists);
 		return navigatorLists;
+	}
+
+	public List<Map<String, Object>> loadNavigatorTreeByUserId(Integer userId) {
+		return navigatorDao.loadNavigatorTreeByUserId(userId);
 	}
 	
 }
