@@ -40,7 +40,11 @@
 			      <#if firstNav.navigatorList?? && (firstNav.navigatorList?size gt 0)>
 				      <ul class="nav">
 				      	<#list firstNav.navigatorList as secondNav>
-				      		<li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '${secondNav.url}')"><i class="${secondNav.iconClass}"></i>${secondNav.nameCn}</a></li>
+				      		<li>
+				      			<a href="javascript:;" onClick="$('#mainFrame').attr('src', '${secondNav.url}')">
+				      				<i class="${secondNav.iconClass}"></i>${secondNav.nameCn}
+				      			</a>
+				      		</li>
 				      	</#list>
 				      </ul>
 			      </#if>
