@@ -15,10 +15,7 @@ jQuery.myformPlugins = {
 			else if (tag == 'select')
 			      this.selectedIndex = 0;
 		});
-//		$(':input', selector)  
-//		.not(':button, :submit, :reset, :hidden')  
-//		.val('')  
-//		.removeAttr('checked')  
-//		.removeAttr('selected');  
+		$(selector).find(".validateTip").html("");
+		$(selector).find(".validateTip").hide();
 	}
 };

@@ -17,4 +17,7 @@ public interface NavigatorDao {
 	public List<Navigator> findAll();
 	public List<Navigator> getUserNavigator(@Param("userId")Integer userId, @Param("parentId")Integer parentId);
 	public List<Map<String, Object>> loadNavigatorTreeByUserId(Integer userId);
+	public void deleteUserNavigatorByUserId(Integer userId);
+	public void insertUserNavigator(Map<String, Integer> userNavigatorMap);
+	public void deleteNavigatorNotInName(List<String> navigatorNameList);
 }

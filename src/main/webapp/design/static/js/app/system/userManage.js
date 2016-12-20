@@ -6,7 +6,7 @@ function initDialog () {
 		autoOpen: false,
 		modal: true,
 		width: 600,
-		height: 400,
+		height: 420,
 		resizable: false,
 		buttons : [ {
 				text : "保存",
@@ -22,8 +22,6 @@ function initDialog () {
 		],
 		close: function( event, ui ) {
 			$.myformPlugins.cleanForm("#userDialog");
-			var validateFrom = $("#userDialogFrom").validate();
-			validateFrom.resetForm();
 		}
 	});
 	
@@ -39,6 +37,7 @@ function initDialog () {
 					primary : "ui-icon-heart"
 				},
 				click : function() {
+					saveUserNavigator();
 				}
 			}
 		],
@@ -47,6 +46,37 @@ function initDialog () {
 		}
 	});
 }
+
+function saveUserNavigator() {
+	var idList = [];
+	var treeObj = $.fn.zTree.getZTreeObj("navigatorTree");
+	var nodes = treeObj.getCheckedNodes(true);
+	for (var i = 0; i < nodes.length; i++) {
+		var node = nodes[i];
+		var id = node.id;
+		idList.push(id);
+	}
+	var ids = idList.join();
+	var userId = $("#userNavigatorDialog input[name=id]").val();
+	
+	$.ajax({
+		url : "/system/saveUserNavigator",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			userId : userId,
+			ids : ids
+		},
+		success : function (data) {
+			if (data.status == 1) {
+				$("#userNavigatorDialog").dialog("close");
+			}
+			$.message.showMessage(data);
+		}
+	});
+	
+}
+
 
 function loadNavigatorTree(userId) {
 	var setting = {
@@ -58,9 +88,6 @@ function loadNavigatorTree(userId) {
 				enable: true
 			},
 		},
-//		callback : {
-//			onClick : loadDictionary
-//		},
 		async: {
 			enable: true,
 			url:"/system/loadNavigatorTree",
@@ -71,6 +98,7 @@ function loadNavigatorTree(userId) {
 	};
 	
 	$.fn.zTree.init($("#navigatorTree"), setting);
+	$("#userNavigatorDialog input[name=id]").val(userId);
 }
 
 function permissionEdit(userId) {
@@ -89,30 +117,51 @@ function showUserDialog (title) {
 }
 
 function validate() {
-	return $("#userDialogFrom").valid();
+	var errorMassage = "";
+	var dialog = $("#userDialog");
+	var name = $.trim(dialog.find("input[name='name']").val());
+	var userName = $.trim(dialog.find("input[name='userName']").val());
+	var password = $.trim(dialog.find("input[name='password']").val());
+	if (name == "") {
+		errorMassage += "&nbsp;*&nbsp;请填写姓名";
+	} 
+	if (userName == "") {
+		errorMassage += "&nbsp;*&nbsp;请填写账号";
+	} 
+	if (password == "") {
+		errorMassage += "&nbsp;*&nbsp;请填写密码";
+	} 
+	if (errorMassage != "") {
+		$(".validateTip").html(errorMassage);
+		$(".validateTip").show();
+		return false;
+	} else {
+		$(".validateTip").hide();
+	}
+	return true; 
 }
 
 function saveUser () {
 	var dialog = $("#userDialog");
 	var id = $.trim(dialog.find("input[name='id']").val());
+	var name = $.trim(dialog.find("input[name='name']").val());
 	var userName = $.trim(dialog.find("input[name='userName']").val());
 	var password = $.trim(dialog.find("input[name='password']").val());
-	var name = $.trim(dialog.find("input[name='name']").val());
+	var role = dialog.find("select[name='role']").val();
+	var status = dialog.find("select[name='status']").val();
 	var email = $.trim(dialog.find("input[name='email']").val());
 	var phone = $.trim(dialog.find("input[name='phone']").val());
-	var status = $.trim(dialog.find("select[name='status']").val());
-	
-	var url = "/system/saveUser";
 	
 	$.ajax({
-		url : url,
+		url : "/system/saveUser",
 		type: 'POST',
 		dataType : "json",
 		data : {
 			id : id,
+			name : name,
 			userName : userName,
 			password : password,
-			name : name,
+			role : role,
 			email : email,
 			phone : phone,
 			status : status
@@ -138,7 +187,6 @@ function editUserInfo (id) {
 			id : id
 		},
 		success : function (data) {
-			$.unblockUI();
 			if (null != data) {
 				fillingData(data, "#userDialog");
 			} else {
@@ -166,19 +214,16 @@ function fillingData (obj, selector) {
 }
 
 function deleteUser (id) {
-	if(confirm("确定删除？")){
-		var url = "/system/deleteUser";
-		$.ajax({
-			url : url,
-			type: 'POST',
-			dataType : "json",
-			data : {
-				id : id
-			},
-			success : function (data) {
-				$.message.showMessage(data);
-				refresh(1000);
-			}
-		});
-	}
+	$.ajax({
+		url : "/system/deleteUser",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			id : id
+		},
+		success : function (data) {
+			$.message.showMessage(data);
+			refresh(1000);
+		}
+	});
 } 

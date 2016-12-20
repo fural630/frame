@@ -2,6 +2,7 @@ package com.code.navigator;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -16,13 +17,10 @@ import org.jdom2.input.SAXBuilder;
 import com.code.frame.SpringContextUtil;
 import com.frame.dao.NavigatorDao;
 import com.frame.model.Navigator;
-import com.frame.service.NavigatorService;
 import com.util.MyLocale;
 import com.util.SystemInfo;
 
 public class InitSystemServlet extends HttpServlet{
-	
-	private NavigatorService navigatorService;
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -41,7 +39,6 @@ public class InitSystemServlet extends HttpServlet{
 	public void initNavigator() {
 		String navigatorFile = SystemInfo.getAppPath() + "design/layout/navigator";
 		NavigatorDao navigatorDao = (NavigatorDao) SpringContextUtil.getBean("navigatorDao");
-//		String navigatorFile = "D:\\MyEclipse10-workspace\\frame\\src\\main\\webapp\\design\\layout\\navigator";
 		MyLocale myLocale = new MyLocale();
 		File root = new File(navigatorFile);
 		File[] fs = root.listFiles();
@@ -52,8 +49,10 @@ public class InitSystemServlet extends HttpServlet{
 				Element rootElement = document.getRootElement();
 				List<Element> firstNavElementList = rootElement.getChildren();
 				if (CollectionUtils.isNotEmpty(firstNavElementList)) {
+					List<String> navigatorNameList = new ArrayList<String>();
 					for (Element firstNavElement : firstNavElementList) {
 						String firstNavName = firstNavElement.getName();
+						navigatorNameList.add(firstNavName);
 						String firstNavNameCn = myLocale.getText(firstNavName);
 						String firstIconClass = firstNavElement.getAttributeValue("icon");
 						Integer sort = java.lang.Integer.parseInt(firstNavElement.getAttributeValue("sort"));
@@ -77,6 +76,7 @@ public class InitSystemServlet extends HttpServlet{
 						if (CollectionUtils.isNotEmpty(secondNavElementList)) {
 							for (Element secondNavElement : secondNavElementList) {
 								String secondNavName = secondNavElement.getName();
+								navigatorNameList.add(secondNavName);
 								String secondNameCn = myLocale.getText(secondNavName);
 								String secondIconClass = secondNavElement.getAttributeValue("icon");
 								String url = secondNavElement.getAttributeValue("link");
@@ -97,6 +97,9 @@ public class InitSystemServlet extends HttpServlet{
 								}
 							}
 						}
+					}
+					if (CollectionUtils.isNotEmpty(navigatorNameList)) {
+						navigatorDao.deleteNavigatorNotInName(navigatorNameList);
 					}
 				}
 			} catch (JDOMException e) {

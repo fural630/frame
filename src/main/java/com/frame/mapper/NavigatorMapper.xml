@@ -95,6 +95,25 @@
 		) tt ON t.id = tt.navigatorId
     </select>
     
+    <delete id="deleteUserNavigatorByUserId" parameterType="int">
+    	delete from navigator_user where userId = #{userId}
+    </delete>
     
+    <insert id="insertUserNavigator" parameterType="hashMap">
+    	insert into navigator_user (
+    		userId,
+    		navigatorId
+    	) values (
+    		#{userId},
+    		#{navigatorId}
+    	)
+    </insert>
+    
+    <delete id="deleteNavigatorNotInName" parameterType="java.util.List">
+    	delete from navigator where name not in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+			#{item}  
+		</foreach> 
+    </delete>
       
 </mapper>  

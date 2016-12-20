@@ -75,5 +75,13 @@ public class NavigatorService {
 	public List<Map<String, Object>> loadNavigatorTreeByUserId(Integer userId) {
 		return navigatorDao.loadNavigatorTreeByUserId(userId);
 	}
+
+	public void deleteNavigatoryByUserId(Integer userId) {
+		navigatorDao.deleteUserNavigatorByUserId(userId);
+	}
+
+	public void insertUserNavigator(Map<String, Integer> userNavigatorMap) {
+		navigatorDao.insertUserNavigator(userNavigatorMap);
+	}
 	
 }

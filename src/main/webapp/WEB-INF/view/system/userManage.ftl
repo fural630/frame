@@ -124,7 +124,7 @@
 						    <li><a href="javascript:void(0)" onclick="editUserInfo(${obj.id})" ><i class="icon icon-pencil"></i> 编辑 </a></li>
 						    <li><a href="javascript:void(0)" onclick="permissionEdit(${obj.id})" ><i class="icon icon-sitemap"></i> 导航权限设置</a></li>
 						    <li class="divider"></li>
-						    <li><a href="javascript:void(0)" onclick="deleteUser(${obj.id})" ><i class="icon icon-trash"></i> 删除 </a></li>
+						    <li><a href="javascript:void(0)" onclick="confirmMsg('deleteUser(${obj.id})')" ><i class="icon icon-trash"></i> 删除 </a></li>
 						  </ul>
 						</div>
 		            </td>
@@ -142,29 +142,23 @@
 	
 	<div id="userDialog" style="display:none;">
 		<input type="hidden" name="id"/>
-		<form id="userDialogFrom">
 	 	<table class="popup_tb">
 	 		<tr>
 	 			<td class="title width_100px">姓名<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_50" name="name" required/></td>
+	 			<td><input type="text" class="txt width_50" name="name"/></td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">账号<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_50" name="userName" required/></td>
+	 			<td><input type="text" class="txt width_50" name="userName"/></td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">密码<i class="star">*</i></td>
-	 			<td><input type="password" class="txt width_50" name="password" required/></td>
+	 			<td><input type="password" class="txt width_50" name="password"/></td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">角色<i class="star">*</i></td>
 	 			<td>
-	 				<select class="sel width_100px">
-	 					<option>员工</option>
-	 					<option>主管</option>
-	 					<option>经理</option>
-	 					<option>超级管理员</option>
-	 				</select>
+	 				<@select name="role" cssClass="sel width_100px" id="role" selected="1" optionClass="Role"/>
 	 			</td>
 	 		</tr>
 	 		<tr>
@@ -173,17 +167,21 @@
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">邮箱</td>
-	 			<td><input type="email" class="txt width_50" name="email" email/></td>
+	 			<td><input type="email" class="txt width_50" name="email"/></td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">电话</td>
 	 			<td><input type="text" class="txt width_50" name="phone" /></td>
 	 		</tr>
 	 	</table>
-	 	</form>
+	 	<div class="validateTip"></div>
 	</div>
 	
 	<div id="userNavigatorDialog" style="display:none;">
+		<input type="hidden" name="id"/>
+		<div class="alert alert-info" style="padding:10px;">
+			重新设置用户导航权限后，需退出重新登录后才能生效。
+		</div>
 		<div id="navigatorTree" class="ztree"></div>
 	</div>
   
