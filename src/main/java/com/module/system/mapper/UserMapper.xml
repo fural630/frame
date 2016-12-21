@@ -36,9 +36,6 @@
         		<if test="password !=null and password !=''">
 					password = #{password},
         		</if>
-        		<if test="phone !=null and phone !=''">
-					phone = #{phone},
-        		</if>
         		<if test="name !=null and name !=''">
 					name = #{name},
         		</if>
@@ -48,15 +45,14 @@
         		<if test="status != null ">
 					status = #{status},
         		</if>
-        		<if test="email !=null and email !=''">
-					email = #{email},
-        		</if>
         		<if test="role !=null and role !=''">
 					role = #{role},
         		</if>
         		<if test="createTime !=null and createTime !=''">
 					createTime = #{createTime},
         		</if>
+        		email = #{email},
+        		phone = #{phone},
         	</set>
         where id = #{id}   
     </update>  
@@ -72,6 +68,10 @@
     <select id="findAll" resultType="User">  
         select * from user  
     </select>  
+    
+    <select id="findNoClosedAll" resultType="User">
+    	select * from user where status != 0
+    </select>
     
     <select id="getUserByUserName" resultType="User" parameterType="string">
     	select * from user where userName = #{userName}

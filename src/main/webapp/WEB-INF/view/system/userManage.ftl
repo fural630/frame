@@ -103,9 +103,9 @@
 		            <td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="1" onclick="countCheckbox()" /></td>
 		            <td>${obj.name!""}</td>
 		            <td>${obj.userName!""}</td>
-		            <td>123</td>
+		            <td><@matchValue key="${obj.role}" optionClass="Role"/></td>
 		            <td>${obj.email!""}</td>
-		            <td>1871567892</td>
+		            <td>${obj.phone!""}</td>
 		            <td><@matchValue key="${obj.status}" optionClass="OpenClose"/></td>
 		            <td>${obj.createTime!""}</td>
 		            <td>

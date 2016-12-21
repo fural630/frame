@@ -17,4 +17,5 @@ public interface UserDao {
 	public void updateUser(User user);
 	public User getUserByIdAndCreator(@Param("id") Integer id, @Param("loginUserId") Integer loginUserId);
 	public void deleteUserById(Integer id);
+	public List<User> findNoClosedAll();
 }

@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="/design/frame/style/css/popup.css"/>
 
 <!-- jquery -->
-<script type="text/javascript" src="/design/frame/jquery/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="/design/frame/jquery/jquery-1.11.1.min.js"></script>
 
 <!-- zui -->
 <script type="text/javascript" src="/design/frame/zui/js/zui.min.js"></script>

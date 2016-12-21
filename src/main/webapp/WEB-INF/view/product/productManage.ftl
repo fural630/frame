@@ -111,25 +111,11 @@
 	          				</select>
 	          			</li>
 	          			<li>
-	          				<select id="skuSelect" class="chosen-select form-control width_100px" tabindex="2">
-						        <option value=""></option>
-						        <option value="cat">小猫</option>
-						        <option value="dog">小狗</option>
-						        <option value="fish">金鱼</option>
-						        <option value="dragon">龙</option>
-						        <option value="cat">小猫</option>
-						        <option value="dog">小狗</option>
-						        <option value="fish">金鱼</option>
-						        <option value="dragon">龙</option>
-						        <option value="cat">小猫</option>
-						        <option value="dog">小狗</option>
-						        <option value="fish">金鱼</option>
-						        <option value="dragon">龙</option>
-						        <option value="cat">小猫</option>
-						        <option value="dog">小狗</option>
-						        <option value="fish">金鱼</option>
-						        <option value="dragon">龙</option>
-						      </select>
+	          				<#if page.params.skuSelect??> 
+	          					<@select id="skuSelect" name="params[skuSelect]" selected="${page.params.userType}" optionClass="UserSelect"  cssClass="chosen-select form-control width_100px" headerKey="" headerValue="" tabindex="2"/>
+	          				<#else>
+	          					<@select id="skuSelect" name="params[skuSelect]"  optionClass="UserSelect"  cssClass="chosen-select form-control width_100px" headerKey="" headerValue="" tabindex="2"/>
+	          				</#if>
 	          			</li>
 	          		<ul>
 	          	</td>
