@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2016-12-19 18:28:01
+Date: 2016-12-21 16:52:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,34 +29,47 @@ CREATE TABLE `navigator` (
   `parentId` int(11) DEFAULT NULL,
   `sort` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of navigator
 -- ----------------------------
-INSERT INTO `navigator` VALUES ('1', 'system.manage', '系统管理', null, 'icon-wrench', '1', '0', '1');
-INSERT INTO `navigator` VALUES ('2', 'navigator.user.manage', '用户管理', '/system/userManage', 'icon-user', '0', '1', null);
-INSERT INTO `navigator` VALUES ('3', 'product.center', '商品中心', null, 'icon-cubes', '1', '0', '2');
-INSERT INTO `navigator` VALUES ('4', 'product.manage', '商品管理', '/product/productManage', 'icon-cubes', '0', '3', null);
+INSERT INTO `navigator` VALUES ('8', 'system.manage', '系统管理', null, 'icon-wrench', '1', '0', '1');
+INSERT INTO `navigator` VALUES ('9', 'navigator.user.manage', '用户管理', '/system/userManage', 'icon-user', '0', '8', null);
+INSERT INTO `navigator` VALUES ('10', 'product.center', '商品中心', null, 'icon-cube-alt', '1', '0', '2');
+INSERT INTO `navigator` VALUES ('11', 'product.manage', '商品管理', '/product/productManage', 'icon-cubes', '0', '10', null);
+INSERT INTO `navigator` VALUES ('12', 'navigator.cdiscount.area', 'Cdiscount 专区', null, 'icon-shopping-cart', '1', '0', '3');
+INSERT INTO `navigator` VALUES ('13', 'cdiscount.publish.manage', '刊登管理', '/cdiscount/cdiscountPublishManage', 'icon-user', '0', '12', null);
+INSERT INTO `navigator` VALUES ('14', 'cdiscount.ean.manage', 'EAN管理', '/cdiscount/cdiscountEanManage', 'icon-user', '0', '12', null);
 
 -- ----------------------------
 -- Table structure for navigator_user
 -- ----------------------------
 DROP TABLE IF EXISTS `navigator_user`;
 CREATE TABLE `navigator_user` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) NOT NULL,
   `navigatorId` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of navigator_user
 -- ----------------------------
-INSERT INTO `navigator_user` VALUES ('1', '2', '1');
-INSERT INTO `navigator_user` VALUES ('2', '2', '2');
-INSERT INTO `navigator_user` VALUES ('3', '2', '3');
-INSERT INTO `navigator_user` VALUES ('4', '2', '4');
+INSERT INTO `navigator_user` VALUES ('17', '14', '12');
+INSERT INTO `navigator_user` VALUES ('18', '14', '13');
+INSERT INTO `navigator_user` VALUES ('19', '14', '14');
+INSERT INTO `navigator_user` VALUES ('20', '14', '8');
+INSERT INTO `navigator_user` VALUES ('21', '14', '9');
+INSERT INTO `navigator_user` VALUES ('22', '14', '10');
+INSERT INTO `navigator_user` VALUES ('23', '14', '11');
+INSERT INTO `navigator_user` VALUES ('24', '2', '8');
+INSERT INTO `navigator_user` VALUES ('25', '2', '9');
+INSERT INTO `navigator_user` VALUES ('26', '2', '10');
+INSERT INTO `navigator_user` VALUES ('27', '2', '11');
+INSERT INTO `navigator_user` VALUES ('28', '2', '12');
+INSERT INTO `navigator_user` VALUES ('29', '2', '13');
+INSERT INTO `navigator_user` VALUES ('30', '2', '14');
 
 -- ----------------------------
 -- Table structure for role
@@ -92,23 +105,15 @@ CREATE TABLE `user` (
   `email` varchar(255) DEFAULT NULL,
   `log` text,
   `createTime` char(20) DEFAULT NULL,
-  `updateTime` char(20) DEFAULT NULL,
+  `role` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('2', '老张', '2028', '2jwecGD86G4=', '', '1', '', '1: 【于 2016-12-05 19:46:01 由 {name}，创建了该账号】', '2016-12-05 19:46:01', '2016-12-05 19:46:01');
-INSERT INTO `user` VALUES ('3', '李四', '1042', 'YeRz3EezyNw=', '', '0', '', '1: 【于 2016-12-05 19:49:45 由 {name}，创建了该账号】', '2016-12-05 19:49:45', '2016-12-05 19:49:45');
-INSERT INTO `user` VALUES ('4', '2333', '123', 'J5xLW6wJJoQ=', '', '1', '', '1: 【于 2016-12-05 19:52:20 由 {name}，创建了该账号】', '2016-12-05 19:52:20', '2016-12-05 19:52:20');
-INSERT INTO `user` VALUES ('5', '123', '12323', '/cc49KdpWc8=', '123', '1', '', '1: 【于 2016-12-05 19:52:37 由 {name}，创建了该账号】', '2016-12-05 19:52:37', '2016-12-05 19:52:37');
-INSERT INTO `user` VALUES ('6', '1231', '12323', '/cc49KdpWc8=', '123', '1', '', '1: 【于 2016-12-05 19:52:37 由 {name}，创建了该账号】', '2016-12-05 19:52:37', '2016-12-05 19:52:37');
-INSERT INTO `user` VALUES ('7', '1231', '123233df', '/cc49KdpWc8=', '123', '1', '', '1: 【于 2016-12-05 19:52:37 由 {name}，创建了该账号】', '2016-12-05 19:52:37', '2016-12-05 19:52:37');
-INSERT INTO `user` VALUES ('8', '1231', '123233dff', '/cc49KdpWc8=', '123', '1', '', '1: 【于 2016-12-05 19:52:37 由 {name}，创建了该账号】', '2016-12-05 19:52:37', '2016-12-05 19:52:37');
-INSERT INTO `user` VALUES ('9', '1231', '123233dffa', '/cc49KdpWc8=', '123', '1', '', '1: 【于 2016-12-05 19:52:37 由 {name}，创建了该账号】', '2016-12-05 19:52:37', '2016-12-05 19:52:37');
-INSERT INTO `user` VALUES ('10', '1231', '123233dffas', '/cc49KdpWc8=', '123', '1', '', '1: 【于 2016-12-05 19:52:37 由 {name}，创建了该账号】', '2016-12-05 19:52:37', '2016-12-05 19:52:37');
-INSERT INTO `user` VALUES ('11', '1231', '123233dffasd', '/cc49KdpWc8=', '123', '1', '', '1: 【于 2016-12-05 19:52:37 由 {name}，创建了该账号】', '2016-12-05 19:52:37', '2016-12-05 19:52:37');
-INSERT INTO `user` VALUES ('12', '1231', '123233dffasds', '/cc49KdpWc8=', '123', '1', '', '1: 【于 2016-12-05 19:52:37 由 {name}，创建了该账号】', '2016-12-05 19:52:37', '2016-12-05 19:52:37');
-INSERT INTO `user` VALUES ('13', '1231', '123233dffasdsd', '/cc49KdpWc8=', '123', '1', '', '1: 【于 2016-12-05 19:52:37 由 {name}，创建了该账号】', '2016-12-05 19:52:37', '2016-12-05 19:52:37');
-INSERT INTO `user` VALUES ('14', '1231', '123233dffasdsd2aasdfs', '1ILFstgAJos=', '123', '0', '123@qq.com', '1: 【于 2016-12-08 18:50:59 由 老张，修改了账号信息】<br/>2: 【于 2016-12-08 18:55:12 由 老张，修改了账号信息】<br/>3: 【于 2016-12-08 18:56:30 由 老张，修改了账号信息】<br/>4: 【于 2016-12-08 18:57:09 由 老张，修改了账号信息】<br/>5: 【于 2016-12-08 18:58:10 由 老张，修改了账号信息】<br/>6: 【于 2016-12-08 18:58:23 由 老张，修改了账号信息】<br/>7: 【于 2016-12-13 14:22:45 由 老张，修改了账号信息】', '2016-12-05 19:52:37', '2016-12-13 14:22:45');
+INSERT INTO `user` VALUES ('2', '老张1', '2028', 'bzT1y5Rc1UQ=', '18677112630', '1', '312651213@qq.com', '1: 【于 2016-12-05 19:46:01 由 {name}，创建了该账号】<br/>2: 【于 2016-12-21 09:51:53 由 {name}，修改了账号信息】<br/>3: 【于 2016-12-21 09:52:00 由 {name}，修改了账号信息】<br/>4: 【于 2016-12-21 09:52:14 由 {name}，修改了账号信息】<br/>5: 【于 2016-12-21 09:52:26 由 {name}，修改了账号信息】<br/>6: 【于 2016-12-21 09:52:37 由 {name}，修改了账号信息】<br/>7: 【于 2016-12-21 09:55:28 由 {name}，修改了账号信息】<br/>8: 【于 2016-12-21 09:55:47 由 {name}，修改了账号信息】<br/>9: 【于 2016-12-21 09:56:03 由 {name}，修改了账号信息】<br/>10: 【于 2016-12-21 11:05:10 由 {name}，修改了账号信息】', '2016-12-05 19:46:01', '100');
+INSERT INTO `user` VALUES ('3', '李四', '1042', 'YeRz3EezyNw=', '', '1', '', '1: 【于 2016-12-05 19:49:45 由 {name}，创建了该账号】<br/>2: 【于 2016-12-21 11:05:20 由 {name}，修改了账号信息】', '2016-12-05 19:49:45', '5');
+INSERT INTO `user` VALUES ('4', '玄奘', '123', 'J5xLW6wJJoQ=', '', '1', '', '1: 【于 2016-12-05 19:52:20 由 {name}，创建了该账号】<br/>2: 【于 2016-12-21 11:06:40 由 {name}，修改了账号信息】', '2016-12-05 19:52:20', '5');
+INSERT INTO `user` VALUES ('6', '莫然', '12323', '/cc49KdpWc8=', '123', '1', '', '1: 【于 2016-12-05 19:52:37 由 {name}，创建了该账号】<br/>2: 【于 2016-12-21 11:06:29 由 {name}，修改了账号信息】', '2016-12-05 19:52:37', '15');
+INSERT INTO `user` VALUES ('7', '王五', '123233df', '/cc49KdpWc8=', '', '1', '', '1: 【于 2016-12-05 19:52:37 由 {name}，创建了该账号】<br/>2: 【于 2016-12-21 11:05:34 由 {name}，修改了账号信息】', '2016-12-05 19:52:37', '5');
