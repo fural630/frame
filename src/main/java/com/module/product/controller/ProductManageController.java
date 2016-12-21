@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.code.Page;
 import com.code.view.MainPage;
-import com.module.system.service.UserService;
+import com.module.product.service.ProductService;
 
 @Controller
 @RequestMapping("product")
 public class ProductManageController extends MainPage{
 	
 	@Autowired
-	private UserService userService;
+	private ProductService productService;
 	
 	@RequestMapping("productManage")
 	public String userManage(Model model, Page page){
 		_execute(page, model);
-		List<Map<String, Object>> collection = userService.getUserPage(page);
+		List<Map<String, Object>> collection = productService.getProductPage(page);
 		model.addAttribute("collection", collection);
 		return "product/productManage";
 	}

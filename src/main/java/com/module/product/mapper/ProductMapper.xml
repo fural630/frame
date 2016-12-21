@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.module.product.dao.ProductDao">
+	
+    <select id="getProductPage" resultType="hashMap" parameterType="Page">
+    	select * from product t
+    	<where>
+	    	<choose>
+				<when test="params.nameLike!=null and params.nameLike!='' ">
+					and t.name like CONCAT('%','${params.name}','%')  
+				</when>
+				<when test="params.name!=null and params.name!=''">
+					and t.name = #{params.name}
+				</when> 		
+	   		</choose>
+	   		<choose>
+				<when test="params.userNameLike!=null and params.userNameLike!='' ">
+					and t.userName like CONCAT('%','${params.userName}','%')  
+				</when>
+				<when test="params.userName!=null and params.userName!=''">
+					and t.userName = #{params.userName}
+				</when>
+	   		</choose>
+	   		<if test="params.role !=null and params.role !=''">
+	 			and t.role = #{params.role}
+	   		</if>
+	   		<choose>
+				<when test="params.emailLike!=null and params.emailLike!='' ">
+					and t.email like CONCAT('%','${params.email}','%')  
+				</when>
+				<when test="params.email!=null and params.email!=''">
+					and t.email = #{params.email}
+				</when>
+	   		</choose> 
+	   		<if test="params.status!=null and params.status !=''">
+	    		and t.status = #{params.status}
+	   		</if>
+	   		<if test="params.createTimeFrom !=null and params.createTimeFrom !=''" >
+	   			<![CDATA[ and t.createTime >= #{params.createTimeFrom} ]]>
+	   		</if>
+	   		<if test="params.createTimeTo !=null and params.createTimeTo!=''" >
+	   			<![CDATA[ and t.createTime <= #{params.createTimeTo} ]]>
+	   		</if>
+   		</where>
+   		order by t.id desc
+    </select>
+	
+</mapper>

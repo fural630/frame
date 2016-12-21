@@ -46,46 +46,31 @@
 	          	<td></td>
 	          	<td>
 	          		<ul>
-	          			<li><input type="text" class="txt width_100px" name="params[name]" value="${page.params.name!''}" /></li>
-	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[nameLike]" <#if page.params.nameLike??> checked </#if>></li>
+	          			<li><input type="text" class="txt width_100px" name="params[sku]" value="${page.params.sku!''}" /></li>
+	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[skuLike]" <#if page.params.skuLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
 	          	<td>
 	          		<ul>
-	          			<li><input type="text" class="txt width_100px" name="params[name]" value="${page.params.name!''}" /></li>
-          				<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[nameLike]" <#if page.params.nameLike??> checked </#if>></li>
+	          			<li><input type="text" class="txt width_100px" name="params[spu]" value="${page.params.spu!''}" /></li>
+          				<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[spuLike]" <#if page.params.spuLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
 	          	<td>
 	          		<ul>
 	          			<li>
-	          				<select class="sel width_100px">
-	          					<option></option>
-	          					<option>中文名</option>
-	          					<option>英文名</option>
-	          				</select>
+	          				<#if page.params.productNameQuery??> 
+	          					<@select id="productNameQuery" name="params[productNameQuery]" selected="${page.params.productNameQuery}" optionClass="ProductNameQuery"  cssClass="sel width_100px" headerKey="" headerValue=""/>
+	          				<#else>
+	          					<@select id="productNameQuery" name="params[productNameQuery]"  optionClass="ProductNameQuery"  cssClass="sel width_100px" headerKey="" headerValue=""/>
+	          				</#if>
 	          			</li>
-	          			<li><input type="text" class="txt width_100px" name="params[name]" value="${page.params.name!''}" /></li>
-	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[nameLike]" <#if page.params.nameLike??> checked </#if>></li>
+	          			<li><input type="text" class="txt width_100px" name="params[productNameValue]" value="${page.params.productNameValue!''}" /></li>
+	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[productNameValueLike]" <#if page.params.productNameValueLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
 	          	<td></td>
-	          	<td>
-	          		<ul>
-	          			<li><input type="text" class="txt width_100px" name="params[email]" value="${page.params.email!''}" /></li>
-	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[emailLike]" <#if page.params.emailLike??> checked </#if>></li>
-	          		</ul>
-	          	</td>
-	          	<!--
-	          	<td>
-	          		<ul>
-	          			<li>
-	          				<input type="text" class="txt width_100px" name="params[phone]" value="${page.params.phone!''}" />
-	          			</li>
-	          			<li></li>
-	          		</ul>
-	          	</td>
-	          	-->
+	          	<td></td>
 	          	<td>
 	          		<ul>
 	          			<li>
