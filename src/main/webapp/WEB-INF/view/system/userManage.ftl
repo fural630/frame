@@ -122,7 +122,7 @@
 						  </button>
 						  <ul class="dropdown-menu pull-right" role="menu">
 						    <li><a href="javascript:void(0)" onclick="editUserInfo(${obj.id})" ><i class="icon icon-pencil"></i> 编辑 </a></li>
-						    <li><a href="javascript:void(0)" onclick="permissionEdit(${obj.id})" ><i class="icon icon-sitemap"></i> 导航权限设置</a></li>
+						    <li><a href="javascript:void(0)" onclick="permissionEdit(${obj.id})" ><i class="icon icon-eye-open"></i> 导航权限设置</a></li>
 						    <li class="divider"></li>
 						    <li><a href="javascript:void(0)" onclick="confirmMsg('deleteUser(${obj.id})')" ><i class="icon icon-trash"></i> 删除 </a></li>
 						  </ul>

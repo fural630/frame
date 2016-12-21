@@ -2,10 +2,10 @@
 	<system.manage icon="icon-wrench" sort="1">
 		<navigator.user.manage link="/system/userManage" icon="icon-user"></navigator.user.manage>
 	</system.manage>
-	<product.center icon="icon-cubes" sort="2">
+	<product.center icon="icon-cube-alt" sort="2">
 		<product.manage link="/product/productManage" icon="icon-cubes"></product.manage>
 	</product.center>
-	<navigator.cdiscount.area icon="icon-time" sort="3">
+	<navigator.cdiscount.area icon="icon-shopping-cart" sort="3">
 		<cdiscount.publish.manage link="/cdiscount/cdiscountPublishManage" icon="icon-user"></cdiscount.publish.manage>
 		<cdiscount.ean.manage link="/cdiscount/cdiscountEanManage" icon="icon-user"></cdiscount.ean.manage>
 	</navigator.cdiscount.area>

@@ -288,7 +288,7 @@
 			 	第一张图片为主图，拖拽图片可移动图片位置。
 			</div>
 			
-			<input type="text" class="txt" style="width:80%;" id="imageUrlAddress" placeholder="图片地址/Url"/>
+			<input type="text" class="txt" style="width:80%;" id="imageUrlAddress" placeholder="图片地址/Url" value="http://www.guphotos.com/images/D/D1816W-EU/D1816W-EU-4-375a.jpg"/>
 		  	<button class="btn btn-sm " type="button" onclick="addImageUrlAddress();">
 				<i class="icon icon-plus-sign"></i> 添加
 			</button>
@@ -296,49 +296,7 @@
 			<table class="width_100" style="margin-top:10px;">
 				<tr>
 					<td>
-						<ul id="sortable">
-							<li>
-								<div class="iamge_div" id="iamge_2">
-											<img src="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" 
-										data-image="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" data-caption="" class="img-thumbnail" title="点击放大" width="110">
-									<div>
-										<table class="width_100 image_operating_table">
-											<tr>
-												<td>
-													<a href="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" data-toggle="lightbox" class="btn btn-sm"><i class="icon icon-zoom-in"></i></a>
-												</td>
-												<td>
-													<button class="btn btn-sm " type="button">
-														<i class="icon icon-trash"></i>
-													</button>
-												</td>
-											</tr>
-										</table>
-									</div>
-								</div>
-							</li>
-							
-							<li>
-								<div class="iamge_div" id="iamge_2">
-											<img src="http://www.guphotos.com/images/D/Y/D4187Y/D4187Y-1-a102-klbM.jpg" 
-										data-image="http://www.guphotos.com/images/D/Y/D4187Y/D4187Y-1-a102-klbM.jpg" data-caption="" class="img-thumbnail" title="点击放大" width="110">
-									<div>
-										<table class="width_100 image_operating_table">
-											<tr>
-												<td>
-													<a href="http://www.guphotos.com/images/D/Y/D4187Y/D4187Y-1-a102-klbM.jpg" data-toggle="lightbox" class="btn btn-sm"><i class="icon icon-zoom-in"></i></a>
-												</td>
-												<td>
-													<button class="btn btn-sm " type="button">
-														<i class="icon icon-trash"></i>
-													</button>
-												</td>
-											</tr>
-										</table>
-									</div>
-								</div>
-							</li>
-						</ul>
+						<ul id="sortable"></ul>
 					</td>
 				</tr>
 			</table>
@@ -449,6 +407,7 @@
 		  </div>
 		  
 		</div>
+		<div class="validateTip"></div>
 	</div>
 	
 	<div id="uploadProductDialog" style="display:none;">

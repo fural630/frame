@@ -15,7 +15,6 @@ jQuery.myformPlugins = {
 			else if (tag == 'select')
 			      this.selectedIndex = 0;
 		});
-		$(selector).find(".validateTip").html("");
-		$(selector).find(".validateTip").hide();
+		$(selector).find(".validateTip").html("").hide();
 	}
 };

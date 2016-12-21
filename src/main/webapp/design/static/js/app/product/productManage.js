@@ -42,24 +42,14 @@ function initDialog () {
 					primary : "ui-icon-heart"
 				},
 				click : function() {
-//					if (validate()) {
-//						saveUser();
-//					}
-				}
-			},{
-				text : "关闭",
-				icons : {
-					primary : "ui-icon-heart"
-				},
-				click : function() {
-					$(this).dialog("close");
+					if (validateProduct()) {
+						alert("save");
+					}
 				}
 			}
 		],
 		close: function( event, ui ) {
-//			$.myformPlugins.cleanForm("#userDialog");
-//			var validateFrom = $("#userDialogFrom").validate();
-//			validateFrom.resetForm();
+			$.myformPlugins.cleanForm("#productDialog");
 		}
 	});
 	
@@ -75,14 +65,6 @@ function initDialog () {
 					primary : "ui-icon-heart"
 				},
 				click : function() {
-				}
-			},{
-				text : "关闭",
-				icons : {
-					primary : "ui-icon-heart"
-				},
-				click : function() {
-					$(this).dialog("close");
 				}
 			}
 		],
@@ -117,14 +99,6 @@ function initDialog () {
 				},
 				click : function() {
 				}
-			},{
-				text : "关闭",
-				icons : {
-					primary : "ui-icon-heart"
-				},
-				click : function() {
-					$(this).dialog("close");
-				}
 			}
 		],
 		close: function( event, ui ) {
@@ -143,14 +117,6 @@ function initDialog () {
 					primary : "ui-icon-heart"
 				},
 				click : function() { 
-				}
-			},{
-				text : "关闭",
-				icons : {
-					primary : "ui-icon-heart"
-				},
-				click : function() {
-					$(this).dialog("close");
 				}
 			}
 		],
@@ -171,21 +137,34 @@ function initDialog () {
 				},
 				click : function() { 
 				}
-			},{
-				text : "关闭",
-				icons : {
-					primary : "ui-icon-heart"
-				},
-				click : function() {
-					$(this).dialog("close");
-				}
 			}
 		],
 		close: function( event, ui ) {
 		}
 	});
 	
-		
+}
+
+function validateProduct() {
+	var errorMassage = "";
+	var dialog = $("#productDialog");
+	var sku = $.trim(dialog.find("input[name='sku']").val());
+	if (sku == "") {
+		errorMassage += "&nbsp;*&nbsp;请选择填写SKU";
+	}
+	
+	var spu = $.trim(dialog.find("input[name='spu']").val());
+	if (spu == "") {
+		errorMassage += "&nbsp;*&nbsp;请选择填写SPU";
+	}
+	
+	if (errorMassage != "") {
+		dialog.find(".validateTip").html(errorMassage).show();
+		return false;
+	} else {
+		dialog.find(".validateTip").hide();
+	}
+	return true; 
 }
 
 function showProductDialog(title) {
@@ -214,4 +193,45 @@ function showDistributionEditUserDialog(title) {
 
 function reviewAudit(id) {
 	showProductAuditDialog("审核进度");
+}
+
+function addImageUrlAddress () {
+	var imageUrlAddress = $.trim($("#imageUrlAddress").val());
+	if (imageUrlAddress == "") {
+		var param = {
+			status : 0,
+			message : "请填写图片地址"
+		};
+		$.message.showMessage(param);
+		return;
+	} 
+	createSelectImageHtml(imageUrlAddress);
+}
+
+function createSelectImageHtml(url) {
+	var imageHtml = "";
+	imageHtml += '<li>';
+	imageHtml += 	'<div class="iamge_div">';
+	imageHtml += 		'<img name="productImage" src="{url}" data-image="{url}" class="img-thumbnail move" title="拖动改变图片顺序" width="110">';
+	imageHtml += 		'<table class="width_100 image_operating_table">';
+	imageHtml += 			'<tr>';
+	imageHtml += 				'<td>';
+	imageHtml += 					'<a href="{url}" data-toggle="lightbox" class="btn btn-sm"><i class="icon icon-zoom-in"></i></a>';
+	imageHtml += 				'</td>';
+	imageHtml += 				'<td>';
+	imageHtml += 					'<button class="btn btn-sm " type="button"><i class="icon icon-trash"></i></button>';
+	imageHtml += 				'</td>';
+	imageHtml += 			'</tr>';
+	imageHtml += 		'</table>';
+	imageHtml += 	'</div>';
+	imageHtml += '</li>';
+	imageHtml = imageHtml.replace(/{url}/g, url);
+	$("#sortable").append(imageHtml);
+	clearImageUrlAddress();
+	initSortable();
+	$('[data-toggle="lightbox"]').lightbox();
+}
+
+function clearImageUrlAddress() {
+	$("#imageUrlAddress").val("");
 }

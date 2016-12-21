@@ -221,4 +221,8 @@ button, input, select, textarea {
 .normal {
 	background-color: #fff;
 }
+
+.move {
+	cursor: move;
+}
 /*align end*/
