@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : 127.0.0.1
-Source Server Version : 50027
+Source Server Version : 50714
 Source Host           : localhost:3306
 Source Database       : producterp
 
 Target Server Type    : MYSQL
-Target Server Version : 50027
+Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2016-12-21 23:39:47
+Date: 2016-12-22 18:40:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,16 +20,16 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `navigator`;
 CREATE TABLE `navigator` (
-  `id` int(11) NOT NULL auto_increment,
-  `name` varchar(255) default NULL,
-  `nameCn` varchar(255) default NULL,
-  `url` varchar(255) default NULL,
-  `iconClass` varchar(255) default NULL,
-  `isParent` int(11) default NULL,
-  `parentId` int(11) default NULL,
-  `sort` int(11) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `nameCn` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `iconClass` varchar(255) DEFAULT NULL,
+  `isParent` int(11) DEFAULT NULL,
+  `parentId` int(11) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of navigator
@@ -47,11 +47,11 @@ INSERT INTO `navigator` VALUES ('14', 'cdiscount.ean.manage', 'EAN管理', '/cdi
 -- ----------------------------
 DROP TABLE IF EXISTS `navigator_user`;
 CREATE TABLE `navigator_user` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) NOT NULL,
   `navigatorId` int(11) NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of navigator_user
@@ -76,28 +76,28 @@ INSERT INTO `navigator_user` VALUES ('30', '2', '14');
 -- ----------------------------
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
-  `id` int(11) NOT NULL auto_increment,
-  `imageListId` int(11) default NULL,
-  `auditId` int(11) default NULL,
-  `sku` varchar(255) default NULL,
-  `spu` varchar(255) default NULL,
-  `nameCn` varchar(255) default NULL,
-  `nameEn` varchar(255) default NULL,
-  `nameFr` varchar(255) default NULL,
-  `nameDe` varchar(255) default NULL,
-  `nameJp` varchar(255) default NULL,
-  `nameIt` varchar(255) default NULL,
-  `nameEs` varchar(255) default NULL,
-  `declarationNameCn` varchar(255) default NULL,
-  `declarationNameEn` varchar(255) default NULL,
-  `purchaseUrl` varchar(255) default NULL,
-  `purchasePrice` double default NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `imageListId` int(11) DEFAULT NULL,
+  `auditId` int(11) DEFAULT NULL,
+  `sku` varchar(255) DEFAULT NULL,
+  `spu` varchar(255) DEFAULT NULL,
+  `nameCn` varchar(255) DEFAULT NULL,
+  `nameEn` varchar(255) DEFAULT NULL,
+  `nameFr` varchar(255) DEFAULT NULL,
+  `nameDe` varchar(255) DEFAULT NULL,
+  `nameJp` varchar(255) DEFAULT NULL,
+  `nameIt` varchar(255) DEFAULT NULL,
+  `nameEs` varchar(255) DEFAULT NULL,
+  `declarationNameCn` varchar(255) DEFAULT NULL,
+  `declarationNameEn` varchar(255) DEFAULT NULL,
+  `purchaseUrl` varchar(255) DEFAULT NULL,
+  `purchasePrice` double DEFAULT NULL,
   `purchaseNotes` text,
   `salesNotes` text,
-  `packageWeight` double default NULL,
-  `packageLength` double default NULL,
-  `packageWidth` double default NULL,
-  `packageHeight` double default NULL,
+  `packageWeight` double DEFAULT NULL,
+  `packageLength` double DEFAULT NULL,
+  `packageWidth` double DEFAULT NULL,
+  `packageHeight` double DEFAULT NULL,
   `descriptionCn` text,
   `descriptionEn` text,
   `descriptionFr` text,
@@ -106,33 +106,34 @@ CREATE TABLE `product` (
   `descriptionIt` text,
   `descriptionEs` text,
   `optionLog` text,
-  `creatorId` int(11) default NULL,
-  `editorId` int(11) default NULL,
-  `publishUserId` int(11) default NULL,
-  `auditStatus` int(11) default NULL,
-  `createTime` varchar(255) default NULL,
-  `updateTime` varchar(255) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `creatorId` int(11) DEFAULT NULL,
+  `editorId` int(11) DEFAULT NULL,
+  `publishUserId` int(11) DEFAULT NULL,
+  `auditStatus` int(11) DEFAULT NULL,
+  `createTime` varchar(255) DEFAULT NULL,
+  `updateTime` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product
 -- ----------------------------
+INSERT INTO `product` VALUES ('1', '2', '5', 'D3', 'D4-3', '烘焙模具 六件套', 'cooking accessory', null, null, null, null, null, null, null, 'http://detail.1688.com/offer/520381456935.html?spm=0.0.0.0.tfSOcH', '50', '备注1', '销售备注2', null, null, null, null, null, null, null, null, null, null, null, '日志', '2', '2', '2', '10', '2016-10-24 16:09:34', '2016-10-28 16:09:34');
 
 -- ----------------------------
 -- Table structure for role
 -- ----------------------------
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
-  `id` int(11) NOT NULL auto_increment,
-  `role_name` varchar(100) default NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(100) DEFAULT NULL,
   `description` text,
-  `create_time` varchar(30) default NULL,
-  `update_time` varchar(30) default NULL,
+  `create_time` varchar(30) DEFAULT NULL,
+  `update_time` varchar(30) DEFAULT NULL,
   `log` text,
-  `creator` int(11) default NULL,
-  `updateor` int(11) default NULL,
-  PRIMARY KEY  (`id`)
+  `creator` int(11) DEFAULT NULL,
+  `updateor` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -144,18 +145,18 @@ CREATE TABLE `role` (
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL auto_increment,
-  `name` varchar(255) default NULL,
-  `userName` varchar(255) default NULL,
-  `password` varchar(255) default NULL,
-  `phone` char(30) default NULL,
-  `status` int(11) default NULL,
-  `email` varchar(255) default NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `userName` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `phone` char(30) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `log` text,
-  `createTime` char(20) default NULL,
-  `role` int(11) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `createTime` char(20) DEFAULT NULL,
+  `role` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
