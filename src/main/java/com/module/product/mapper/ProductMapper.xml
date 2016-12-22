@@ -7,12 +7,12 @@
     	select * from product t
     	<where>
 	    	<choose>
-				<when test="params.nameLike!=null and params.nameLike!='' ">
-					and t.name like CONCAT('%','${params.name}','%')  
+				<when test="params.skuLike!=null and params.skuLike!='' ">
+					and t.sku like CONCAT('%','${params.sku}','%')  
 				</when>
-				<when test="params.name!=null and params.name!=''">
-					and t.name = #{params.name}
-				</when> 		
+				<when test="params.sku !=null and params.sku !=''">
+					and t.sku = #{params.sku}
+				</when>
 	   		</choose>
 	   		<choose>
 				<when test="params.userNameLike!=null and params.userNameLike!='' ">

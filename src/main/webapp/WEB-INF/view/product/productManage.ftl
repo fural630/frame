@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/design/static/css/product/productManage.css"/>
   </head>
   <body>
-    <form action="/system/userManage" id="mainPageForm" method="post">
+    <form action="/product/productManage" id="mainPageForm" method="post">
   	<div class="current_nav_name clearfix">产品中心
 		<div class="fr small_size"> 
 		<button class="btn btn-sm " type="button" onclick="showProductDialog('添加产品')">
@@ -74,13 +74,11 @@
 	          	<td>
 	          		<ul>
 	          			<li>
-	          				<select class="sel width_60px">
-	          					<option></option>
-	          					<option>待分配</option>
-	          					<option>待编辑</option>
-	          					<option>待审核</option>
-	          					<option>已审核</option>
-	          				</select>
+	          			<#if page.params.auditStatus??> 
+          					<@select id="auditStatus" name="params[auditStatus]" selected="${page.params.auditStatus}" optionClass="ProductAuditStatus"  cssClass="sel width_100px" headerKey="" headerValue=""/>
+          				<#else>
+          					<@select id="auditStatus" name="params[auditStatus]"  optionClass="ProductAuditStatus"  cssClass="sel width_100px" headerKey="" headerValue=""/>
+          				</#if>
 	          			</li>
 	          			<li></li>
 					</ul>	
@@ -88,18 +86,17 @@
 	          	<td>
 	          		<ul>
 	          			<li>
-	          				<select class="sel width_100px">
-	          					<option></option>
-	          					<option>创建人</option>
-	          					<option>编辑人</option>
-	          					<option>刊登人</option>
-	          				</select>
+		          			<#if page.params.productUserQuery??> 
+	          					<@select id="productUserQuery" name="params[productUserQuery]" selected="${page.params.productUserQuery}" optionClass="ProductUserQuery"  cssClass="sel width_100px" headerKey="" headerValue=""/>
+	          				<#else>
+	          					<@select id="productUserQuery" name="params[productUserQuery]"  optionClass="ProductUserQuery"  cssClass="sel width_100px" headerKey="" headerValue=""/>
+	          				</#if>
 	          			</li>
 	          			<li>
-	          				<#if page.params.skuSelect??> 
-	          					<@select id="skuSelect" name="params[skuSelect]" selected="${page.params.userType}" optionClass="UserSelect"  cssClass="chosen-select form-control width_100px" headerKey="" headerValue="" tabindex="2"/>
+	          				<#if page.params.userSelect??> 
+	          					<@select id="userSelect" name="params[userSelect]" selected="${page.params.userSelect}" optionClass="UserSelect"  cssClass="chosen-select form-control width_100px" headerKey="" headerValue="" tabindex="2"/>
 	          				<#else>
-	          					<@select id="skuSelect" name="params[skuSelect]"  optionClass="UserSelect"  cssClass="chosen-select form-control width_100px" headerKey="" headerValue="" tabindex="2"/>
+	          					<@select id="userSelect" name="params[userSelect]"  optionClass="UserSelect"  cssClass="chosen-select form-control width_100px" headerKey="" headerValue="" tabindex="2"/>
 	          				</#if>
 	          			</li>
 	          		<ul>
@@ -120,17 +117,19 @@
 	          	<td></td>
 	          </tr>
 	          </form>
+	          	<#if collection??>
+	          		<#list collection as obj>
 	      		 <tr>
 		            <td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="1" onclick="countCheckbox()" /></td>
 		            <td>
-		            	SKU:DV7-01
+		            	${obj.sku!''}
 		            </td>
 		            <td>
-		            	SPU:DV7
+		            	${obj.spu!''}
 		            </td>
 		            <td>
-		            	中文名：烘焙模具 六件套<br/>
-		            	英文名：cooking accessory
+		            	中文名：${obj.nameCn!''}<br/>
+		            	英文名：${obj.nameEn!''}
 		            </td>
 		            <td><img src="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" width="100" height="100"/></td>
 		            <!--
@@ -142,24 +141,24 @@
 		            </td>
 		            -->
 		            <td>
-		            	采购价：10<br/>
-		            	采购链接：<a href="http://detail.1688.com/offer/520381456935.html?spm=0.0.0.0.tfSOcH" target="_blank" >打开链接</a><br/>
-		            	采购备注：50单起
+		            	采购价：${obj.purchasePrice!''}<br/>
+		            	采购链接：<a href="${obj.purchaseUrl!''}" target="_blank" >打开链接</a><br/>
+		            	采购备注：${obj.purchaseNotes!''}
 		            </td>
-		            <td>待编辑</td>
+		            <td><@matchValue key="${obj.auditStatus}" optionClass="ProductAuditStatus"/></td>
 		            <td>
-		            	创建人：张三<br/>
-		            	编辑人：未分配<br/>
-		            	刊登人：未分配<br/>
+		            	创建人：<@matchValue key="${obj.creatorId}" optionClass="UserSelect"/><br/>
+		            	编辑人：<@matchValue key="${obj.editorId}" optionClass="UserSelect"/><br/>
+		            	刊登人：<@matchValue key="${obj.publishUserId}" optionClass="UserSelect"/><br/>
 		            </td>
 		            <td>
-		            	创建时间：<br/>2016-05-05 10:10:10<br/>
-		            	修改时间：<br/>2016-05-05 10:10:10<br/>
+		            	创建时间：<br/>${obj.createTime!''}<br/>
+		            	修改时间：<br/>${obj.updateTime!''}<br/>
 		            </td>
 		            <td>
 		            	<a href="javascript:void(0)" onclick="showLog(this)"><img src="/design/static/images/common/system-log.png"/></a>
 		            	<div class="log_content">
-		            		1: 【于 2016-11-03 21:04:25 由 超级管理员，创建了该条信息】
+		            		${obj.optionLog!''}
 		            	</div>
 		            </td>
 		            <td class="optionTd" style="width:60px;text-align:center;">
@@ -179,6 +178,8 @@
 						</div>
 		            </td>
 		          </tr>
+		          </#list>
+		  		</#if>
 	      	</table>
 			<div class="paging clearfix">
 				<div class="massaction">

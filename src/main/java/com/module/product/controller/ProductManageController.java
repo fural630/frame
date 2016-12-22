@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.code.Page;
 import com.code.view.MainPage;
 import com.module.product.service.ProductService;
+import com.util.Dumper;
 
 @Controller
 @RequestMapping("product")
@@ -22,6 +23,7 @@ public class ProductManageController extends MainPage{
 	@RequestMapping("productManage")
 	public String userManage(Model model, Page page){
 		_execute(page, model);
+		Dumper.dump(page);
 		List<Map<String, Object>> collection = productService.getProductPage(page);
 		model.addAttribute("collection", collection);
 		return "product/productManage";
