@@ -15,26 +15,52 @@
 				</when>
 	   		</choose>
 	   		<choose>
-				<when test="params.userNameLike!=null and params.userNameLike!='' ">
-					and t.userName like CONCAT('%','${params.userName}','%')  
+				<when test="params.spuLike!=null and params.spuLike!='' ">
+					and t.spu like CONCAT('%','${params.spu}','%')  
 				</when>
-				<when test="params.userName!=null and params.userName!=''">
-					and t.userName = #{params.userName}
+				<when test="params.spu!=null and params.spu!=''">
+					and t.spu = #{params.spu}
 				</when>
 	   		</choose>
-	   		<if test="params.role !=null and params.role !=''">
-	 			and t.role = #{params.role}
+	   		
+   			<choose>
+	   			<when test="params.productNameQuery !='' and params.productNameQuery == 'nameCn' ">
+	   				<choose>
+						<when test="params.productNameValueLike!=null and params.productNameValueLike!='' ">
+							and t.nameCn like CONCAT('%','${params.productNameValue}','%')  
+						</when>
+						<when test="params.productNameValue!=null and params.productNameValue!=''">
+							and t.nameCn = #{params.productNameValue}
+						</when>
+	   				</choose>
+				</when>
+				<when test="params.productNameQuery !='' and params.productNameQuery == 'nameEn' ">
+					<choose>
+						<when test="params.productNameValueLike!=null and params.productNameValueLike!='' ">
+							and t.nameEn like CONCAT('%','${params.productNameValue}','%')  
+						</when>
+						<when test="params.productNameValue!=null and params.productNameValue!=''">
+							and t.nameEn = #{params.productNameValue}
+						</when>
+	   				</choose>
+				</when>
+ 			</choose>
+	   		
+	   		<if test="params.productUserQuery != null and params.productUserQuery !='' and params.userSelect != ''">
+	   			<choose>
+					<when test="params.productUserQuery == 'creator'">
+						and t.creatorId = ${params.userSelect}
+					</when>
+					<when test="params.productUserQuery == 'editor' ">
+						and t.editorId = #{params.userSelect}
+					</when>
+					<when test="params.productUserQuery == 'publishUser' ">
+						and t.publishUserId = #{params.userSelect}
+					</when>
+		   		</choose>
 	   		</if>
-	   		<choose>
-				<when test="params.emailLike!=null and params.emailLike!='' ">
-					and t.email like CONCAT('%','${params.email}','%')  
-				</when>
-				<when test="params.email!=null and params.email!=''">
-					and t.email = #{params.email}
-				</when>
-	   		</choose> 
-	   		<if test="params.status!=null and params.status !=''">
-	    		and t.status = #{params.status}
+	   		<if test="params.auditStatus!=null and params.auditStatus !=''">
+	    		and t.auditStatus = #{params.auditStatus}
 	   		</if>
 	   		<if test="params.createTimeFrom !=null and params.createTimeFrom !=''" >
 	   			<![CDATA[ and t.createTime >= #{params.createTimeFrom} ]]>
