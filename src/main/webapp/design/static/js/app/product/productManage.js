@@ -73,7 +73,7 @@ function initDialog () {
 	});
 	
 	$("#auditProductDialog").dialog({
-		autoOpen: false,
+		autoOpen: true,
 		modal: true,
 		width: 800,
 		height: 600,
@@ -371,6 +371,7 @@ function showUploadProductDialog(title) {
 function showProductAuditDialog(title) {
 	$("#auditProductDialog").dialog("option", "title", title);
 	$("#auditProductDialog").dialog("open");
+	$("#auditProductComment").scrollTop($("#auditProductComment")[0].scrollHeight);		//设置滚动条最底端
 }
 
 function showDistributionEditUserDialog(title) {

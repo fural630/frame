@@ -411,6 +411,7 @@
 	
 	<div id="auditProductDialog" style="display:none;">
 		<div class="comments">
+		<div id="auditProductComment" style="max-height:360px;overflow: scroll; scroll: both; padding:5px 5px;">
 		  <section class="comments-list">
 		    <div class="comment">
 		      <a href="###" class="avatar">
@@ -434,7 +435,52 @@
 		      </div>
 		    </div>
 		    
+		    <div class="comment">
+		      <a href="###" class="avatar">
+		        <i class="icon-yinyang icon-2x"></i>
+		      </a>
+		      <div class="content">
+		        <div class="pull-right text-muted">2016-05-10 10:56:25</div>
+		        <div><a href="###"><strong>张三</strong></a></div>
+		        <div class="text">对不起我也没看见</div>
+		      </div>
+		    </div>
+		    
+		    <div class="comment">
+		      <a href="###" class="avatar">
+		        <i class="icon-yinyang icon-2x"></i>
+		      </a>
+		      <div class="content">
+		        <div class="pull-right text-muted">2016-05-10 10:56:25</div>
+		        <div><a href="###"><strong>张三</strong></a></div>
+		        <div class="text">对不起我也没看见</div>
+		      </div>
+		    </div>
+		    
+		    <div class="comment">
+		      <a href="###" class="avatar">
+		        <i class="icon-yinyang icon-2x"></i>
+		      </a>
+		      <div class="content">
+		        <div class="pull-right text-muted">2016-05-10 10:56:25</div>
+		        <div><a href="###"><strong>张三</strong></a></div>
+		        <div class="text">对不起我也没看见</div>
+		      </div>
+		    </div>
+		    
+		    <div class="comment">
+		      <a href="###" class="avatar">
+		        <i class="icon-yinyang icon-2x"></i>
+		      </a>
+		      <div class="content">
+		        <div class="pull-right text-muted">2016-05-10 10:56:25</div>
+		        <div><a href="###"><strong>张三</strong></a></div>
+		        <div class="text">对不起我也没看见</div>
+		      </div>
+		    </div>
+		    
 		  </section>
+		  </div>
 		  <footer>
 		    <div class="reply-form" id="commentReplyForm1">
 		      <a href="###" class="avatar"><i class="icon-user icon-2x"></i></a>
@@ -445,6 +491,7 @@
 		      </form>
 		    </div>
 		  </footer>
+		  
 		</div>
 	</div>
 	

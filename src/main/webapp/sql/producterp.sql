@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2016-12-22 18:40:34
+Date: 2016-12-23 18:13:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -77,8 +77,6 @@ INSERT INTO `navigator_user` VALUES ('30', '2', '14');
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `imageListId` int(11) DEFAULT NULL,
-  `auditId` int(11) DEFAULT NULL,
   `sku` varchar(255) DEFAULT NULL,
   `spu` varchar(255) DEFAULT NULL,
   `nameCn` varchar(255) DEFAULT NULL,
@@ -105,6 +103,13 @@ CREATE TABLE `product` (
   `descriptionJp` text,
   `descriptionIt` text,
   `descriptionEs` text,
+  `briefDescriptionCn` text,
+  `briefDescriptionIt` text,
+  `briefDescriptionEs` text,
+  `briefDescriptionJp` text,
+  `briefDescriptionDe` text,
+  `briefDescriptionFr` text,
+  `briefDescriptionEn` text,
   `optionLog` text,
   `creatorId` int(11) DEFAULT NULL,
   `editorId` int(11) DEFAULT NULL,
@@ -113,12 +118,37 @@ CREATE TABLE `product` (
   `createTime` varchar(255) DEFAULT NULL,
   `updateTime` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product
 -- ----------------------------
-INSERT INTO `product` VALUES ('1', '2', '5', 'D3', 'D4-3', '烘焙模具 六件套', 'cooking accessory', null, null, null, null, null, null, null, 'http://detail.1688.com/offer/520381456935.html?spm=0.0.0.0.tfSOcH', '50', '备注1', '销售备注2', null, null, null, null, null, null, null, null, null, null, null, '日志', '2', '2', '2', '10', '2016-10-24 16:09:34', '2016-10-28 16:09:34');
+INSERT INTO `product` VALUES ('1', 'D3', 'D4-3', '烘焙模具 六件套', 'cooking accessory', null, null, null, null, null, null, null, 'http://detail.1688.com/offer/520381456935.html?spm=0.0.0.0.tfSOcH', '50', '备注1', '销售备注2', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '日志', '2', '2', '2', '10', '2016-10-24 16:09:34', '2016-10-28 16:09:34');
+INSERT INTO `product` VALUES ('4', 'H108831', 'H10883-S', '香甜味玉米粒路亚软饵 假饵 淡水饵', 'Lixada', 'Lixada 30Pcs Leurre de pêche Appâts souples Simulation de grains de maïs avec Odeur de maïs', '', '', '', '', '', '', '', '5.49', '采购备', '销售备', '21.2', '11', '10', '0.5', '', '', '<strong>Sp&eacute;cifications:</strong><br />\nType: app&acirc;ts souple<br />\nQuantit&eacute;: 30pcs<br />\nMati&egrave;re: PVC<br />\nTaille de l&#39;emballage: Env. 11 * 10 * 0.5cm / 4.3 * 3.9 * 0.2in<br />\nPoids total: env. 15g / 0,5 oz<br />\n<br />\n<strong>Liste des paquets:</strong><br />\n30 * Leurres souple', '', '', '', '', '', '', '', '', '', 'Lixada 30Pcs Leurre de p&ecirc;che App&acirc;ts souples Simulation de grains de ma&iuml;s avec Odeur de ma&iuml;s', '', '1: 【于 2016-12-23 14:18:04 由 老张1 操作, 创建商品】<br/>2: 【于 2016-12-23 17:34:25 由 老张1 操作, 修改了商品信息】<br/>3: 【于 2016-12-23 17:34:50 由 老张1 操作, 修改了商品信息】<br/>4: 【于 2016-12-23 17:46:22 由 老张1 操作, 修改了商品信息】<br/>5: 【于 2016-12-23 17:46:30 由 老张1 操作, 修改了商品信息】', '2', null, null, '10', '2016-12-23 14:18:04', '2016-12-23 17:46:30');
+
+-- ----------------------------
+-- Table structure for product_image
+-- ----------------------------
+DROP TABLE IF EXISTS `product_image`;
+CREATE TABLE `product_image` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `productId` int(11) DEFAULT NULL,
+  `imageUrl` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of product_image
+-- ----------------------------
+INSERT INTO `product_image` VALUES ('1', '2', 'http://www.guphotos.com/images/D/D1816W-EU/D1816W-EU-4-375a.jpg');
+INSERT INTO `product_image` VALUES ('2', '2', 'http://www.guphotos.com/images/H/H10883/H10883-3-065a.JPG');
+INSERT INTO `product_image` VALUES ('3', '3', 'http://www.guphotos.com/images/D/D1816W-EU/D1816W-EU-4-375a.jpg');
+INSERT INTO `product_image` VALUES ('4', '3', 'http://www.guphotos.com/images/H/H10883/H10883-3-065a.JPG');
+INSERT INTO `product_image` VALUES ('5', '3', 'http://www.guphotos.com/images/H/H10883/H10883-3-065a.JPG');
+INSERT INTO `product_image` VALUES ('6', '3', 'http://www.guphotos.com/images/H/H10883/H10883-1-065a-dK5z.jpg');
+INSERT INTO `product_image` VALUES ('7', '3', 'http://www.guphotos.com/images/H/H10883/H10883-5-065a.JPG');
+INSERT INTO `product_image` VALUES ('22', '4', 'http://www.guphotos.com/images/H/H10883/H10883-1-065a-dK5z.jpg');
+INSERT INTO `product_image` VALUES ('23', '4', 'http://www.guphotos.com/images/H/H10883/H10883-5-065a.JPG');
 
 -- ----------------------------
 -- Table structure for role
