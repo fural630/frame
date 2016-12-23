@@ -71,4 +71,19 @@ public class ProductManageController extends MainPage{
 		ReturnMessage returnMessage = new ReturnMessage();
 		return JsonUtil.toJsonStr(returnMessage);
 	}
+	
+	@RequestMapping("getProductEditoUser")
+	@ResponseBody
+	public String getProductEditoUser(Integer productId) {
+		Integer userId = productService.getProductEditoUser(productId);
+		return JsonUtil.toJsonStr(String.valueOf(userId));
+	}
+	
+	@RequestMapping("saveProductEditUser")
+	@ResponseBody
+	public String saveProductEditUser(Integer userId, Integer productId) {
+		productService.saveProductEditUser(userId, productId);
+		ReturnMessage returnMessage = new ReturnMessage();
+		return JsonUtil.toJsonStr(returnMessage);
+	}
 }

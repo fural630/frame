@@ -73,7 +73,7 @@ function initDialog () {
 	});
 	
 	$("#auditProductDialog").dialog({
-		autoOpen: true,
+		autoOpen: false,
 		modal: true,
 		width: 800,
 		height: 600,
@@ -117,6 +117,7 @@ function initDialog () {
 					primary : "ui-icon-heart"
 				},
 				click : function() { 
+					saveProductEditUser();
 				}
 			}
 		],
@@ -142,6 +143,38 @@ function initDialog () {
 		close: function( event, ui ) {
 		}
 	});
+	
+}
+
+function saveProductEditUser() {
+	var dialog = $("#distributionEditUserDialog");
+	var userId = dialog.find("select[name='editUserSelect']").val();
+	var productId = dialog.find("input[name='id']").val();
+	if (null == userId) {
+		var param = {
+				status : 0,
+				message : "请选择分配人员"
+			};
+		$.message.showMessage(param);
+		return;
+	}
+	
+	$.ajax({
+		url : "/product/saveProductEditUser",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			userId : userId,
+			productId :productId
+		},
+		success : function (data) {
+			$.message.showMessage(data);
+			if (data.status == 1){
+				refresh(1000);
+			}
+		}
+	});
+	
 	
 }
 
@@ -377,10 +410,10 @@ function showProductAuditDialog(title) {
 function showDistributionEditUserDialog(title) {
 	$("#distributionEditUserDialog").dialog("option", "title", title);
 	$("#distributionEditUserDialog").dialog("open");
-	$('#editUserSelect').chosen({
-	    disable_search_threshold: 5, // 5 个以下的选择项则不显示检索框
-	    search_contains: true         // 从任意位置开始检索
-	});
+//	$("#distributionEditUserDialog").find("select[name='editUserSelect']").chosen({
+//	    disable_search_threshold: 5, // 5 个以下的选择项则不显示检索框
+//	    search_contains: true         // 从任意位置开始检索
+//	});
 }
 
 function reviewAudit(id) {
@@ -449,6 +482,28 @@ function deleteProduct(id) {
 			if (data.status == 1){
 				refresh(1000);
 			}
+		}
+	});
+}
+
+function distributionEditUser(productId) {
+	var dialog = $("#distributionEditUserDialog");
+	$.ajax({
+		url : "/product/getProductEditoUser",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			productId : productId
+		},
+		success : function (data) {
+			var userId = data;
+			if (userId != null) {
+				dialog.find("select[name='editUserSelect']").val(userId);
+			} else {
+				dialog.find("select[name='editUserSelect']").val("");
+			}
+			dialog.find("input[name=id]").val(productId);
+			showDistributionEditUserDialog("分配编辑人员");
 		}
 	});
 }

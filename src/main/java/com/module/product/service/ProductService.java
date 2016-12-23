@@ -75,4 +75,16 @@ public class ProductService {
 		productDao.deleteProductById(id);
 		productDao.deleteProductImageByProductId(id);
 	}
+
+	public Integer getProductEditoUser(Integer productId) {
+		return productDao.getProductEditoUser(productId);
+	}
+	
+	public Integer getProductPublishUser(Integer productId) {
+		return productDao.getProductPublishUser(productId);
+	}
+
+	public void saveProductEditUser(Integer userId, Integer productId) {
+		productDao.saveProductEditUser(userId, productId);
+	}
 }

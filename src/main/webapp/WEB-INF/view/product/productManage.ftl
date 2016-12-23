@@ -170,8 +170,8 @@
 						  <ul class="dropdown-menu pull-right" role="menu">
 						    <li><a href="javascript:void(0)" onclick="editProduct(${obj.id})"><i class="icon icon-edit"></i> 编辑 </a></li>
 						    <li><a href="javascript:void(0)" onclick="reviewAudit(${obj.id})" ><i class="icon icon-check-board"></i> 查看审核 </a></li>
-						    <li><a href="javascript:void(0)" onclick="showDistributionEditUserDialog('分配编辑人')" ><i class="icon icon-hand-right"></i> 分配编辑人</a></li>
-						    <li><a href="javascript:void(0)" onclick="reviewAudit(${obj.id})" ><i class="icon icon-hand-right"></i> 分配刊登人</a></li>
+						    <li><a href="javascript:void(0)" onclick="distributionEditUser(${obj.id})" ><i class="icon icon-hand-right"></i> 分配编辑人</a></li>
+						    <li><a href="javascript:void(0)" onclick="distributionPublishUser(${obj.id})" ><i class="icon icon-hand-right"></i> 分配刊登人</a></li>
 						    <li class="divider"></li>
 						    <li><a href="javascript:void(0)" onclick="confirmMsg('deleteProduct(${obj.id})')" ><i class="icon icon-trash"></i> 删除 </a></li>
 						  </ul>
@@ -496,28 +496,12 @@
 	</div>
 	
 	<div id="distributionEditUserDialog" style="display:none;">
+		<input type="hidden" name="id"/>
 		<table class="popup_tb">
 	 		<tr>
 	 			<td class="title width_100px">分配编辑人员<i class="star">*</i></td>
 	 			<td>
-	 				<select id="editUserSelect" class="chosen-select form-control" tabindex="2">
-			            <option value="cat">小猫</option>
-			            <option value="dog">小狗</option>
-			            <option value="fish">金鱼</option>
-			            <option value="dragon">龙</option>
-			            <option value="cat">小猫</option>
-			            <option value="dog">小狗</option>
-			            <option value="fish">金鱼</option>
-			            <option value="dragon">龙</option>
-			            <option value="cat">小猫</option>
-			            <option value="dog">小狗</option>
-			            <option value="fish">金鱼</option>
-			            <option value="dragon">龙</option>
-			            <option value="cat">小猫</option>
-			            <option value="dog">小狗</option>
-			            <option value="fish">金鱼</option>
-			            <option value="dragon">龙</option>
-		          </select>
+	 				<@select id="editUserSelect" name="editUserSelect"  optionClass="UserSelect"  cssClass="sel width_100px" headerKey="" headerValue="" tabindex="2"/>
 	 			</td>
 	 		</tr>
  		</table>

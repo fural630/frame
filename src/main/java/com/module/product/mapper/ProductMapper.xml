@@ -307,4 +307,19 @@
     <delete id="deleteProductById" parameterType="int">
     	delete from product where id = #{id}
     </delete>
+    
+    <select id="getProductEditoUser" parameterType="int" resultType="int">
+    	select editorId from product where id = #{productId}
+    </select>
+    
+    <select id="getProductPublishUser" parameterType="int" resultType="int">
+    	select publishUserId from product where id = #{productId}
+    </select>
+    
+    <update id="saveProductEditUser">
+    	update product set 
+    		editorId = #{userId}
+    	where id = #{productId}
+    </update>
+    
 </mapper>
