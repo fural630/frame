@@ -2,8 +2,6 @@ package com.module.product.model;
 
 public class Product {
 	private Integer id;
-	private Integer imageListId;
-	private Integer auditId;
 	
 	private String sku;
 	private String spu;
@@ -16,13 +14,13 @@ public class Product {
 	private String nameIt;
 	private String nameEs;
 	
-	private String declarationNameCn;
-	private String declarationNameEn;
+	private String declarationNameCn;//中文报关名
+	private String declarationNameEn;//英文报关名
 	
-	private String purchaseUrl;
-	private Double purchasePrice;
-	private String purchaseNotes;
-	private String salesNotes;
+	private String purchaseUrl;//采购链接
+	private Double purchasePrice;//采购价格
+	private String purchaseNotes;//采购备注
+	private String salesNotes;//销售备注
 	
 	private Double packageWeight;
 	private Double packageLength;
@@ -37,6 +35,14 @@ public class Product {
 	private String descriptionIt;
 	private String descriptionEs;
 	
+	private String briefDescriptionCn;
+	private String briefDescriptionEn;
+	private String briefDescriptionFr;
+	private String briefDescriptionDe;
+	private String briefDescriptionJp;
+	private String briefDescriptionEs;
+	private String briefDescriptionIt;
+	
 	private String optionLog;
 	private Integer creatorId;
 	private Integer editorId;
@@ -45,23 +51,12 @@ public class Product {
 	
 	private String createTime;
 	private String updateTime;
+	
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	public Integer getImageListId() {
-		return imageListId;
-	}
-	public void setImageListId(Integer imageListId) {
-		this.imageListId = imageListId;
-	}
-	public Integer getAuditId() {
-		return auditId;
-	}
-	public void setAuditId(Integer auditId) {
-		this.auditId = auditId;
 	}
 	public String getSku() {
 		return sku;
@@ -260,6 +255,48 @@ public class Product {
 	}
 	public void setUpdateTime(String updateTime) {
 		this.updateTime = updateTime;
+	}
+	public String getBriefDescriptionCn() {
+		return briefDescriptionCn;
+	}
+	public void setBriefDescriptionCn(String briefDescriptionCn) {
+		this.briefDescriptionCn = briefDescriptionCn;
+	}
+	public String getBriefDescriptionEn() {
+		return briefDescriptionEn;
+	}
+	public void setBriefDescriptionEn(String briefDescriptionEn) {
+		this.briefDescriptionEn = briefDescriptionEn;
+	}
+	public String getBriefDescriptionFr() {
+		return briefDescriptionFr;
+	}
+	public void setBriefDescriptionFr(String briefDescriptionFr) {
+		this.briefDescriptionFr = briefDescriptionFr;
+	}
+	public String getBriefDescriptionDe() {
+		return briefDescriptionDe;
+	}
+	public void setBriefDescriptionDe(String briefDescriptionDe) {
+		this.briefDescriptionDe = briefDescriptionDe;
+	}
+	public String getBriefDescriptionJp() {
+		return briefDescriptionJp;
+	}
+	public void setBriefDescriptionJp(String briefDescriptionJp) {
+		this.briefDescriptionJp = briefDescriptionJp;
+	}
+	public String getBriefDescriptionEs() {
+		return briefDescriptionEs;
+	}
+	public void setBriefDescriptionEs(String briefDescriptionEs) {
+		this.briefDescriptionEs = briefDescriptionEs;
+	}
+	public String getBriefDescriptionIt() {
+		return briefDescriptionIt;
+	}
+	public void setBriefDescriptionIt(String briefDescriptionIt) {
+		this.briefDescriptionIt = briefDescriptionIt;
 	}
 	
 }

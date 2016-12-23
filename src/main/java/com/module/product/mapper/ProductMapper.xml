@@ -71,5 +71,240 @@
    		</where>
    		order by t.id desc
     </select>
-	
+    
+    <insert id="insertProduct" parameterType="Product" useGeneratedKeys="true" keyProperty="id">
+    	insert into product (
+			sku,
+			spu,
+			nameCn,
+			nameEn,
+			nameFr,
+			nameDe,
+			nameIt,
+			nameJp,
+			nameEs,
+			declarationNameCn,
+			declarationNameEn,
+			purchasePrice,
+			purchaseUrl,
+			purchaseNotes,
+			salesNotes,
+			packageWeight,
+			packageWidth,
+			packageHeight,
+			packageLength,
+			descriptionCn,
+			descriptionEn,
+			descriptionFr,
+			descriptionDe,
+			descriptionJp,
+			descriptionEs,
+			descriptionIt,
+			briefDescriptionCn,
+			briefDescriptionEn,
+			briefDescriptionFr,
+			briefDescriptionDe,
+			briefDescriptionJp,
+			briefDescriptionEs,
+			briefDescriptionIt,
+			optionLog,
+			creatorId,
+			auditStatus,
+			createTime,
+			updateTime
+   		) values (
+   			#{sku},
+			#{spu},
+			#{nameCn},
+			#{nameEn},
+			#{nameFr},
+			#{nameDe},
+			#{nameIt},
+			#{nameJp},
+			#{nameEs},
+			#{declarationNameCn},
+			#{declarationNameEn},
+			#{purchasePrice},
+			#{purchaseUrl},
+			#{purchaseNotes},
+			#{salesNotes},
+			#{packageWeight},
+			#{packageWidth},
+			#{packageHeight},
+			#{packageLength},
+			#{descriptionCn},
+			#{descriptionEn},
+			#{descriptionFr},
+			#{descriptionDe},
+			#{descriptionJp},
+			#{descriptionEs},
+			#{descriptionIt},
+			#{briefDescriptionCn},
+			#{briefDescriptionEn},
+			#{briefDescriptionFr},
+			#{briefDescriptionDe},
+			#{briefDescriptionJp},
+			#{briefDescriptionEs},
+			#{briefDescriptionIt},
+			#{optionLog},
+			#{creatorId},
+			#{auditStatus},
+			#{createTime},
+			#{updateTime}
+   		)
+    </insert>
+    
+    <insert id="insertProductImage" parameterType="hashMap">
+    	insert into product_image (
+    		productId,
+    		imageUrl
+   		) values 
+   		<foreach item="item" index="index" collection="imageList" separator=",">  
+			(#{productId}, #{item})  
+		</foreach> 
+    		
+    </insert>
+    
+    <select id="getProductById" parameterType="int" resultType="Product">
+    	select * from product where id = #{id};
+    </select>
+    
+    <select id="getProductImage" parameterType="int" resultType="string">
+    	select t.imageUrl from product_image t where productId = #{productId}
+    </select>
+    
+    <update id="updateProduct" parameterType="Product">
+    	update product 
+    	<set>
+       		<if test="sku !=null and sku !=''">
+				sku = #{sku},
+			</if>
+			<if test="spu !=null and spu !=''">
+				spu = #{spu},
+			</if>
+			<if test="nameCn !=null and nameCn !=''">
+				nameCn = #{nameCn},
+			</if>
+			<if test="nameEn !=null and nameEn !=''">
+				nameEn = #{nameEn},
+			</if>
+			<if test="nameFr !=null and nameFr !=''">
+				nameFr = #{nameFr},
+			</if>
+			<if test="nameDe !=null and nameDe !=''">
+				nameDe = #{nameDe},
+			</if>
+			<if test="nameIt !=null and nameIt !=''">
+				nameIt = #{nameIt},
+			</if>
+			<if test="nameJp !=null and nameJp !=''">
+				nameJp = #{nameJp},
+			</if>
+			<if test="nameEs !=null and nameEs !=''">
+				nameEs = #{nameEs},
+			</if>
+			<if test="declarationNameCn !=null and declarationNameCn !=''">
+				declarationNameCn = #{declarationNameCn},
+			</if>
+			<if test="declarationNameEn !=null and declarationNameEn !=''">
+				declarationNameEn = #{declarationNameEn},
+			</if>
+			<if test="purchasePrice !=null and purchasePrice !=''">
+				purchasePrice = #{purchasePrice},
+			</if>
+			<if test="purchaseUrl !=null and purchaseUrl !=''">
+				purchaseUrl = #{purchaseUrl},
+			</if>
+			<if test="purchaseNotes !=null and purchaseNotes !=''">
+				purchaseNotes = #{purchaseNotes},
+			</if>
+			<if test="salesNotes !=null and salesNotes !=''">
+				salesNotes = #{salesNotes},
+			</if>
+			<if test="packageWeight !=null and packageWeight !=''">
+				packageWeight = #{packageWeight},
+			</if>
+			<if test="packageWidth !=null and packageWidth !=''">
+				packageWidth = #{packageWidth},
+			</if>
+			<if test="packageHeight !=null and packageHeight !=''">
+				packageHeight = #{packageHeight},
+			</if>
+			<if test="packageLength !=null and packageLength !=''">
+				packageLength = #{packageLength},
+			</if>
+			<if test="descriptionCn !=null and descriptionCn !=''">
+				descriptionCn = #{descriptionCn},
+			</if>
+			<if test="descriptionEn !=null and descriptionEn !=''">
+				descriptionEn = #{descriptionEn},
+			</if>
+			<if test="descriptionFr !=null and descriptionFr !=''">
+				descriptionFr = #{descriptionFr},
+			</if>
+			<if test="descriptionDe !=null and descriptionDe !=''">
+				descriptionDe = #{descriptionDe},
+			</if>
+			<if test="descriptionJp !=null and descriptionJp !=''">
+				descriptionJp = #{descriptionJp},
+			</if>
+			<if test="descriptionEs !=null and descriptionEs !=''">
+				descriptionEs = #{descriptionEs},
+			</if>
+			<if test="descriptionIt !=null and descriptionIt !=''">
+				descriptionIt = #{descriptionIt},
+			</if>
+			<if test="briefDescriptionCn !=null and briefDescriptionCn !=''">
+				briefDescriptionCn = #{briefDescriptionCn},
+			</if>
+			<if test="briefDescriptionEn !=null and briefDescriptionEn !=''">
+				briefDescriptionEn = #{briefDescriptionEn},
+			</if>
+			<if test="briefDescriptionFr !=null and briefDescriptionFr !=''">
+				briefDescriptionFr = #{briefDescriptionFr},
+			</if>
+			<if test="briefDescriptionDe !=null and briefDescriptionDe !=''">
+				briefDescriptionDe = #{briefDescriptionDe},
+			</if>
+			<if test="briefDescriptionJp !=null and briefDescriptionJp !=''">
+				briefDescriptionJp = #{briefDescriptionJp},
+			</if>
+			<if test="briefDescriptionEs !=null and briefDescriptionEs !=''">
+				briefDescriptionEs = #{briefDescriptionEs},
+			</if>
+			<if test="briefDescriptionIt !=null and briefDescriptionIt !=''">
+				briefDescriptionIt = #{briefDescriptionIt},
+			</if>
+			<if test="optionLog !=null and optionLog !=''">
+				optionLog = #{optionLog},
+			</if>
+			<if test="editorId !=null and editorId !=''">
+				editorId = #{editorId},
+			</if>
+			<if test="publishUserId !=null and publishUserId !=''">
+				publishUserId = #{publishUserId},
+			</if>
+			<if test="auditStatus !=null and auditStatus !=''">
+				auditStatus = #{auditStatus},
+			</if>
+			<if test="updateTime !=null and updateTime !=''">
+				updateTime = #{updateTime},
+			</if>
+			<if test="creatorId !=null and creatorId !=''">
+				creatorId = #{creatorId},
+			</if>
+			<if test="createTime !=null and createTime !=''">
+				createTime = #{createTime},
+			</if>
+       	</set>
+        where id = #{id}   
+    </update>
+    
+    <delete id="deleteProductImageByProductId" parameterType="int">
+    	delete from product_image where productId = #{productId}
+    </delete>
+    
+    <delete id="deleteProductById" parameterType="int">
+    	delete from product where id = #{id}
+    </delete>
 </mapper>

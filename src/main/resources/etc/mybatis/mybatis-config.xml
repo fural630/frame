@@ -7,6 +7,7 @@
         <typeAlias alias="User" type="com.module.system.model.User" />
         <typeAlias alias="Role" type="com.module.system.model.Role" />
         <typeAlias alias="Navigator" type="com.frame.model.Navigator" />
+        <typeAlias alias="Product" type="com.module.product.model.Product" />
         <typeAlias alias="Page" type="com.code.Page" />
     </typeAliases> 
     

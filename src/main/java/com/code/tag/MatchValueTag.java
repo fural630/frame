@@ -41,7 +41,9 @@ public class MatchValueTag implements TemplateDirectiveModel{
 			valueHtml = optionMap.get(String.valueOf(key));
 		}
 		if (StringUtils.isEmpty(valueHtml)) {
-			valueHtml = "";
+			if (StringUtils.isNotEmpty(key)) {
+				valueHtml = key;
+			} 
 		}
 		Writer out = environment.getOut();
 		out.write(valueHtml);

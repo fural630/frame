@@ -31,15 +31,15 @@
 	            <th>SKU</th>
 	            <th>SPU</th>
 	            <th>基本信息</th>
-	            <th>主图</th>
+	            <th style="min-width:110px;">主图</th>
 	            <!--
 	            <th>尺寸信息</th>
 	            -->
-	            <th>采购信息</th>
+	            <th style="min-width:120px;">采购信息</th>
 	            <th>审核状态</th>
 	            <th>人员信息</th>
-	            <th>时间信息</th>
-	            <th>日志</th>
+	            <th style="min-width:180px;">时间信息</th>
+	            <th style="min-width:40px;">日志</th>
 	            <th>操作</th>
 	          </tr>
 	          <tr class="conditionTr">
@@ -75,9 +75,9 @@
 	          		<ul>
 	          			<li>
 	          			<#if page.params.auditStatus??> 
-          					<@select id="auditStatus" name="params[auditStatus]" selected="${page.params.auditStatus}" optionClass="ProductAuditStatus"  cssClass="sel width_100px" headerKey="" headerValue=""/>
+          					<@select id="auditStatus" name="params[auditStatus]" selected="${page.params.auditStatus}" optionClass="ProductAuditStatus"  cssClass="sel width_50px" headerKey="" headerValue=""/>
           				<#else>
-          					<@select id="auditStatus" name="params[auditStatus]"  optionClass="ProductAuditStatus"  cssClass="sel width_100px" headerKey="" headerValue=""/>
+          					<@select id="auditStatus" name="params[auditStatus]"  optionClass="ProductAuditStatus"  cssClass="sel width_50px" headerKey="" headerValue=""/>
           				</#if>
 	          			</li>
 	          			<li></li>
@@ -131,7 +131,7 @@
 		            	中文名：${obj.nameCn!''}<br/>
 		            	英文名：${obj.nameEn!''}
 		            </td>
-		            <td><img src="http://www.guphotos.com/images/V/5/V2225/V2225-1-53ce-xCR4.jpg" width="100" height="100"/></td>
+		            <td><img src="${obj.mainImage!''}" width="100" height="100"/></td>
 		            <!--
 		            <td>
 		            	包裹长度：10（cm）<br/>
@@ -145,11 +145,11 @@
 		            	采购链接：<a href="${obj.purchaseUrl!''}" target="_blank" >打开链接</a><br/>
 		            	采购备注：${obj.purchaseNotes!''}
 		            </td>
-		            <td><@matchValue key="${obj.auditStatus}" optionClass="ProductAuditStatus"/></td>
+		            <td><@matchValue key="${obj.auditStatus!''}" optionClass="ProductAuditStatus"/></td>
 		            <td>
-		            	创建人：<@matchValue key="${obj.creatorId}" optionClass="UserSelect"/><br/>
-		            	编辑人：<@matchValue key="${obj.editorId}" optionClass="UserSelect"/><br/>
-		            	刊登人：<@matchValue key="${obj.publishUserId}" optionClass="UserSelect"/><br/>
+		            	创建人：<@matchValue key="${obj.creatorId!''}" optionClass="UserSelect"/><br/>
+		            	编辑人：<@matchValue key="${obj.editorId!'未分配'}" optionClass="UserSelect"/><br/>
+		            	刊登人：<@matchValue key="${obj.publishUserId!'未分配'}" optionClass="UserSelect"/><br/>
 		            </td>
 		            <td>
 		            	创建时间：<br/>${obj.createTime!''}<br/>
@@ -168,12 +168,12 @@
 						  	<span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu pull-right" role="menu">
-						    <li><a href="javascript:void(0)" onclick="editUserInfo(1})"><i class="icon icon-edit"></i> 编辑 </a></li>
-						    <li><a href="javascript:void(0)" onclick="reviewAudit(1)" ><i class="icon icon-check-board"></i> 查看审核 </a></li>
+						    <li><a href="javascript:void(0)" onclick="editProduct(${obj.id})"><i class="icon icon-edit"></i> 编辑 </a></li>
+						    <li><a href="javascript:void(0)" onclick="reviewAudit(${obj.id})" ><i class="icon icon-check-board"></i> 查看审核 </a></li>
 						    <li><a href="javascript:void(0)" onclick="showDistributionEditUserDialog('分配编辑人')" ><i class="icon icon-hand-right"></i> 分配编辑人</a></li>
-						    <li><a href="javascript:void(0)" onclick="reviewAudit(1)" ><i class="icon icon-hand-right"></i> 分配刊登人</a></li>
+						    <li><a href="javascript:void(0)" onclick="reviewAudit(${obj.id})" ><i class="icon icon-hand-right"></i> 分配刊登人</a></li>
 						    <li class="divider"></li>
-						    <li><a href="javascript:void(0)" onclick="deleteUser(1)" ><i class="icon icon-trash"></i> 删除 </a></li>
+						    <li><a href="javascript:void(0)" onclick="confirmMsg('deleteProduct(${obj.id})')" ><i class="icon icon-trash"></i> 删除 </a></li>
 						  </ul>
 						</div>
 		            </td>
@@ -228,52 +228,51 @@
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">SPU<i class="star">*</i></td>
-		 			<td><input type="password" class="txt width_50" name="spu"/></td>
+		 			<td><input type="text" class="txt width_50" name="spu"/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">中文名<i class="star">*</i></td>
-		 			<td><input type="text" class="txt width_98" name=""/></td>
+		 			<td><input type="text" class="txt width_98" name="nameCn"/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">英文名</td>
-		 			<td><input type="text" class="txt width_98" name="" /></td>
+		 			<td><input type="text" class="txt width_98" name="nameEn" /></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">法语名</td>
-		 			<td><input type="text" class="txt width_98" name="" /></td>
+		 			<td><input type="text" class="txt width_98" name="nameFr" /></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">德语名</td>
-		 			<td><input type="text" class="txt width_98" name="" required/></td>
+		 			<td><input type="text" class="txt width_98" name="nameDe" required/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">意大利语名</td>
-		 			<td><input type="text" class="txt width_98" name="" required/></td>
+		 			<td><input type="text" class="txt width_98" name="nameIt" required/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">日语名</td>
-		 			<td><input type="text" class="txt width_98" name="" required/></td>
+		 			<td><input type="text" class="txt width_98" name="nameJp" required/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">西班牙语名</td>
-		 			<td><input type="text" class="txt width_98" name="" required/></td>
+		 			<td><input type="text" class="txt width_98" name="nameEs" required/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">中文报关名</td>
-		 			<td><input type="text" class="txt width_98" name="" required/></td>
+		 			<td><input type="text" class="txt width_98" name="declarationNameCn" required/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">英文报关名</td>
-		 			<td><input type="text" class="txt width_98" name="" required/></td>
+		 			<td><input type="text" class="txt width_98" name="declarationNameEn" required/></td>
 		 		</tr>
 		 	</table>
 		  </div>
 		  
 		  <div id="tabs-2">
 			<div class="alert alert-info" style="padding:10px;">
-			 	第一张图片为主图，拖拽图片可移动图片位置。
+			 	注意：第一张图片为主图，拖拽图片可移动图片位置。删除图片后，点击保存才会生效。
 			</div>
-			
 			<input type="text" class="txt" style="width:80%;" id="imageUrlAddress" placeholder="图片地址/Url" value="http://www.guphotos.com/images/D/D1816W-EU/D1816W-EU-4-375a.jpg"/>
 		  	<button class="btn btn-sm " type="button" onclick="addImageUrlAddress();">
 				<i class="icon icon-plus-sign"></i> 添加
@@ -293,19 +292,19 @@
 	  		<table class="popup_tb">
 		 		<tr>
 		 			<td class="title width_100px">采购价格</td>
-		 			<td><input type="text" class="txt width_100px" name=""/></td>
+		 			<td><input type="text" class="txt width_100px" name="purchasePrice"/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">采购链接</td>
-		 			<td><input type="text" class="txt width_96" name=""/></td>
+		 			<td><input type="text" class="txt width_96" name="purchaseUrl"/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">采购备注</td>
-		 			<td><textarea class="txt width_96 remark" id="" name="" placeholder="" style="height:150px;"></textarea></td>
+		 			<td><textarea class="txt width_96 remark" name="purchaseNotes" style="height:150px;"></textarea></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">销售备注</td>
-		 			<td><textarea class="txt width_96 remark" id="" name="" placeholder="" style="height:150px;"></textarea></td>
+		 			<td><textarea class="txt width_96 remark" name="salesNotes" style="height:150px;"></textarea></td>
 		 		</tr>
 	 		</table>
 		  </div>
@@ -314,19 +313,19 @@
 			  <table class="popup_tb">
 		 		<tr>
 		 			<td class="title width_100px">含包装重量(g)</td>
-		 			<td><input type="text" class="txt width_100px" name=""/></td>
+		 			<td><input type="text" class="txt width_100px" name="packageWeight"/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">包装长度(cm)</td>
-		 			<td><input type="text" class="txt width_100px" name=""/></td>
+		 			<td><input type="text" class="txt width_100px" name="packageLength"/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">包装宽度(cm)</td>
-		 			<td><input type="text" class="txt width_100px" name=""/></td>
+		 			<td><input type="text" class="txt width_100px" name="packageWidth"/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">包装高度(cm)</td>
-		 			<td><input type="text" class="txt width_100px" name=""/></td>
+		 			<td><input type="text" class="txt width_100px" name="packageHeight"/></td>
 		 		</tr>
 	 		</table>
 		  </div>
@@ -455,22 +454,22 @@
 	 			<td class="title width_100px">分配编辑人员<i class="star">*</i></td>
 	 			<td>
 	 				<select id="editUserSelect" class="chosen-select form-control" tabindex="2">
-		            <option value="cat">小猫</option>
-		            <option value="dog">小狗</option>
-		            <option value="fish">金鱼</option>
-		            <option value="dragon">龙</option>
-		            <option value="cat">小猫</option>
-		            <option value="dog">小狗</option>
-		            <option value="fish">金鱼</option>
-		            <option value="dragon">龙</option>
-		            <option value="cat">小猫</option>
-		            <option value="dog">小狗</option>
-		            <option value="fish">金鱼</option>
-		            <option value="dragon">龙</option>
-		            <option value="cat">小猫</option>
-		            <option value="dog">小狗</option>
-		            <option value="fish">金鱼</option>
-		            <option value="dragon">龙</option>
+			            <option value="cat">小猫</option>
+			            <option value="dog">小狗</option>
+			            <option value="fish">金鱼</option>
+			            <option value="dragon">龙</option>
+			            <option value="cat">小猫</option>
+			            <option value="dog">小狗</option>
+			            <option value="fish">金鱼</option>
+			            <option value="dragon">龙</option>
+			            <option value="cat">小猫</option>
+			            <option value="dog">小狗</option>
+			            <option value="fish">金鱼</option>
+			            <option value="dragon">龙</option>
+			            <option value="cat">小猫</option>
+			            <option value="dog">小狗</option>
+			            <option value="fish">金鱼</option>
+			            <option value="dragon">龙</option>
 		          </select>
 	 			</td>
 	 		</tr>
