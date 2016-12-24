@@ -149,7 +149,7 @@ function initDialog () {
 function saveProductEditUser() {
 	var dialog = $("#distributionEditUserDialog");
 	var userId = dialog.find("select[name='editUserSelect']").val();
-	var productId = dialog.find("input[name='id']").val();
+	var productIds = dialog.find("input[name='id']").val();
 	if (null == userId) {
 		var param = {
 				status : 0,
@@ -165,7 +165,7 @@ function saveProductEditUser() {
 		dataType : "json",
 		data : {
 			userId : userId,
-			productId :productId
+			productIds : productIds
 		},
 		success : function (data) {
 			$.message.showMessage(data);
@@ -245,10 +245,14 @@ function saveProduct() {
 	var briefDescriptionIt = CKEDITOR.instances["briefDescriptionIt"].getData();
 	
 	var imageElements = dialog.find("img[name=productImage]");
+	var mainImage = "";
 	var productImageList = [];
-	imageElements.each(function(e) {
+	imageElements.each(function() {
 		var imageUrl = $(this).attr("src");
 		if (imageUrl != "") {
+			if (mainImage == "") {
+				mainImage = imageUrl;
+			}
 			productImageList.push(imageUrl);
 		}
 	});
@@ -292,7 +296,8 @@ function saveProduct() {
 			briefDescriptionJp : briefDescriptionJp,
 			briefDescriptionEs : briefDescriptionEs,
 			briefDescriptionIt : briefDescriptionIt,
-			productImageList : productImageList
+			productImageList : productImageList,
+			mainImage : mainImage
 		},
 		success : function (data) {
 			$.message.showMessage(data);
@@ -506,4 +511,10 @@ function distributionEditUser(productId) {
 			showDistributionEditUserDialog("分配编辑人员");
 		}
 	});
+}
+
+function batchDistributeEditUser(idList) {
+	var dialog = $("#distributionEditUserDialog");
+	dialog.find("input[name=id]").val(idList);
+	showDistributionEditUserDialog("批量分配编辑人员");
 }

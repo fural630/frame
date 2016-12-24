@@ -120,7 +120,7 @@
 	          	<#if collection??>
 	          		<#list collection as obj>
 	      		 <tr>
-		            <td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="1" onclick="countCheckbox()" /></td>
+		            <td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="${obj.id}" onclick="countCheckbox()" /></td>
 		            <td>
 		            	${obj.sku!''}
 		            </td>
@@ -131,7 +131,10 @@
 		            	中文名：${obj.nameCn!''}<br/>
 		            	英文名：${obj.nameEn!''}
 		            </td>
-		            <td><img src="${obj.mainImage!''}" width="100" height="100"/></td>
+		            <td>
+		            	<img src="${obj.mainImage!''}" data-image="${obj.mainImage!''}" class="img-thumbnail" width="110"/>
+		            	<!--<img src="${obj.mainImage!''}" width="100" height="100"/>-->
+		            </td>
 		            <!--
 		            <td>
 		            	包裹长度：10（cm）<br/>
@@ -194,10 +197,10 @@
 							<td class="td_right">批量操作&nbsp;&nbsp;
 								<select class="sel" id="batchOptionSelect">
 									<option value="" selected></option>
-									<option value="batchUploadOffers">批量分配编辑人</option>
-									<option value="batchUpdateToWaitPendding">批量分配刊登人</option>
-									<option value="batchShelvesProduct">批量删除</option>
-									<option value="batchDelete">批量通过审核</option>
+									<option value="batchDistributeEditUser">批量分配编辑人</option>
+									<option value="batchDistributePublishUser">批量分配刊登人</option>
+									<option value="batchDeleteProduct">批量删除</option>
+									<option value="batchApproved">批量通过审核</option>
 								</select>
 								&nbsp; <button class="btn btn-sm" type="button" onclick="batchOptionSubmit()">提交</button>
 							</td>
@@ -273,7 +276,8 @@
 			<div class="alert alert-info" style="padding:10px;">
 			 	注意：第一张图片为主图，拖拽图片可移动图片位置。删除图片后，点击保存才会生效。
 			</div>
-			<input type="text" class="txt" style="width:80%;" id="imageUrlAddress" placeholder="图片地址/Url" value="http://www.guphotos.com/images/D/D1816W-EU/D1816W-EU-4-375a.jpg"/>
+			<input type="text" class="txt" style="width:80%;" id="imageUrlAddress" placeholder="图片地址/Url" 
+				value="http://www.guphotos.com/images/D/D1816W-EU/D1816W-EU-4-375a.jpg"/>
 		  	<button class="btn btn-sm " type="button" onclick="addImageUrlAddress();">
 				<i class="icon icon-plus-sign"></i> 添加
 			</button>

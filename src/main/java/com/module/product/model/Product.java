@@ -43,6 +43,8 @@ public class Product {
 	private String briefDescriptionEs;
 	private String briefDescriptionIt;
 	
+	private String mainImage;
+	
 	private String optionLog;
 	private Integer creatorId;
 	private Integer editorId;
@@ -297,6 +299,12 @@ public class Product {
 	}
 	public void setBriefDescriptionIt(String briefDescriptionIt) {
 		this.briefDescriptionIt = briefDescriptionIt;
+	}
+	public String getMainImage() {
+		return mainImage;
+	}
+	public void setMainImage(String mainImage) {
+		this.mainImage = mainImage;
 	}
 	
 }

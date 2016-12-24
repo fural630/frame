@@ -93,7 +93,7 @@ function countCheckbox() {
 	var mainPageCheckbox = $("input[name=main_page_checkbox]");
 	var count = 0;
 	mainPageCheckbox.each(function() {
-		if ($(this).attr("checked")) {
+		if ($(this).is(':checked')) {
 			count++;
 		}
 	});
@@ -173,7 +173,7 @@ function getBatchOptionIds () {
 	var mainPageCheckBox = $("input[name=main_page_checkbox]");
 	var ids = [];
 	mainPageCheckBox.each(function(){
-		if ($(this).attr("checked")) {
+		if ($(this).is(':checked')) {
 			ids.push($(this).val());
 		}
 	});
@@ -199,7 +199,7 @@ function copyFreezeTable () {
 		pageTable.find("tr:first th").each(function () {
 			var pageTableTh = $(this).clone();
 			pageTableTh.removeAttr("width");
-			pageTableTh.width($(this).width() + 1);
+			pageTableTh.width($(this).width()+12);
 			freezeTable.append(pageTableTh);
 		});
 		$(".content").append(freezeTable);
@@ -208,9 +208,10 @@ function copyFreezeTable () {
 
 $(window).scroll(function () {
 	if($(window).scrollTop() > 110) {
+		copyFreezeTable();
 		$("table[name='freezeTable']").show();
 	} else {
-		$("table[name='freezeTable']").hide();
+		$("table[name='freezeTable']").remove();
 	}
 });
 
@@ -245,3 +246,20 @@ function confirmMsg(fun, msg) {
 	$('#confirmSmModal').modal().show();
 }
 
+function batchOptionSubmit () {
+	var batchOption = $("#batchOptionSelect").val();
+	if (batchOption == "") {
+		return;
+	} 
+	var idList = getBatchOptionIds();//获取勾选的数据Id
+	if (idList.length == 0) {
+		var param = {
+			status : 0,
+			message : "请勾选需要操作的数据"
+		};
+		$.message.showMessage(param);
+		return;
+	}
+	var ids = idList.join();
+	eval(batchOption + "('" + ids + "');");
+}

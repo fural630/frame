@@ -107,6 +107,7 @@
 			briefDescriptionJp,
 			briefDescriptionEs,
 			briefDescriptionIt,
+			mainImage,
 			optionLog,
 			creatorId,
 			auditStatus,
@@ -146,6 +147,7 @@
 			#{briefDescriptionJp},
 			#{briefDescriptionEs},
 			#{briefDescriptionIt},
+			#{mainImage},
 			#{optionLog},
 			#{creatorId},
 			#{auditStatus},
@@ -274,6 +276,9 @@
 			</if>
 			<if test="briefDescriptionIt !=null and briefDescriptionIt !=''">
 				briefDescriptionIt = #{briefDescriptionIt},
+			</if>
+			<if test="mainImage !=null and mainImage !=''">
+				mainImage = #{mainImage},
 			</if>
 			<if test="optionLog !=null and optionLog !=''">
 				optionLog = #{optionLog},

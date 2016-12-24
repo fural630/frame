@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.sound.sampled.Port;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.application.libraries.constentEnum.ReturnMessageEnum;
 import com.code.Page;
 import com.code.view.MainPage;
 import com.code.view.ReturnMessage;
@@ -81,9 +83,18 @@ public class ProductManageController extends MainPage{
 	
 	@RequestMapping("saveProductEditUser")
 	@ResponseBody
-	public String saveProductEditUser(Integer userId, Integer productId) {
-		productService.saveProductEditUser(userId, productId);
+	public String saveProductEditUser(Integer userId, String productIds) {
 		ReturnMessage returnMessage = new ReturnMessage();
+		if (StringUtils.isNotEmpty(productIds)) {
+			String ids[] = productIds.split(",");
+			if (ids.length > 0) {
+				for (String productIdStr : ids) {
+					productService.saveProductEditUser(userId, Integer.parseInt(productIdStr));
+				}
+			}
+		} else {
+			returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
+		}
 		return JsonUtil.toJsonStr(returnMessage);
 	}
 }
