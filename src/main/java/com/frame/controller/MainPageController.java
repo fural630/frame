@@ -22,21 +22,6 @@ public class MainPageController {
 	@Autowired
 	private NavigatorService navigatorService;
 	
-	@RequestMapping("header") 
-	public String goToHeaderPage(Model model) {
-		return "frame/header";
-	}
-	
-	@RequestMapping("sidebar")
-	public String goToSidebarPage(Model model) {
-		return "frame/sidebar";
-	}
-	
-	@RequestMapping("center")
-	public String goToCenterPage(Model model) {
-		return "frame/center";
-	}
-	
 	@RequestMapping("blank")
 	public String goToBlankPage(Model model) {
 		return "frame/blank";

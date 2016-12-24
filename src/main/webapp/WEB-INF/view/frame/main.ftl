@@ -20,7 +20,13 @@
 				<table class="tb_common">
 					<tr>
 						<td><a href="#" class="logo" style="color:#0099FF">Smart</a></td>
-						<td class="loginOut"><a><i class="icon icon-off"></i>&nbsp;退出 </a></td>
+						<td class="loginOut">
+							<a onclick="modifyPersonInfo();" title="<@s.message 'check.to.modify.person.info'/>">
+								<img src="/design/frame/style/img/default.gif">&nbsp;
+									<span style="color:#fff">${loginUserName!""}<span>
+							</a>&nbsp;&nbsp;
+							<a><i class="icon icon-off"></i>&nbsp;退出 </a>
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -51,33 +57,6 @@
 			    </li>
 		  	</#list>
 		  </#if>
-		  
-		  <!--
-		    <li class="nav-parent">
-		      <a href="javascript:;"><i class="icon-time"></i> Cdiscount 专区</a>
-		      <ul class="nav">
-		        <li><a href="javascript:;"><i class="icon-user"></i>刊登管理</a></li>
-		        <li><a href="javascript:;"><i class="icon-user"></i>EAN管理</a></li>
-		      </ul>
-		    </li>
-		    
-		    <li class="nav-parent">
-		      <a href="javascript:;"><i class="icon-time"></i> Shopee专区</a>
-		      <ul class="nav">
-		        <li><a href="javascript:;"><i class="icon-user"></i>刊登管理</a></li>
-		        <li><a href="javascript:;"><i class="icon-user"></i>EAN管理</a></li>
-		      </ul>
-		    </li>
-		    
-		    <li class="nav-parent">
-		      <a href="javascript:;"><i class="icon icon-cubes"></i> 产品中心</a>
-		      <ul class="nav">
-		        <li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '/product/productManage')"><i class="icon-user"></i>产品列表</a></li>
-		      </ul>
-		    </li>
-		    <li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '/product/productManage')"><i class="icon-cubes"></i> 产品列表</a></li>
-		  	<li><a href="javascript:;" onClick="$('#mainFrame').attr('src', '/product/test')"><i class="icon-cubes"></i> 测试用例</a></li>
-		  -->
 		  </ul>
 		</nav>
 	</div>
