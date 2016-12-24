@@ -313,7 +313,7 @@
     	delete from product where id = #{id}
     </delete>
     
-    <select id="getProductEditoUser" parameterType="int" resultType="int">
+    <select id="getProductEditUser" parameterType="int" resultType="int">
     	select editorId from product where id = #{productId}
     </select>
     
@@ -327,4 +327,29 @@
     	where id = #{productId}
     </update>
     
+     <update id="saveProductPublishUser">
+    	update product set 
+    		publishUserId = #{userId}
+    	where id = #{productId}
+    </update>
+    
+    <select id="getProductAuditListByProductId" parameterType="int" resultType="ProductAudit">
+    	select t.*,tt.name as userName from product_audit t 
+    		left join user tt on t.userId = tt.id 
+    	where t.productId = #{productId}
+    </select>
+    
+    <insert id="insertProductAudit" parameterType="ProductAudit">
+    	insert into product_audit (
+    		userId,
+    		productId,
+    		comment,
+    		createTime
+    	) values (
+    		#{userId},
+    		#{productId},
+    		#{comment},
+    		#{createTime}
+    	)
+    </insert>
 </mapper>

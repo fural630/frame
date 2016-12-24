@@ -13,6 +13,7 @@ import com.code.Page;
 import com.code.session.UserSingleton;
 import com.module.product.dao.ProductDao;
 import com.module.product.model.Product;
+import com.module.product.model.ProductAudit;
 import com.module.system.model.User;
 import com.util.MyDate;
 import com.util.MyLocale;
@@ -76,8 +77,8 @@ public class ProductService {
 		productDao.deleteProductImageByProductId(id);
 	}
 
-	public Integer getProductEditoUser(Integer productId) {
-		return productDao.getProductEditoUser(productId);
+	public Integer getProductEditUser(Integer productId) {
+		return productDao.getProductEditUser(productId);
 	}
 	
 	public Integer getProductPublishUser(Integer productId) {
@@ -86,5 +87,17 @@ public class ProductService {
 
 	public void saveProductEditUser(Integer userId, Integer productId) {
 		productDao.saveProductEditUser(userId, productId);
+	}
+
+	public void saveProductPublishUser(Integer userId, Integer productId) {
+		productDao.saveProductPublishUser(userId, productId);
+	}
+	
+	public List<ProductAudit> getProductAuditListByProductId(Integer productId) {
+		return productDao.getProductAuditListByProductId(productId);
+	}
+	
+	public void insertProductAudit(ProductAudit productAudit) {
+		productDao.insertProductAudit(productAudit);
 	}
 }

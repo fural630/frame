@@ -128,8 +128,8 @@ function initDialog () {
 	$("#distributionPublishUserDialog").dialog({
 		autoOpen: false,
 		modal: true,
-		width: 800,
-		height: 600,
+		width: 450,
+		height: 420,
 		resizable: false,
 		buttons : [ {
 				text : "保存",
@@ -137,6 +137,7 @@ function initDialog () {
 					primary : "ui-icon-heart"
 				},
 				click : function() { 
+					saveProductPublishUser();
 				}
 			}
 		],
@@ -150,7 +151,7 @@ function saveProductEditUser() {
 	var dialog = $("#distributionEditUserDialog");
 	var userId = dialog.find("select[name='editUserSelect']").val();
 	var productIds = dialog.find("input[name='id']").val();
-	if (null == userId) {
+	if (null == userId || "" == userId) {
 		var param = {
 				status : 0,
 				message : "请选择分配人员"
@@ -170,12 +171,43 @@ function saveProductEditUser() {
 		success : function (data) {
 			$.message.showMessage(data);
 			if (data.status == 1){
+				dialog.dialog("close");
 				refresh(1000);
 			}
 		}
 	});
 	
+}
+
+function saveProductPublishUser() {
+	var dialog = $("#distributionPublishUserDialog");
+	var userId = dialog.find("select[name='publishUserSelect']").val();
+	var productIds = dialog.find("input[name='id']").val();
+	if (null == userId || "" == userId) {
+		var param = {
+				status : 0,
+				message : "请选择分配人员"
+			};
+		$.message.showMessage(param);
+		return;
+	}
 	
+	$.ajax({
+		url : "/product/saveProductPublishUser",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			userId : userId,
+			productIds : productIds
+		},
+		success : function (data) {
+			$.message.showMessage(data);
+			if (data.status == 1){
+				dialog.dialog("close");
+				refresh(1000);
+			}
+		}
+	});
 }
 
 function validateProduct() {
@@ -421,8 +453,49 @@ function showDistributionEditUserDialog(title) {
 //	});
 }
 
-function reviewAudit(id) {
-	showProductAuditDialog("审核进度");
+function showDistributionPublishUserDialog (title) {
+	$("#distributionPublishUserDialog").dialog("option", "title", title);
+	$("#distributionPublishUserDialog").dialog("open");
+}
+
+function reviewAudit(productId) {
+	var dialog = $("#auditProductDialog");
+	$.ajax({
+		url : "/product/getProductAuditList",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			productId : productId,
+		},
+		success : function (data) {
+			var productAuditList = data;
+			createProductAuditList(productAuditList);
+			showProductAuditDialog("审核进度");
+		}
+	});
+}
+
+function createProductAuditList(productAuditList) {
+	var auditList = "";
+	auditList += '<div class="comment">';
+	auditList += 	'<a href="javascript:;" class="avatar">';
+	auditList += 		'<i class="icon-user icon-2x"></i>';
+	auditList += 	'</a>';
+	auditList += 	'<div class="content">';
+	auditList += 		'<div class="pull-right text-muted">{createTime}</div>';
+	auditList += 		'<div><strong>{userName}</strong></div>';
+	auditList += 		'<div class="text">{comment}</div>';
+	auditList += 	'</div>';
+	auditList += '</div>';
+	
+	var auditHtml = "";
+	for(var i = 0; i < productAuditList.length; i++) {
+		var productAudit = productAuditList[i];
+		auditHtml += auditList.replace(/{createTime}/g, productAudit.createTime)
+				.replace(/{userName}/g, productAudit.userName)
+				.replace(/{comment}/g, productAudit.comment);
+	}
+	$("#auditProductDialog").find("section").html(auditHtml);
 }
 
 function addImageUrlAddress () {
@@ -474,27 +547,10 @@ function clearImageUrlAddress() {
 	$("#imageUrlAddress").val("");
 }
 
-function deleteProduct(id) {
-	$.ajax({
-		url : "/product/deleteProductById",
-		type: 'POST',
-		dataType : "json",
-		data : {
-			id : id
-		},
-		success : function (data) {
-			$.message.showMessage(data);
-			if (data.status == 1){
-				refresh(1000);
-			}
-		}
-	});
-}
-
 function distributionEditUser(productId) {
 	var dialog = $("#distributionEditUserDialog");
 	$.ajax({
-		url : "/product/getProductEditoUser",
+		url : "/product/getProductEditUser",
 		type: 'POST',
 		dataType : "json",
 		data : {
@@ -513,8 +569,74 @@ function distributionEditUser(productId) {
 	});
 }
 
+function distributionPublishUser(productId) {
+	var dialog = $("#distributionPublishUserDialog");
+	$.ajax({
+		url : "/product/getProductPublishUser",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			productId : productId
+		},
+		success : function (data) {
+			var userId = data;
+			if (userId != null) {
+				dialog.find("select[name='publishUserSelect']").val(userId);
+			} else {
+				dialog.find("select[name='publishUserSelect']").val("");
+			}
+			dialog.find("input[name=id]").val(productId);
+			showDistributionPublishUserDialog("分配刊登人员");
+		}
+	});
+}
+
 function batchDistributeEditUser(idList) {
 	var dialog = $("#distributionEditUserDialog");
 	dialog.find("input[name=id]").val(idList);
 	showDistributionEditUserDialog("批量分配编辑人员");
+}
+
+function batchDistributePublishUser(idList) {
+	var dialog = $("#distributionPublishUserDialog");
+	dialog.find("input[name=id]").val(idList);
+	showDistributionPublishUserDialog("批量分配刊登人员");
+}
+
+function batchDeleteProduct(idList) {
+	confirmMsg("deleteProductByIds('"+idList+"')");
+}
+
+function deleteProductByIds(idList) {
+	$.ajax({
+		url : "/product/deleteProductByIds",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			idList : idList
+		},
+		success : function (data) {
+			$.message.showMessage(data);
+			if (data.status == 1){
+				refresh(1000);
+			}
+		}
+	});
+}
+
+function deleteProduct(id) {
+	$.ajax({
+		url : "/product/deleteProductById",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			id : id
+		},
+		success : function (data) {
+			$.message.showMessage(data);
+			if (data.status == 1){
+				refresh(1000);
+			}
+		}
+	});
 }

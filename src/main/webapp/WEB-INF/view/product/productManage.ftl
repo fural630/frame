@@ -199,8 +199,8 @@
 									<option value="" selected></option>
 									<option value="batchDistributeEditUser">批量分配编辑人</option>
 									<option value="batchDistributePublishUser">批量分配刊登人</option>
-									<option value="batchDeleteProduct">批量删除</option>
 									<option value="batchApproved">批量通过审核</option>
+									<option value="batchDeleteProduct">批量删除</option>
 								</select>
 								&nbsp; <button class="btn btn-sm" type="button" onclick="batchOptionSubmit()">提交</button>
 							</td>
@@ -417,6 +417,7 @@
 		<div class="comments">
 		<div id="auditProductComment" style="max-height:360px;overflow: scroll; scroll: both; padding:5px 5px;">
 		  <section class="comments-list">
+		  <!--
 		    <div class="comment">
 		      <a href="###" class="avatar">
 		        <i class="icon-user icon-2x"></i>
@@ -482,7 +483,7 @@
 		        <div class="text">对不起我也没看见</div>
 		      </div>
 		    </div>
-		    
+		    -->
 		  </section>
 		  </div>
 		  <footer>
@@ -506,6 +507,18 @@
 	 			<td class="title width_100px">分配编辑人员<i class="star">*</i></td>
 	 			<td>
 	 				<@select id="editUserSelect" name="editUserSelect"  optionClass="UserSelect"  cssClass="sel width_100px" headerKey="" headerValue="" tabindex="2"/>
+	 			</td>
+	 		</tr>
+ 		</table>
+	</div>
+	
+	<div id="distributionPublishUserDialog" style="display:none;">
+		<input type="hidden" name="id"/>
+		<table class="popup_tb">
+	 		<tr>
+	 			<td class="title width_100px">分配刊登人员<i class="star">*</i></td>
+	 			<td>
+	 				<@select id="publishUserSelect" name="publishUserSelect"  optionClass="UserSelect"  cssClass="sel width_100px" headerKey="" headerValue="" tabindex="2"/>
 	 			</td>
 	 		</tr>
  		</table>

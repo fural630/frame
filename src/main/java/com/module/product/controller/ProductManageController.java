@@ -20,6 +20,7 @@ import com.code.Page;
 import com.code.view.MainPage;
 import com.code.view.ReturnMessage;
 import com.module.product.model.Product;
+import com.module.product.model.ProductAudit;
 import com.module.product.service.ProductService;
 import com.util.Dumper;
 import com.util.JsonUtil;
@@ -34,7 +35,6 @@ public class ProductManageController extends MainPage{
 	@RequestMapping("productManage")
 	public String userManage(Model model, Page page){
 		_execute(page, model);
-		Dumper.dump(page);
 		List<Map<String, Object>> collection = productService.getProductPage(page);
 		model.addAttribute("collection", collection);
 		return "product/productManage";
@@ -74,10 +74,17 @@ public class ProductManageController extends MainPage{
 		return JsonUtil.toJsonStr(returnMessage);
 	}
 	
-	@RequestMapping("getProductEditoUser")
+	@RequestMapping("getProductEditUser")
 	@ResponseBody
-	public String getProductEditoUser(Integer productId) {
-		Integer userId = productService.getProductEditoUser(productId);
+	public String getProductEditUser(Integer productId) {
+		Integer userId = productService.getProductEditUser(productId);
+		return JsonUtil.toJsonStr(String.valueOf(userId));
+	}
+	
+	@RequestMapping("getProductPublishUser")
+	@ResponseBody
+	public String getProductPublishUser(Integer productId) {
+		Integer userId = productService.getProductPublishUser(productId);
 		return JsonUtil.toJsonStr(String.valueOf(userId));
 	}
 	
@@ -96,5 +103,46 @@ public class ProductManageController extends MainPage{
 			returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
 		}
 		return JsonUtil.toJsonStr(returnMessage);
+	}
+	
+	@RequestMapping("saveProductPublishUser")
+	@ResponseBody
+	public String saveProductPublishUser(Integer userId, String productIds) {
+		ReturnMessage returnMessage = new ReturnMessage();
+		if (StringUtils.isNotEmpty(productIds)) {
+			String ids[] = productIds.split(",");
+			if (ids.length > 0) {
+				for (String productIdStr : ids) {
+					productService.saveProductPublishUser(userId, Integer.parseInt(productIdStr));
+				}
+			}
+		} else {
+			returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
+		}
+		return JsonUtil.toJsonStr(returnMessage);
+	}
+	
+	@RequestMapping("deleteProductByIds")
+	@ResponseBody
+	public String deleteProductByIds(String idList) {
+		ReturnMessage returnMessage = new ReturnMessage();
+		if (StringUtils.isNotEmpty(idList)) {
+			String ids[] = idList.split(",");
+			if (ids.length > 0) {
+				for (String productIdStr : ids) {
+					productService.deleteProductById(Integer.parseInt(productIdStr));
+				}
+			}
+		} else {
+			returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
+		}
+		return JsonUtil.toJsonStr(returnMessage);
+	}
+	
+	@RequestMapping("getProductAuditList")
+	@ResponseBody
+	public String getProductAuditList(Integer productId) {
+		List<ProductAudit> productAuditList = productService.getProductAuditListByProductId(productId);
+		return JsonUtil.toJsonStr(productAuditList);
 	}
 }
