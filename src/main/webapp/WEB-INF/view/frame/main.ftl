@@ -21,11 +21,12 @@
 					<tr>
 						<td><a href="#" class="logo" style="color:#0099FF">Smart</a></td>
 						<td class="loginOut">
-							<a onclick="modifyPersonInfo();" title="<@s.message 'check.to.modify.person.info'/>">
-								<img src="/design/frame/style/img/default.gif">&nbsp;
-									<span style="color:#fff">${loginUserName!""}<span>
+							<a onclick="modifyPersonInfo();" title="点击修改个人信息">
+								<img src="/design/frame/style/img/default.gif"/>&nbsp;
+									<span style="color:#fff">${user.name!""}<span>
 							</a>&nbsp;&nbsp;
-							<a><i class="icon icon-off"></i>&nbsp;退出 </a>
+							<a onclick="loginOut();"><i class="icon icon-off"></i>&nbsp;退出 </a>
+							<form id="loginOutForm" action="/frame/loginOut" method="post"></form>
 						</td>
 					</tr>
 				</table>

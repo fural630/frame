@@ -72,16 +72,14 @@
 	
 	
     <mvc:resources mapping="/design/**" location="/design/" />
-    <!-- 
     <mvc:interceptors>  
         <mvc:interceptor>
         	<mvc:mapping path="/**" /> 
-        	<mvc:exclude-mapping path="/SmartErp/loginForm"/>  
-        	<mvc:exclude-mapping path="/SmartErp/login"/>
+        	<mvc:exclude-mapping path="/frame/loginForm"/>  
+        	<mvc:exclude-mapping path="/frame/login"/>
         	<mvc:exclude-mapping path="/design/**"/>
         	<mvc:exclude-mapping path="/authenticate/**"/>
-        	<bean class="com.smartErp.code.interceptor.SecurityInterceptor"> </bean>
+        	<bean class="com.code.SecurityInterceptor"> </bean>
         </mvc:interceptor>
     </mvc:interceptors>
-    -->
  </beans>  

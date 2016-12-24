@@ -1,3 +1,3 @@
 <% 
-	response.sendRedirect("/frame/main");
+	response.sendRedirect("/frame/loginForm");
 %>
