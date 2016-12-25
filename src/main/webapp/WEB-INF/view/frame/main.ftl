@@ -5,11 +5,17 @@
 <title>系统</title>
 <link type="image/x-icon" href="/design/static/images/common/favicon.ico" rel="shortcut icon">
 <link rel="stylesheet" type="text/css" href="/design/frame/zui/css/zui.css"/>
+<link rel="stylesheet" type="text/css" href="/design/frame/style/css/global.css"/>
+<link rel="stylesheet" type="text/css" href="/design/frame/style/css/popup.css"/>
 <link rel="stylesheet" type="text/css" href="/design/frame/style/css/header.css"/>
 <script type="text/javascript" src="/design/frame/style/js/jquery-1.7.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/design/frame/jquery/jqueryui/jquery-ui.min.css"/>
+<script type="text/javascript" src="/design/frame/jquery/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/design/frame/zui/js/zui.js"></script>
 <script type="text/javascript" src="/design/frame/jquery/layout/jquery.layout.js"></script>
 <script type="text/javascript" src="/design/frame/style/js/header.js"></script>
+<script type="text/javascript" src="/design/frame/jquery/jquery.blockUI.js"></script>
+<script type="text/javascript" src="/design/static/js/plugins/message.js"></script>
 </head>
 <body>
 
@@ -68,5 +74,35 @@
 			浏览器不支持嵌入式框架，或被配置为不显示嵌入式框架。
 		</iframe>
 	</div>
+	
+	
+	<div id="personDialog" style="display:none;">
+		<div class="alert alert-info" style="padding:10px;">
+			 	注意：修改个人信息成功后系统将自动退出登录！
+		</div>
+		<table class="popup_tb">
+			<tr>
+				<td class="title width_100px">账号<i class="star">*</i></td>
+				<td><input type="text" class="txt width_50" name="userName" disabled/></td>
+			</tr>
+			<tr>
+				<td class="title width_100px">昵称<i class="star">*</i></td>
+				<td><input type="text" class="txt width_50" name="name" disabled/></td>
+			</tr>
+			<tr>
+				<td class="title width_100px">密码<i class="star">*</i></td>
+				<td><input type="password" class="txt width_50" name="password"/></td>
+			</tr>
+			<tr>
+				<td class="title width_100px">邮箱</td>
+				<td><input type="email" class="txt width_50" name="email"/></td>
+			</tr>
+			<tr>
+				<td class="title width_100px">电话</td>
+				<td><input type="text" class="txt width_50" name="phone"/></td>
+			</tr>
+		</table>
+	</div>
+	
 </body>
 </html>

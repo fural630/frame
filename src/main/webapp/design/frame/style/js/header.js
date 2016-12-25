@@ -24,7 +24,7 @@ $(function () {
 
 
 $(function () {
-//	initPersonDialog();
+	initPersonDialog();
 //	initSystemPromptDialog();
 });
 
@@ -65,23 +65,26 @@ function initPersonDialog () {
 					primary : "ui-icon-heart"
 				},
 				click : function() {
-					if (validatePersonForm()) {
-						savePersonInfo();
-					}
+					savePersonInfo();
+				}
+			},{
+				text : "关闭",
+				icons : {
+					primary : "ui-icon-heart"
+				},
+				click : function() {
+					$("#personDialog").dialog("close");
 				}
 			}
 		],
 		close: function( event, ui ) {
-			$.myformPlugins.cleanForm("#personDialog");
-			var validateFrom = $("#personDialogFrom").validate();
-			validateFrom.resetForm();
 		}
 	});
 }
 
 function savePersonInfo () {
 	var dialog = $("#personDialog");
-	var username = $.trim(dialog.find("input[name='username']").val());
+	var userName = $.trim(dialog.find("input[name='userName']").val());
 	var password = $.trim(dialog.find("input[name='password']").val());
 	var name = $.trim(dialog.find("input[name='name']").val());
 	var email = $.trim(dialog.find("input[name='email']").val());
@@ -94,7 +97,7 @@ function savePersonInfo () {
 		type: 'POST',
 		dataType : "json",
 		data : {
-			username : username,
+			userName : userName,
 			password : password,
 			name : name,
 			email : email,
@@ -127,7 +130,6 @@ function modifyPersonInfo () {
 		type: 'POST',
 		dataType : "json",
 		success : function (data) {
-			$.unblockUI();
 			if (null != data) {
 				fillingPersonData(data, "#personDialog");
 			} else {
@@ -191,3 +193,4 @@ function showSystemPromptDialog (id) {
 		}
 	});
 }
+
