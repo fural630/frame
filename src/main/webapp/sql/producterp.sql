@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : 127.0.0.1
-Source Server Version : 50714
+Source Server Version : 50027
 Source Host           : localhost:3306
 Source Database       : producterp
 
 Target Server Type    : MYSQL
-Target Server Version : 50714
+Target Server Version : 50027
 File Encoding         : 65001
 
-Date: 2016-12-24 17:34:33
+Date: 2016-12-25 23:26:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,16 +20,16 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `navigator`;
 CREATE TABLE `navigator` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `nameCn` varchar(255) DEFAULT NULL,
-  `url` varchar(255) DEFAULT NULL,
-  `iconClass` varchar(255) DEFAULT NULL,
-  `isParent` int(11) DEFAULT NULL,
-  `parentId` int(11) DEFAULT NULL,
-  `sort` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(255) default NULL,
+  `nameCn` varchar(255) default NULL,
+  `url` varchar(255) default NULL,
+  `iconClass` varchar(255) default NULL,
+  `isParent` int(11) default NULL,
+  `parentId` int(11) default NULL,
+  `sort` int(11) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of navigator
@@ -47,11 +47,11 @@ INSERT INTO `navigator` VALUES ('14', 'cdiscount.ean.manage', 'EAN管理', '/cdi
 -- ----------------------------
 DROP TABLE IF EXISTS `navigator_user`;
 CREATE TABLE `navigator_user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL auto_increment,
   `userId` int(11) NOT NULL,
   `navigatorId` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of navigator_user
@@ -76,26 +76,26 @@ INSERT INTO `navigator_user` VALUES ('30', '2', '14');
 -- ----------------------------
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sku` varchar(255) DEFAULT NULL,
-  `spu` varchar(255) DEFAULT NULL,
-  `nameCn` varchar(255) DEFAULT NULL,
-  `nameEn` varchar(255) DEFAULT NULL,
-  `nameFr` varchar(255) DEFAULT NULL,
-  `nameDe` varchar(255) DEFAULT NULL,
-  `nameJp` varchar(255) DEFAULT NULL,
-  `nameIt` varchar(255) DEFAULT NULL,
-  `nameEs` varchar(255) DEFAULT NULL,
-  `declarationNameCn` varchar(255) DEFAULT NULL,
-  `declarationNameEn` varchar(255) DEFAULT NULL,
-  `purchaseUrl` varchar(255) DEFAULT NULL,
-  `purchasePrice` double DEFAULT NULL,
+  `id` int(11) NOT NULL auto_increment,
+  `sku` varchar(255) default NULL,
+  `spu` varchar(255) default NULL,
+  `nameCn` varchar(255) default NULL,
+  `nameEn` varchar(255) default NULL,
+  `nameFr` varchar(255) default NULL,
+  `nameDe` varchar(255) default NULL,
+  `nameJp` varchar(255) default NULL,
+  `nameIt` varchar(255) default NULL,
+  `nameEs` varchar(255) default NULL,
+  `declarationNameCn` varchar(255) default NULL,
+  `declarationNameEn` varchar(255) default NULL,
+  `purchaseUrl` varchar(255) default NULL,
+  `purchasePrice` double default NULL,
   `purchaseNotes` text,
   `salesNotes` text,
-  `packageWeight` double DEFAULT NULL,
-  `packageLength` double DEFAULT NULL,
-  `packageWidth` double DEFAULT NULL,
-  `packageHeight` double DEFAULT NULL,
+  `packageWeight` double default NULL,
+  `packageLength` double default NULL,
+  `packageWidth` double default NULL,
+  `packageHeight` double default NULL,
   `descriptionCn` text,
   `descriptionEn` text,
   `descriptionFr` text,
@@ -110,16 +110,16 @@ CREATE TABLE `product` (
   `briefDescriptionDe` text,
   `briefDescriptionFr` text,
   `briefDescriptionEn` text,
-  `mainImage` varchar(255) DEFAULT NULL,
+  `mainImage` varchar(255) default NULL,
   `optionLog` text,
-  `creatorId` int(11) DEFAULT NULL,
-  `editorId` int(11) DEFAULT NULL,
-  `publishUserId` int(11) DEFAULT NULL,
-  `auditStatus` int(11) DEFAULT NULL,
-  `createTime` varchar(255) DEFAULT NULL,
-  `updateTime` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+  `creatorId` int(11) default NULL,
+  `editorId` int(11) default NULL,
+  `publishUserId` int(11) default NULL,
+  `auditStatus` int(11) default NULL,
+  `createTime` varchar(255) default NULL,
+  `updateTime` varchar(255) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product
@@ -138,13 +138,13 @@ INSERT INTO `product` VALUES ('15', 'D15', 'D4-3', '烘焙模具 六件套', 'co
 -- ----------------------------
 DROP TABLE IF EXISTS `product_audit`;
 CREATE TABLE `product_audit` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `userId` int(11) DEFAULT NULL,
-  `productId` int(11) DEFAULT NULL,
+  `id` int(11) NOT NULL auto_increment,
+  `userId` int(11) default NULL,
+  `productId` int(11) default NULL,
   `comment` text,
-  `createTime` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `createTime` varchar(255) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product_audit
@@ -157,11 +157,11 @@ INSERT INTO `product_audit` VALUES ('2', '2', '15', '好，已经审核', '2016-
 -- ----------------------------
 DROP TABLE IF EXISTS `product_image`;
 CREATE TABLE `product_image` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `productId` int(11) DEFAULT NULL,
-  `imageUrl` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+  `id` int(11) NOT NULL auto_increment,
+  `productId` int(11) default NULL,
+  `imageUrl` varchar(255) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product_image
@@ -182,15 +182,15 @@ INSERT INTO `product_image` VALUES ('31', '4', 'http://www.guphotos.com/images/H
 -- ----------------------------
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `role_name` varchar(100) DEFAULT NULL,
+  `id` int(11) NOT NULL auto_increment,
+  `role_name` varchar(100) default NULL,
   `description` text,
-  `create_time` varchar(30) DEFAULT NULL,
-  `update_time` varchar(30) DEFAULT NULL,
+  `create_time` varchar(30) default NULL,
+  `update_time` varchar(30) default NULL,
   `log` text,
-  `creator` int(11) DEFAULT NULL,
-  `updateor` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `creator` int(11) default NULL,
+  `updateor` int(11) default NULL,
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -202,24 +202,24 @@ CREATE TABLE `role` (
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `userName` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `phone` char(30) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(255) default NULL,
+  `userName` varchar(255) default NULL,
+  `password` varchar(255) default NULL,
+  `phone` char(30) default NULL,
+  `status` int(11) default NULL,
+  `email` varchar(255) default NULL,
   `log` text,
-  `createTime` char(20) DEFAULT NULL,
-  `role` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+  `createTime` char(20) default NULL,
+  `role` int(11) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('2', '超级管理员', '2028', 'bzT1y5Rc1UQ=', '18677112630', '1', '312651213@qq.com', '1: 【于 2016-12-05 19:46:01 由 {name}，创建了该账号】<br/>2: 【于 2016-12-21 09:51:53 由 {name}，修改了账号信息】<br/>3: 【于 2016-12-21 09:52:00 由 {name}，修改了账号信息】<br/>4: 【于 2016-12-21 09:52:14 由 {name}，修改了账号信息】<br/>5: 【于 2016-12-21 09:52:26 由 {name}，修改了账号信息】<br/>6: 【于 2016-12-21 09:52:37 由 {name}，修改了账号信息】<br/>7: 【于 2016-12-21 09:55:28 由 {name}，修改了账号信息】<br/>8: 【于 2016-12-21 09:55:47 由 {name}，修改了账号信息】<br/>9: 【于 2016-12-21 09:56:03 由 {name}，修改了账号信息】<br/>10: 【于 2016-12-21 11:05:10 由 {name}，修改了账号信息】', '2016-12-05 19:46:01', '100');
-INSERT INTO `user` VALUES ('3', '李四', '1042', 'YeRz3EezyNw=', '', '1', '', '1: 【于 2016-12-05 19:49:45 由 {name}，创建了该账号】<br/>2: 【于 2016-12-21 11:05:20 由 {name}，修改了账号信息】', '2016-12-05 19:49:45', '5');
-INSERT INTO `user` VALUES ('4', '玄奘', '123', 'J5xLW6wJJoQ=', '', '1', '', '1: 【于 2016-12-05 19:52:20 由 {name}，创建了该账号】<br/>2: 【于 2016-12-21 11:06:40 由 {name}，修改了账号信息】', '2016-12-05 19:52:20', '5');
-INSERT INTO `user` VALUES ('6', '莫然', '12323', '/cc49KdpWc8=', '123', '1', '', '1: 【于 2016-12-05 19:52:37 由 {name}，创建了该账号】<br/>2: 【于 2016-12-21 11:06:29 由 {name}，修改了账号信息】', '2016-12-05 19:52:37', '15');
-INSERT INTO `user` VALUES ('7', '王五', '123233df', '/cc49KdpWc8=', '', '1', '', '1: 【于 2016-12-05 19:52:37 由 {name}，创建了该账号】<br/>2: 【于 2016-12-21 11:05:34 由 {name}，修改了账号信息】', '2016-12-05 19:52:37', '5');
+INSERT INTO `user` VALUES ('2', '王单爆', '2028', '2jwecGD86G4=', '18677112630', '1', '312651213@qq.com', '1: 【于 2016-12-05 19:46:01 由 {name}，创建了该账号】<br/>2: 【于 2016-12-21 09:51:53 由 {name}，修改了账号信息】<br/>3: 【于 2016-12-21 09:52:00 由 {name}，修改了账号信息】<br/>4: 【于 2016-12-21 09:52:14 由 {name}，修改了账号信息】<br/>5: 【于 2016-12-21 09:52:26 由 {name}，修改了账号信息】<br/>6: 【于 2016-12-21 09:52:37 由 {name}，修改了账号信息】<br/>7: 【于 2016-12-21 09:55:28 由 {name}，修改了账号信息】<br/>8: 【于 2016-12-21 09:55:47 由 {name}，修改了账号信息】<br/>9: 【于 2016-12-21 09:56:03 由 {name}，修改了账号信息】<br/>10: 【于 2016-12-21 11:05:10 由 {name}，修改了账号信息】<br/>11: 【于 2016-12-25 17:28:39 由 {name}，修改了账号信息】<br/>12: 【于 2016-12-25 18:07:01 由 {name}，修改了账号信息】<br/>13: 【于 2016-12-25 18:07:35 由 {name}，修改了账号信息】<br/>14: 【于 2016-12-25 18:08:00 由 {name}，修改了账号信息】<br/>15: 【于 2016-12-25 18:08:34 由 {name}，修改了账号信息】<br/>16: 【于 2016-12-25 18:09:07 由 {name}，修改了账号信息】', '2016-12-05 19:46:01', '100');
+INSERT INTO `user` VALUES ('3', '李四-主管', '1042', 'YeRz3EezyNw=', '', '1', '', '1: 【于 2016-12-05 19:49:45 由 {name}，创建了该账号】<br/>2: 【于 2016-12-21 11:05:20 由 {name}，修改了账号信息】<br/>3: 【于 2016-12-25 17:29:44 由 {name}，修改了账号信息】', '2016-12-05 19:49:45', '10');
+INSERT INTO `user` VALUES ('4', '玄奘-员工', '205', '2jwecGD86G4=', '', '1', '', '1: 【于 2016-12-05 19:52:20 由 {name}，创建了该账号】<br/>2: 【于 2016-12-21 11:06:40 由 {name}，修改了账号信息】<br/>3: 【于 2016-12-25 17:29:33 由 {name}，修改了账号信息】<br/>4: 【于 2016-12-25 17:31:03 由 {name}，修改了账号信息】', '2016-12-05 19:52:20', '5');
+INSERT INTO `user` VALUES ('6', '经理-漠然', '204', '2jwecGD86G4=', '123', '1', '', '1: 【于 2016-12-05 19:52:37 由 {name}，创建了该账号】<br/>2: 【于 2016-12-21 11:06:29 由 {name}，修改了账号信息】<br/>3: 【于 2016-12-25 17:29:21 由 {name}，修改了账号信息】<br/>4: 【于 2016-12-25 17:30:27 由 {name}，修改了账号信息】<br/>5: 【于 2016-12-25 17:30:36 由 {name}，修改了账号信息】', '2016-12-05 19:52:37', '15');
+INSERT INTO `user` VALUES ('7', '员工-小王', '203', '2jwecGD86G4=', '', '1', '', '1: 【于 2016-12-05 19:52:37 由 {name}，创建了该账号】<br/>2: 【于 2016-12-21 11:05:34 由 {name}，修改了账号信息】<br/>3: 【于 2016-12-25 17:29:00 由 {name}，修改了账号信息】<br/>4: 【于 2016-12-25 17:30:15 由 {name}，修改了账号信息】', '2016-12-05 19:52:37', '5');
