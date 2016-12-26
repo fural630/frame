@@ -1,5 +1,7 @@
 package com.code;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,7 +33,16 @@ public class SecurityInterceptor implements HandlerInterceptor {
         if(user != null) {    
             return true;
         } else {  
-        	response.sendRedirect("/frame/loginForm"); 
+            PrintWriter out = response.getWriter();
+            out.println("<html>");  
+            out.println("<script>");  
+            String path = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+            out.println("top.location.href = " + "'" + path + "/frame/loginForm'");
+            out.println("</script>");  
+            out.println("</html>"); 
+            out.flush();
+            out.close();
+//        	response.sendRedirect("/frame/loginForm"); 
         }  
 		return false;
 	}
