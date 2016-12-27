@@ -400,90 +400,29 @@
 	</div>
 	
 	<div id="uploadProductDialog" style="display:none;">
-		<table class="popup_tb">
-	 		<tr>
-	 			<td class="title width_100px">上传文件<i class="star">*</i></td>
-	 			<td><input type="file" class="form-control" value="" style="width:50%"></td>
-	 		</tr>
-	 		<tr>
-	 			<td class="title width_100px">模板文件下载<i class="star">*</i></td>
-	 			<td><a><i class="icon icon-file-excel"></i> 商品导入文件模板下载</a></td>
-	 		</tr>
- 		</table>
-		
+		<form name="uploadProductFrom" action="/product/uploadProduct" method="post" enctype="multipart/form-data" target="iframe_shippingData">
+			<table class="popup_tb">
+		 		<tr>
+		 			<td class="title width_100px">上传文件<i class="star">*</i></td>
+		 			<td><input type="file" name="productFile" class="form-control" value="" style="width:50%"></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">模板文件下载<i class="star">*</i></td>
+		 			<td>
+		 				<a href="/download/template/productImportTemplate.xls">
+		 					<i class="icon icon-file-excel"></i> 商品导入文件模板下载
+		 				</a>
+		 			</td>
+		 		</tr>
+	 		</table>
+		</form>
+		<iframe name="iframe_shippingData" width="80%" height="200" frameborder="0"></iframe>
 	</div>
 	
 	<div id="auditProductDialog" style="display:none;">
 		<div class="comments">
 		<div id="auditProductComment" style="max-height:360px;overflow: scroll; scroll: both; padding:5px 5px;">
 		  <section class="comments-list">
-		  <!--
-		    <div class="comment">
-		      <a href="###" class="avatar">
-		        <i class="icon-user icon-2x"></i>
-		      </a>
-		      <div class="content">
-		        <div class="pull-right text-muted">2016-05-10 10:56:25</div>
-		        <div><a href="###"><strong>Catouse</strong></a></div>
-		        <div class="text">你到底把我家钥匙放哪里了...</div>
-		      </div>
-		    </div>
-		    
-		    <div class="comment">
-		      <a href="###" class="avatar">
-		        <i class="icon-yinyang icon-2x"></i>
-		      </a>
-		      <div class="content">
-		        <div class="pull-right text-muted">2016-05-10 10:56:25</div>
-		        <div><a href="###"><strong>张三</strong></a></div>
-		        <div class="text">对不起我也没看见</div>
-		      </div>
-		    </div>
-		    
-		    <div class="comment">
-		      <a href="###" class="avatar">
-		        <i class="icon-yinyang icon-2x"></i>
-		      </a>
-		      <div class="content">
-		        <div class="pull-right text-muted">2016-05-10 10:56:25</div>
-		        <div><a href="###"><strong>张三</strong></a></div>
-		        <div class="text">对不起我也没看见</div>
-		      </div>
-		    </div>
-		    
-		    <div class="comment">
-		      <a href="###" class="avatar">
-		        <i class="icon-yinyang icon-2x"></i>
-		      </a>
-		      <div class="content">
-		        <div class="pull-right text-muted">2016-05-10 10:56:25</div>
-		        <div><a href="###"><strong>张三</strong></a></div>
-		        <div class="text">对不起我也没看见</div>
-		      </div>
-		    </div>
-		    
-		    <div class="comment">
-		      <a href="###" class="avatar">
-		        <i class="icon-yinyang icon-2x"></i>
-		      </a>
-		      <div class="content">
-		        <div class="pull-right text-muted">2016-05-10 10:56:25</div>
-		        <div><a href="###"><strong>张三</strong></a></div>
-		        <div class="text">对不起我也没看见</div>
-		      </div>
-		    </div>
-		    
-		    <div class="comment">
-		      <a href="###" class="avatar">
-		        <i class="icon-yinyang icon-2x"></i>
-		      </a>
-		      <div class="content">
-		        <div class="pull-right text-muted">2016-05-10 10:56:25</div>
-		        <div><a href="###"><strong>张三</strong></a></div>
-		        <div class="text">对不起我也没看见</div>
-		      </div>
-		    </div>
-		    -->
 		  </section>
 		  </div>
 		  <footer>

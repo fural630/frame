@@ -65,6 +65,7 @@ function initDialog () {
 					primary : "ui-icon-heart"
 				},
 				click : function() {
+					validateProductFrom();
 				}
 			}
 		],
@@ -145,6 +146,20 @@ function initDialog () {
 		}
 	});
 	
+}
+
+function validateProductFrom() {
+	var dialog = $("#uploadProductDialog");
+	var file = dialog.find("input[name=productFile]").val();
+	if (file == "" || file == null || file == undefined) {
+		var param = {
+			status : 0,
+			message : "请选择要上传的文件"
+		};
+		$.message.showMessage(param);
+		return;
+	}
+	dialog.find("form[name=uploadProductFrom]").submit();
 }
 
 function saveProductEditUser() {
