@@ -48,7 +48,6 @@ public class ProductManageController extends MainPage{
 	public String userManage(Model model, Page page){
 		_execute(page, model);
 		List<Map<String, Object>> collection = productService.getProductPage(page);
-		Dumper.dump(page);
 		model.addAttribute("collection", collection);
 		return "product/productManage";
 	}
