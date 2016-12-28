@@ -124,7 +124,6 @@ public class ProductService {
 
 	public Map uploadPorduct(ArrayList<ArrayList<String>> data) {
 		MyLocale myLocale = new MyLocale();
-		MyDate myDate = new MyDate();
 		TreeMap messageOutput = new TreeMap(); 
 		Map countData = new HashMap();
 		Map outputData = new HashMap();
@@ -133,7 +132,7 @@ public class ProductService {
     	int failureCounts = 0;
     	for (int i = 1; i < data.size(); i++) {
 			List<String> row = data.get(i);
-			if (CollectionUtils.isEmpty(row) || StringUtils.isBlank(row.get(0))) {
+			if (CollectionUtils.isEmpty(row)) {
 				continue;
 			}
 			number++;
@@ -272,7 +271,7 @@ public class ProductService {
 			}
 			if (flag) {
 				successCounts++;
-				messageOutput.put(number, myLocale.getText("upload.is.successfull"));
+				messageOutput.put(String.valueOf(number), myLocale.getText("upload.is.successfull"));
 				Product product = new Product();
 				product.setSku(sku);
 				product.setSpu(spu);
@@ -291,13 +290,14 @@ public class ProductService {
 				product.setMainImage(mainImage);
 				this.createNewProduct(product, iamgeList);
 			} else {
+				failureCounts++;
 				if (errorMessage.endsWith(",")) {
 					errorMessage = errorMessage.substring(0, errorMessage.length() -1);
 				}
-				messageOutput.put(number, myLocale.getText("upload.is.fail", errorMessage));
+				messageOutput.put(String.valueOf(number), myLocale.getText("upload.is.fail", errorMessage));
 			}
 		}
-		countData.put("finalNumber", number);
+		countData.put("finalNumber", number-1);
 		countData.put("successCounts", successCounts);
 		countData.put("failureCounts" ,failureCounts);
 		outputData.put("countData", countData);

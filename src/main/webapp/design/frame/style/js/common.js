@@ -263,3 +263,7 @@ function batchOptionSubmit () {
 	var ids = idList.join();
 	eval(batchOption + "('" + ids + "');");
 }
+
+function unblock() {
+	$.unblockUI();
+}  

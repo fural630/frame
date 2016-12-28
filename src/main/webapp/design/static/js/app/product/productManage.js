@@ -67,9 +67,20 @@ function initDialog () {
 				click : function() {
 					validateProductFrom();
 				}
+			},{
+				text : "关闭",
+				icons : {
+					primary : "ui-icon-heart"
+				},
+				click : function() {
+					$("#uploadProductDialog").dialog("close");
+					refresh(1000);
+				}
 			}
+			
 		],
 		close: function( event, ui ) {
+			$.myformPlugins.cleanForm("#uploadProductDialog");
 		}
 	});
 	
@@ -159,6 +170,14 @@ function validateProductFrom() {
 		$.message.showMessage(param);
 		return;
 	}
+	$.blockUI({
+		message: '<img src="/design/static/images/common/progressbar10.gif">',
+		timeout: 5000,
+		css:{
+			backgroundColor: "",
+			border:"0"
+		}
+	});
 	dialog.find("form[name=uploadProductFrom]").submit();
 }
 
@@ -255,6 +274,9 @@ function saveProduct() {
 	var sku = $.trim(dialog.find("input[name=sku]").val());
 	var spu = $.trim(dialog.find("input[name=spu]").val());
 	
+	var color = $.trim(dialog.find("input[name=color]").val());
+	var size = $.trim(dialog.find("input[name=size]").val());
+	
 	var nameCn = $.trim(dialog.find("input[name=nameCn]").val());
 	var nameEn = $.trim(dialog.find("input[name=nameEn]").val());
 	var nameFr = $.trim(dialog.find("input[name=nameFr]").val());
@@ -312,6 +334,8 @@ function saveProduct() {
 			id : id,
 			sku : sku,
 			spu : spu,
+			color : color,
+			size : size,
 			nameCn : nameCn,
 			nameEn : nameEn,
 			nameFr : nameFr,
@@ -399,6 +423,8 @@ function fillingProductData(product, imageList) {
 	dialog.find("input[name=id]").val(product.id);
 	dialog.find("input[name=sku]").val(product.sku);
 	dialog.find("input[name=spu]").val(product.spu);
+	dialog.find("input[name=color]").val(product.color);
+	dialog.find("input[name=size]").val(product.size);
 	dialog.find("input[name=nameCn]").val(product.nameCn);
 	dialog.find("input[name=nameEn]").val(product.nameEn);
 	dialog.find("input[name=nameFr]").val(product.nameFr);

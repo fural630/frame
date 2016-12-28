@@ -31,6 +31,8 @@
 	            <th>SKU</th>
 	            <th>SPU</th>
 	            <th>基本信息</th>
+	            <th>颜色</th>
+	            <th>尺寸</th>
 	            <th style="min-width:110px;">主图</th>
 	            <!--
 	            <th>尺寸信息</th>
@@ -67,6 +69,18 @@
 	          			</li>
 	          			<li><input type="text" class="txt width_100px" name="params[productNameValue]" value="${page.params.productNameValue!''}" /></li>
 	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[productNameValueLike]" <#if page.params.productNameValueLike??> checked </#if>></li>
+	          		</ul>
+	          	</td>
+	          	<td>
+	          		<ul>
+	          			<li><input type="text" class="txt width_100px" name="params[color]" value="${page.params.color!''}" /></li>
+          				<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[colorLike]" <#if page.params.colorLike??> checked </#if>></li>
+	          		</ul>
+	          	</td>
+	          	<td>
+	          		<ul>
+	          			<li><input type="text" class="txt width_100px" name="params[productSize]" value="${page.params.productSize!''}" /></li>
+          				<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[productSizeLike]" <#if page.params.productSizeLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
 	          	<td></td>
@@ -131,6 +145,8 @@
 		            	中文名：${obj.nameCn!''}<br/>
 		            	英文名：${obj.nameEn!''}
 		            </td>
+		            <td>${obj.color!''}</td>
+		            <td>${obj.size!''}</td>
 		            <td>
 		            	<img src="${obj.mainImage!''}" data-image="${obj.mainImage!''}" class="img-thumbnail" width="110"/>
 		            	<!--<img src="${obj.mainImage!''}" width="100" height="100"/>-->
@@ -228,46 +244,46 @@
 		 		<tr>
 		 			<td class="title width_100px">SKU<i class="star">*</i></td>
 		 			<td><input type="text" class="txt width_50" name="sku"/></td>
+		 			<td class="title width_100px">颜色</td>
+		 			<td><input type="text" class="txt width_50" name="color" /></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">SPU<i class="star">*</i></td>
 		 			<td><input type="text" class="txt width_50" name="spu"/></td>
+		 			<td class="title width_100px">尺寸</td>
+		 			<td><input type="text" class="txt width_50" name="size" /></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">中文名<i class="star">*</i></td>
-		 			<td><input type="text" class="txt width_98" name="nameCn"/></td>
+		 			<td colspan="3"><input type="text" class="txt width_98" name="nameCn"/></td>
 		 		</tr>
 		 		<tr>
-		 			<td class="title width_100px">英文名</td>
-		 			<td><input type="text" class="txt width_98" name="nameEn" /></td>
+		 			<td class="title width_100px">英文名<i class="star">*</i></td>
+		 			<td colspan="3"><input type="text" class="txt width_98" name="nameEn" /></td>
+		 		</tr>
+	 			<tr>
+		 			<td class="title width_100px">中文报关名<i class="star">*</i></td>
+		 			<td colspan="3"><input type="text" class="txt width_98" name="declarationNameCn" required/></td>
 		 		</tr>
 		 		<tr>
-		 			<td class="title width_100px">法语名</td>
-		 			<td><input type="text" class="txt width_98" name="nameFr" /></td>
+		 			<td class="title width_100px">英文报关名<i class="star">*</i></td>
+		 			<td colspan="3"><input type="text" class="txt width_98" name="declarationNameEn" required/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">德语名</td>
-		 			<td><input type="text" class="txt width_98" name="nameDe" required/></td>
+		 			<td colspan="3"><input type="text" class="txt width_98" name="nameDe" required/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">意大利语名</td>
-		 			<td><input type="text" class="txt width_98" name="nameIt" required/></td>
+		 			<td colspan="3"><input type="text" class="txt width_98" name="nameIt" required/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">日语名</td>
-		 			<td><input type="text" class="txt width_98" name="nameJp" required/></td>
+		 			<td colspan="3"><input type="text" class="txt width_98" name="nameJp" required/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">西班牙语名</td>
-		 			<td><input type="text" class="txt width_98" name="nameEs" required/></td>
-		 		</tr>
-		 		<tr>
-		 			<td class="title width_100px">中文报关名</td>
-		 			<td><input type="text" class="txt width_98" name="declarationNameCn" required/></td>
-		 		</tr>
-		 		<tr>
-		 			<td class="title width_100px">英文报关名</td>
-		 			<td><input type="text" class="txt width_98" name="declarationNameEn" required/></td>
+		 			<td colspan="3"><input type="text" class="txt width_98" name="nameEs" required/></td>
 		 		</tr>
 		 	</table>
 		  </div>

@@ -8,7 +8,8 @@ jQuery.myformPlugins = {
 				|| type == 'password' 
 						|| type == 'textarea' 
 							|| type == 'email' 
-								|| type == 'hidden')
+								|| type == 'hidden'
+									|| type == 'file')
 				this.value = "";
 			else if (type == 'checkbox' || type == 'radio')
 			      this.checked = false;

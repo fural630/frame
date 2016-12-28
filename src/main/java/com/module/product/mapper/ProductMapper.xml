@@ -59,6 +59,25 @@
 					</when>
 		   		</choose>
 	   		</if>
+	   		
+	   		<choose>
+				<when test="params.colorLike!=null and params.colorLike!='' ">
+					and t.color like CONCAT('%','${params.color}','%')  
+				</when>
+				<when test="params.color!=null and params.color!=''">
+					and t.color = #{params.color}
+				</when>
+	   		</choose>
+	   		
+	   		<choose>
+				<when test="params.productSizeLike!=null and params.productSizeLike!='' ">
+					and t.size like CONCAT('%','${params.productSize}','%')  
+				</when>
+				<when test="params.productSize!=null and params.productSize!=''">
+					and t.size = #{params.productSize}
+				</when>
+	   		</choose>
+	   		
 	   		<if test="params.auditStatus!=null and params.auditStatus !=''">
 	    		and t.auditStatus = #{params.auditStatus}
 	   		</if>

@@ -48,6 +48,7 @@ public class ProductManageController extends MainPage{
 	public String userManage(Model model, Page page){
 		_execute(page, model);
 		List<Map<String, Object>> collection = productService.getProductPage(page);
+		Dumper.dump(page);
 		model.addAttribute("collection", collection);
 		return "product/productManage";
 	}
@@ -169,6 +170,7 @@ public class ProductManageController extends MainPage{
 				MultipartFile file = multiRequest.getFile(iter.next().toString());
 				if (file != null) {
 					String path = Constant.TMP_PATH + file.getOriginalFilename();
+					path = "E:\\" + file.getOriginalFilename();
 					File tmpFile = new File(path);
 					try {
 						file.transferTo(tmpFile);
@@ -181,6 +183,12 @@ public class ProductManageController extends MainPage{
 					}
 				}
 			}
+		}
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 		model.addAttribute("outputData", outputData);
 		return "template/upload-message-page";
