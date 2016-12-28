@@ -26,5 +26,6 @@ public interface ProductDao {
 	
 	public List<ProductAudit> getProductAuditListByProductId(Integer productId);
 	public void insertProductAudit(ProductAudit productAudit);
+	public Product getProductBySku(String sku);
 
 }

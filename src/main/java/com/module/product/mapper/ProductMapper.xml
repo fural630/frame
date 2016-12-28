@@ -112,7 +112,9 @@
 			creatorId,
 			auditStatus,
 			createTime,
-			updateTime
+			updateTime,
+			size,
+			color
    		) values (
    			#{sku},
 			#{spu},
@@ -152,7 +154,9 @@
 			#{creatorId},
 			#{auditStatus},
 			#{createTime},
-			#{updateTime}
+			#{updateTime},
+			#{size},
+			#{color}
    		)
     </insert>
     
@@ -301,6 +305,12 @@
 			<if test="createTime !=null and createTime !=''">
 				createTime = #{createTime},
 			</if>
+			<if test="size !=null and size !=''">
+				size = #{size},
+			</if>
+			<if test="color !=null and color !=''">
+				color = #{color},
+			</if>
        	</set>
         where id = #{id}   
     </update>
@@ -352,4 +362,8 @@
     		#{createTime}
     	)
     </insert>
+    
+    <select id="getProductBySku" parameterType="string" resultType="Product">
+    	select * from product where sku = #{sku}
+    </select>
 </mapper>

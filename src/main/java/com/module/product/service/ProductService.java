@@ -108,6 +108,14 @@ public class ProductService {
 		productDao.insertProductAudit(productAudit);
 	}
 	
+	public boolean checkSkuExist(String sku) {
+		Product product = productDao.getProductBySku(sku);
+		if (null == product) {
+			return false;
+		} 
+		return true;
+	}
+	
 	public static void main(String[] args) {
 		Excel excel = new Excel("E:\\test.txt");
 		ProductService productService = new ProductService();
@@ -155,105 +163,110 @@ public class ProductService {
 				if (StringUtils.isBlank(sku)) {
 					errorMessage += myLocale.getText("field.can.not.be.empty", "SKU");
 					flag = false;
-				}
-				spu = StringUtils.isBlank(row.get(1)) ? null : row.get(1);
-				color = StringUtils.isBlank(row.get(2)) ? null : row.get(2);
-				size = StringUtils.isBlank(row.get(3)) ? null : row.get(3);
-				nameCn = row.get(4);
-				if (StringUtils.isBlank(nameCn)) {
-					errorMessage += myLocale.getText("field.can.not.be.empty", myLocale.getText("name.cn"));
+				} else if (checkSkuExist(sku)) {
+					errorMessage += myLocale.getText("sku.repeat", sku);
 					errorMessage += ",";
 					flag = false;
-				}
-				nameEn = row.get(5);
-				if (StringUtils.isBlank(nameEn)) {
-					errorMessage += myLocale.getText("field.can.not.be.empty", myLocale.getText("name.en"));
-					errorMessage += ",";
-					flag = false;
-				}
-				purchaseUrl = row.get(6);
-				if (StringUtils.isBlank(purchaseUrl)) {
-					errorMessage += myLocale.getText("field.can.not.be.empty", myLocale.getText("purchase.url"));
-					errorMessage += ",";
-					flag = false;
-				}
-				try {
-					purchasePrice = Double.parseDouble(row.get(7));
-				} catch (Exception e) {
-					errorMessage += myLocale.getText("wrong.format", myLocale.getText("purchase.price"));
-					errorMessage += ",";
-					flag = false;
-				}
-				try {
-					packageWeight = Double.parseDouble(row.get(8));
-				} catch (Exception e) {
-					errorMessage += myLocale.getText("wrong.format", myLocale.getText("package.weight"));
-					errorMessage += ",";
-					flag = false;
-				}
-				try {
-					packageLength = Double.parseDouble(row.get(9));
-				} catch (Exception e) {
-					errorMessage += myLocale.getText("wrong.format", myLocale.getText("package.length"));
-					errorMessage += ",";
-					flag = false;
-				}
-				try {
-					packageWidth = Double.parseDouble(row.get(10));
-				} catch (Exception e) {
-					errorMessage += myLocale.getText("wrong.format", myLocale.getText("package.width"));
-					errorMessage += ",";
-					flag = false;
-				}
-				try {
-					packageHeight = Double.parseDouble(row.get(11));
-				} catch (Exception e) {
-					errorMessage += myLocale.getText("wrong.format", myLocale.getText("package.height"));
-					errorMessage += ",";
-					flag = false;
-				}
-				declarationNameCn = row.get(12);
-				if (StringUtils.isBlank(declarationNameCn)) {
-					errorMessage += myLocale.getText("field.can.not.be.empty", myLocale.getText("declaration.name.cn"));
-					errorMessage += ",";
-					flag = false;
-				}
-				declarationNameEn = row.get(13);
-				if (StringUtils.isBlank(declarationNameEn)) {
-					errorMessage += myLocale.getText("field.can.not.be.empty", myLocale.getText("declaration.name.en"));
-					errorMessage += ",";
-					flag = false;
-				}
-				mainImage = row.get(14);
-				if (StringUtils.isBlank(mainImage)) {
-					errorMessage += myLocale.getText("field.can.not.be.empty", myLocale.getText("main.image"));
-					errorMessage += ",";
-					flag = false;
-				}
-				iamgeList.add(mainImage);
-				if (row.size() > 15) {
-					if(StringUtils.isNotBlank(row.get(15))) {
-						iamgeList.add(row.get(15));
+				} else {
+					spu = StringUtils.isBlank(row.get(1)) ? null : row.get(1);
+					color = StringUtils.isBlank(row.get(2)) ? null : row.get(2);
+					size = StringUtils.isBlank(row.get(3)) ? null : row.get(3);
+					nameCn = row.get(4);
+					if (StringUtils.isBlank(nameCn)) {
+						errorMessage += myLocale.getText("field.can.not.be.empty", myLocale.getText("name.cn"));
+						errorMessage += ",";
+						flag = false;
 					}
-				}
-				if (row.size() > 16) {
-					if(StringUtils.isNotBlank(row.get(16))) {
-						iamgeList.add(row.get(16));
+					nameEn = row.get(5);
+					if (StringUtils.isBlank(nameEn)) {
+						errorMessage += myLocale.getText("field.can.not.be.empty", myLocale.getText("name.en"));
+						errorMessage += ",";
+						flag = false;
 					}
-				}
-				if (row.size() > 17) {
-					if(StringUtils.isNotBlank(row.get(17))) {
-						iamgeList.add(row.get(17));
+					purchaseUrl = row.get(6);
+					if (StringUtils.isBlank(purchaseUrl)) {
+						errorMessage += myLocale.getText("field.can.not.be.empty", myLocale.getText("purchase.url"));
+						errorMessage += ",";
+						flag = false;
 					}
-				}
-				if (row.size() > 18) {
-					if(StringUtils.isNotBlank(row.get(18))) {
-						iamgeList.add(row.get(18));
+					try {
+						purchasePrice = Double.parseDouble(row.get(7));
+					} catch (Exception e) {
+						errorMessage += myLocale.getText("wrong.format", myLocale.getText("purchase.price"));
+						errorMessage += ",";
+						flag = false;
 					}
-				}
-				if (row.size() > 19) {
-					if(StringUtils.isNotBlank(row.get(19))) {
-						iamgeList.add(row.get(19));
+					try {
+						packageWeight = Double.parseDouble(row.get(8));
+					} catch (Exception e) {
+						errorMessage += myLocale.getText("wrong.format", myLocale.getText("package.weight"));
+						errorMessage += ",";
+						flag = false;
+					}
+					try {
+						packageLength = Double.parseDouble(row.get(9));
+					} catch (Exception e) {
+						errorMessage += myLocale.getText("wrong.format", myLocale.getText("package.length"));
+						errorMessage += ",";
+						flag = false;
+					}
+					try {
+						packageWidth = Double.parseDouble(row.get(10));
+					} catch (Exception e) {
+						errorMessage += myLocale.getText("wrong.format", myLocale.getText("package.width"));
+						errorMessage += ",";
+						flag = false;
+					}
+					try {
+						packageHeight = Double.parseDouble(row.get(11));
+					} catch (Exception e) {
+						errorMessage += myLocale.getText("wrong.format", myLocale.getText("package.height"));
+						errorMessage += ",";
+						flag = false;
+					}
+					declarationNameCn = row.get(12);
+					if (StringUtils.isBlank(declarationNameCn)) {
+						errorMessage += myLocale.getText("field.can.not.be.empty", myLocale.getText("declaration.name.cn"));
+						errorMessage += ",";
+						flag = false;
+					}
+					declarationNameEn = row.get(13);
+					if (StringUtils.isBlank(declarationNameEn)) {
+						errorMessage += myLocale.getText("field.can.not.be.empty", myLocale.getText("declaration.name.en"));
+						errorMessage += ",";
+						flag = false;
+					}
+					mainImage = row.get(14);
+					if (StringUtils.isBlank(mainImage)) {
+						errorMessage += myLocale.getText("field.can.not.be.empty", myLocale.getText("main.image"));
+						errorMessage += ",";
+						flag = false;
+					}
+					iamgeList.add(mainImage);
+					if (row.size() > 15) {
+						if(StringUtils.isNotBlank(row.get(15))) {
+							iamgeList.add(row.get(15));
+						}
+					}
+					if (row.size() > 16) {
+						if(StringUtils.isNotBlank(row.get(16))) {
+							iamgeList.add(row.get(16));
+						}
+					}
+					if (row.size() > 17) {
+						if(StringUtils.isNotBlank(row.get(17))) {
+							iamgeList.add(row.get(17));
+						}
+					}
+					if (row.size() > 18) {
+						if(StringUtils.isNotBlank(row.get(18))) {
+							iamgeList.add(row.get(18));
+						}
+					}
+					if (row.size() > 19) {
+						if(StringUtils.isNotBlank(row.get(19))) {
+							iamgeList.add(row.get(19));
+						}
 					}
 				}
 			}
