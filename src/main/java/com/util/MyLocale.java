@@ -46,10 +46,10 @@ public class MyLocale {
 				arg = "";
 			}
 			text = text.replaceAll("\\{0\\}", arg);
-			User user = UserSingleton.getInstance().getUser();
-			if (null != user) {
-				text = text.replaceAll("\\{name\\}", user.getName());
-			}
+//			User user = UserSingleton.getInstance().getUser();
+//			if (null != user) {
+//				text = text.replaceAll("\\{name\\}", user.getName());
+//			}
 		}
 		return text;
 	}

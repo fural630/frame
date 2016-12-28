@@ -6,6 +6,9 @@ public class Product {
 	private String sku;
 	private String spu;
 	
+	private String color;
+	private String size;
+	
 	private String nameCn;
 	private String nameEn;
 	private String nameFr;
@@ -305,6 +308,18 @@ public class Product {
 	}
 	public void setMainImage(String mainImage) {
 		this.mainImage = mainImage;
+	}
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
+	public String getSize() {
+		return size;
+	}
+	public void setSize(String size) {
+		this.size = size;
 	}
 	
 }

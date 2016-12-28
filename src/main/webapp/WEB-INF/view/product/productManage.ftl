@@ -416,7 +416,7 @@
 		 		</tr>
 	 		</table>
 		</form>
-		<iframe name="iframe_shippingData" width="80%" height="200" frameborder="0"></iframe>
+		<iframe name="iframe_shippingData" width="100%" height="200" frameborder="0"></iframe>
 	</div>
 	
 	<div id="auditProductDialog" style="display:none;">

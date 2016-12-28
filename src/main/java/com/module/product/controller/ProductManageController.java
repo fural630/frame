@@ -159,15 +159,8 @@ public class ProductManageController extends MainPage{
 	}
 	
 	@RequestMapping("uploadProduct")
-	public String uploadProduct(HttpServletRequest request) {
-		MyDate myDate = new MyDate();
-		TreeMap messageOutput = new TreeMap(); 
-		Map countData = new HashMap();
-		int number = 0;
-		int successCounts = 0;
-    	int failureCounts = 0;
-		
-		
+	public String uploadProduct(HttpServletRequest request, Model model) {
+		Map outputData = new HashMap();
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
 		if (multipartResolver.isMultipart(request)) {
 			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
@@ -180,8 +173,7 @@ public class ProductManageController extends MainPage{
 					try {
 						file.transferTo(tmpFile);
 						Excel excel = new Excel(tmpFile.toString());
-						ArrayList<ArrayList<String>> dataArrayList = excel.toArray();
-						Dumper.dump(dataArrayList);
+						outputData = productService.uploadPorduct(excel.toArray());
 					} catch (IllegalStateException e) {
 						e.printStackTrace();
 					} catch (IOException e) {
@@ -190,49 +182,7 @@ public class ProductManageController extends MainPage{
 				}
 			}
 		}
-
-//		try {
-//			if (marketingOrderFileFileName.indexOf(".xlsx") > 0 || marketingOrderFileFileName.indexOf(".xls") > 0) {
-//				File tmpFile = new File(Constant.TMP_PATH + marketingOrderFileFileName);
-//				FileUtils.copyFile(marketingOrderFile, tmpFile);
-//				List<String> transationIdList = processImportMarketingOrder(tmpFile.toString());
-//				if (CollectionUtils.isEmpty(transationIdList)) {
-//					uploadMessage = new MyLocale().getText("file.content.format.error"); 
-//					return INPUT;
-//				}
-//				AmazonMarketingOrderDao amazonMarketingOrderDao = new AmazonMarketingOrderDao();
-//				for (String transationId : transationIdList) {
-//					if (StringUtils.isNotEmpty(transationId)) {
-//						number++;
-//						if (!amazonMarketingOrderDao.checkExist(transationId)) {
-//							AmazonMarketingOrder amazonMarketingOrder = new AmazonMarketingOrder();
-//							amazonMarketingOrder.setCreateTime(myDate.getCurrentDateTime());
-//							amazonMarketingOrder.setCreator(UserSingleton.getInstance().getUser().getId());
-//							amazonMarketingOrder.setOrderLevel(OrderLevel.SEO.getOrderLevel());
-//							amazonMarketingOrder.setStatus(0);
-//							amazonMarketingOrder.setTransactionId(transationId);
-//							amazonMarketingOrderDao.saveOrUpate(amazonMarketingOrder);
-//							successCounts++;
-//							messageOutput.put(number, new MyLocale().getText("upload.is.successfull") + "!");
-//						} else {
-//							failureCounts++;
-//							messageOutput.put(number, new MyLocale().getText("upload.amazon.marketing.order.failure", transationId.trim()));
-//						}
-//					}
-//				}
-//			} else {
-//				uploadMessage = "只能上传.xlsx或.xls";
-//				return INPUT;
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return INPUT;
-//		}
-//		countData.put("finalNumber", number);
-//		countData.put("successCounts", successCounts);
-//		countData.put("failureCounts" ,failureCounts);
-//		outputData.put("countData", countData);
-//		outputData.put("messageOutput", messageOutput);
+		model.addAttribute("outputData", outputData);
 		return "template/upload-message-page";
 	}
 }
