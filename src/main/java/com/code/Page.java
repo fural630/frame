@@ -13,11 +13,13 @@ public class Page {
 	private int totalPage;
 	private List<Integer> pageList = new ArrayList<Integer>();
 	private Map<String, Object> params = new HashMap<String, Object>();
+	private List<String> permissionBut = new ArrayList<String>();
 
 	public Page() {
 		pageList.add(10);
 		pageList.add(20);
-		pageList.add(30);
+		pageList.add(50);
+		pageList.add(100);
 	}
 
 	public int getPageNo() {
@@ -69,6 +71,14 @@ public class Page {
 
 	public void setPageList(List<Integer> pageList) {
 		this.pageList = pageList;
+	}
+
+	public List<String> getPermissionBut() {
+		return permissionBut;
+	}
+
+	public void setPermissionBut(List<String> permissionBut) {
+		this.permissionBut = permissionBut;
 	}
 
 }

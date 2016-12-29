@@ -8,10 +8,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.code.session.UserNavigatorSession;
+import com.code.session.UserSingleton;
 import com.frame.dao.NavigatorDao;
 import com.frame.model.Navigator;
 import com.frame.model.NavigatorList;
-import com.util.Dumper;
+import com.module.system.model.User;
 
 @Service
 public class NavigatorService {
@@ -44,32 +46,27 @@ public class NavigatorService {
 	public List<Navigator> findAll() {
 		return navigatorDao.findAll();
 	}
-
+	
 	public List<NavigatorList> parasNavigator(Integer userId) {
-		List<NavigatorList> navigatorLists = new ArrayList<NavigatorList>();
-		List<Navigator> firstNavigators = navigatorDao.getUserNavigator(userId, 0);
-		if (CollectionUtils.isNotEmpty(firstNavigators)) {
-			for (Navigator navigator : firstNavigators) {
+		List<NavigatorList> navigatorLists = parseUserNavigator(userId, 0);
+		return navigatorLists;
+	}
+
+	private List<NavigatorList> parseUserNavigator(Integer userId, Integer parentId) {
+		List<Navigator> userNavigators = navigatorDao.getUserNavigator(userId, parentId);
+		if (CollectionUtils.isNotEmpty(userNavigators)) {
+			List<NavigatorList> navigatorLists = new ArrayList<NavigatorList>();
+			for (Navigator navigator : userNavigators) {
 				NavigatorList navigatorList = new NavigatorList();
 				navigatorList.setIconClass(navigator.getIconClass());
 				navigatorList.setNameCn(navigator.getNameCn());
-				Integer id = navigator.getId();
-				List<Navigator> secondNavigators = navigatorDao.getUserNavigator(userId, id);
-				if (CollectionUtils.isNotEmpty(secondNavigators)) {
-					List<NavigatorList> navigatorLists2 = new ArrayList<NavigatorList>();
-					for (Navigator navigator2 : secondNavigators) {
-						NavigatorList navigatorList2 = new NavigatorList();
-						navigatorList2.setIconClass(navigator2.getIconClass());
-						navigatorList2.setUrl(navigator2.getUrl());
-						navigatorList2.setNameCn(navigator2.getNameCn());
-						navigatorLists2.add(navigatorList2);
-					}
-					navigatorList.setNavigatorList(navigatorLists2);
-				}
+				navigatorList.setUrl(navigator.getUrl());
+				navigatorList.setNavigatorList(parseUserNavigator(userId, navigator.getId()));
 				navigatorLists.add(navigatorList);
 			}
-		}
-		return navigatorLists;
+			return navigatorLists;
+		} 
+		return null;
 	}
 
 	public List<Map<String, Object>> loadNavigatorTreeByUserId(Integer userId) {
@@ -82,6 +79,30 @@ public class NavigatorService {
 
 	public void insertUserNavigator(Map<String, Integer> userNavigatorMap) {
 		navigatorDao.insertUserNavigator(userNavigatorMap);
+	}
+
+	public List<NavigatorList> initPermission() {
+		User user = UserSingleton.getInstance().getUser();
+		
+		List<NavigatorList> navigatorLists = UserNavigatorSession.getInstance().getNavigatorList();
+		if (CollectionUtils.isEmpty(navigatorLists)) {
+			navigatorLists = this.parasNavigator(user.getId());
+			UserNavigatorSession.getInstance().setNavigatorList(navigatorLists);
+		}
+		
+		List<String> permissionUrlList = UserNavigatorSession.getInstance().getPermissionUrlList();
+		if (CollectionUtils.isEmpty(permissionUrlList)) {
+			permissionUrlList = navigatorDao.getUserPermissionUrlByUserId(user.getId());
+			UserNavigatorSession.getInstance().setPermissionUrlList(permissionUrlList);
+		}
+		
+		List<String> permissionButtonList = UserNavigatorSession.getInstance().getPermissionButtonList();
+		if (CollectionUtils.isEmpty(permissionButtonList)) {
+			permissionButtonList = navigatorDao.getUserPermissionButtonByUserId(user.getId());
+			UserNavigatorSession.getInstance().setPermissionButtonList(permissionButtonList);
+		}
+		
+		return navigatorLists;
 	}
 	
 }

@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : 127.0.0.1
-Source Server Version : 50027
+Source Server Version : 50714
 Source Host           : localhost:3306
 Source Database       : producterp
 
 Target Server Type    : MYSQL
-Target Server Version : 50027
+Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2016-12-29 00:02:32
+Date: 2016-12-29 17:59:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,38 +20,39 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `navigator`;
 CREATE TABLE `navigator` (
-  `id` int(11) NOT NULL auto_increment,
-  `name` varchar(255) default NULL,
-  `nameCn` varchar(255) default NULL,
-  `url` varchar(255) default NULL,
-  `iconClass` varchar(255) default NULL,
-  `isParent` int(11) default NULL,
-  `parentId` int(11) default NULL,
-  `sort` int(11) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `nameCn` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `iconClass` varchar(255) DEFAULT NULL,
+  `isParent` int(11) DEFAULT NULL,
+  `parentId` int(11) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of navigator
 -- ----------------------------
-INSERT INTO `navigator` VALUES ('8', 'system.manage', '系统管理', null, 'icon-wrench', '1', '0', '1');
-INSERT INTO `navigator` VALUES ('9', 'navigator.user.manage', '用户管理', '/system/userManage', 'icon-user', '0', '8', null);
-INSERT INTO `navigator` VALUES ('10', 'product.center', '商品中心', null, 'icon-cube-alt', '1', '0', '2');
-INSERT INTO `navigator` VALUES ('11', 'product.manage', '商品管理', '/product/productManage', 'icon-cubes', '0', '10', null);
-INSERT INTO `navigator` VALUES ('12', 'navigator.cdiscount.area', 'Cdiscount 专区', null, 'icon-shopping-cart', '1', '0', '3');
-INSERT INTO `navigator` VALUES ('13', 'cdiscount.publish.manage', '刊登管理', '/cdiscount/cdiscountPublishManage', 'icon-user', '0', '12', null);
-INSERT INTO `navigator` VALUES ('14', 'cdiscount.ean.manage', 'EAN管理', '/cdiscount/cdiscountEanManage', 'icon-user', '0', '12', null);
+INSERT INTO `navigator` VALUES ('29', 'system.manage', '系统管理', null, 'icon-wrench', '1', '0', '1');
+INSERT INTO `navigator` VALUES ('30', 'navigator.user.manage', '用户管理', '/system/userManage', 'icon-user', '0', '29', null);
+INSERT INTO `navigator` VALUES ('31', 'product.center', '商品中心', null, 'icon-cube-alt', '1', '0', '2');
+INSERT INTO `navigator` VALUES ('32', 'product.manage', '商品管理', '/product/productManage', 'icon-cubes', '1', '31', null);
+INSERT INTO `navigator` VALUES ('34', 'navigator.cdiscount.area', 'Cdiscount 专区', null, 'icon-shopping-cart', '1', '0', '3');
+INSERT INTO `navigator` VALUES ('36', 'cdiscount.ean.manage', 'EAN管理', '/cdiscount/cdiscountEanManage', 'icon-user', '0', '34', null);
+INSERT INTO `navigator` VALUES ('38', 'cdiscount.publish.manage', '刊登管理', '/cdiscount/cdiscountPublishManage', 'icon-user', '0', '34', null);
+INSERT INTO `navigator` VALUES ('39', 'add.product', '添加产品', '/product/saveProduct', null, '0', '32', null);
 
 -- ----------------------------
 -- Table structure for navigator_user
 -- ----------------------------
 DROP TABLE IF EXISTS `navigator_user`;
 CREATE TABLE `navigator_user` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) NOT NULL,
   `navigatorId` int(11) NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of navigator_user
@@ -63,39 +64,46 @@ INSERT INTO `navigator_user` VALUES ('20', '14', '8');
 INSERT INTO `navigator_user` VALUES ('21', '14', '9');
 INSERT INTO `navigator_user` VALUES ('22', '14', '10');
 INSERT INTO `navigator_user` VALUES ('23', '14', '11');
-INSERT INTO `navigator_user` VALUES ('24', '2', '8');
-INSERT INTO `navigator_user` VALUES ('25', '2', '9');
-INSERT INTO `navigator_user` VALUES ('26', '2', '10');
-INSERT INTO `navigator_user` VALUES ('27', '2', '11');
-INSERT INTO `navigator_user` VALUES ('28', '2', '12');
-INSERT INTO `navigator_user` VALUES ('29', '2', '13');
-INSERT INTO `navigator_user` VALUES ('30', '2', '14');
+INSERT INTO `navigator_user` VALUES ('47', '7', '29');
+INSERT INTO `navigator_user` VALUES ('48', '7', '30');
+INSERT INTO `navigator_user` VALUES ('49', '7', '31');
+INSERT INTO `navigator_user` VALUES ('50', '7', '32');
+INSERT INTO `navigator_user` VALUES ('51', '7', '34');
+INSERT INTO `navigator_user` VALUES ('52', '7', '35');
+INSERT INTO `navigator_user` VALUES ('53', '7', '36');
+INSERT INTO `navigator_user` VALUES ('54', '2', '29');
+INSERT INTO `navigator_user` VALUES ('55', '2', '30');
+INSERT INTO `navigator_user` VALUES ('56', '2', '31');
+INSERT INTO `navigator_user` VALUES ('57', '2', '32');
+INSERT INTO `navigator_user` VALUES ('58', '2', '39');
+INSERT INTO `navigator_user` VALUES ('59', '2', '34');
+INSERT INTO `navigator_user` VALUES ('60', '2', '36');
 
 -- ----------------------------
 -- Table structure for product
 -- ----------------------------
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
-  `id` int(11) NOT NULL auto_increment,
-  `sku` varchar(255) default NULL,
-  `spu` varchar(255) default NULL,
-  `nameCn` varchar(255) default NULL,
-  `nameEn` varchar(255) default NULL,
-  `nameFr` varchar(255) default NULL,
-  `nameDe` varchar(255) default NULL,
-  `nameJp` varchar(255) default NULL,
-  `nameIt` varchar(255) default NULL,
-  `nameEs` varchar(255) default NULL,
-  `declarationNameCn` varchar(255) default NULL,
-  `declarationNameEn` varchar(255) default NULL,
-  `purchaseUrl` varchar(255) default NULL,
-  `purchasePrice` double default NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sku` varchar(255) DEFAULT NULL,
+  `spu` varchar(255) DEFAULT NULL,
+  `nameCn` varchar(255) DEFAULT NULL,
+  `nameEn` varchar(255) DEFAULT NULL,
+  `nameFr` varchar(255) DEFAULT NULL,
+  `nameDe` varchar(255) DEFAULT NULL,
+  `nameJp` varchar(255) DEFAULT NULL,
+  `nameIt` varchar(255) DEFAULT NULL,
+  `nameEs` varchar(255) DEFAULT NULL,
+  `declarationNameCn` varchar(255) DEFAULT NULL,
+  `declarationNameEn` varchar(255) DEFAULT NULL,
+  `purchaseUrl` varchar(255) DEFAULT NULL,
+  `purchasePrice` double DEFAULT NULL,
   `purchaseNotes` text,
   `salesNotes` text,
-  `packageWeight` double default NULL,
-  `packageLength` double default NULL,
-  `packageWidth` double default NULL,
-  `packageHeight` double default NULL,
+  `packageWeight` double DEFAULT NULL,
+  `packageLength` double DEFAULT NULL,
+  `packageWidth` double DEFAULT NULL,
+  `packageHeight` double DEFAULT NULL,
   `descriptionCn` text,
   `descriptionEn` text,
   `descriptionFr` text,
@@ -110,18 +118,18 @@ CREATE TABLE `product` (
   `briefDescriptionDe` text,
   `briefDescriptionFr` text,
   `briefDescriptionEn` text,
-  `mainImage` varchar(255) default NULL,
+  `mainImage` varchar(255) DEFAULT NULL,
   `optionLog` text,
-  `creatorId` int(11) default NULL,
-  `editorId` int(11) default NULL,
-  `publishUserId` int(11) default NULL,
-  `auditStatus` int(11) default NULL,
-  `createTime` varchar(255) default NULL,
-  `updateTime` varchar(255) default NULL,
-  `size` varchar(255) default NULL,
-  `color` varchar(255) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `creatorId` int(11) DEFAULT NULL,
+  `editorId` int(11) DEFAULT NULL,
+  `publishUserId` int(11) DEFAULT NULL,
+  `auditStatus` int(11) DEFAULT NULL,
+  `createTime` varchar(255) DEFAULT NULL,
+  `updateTime` varchar(255) DEFAULT NULL,
+  `size` varchar(255) DEFAULT NULL,
+  `color` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product
@@ -142,13 +150,13 @@ INSERT INTO `product` VALUES ('17', 'DV3', 'tes2', '照片', 'photo', null, null
 -- ----------------------------
 DROP TABLE IF EXISTS `product_audit`;
 CREATE TABLE `product_audit` (
-  `id` int(11) NOT NULL auto_increment,
-  `userId` int(11) default NULL,
-  `productId` int(11) default NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) DEFAULT NULL,
+  `productId` int(11) DEFAULT NULL,
   `comment` text,
-  `createTime` varchar(255) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `createTime` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product_audit
@@ -161,11 +169,11 @@ INSERT INTO `product_audit` VALUES ('2', '2', '15', '好，已经审核', '2016-
 -- ----------------------------
 DROP TABLE IF EXISTS `product_image`;
 CREATE TABLE `product_image` (
-  `id` int(11) NOT NULL auto_increment,
-  `productId` int(11) default NULL,
-  `imageUrl` varchar(255) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `productId` int(11) DEFAULT NULL,
+  `imageUrl` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product_image
@@ -188,15 +196,15 @@ INSERT INTO `product_image` VALUES ('33', '17', 'http://www.guphotos.com/images/
 -- ----------------------------
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
-  `id` int(11) NOT NULL auto_increment,
-  `role_name` varchar(100) default NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(100) DEFAULT NULL,
   `description` text,
-  `create_time` varchar(30) default NULL,
-  `update_time` varchar(30) default NULL,
+  `create_time` varchar(30) DEFAULT NULL,
+  `update_time` varchar(30) DEFAULT NULL,
   `log` text,
-  `creator` int(11) default NULL,
-  `updateor` int(11) default NULL,
-  PRIMARY KEY  (`id`)
+  `creator` int(11) DEFAULT NULL,
+  `updateor` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -208,18 +216,18 @@ CREATE TABLE `role` (
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL auto_increment,
-  `name` varchar(255) default NULL,
-  `userName` varchar(255) default NULL,
-  `password` varchar(255) default NULL,
-  `phone` char(30) default NULL,
-  `status` int(11) default NULL,
-  `email` varchar(255) default NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `userName` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `phone` char(30) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `log` text,
-  `createTime` char(20) default NULL,
-  `role` int(11) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `createTime` char(20) DEFAULT NULL,
+  `role` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user

@@ -12,9 +12,11 @@
     <form action="/product/productManage" id="mainPageForm" method="post">
   	<div class="current_nav_name clearfix">产品中心
 		<div class="fr small_size"> 
-		<button class="btn btn-sm " type="button" onclick="showProductDialog('添加产品')">
-			<i class="icon icon-plus-sign"></i> 添加产品
-		</button>
+		<#if page.permissionBut?seq_contains("add.product")>
+			<button class="btn btn-sm " type="button" onclick="showProductDialog('<@s.message "add.product"/>')">
+				<i class="icon icon-plus-sign"></i> <@s.message "add.product"/>
+			</button>
+		</#if>
 		<button class="btn btn-sm " type="button" onclick="showUploadProductDialog('批量导入产品')">
 			<i class="icon icon-upload-alt"></i> 批量导入产品
 		</button>

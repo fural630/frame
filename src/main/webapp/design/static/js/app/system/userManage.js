@@ -81,12 +81,13 @@ function saveUserNavigator() {
 function loadNavigatorTree(userId) {
 	var setting = {
 		check: {
-			enable: true
+			enable: true,
+			chkboxType : { "Y" : "ps", "N" : "s" }
 		},
 		data: {
 			simpleData: {
 				enable: true
-			},
+			}
 		},
 		async: {
 			enable: true,

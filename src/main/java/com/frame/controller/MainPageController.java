@@ -16,6 +16,7 @@ import com.frame.model.NavigatorList;
 import com.frame.service.NavigatorService;
 import com.module.system.model.User;
 import com.module.system.service.UserService;
+import com.util.Dumper;
 import com.util.MyLocale;
 
 @Controller
@@ -35,11 +36,7 @@ public class MainPageController {
 	@RequestMapping("main")
 	public String goToMainPage(Model model) {
 		User user = UserSingleton.getInstance().getUser();
-		List<NavigatorList> navigatorLists = UserNavigatorSession.getInstance().getNavigatorList();
-		if (CollectionUtils.isEmpty(navigatorLists)) {
-			navigatorLists = navigatorService.parasNavigator(user.getId());
-			UserNavigatorSession.getInstance().setNavigatorList(navigatorLists);
-		}
+		List<NavigatorList> navigatorLists = navigatorService.initPermission();
 		model.addAttribute("navigatorLists", navigatorLists);
 		model.addAttribute("user", user);
 		return "frame/main";

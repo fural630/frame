@@ -27,6 +27,10 @@
     	select * from navigator where name = #{name}
     </select>
     
+    <select id="selectNavigatorByLink" resultType="Navigator" parameterType="string">
+    	select * from navigator where url = #{link}
+    </select>
+    
     <update id="updateNavigator" parameterType="Navigator">  
         update navigator
         <set>
@@ -115,5 +119,16 @@
 			#{item}  
 		</foreach> 
     </delete>
+    
+    <select id="getUserPermissionUrlByUserId" parameterType="int" resultType="string">
+    	select t.url from navigator t where id in 
+    		(select t.navigatorId from navigator_user t where userId = #{userId}) 
+    			and t.url != ''
+    </select>
+    
+    <select id="getUserPermissionButtonByUserId" parameterType="int" resultType="string">
+    	select t.name from navigator t where id in 
+    		(select t.navigatorId from navigator_user t where userId = #{userId})
+    </select>
       
 </mapper>  
