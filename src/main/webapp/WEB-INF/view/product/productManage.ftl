@@ -17,9 +17,11 @@
 				<i class="icon icon-plus-sign"></i> <@s.message "add.product"/>
 			</button>
 		</#if>
-		<button class="btn btn-sm " type="button" onclick="showUploadProductDialog('批量导入产品')">
-			<i class="icon icon-upload-alt"></i> 批量导入产品
-		</button>
+		<#if page.permissionBut?seq_contains("batch.import.product")>
+			<button class="btn btn-sm " type="button" onclick="showUploadProductDialog('<@s.message "batch.import.product"/>')">
+				<i class="icon icon-upload-alt"></i> <@s.message "batch.import.product"/>
+			</button>
+		</#if>
 		</div>
 	</div>
 	<#include "../common/page.ftl"/>
@@ -189,12 +191,21 @@
 						  	<span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu pull-right" role="menu">
-						    <li><a href="javascript:void(0)" onclick="editProduct(${obj.id})"><i class="icon icon-edit"></i> 编辑 </a></li>
-						    <li><a href="javascript:void(0)" onclick="reviewAudit(${obj.id})" ><i class="icon icon-check-board"></i> 查看审核 </a></li>
-						    <li><a href="javascript:void(0)" onclick="distributionEditUser(${obj.id})" ><i class="icon icon-hand-right"></i> 分配编辑人</a></li>
-						    <li><a href="javascript:void(0)" onclick="distributionPublishUser(${obj.id})" ><i class="icon icon-hand-right"></i> 分配刊登人</a></li>
-						    <li class="divider"></li>
-						    <li><a href="javascript:void(0)" onclick="confirmMsg('deleteProduct(${obj.id})')" ><i class="icon icon-trash"></i> 删除 </a></li>
+						  	<#if page.params._roleLevel gte 10>
+							    <li><a href="javascript:void(0)" onclick="editProduct(${obj.id})"><i class="icon icon-edit"></i> 编辑 </a></li>
+							    <li><a href="javascript:void(0)" onclick="reviewAudit(${obj.id})" ><i class="icon icon-check-board"></i> 查看审核 </a></li>
+							    <li><a href="javascript:void(0)" onclick="distributionEditUser(${obj.id})" ><i class="icon icon-hand-right"></i> 分配编辑人</a></li>
+							    <li><a href="javascript:void(0)" onclick="distributionPublishUser(${obj.id})" ><i class="icon icon-hand-right"></i> 分配刊登人</a></li>
+							    <li class="divider"></li>
+							    <li><a href="javascript:void(0)" onclick="confirmMsg('deleteProduct(${obj.id})')" ><i class="icon icon-trash"></i> 删除 </a></li>
+						  	<#else>
+						  		<#if obj.editorId??>
+						  			<#if obj.editorId == page.params._userId>
+						  				<li><a href="javascript:void(0)" onclick="editProduct(${obj.id})"><i class="icon icon-edit"></i> 编辑 </a></li>
+							    		<li><a href="javascript:void(0)" onclick="reviewAudit(${obj.id})" ><i class="icon icon-check-board"></i> 查看审核 </a></li>
+						  			</#if>
+						  		</#if>
+						  	</#if>
 						  </ul>
 						</div>
 		            </td>
@@ -215,10 +226,18 @@
 							<td class="td_right">批量操作&nbsp;&nbsp;
 								<select class="sel" id="batchOptionSelect">
 									<option value="" selected></option>
-									<option value="batchDistributeEditUser">批量分配编辑人</option>
-									<option value="batchDistributePublishUser">批量分配刊登人</option>
-									<option value="batchApproved">批量通过审核</option>
-									<option value="batchDeleteProduct">批量删除</option>
+									<#if page.permissionBut?seq_contains("batch.distribute.edit.user")>
+										<option value="batchDistributeEditUser">批量分配编辑人</option>
+									</#if>
+									<#if page.permissionBut?seq_contains("batch.distribute.publish.user")>
+										<option value="batchDistributePublishUser">批量分配刊登人</option>
+									</#if>
+									<#if page.params._roleLevel gte 10>
+										<option value="batchApproved">批量通过审核</option>
+									</#if>
+									<#if page.permissionBut?seq_contains("batch.delete.product")>
+										<option value="batchDeleteProduct">批量删除</option>
+									</#if>
 								</select>
 								&nbsp; <button class="btn btn-sm" type="button" onclick="batchOptionSubmit()">提交</button>
 							</td>

@@ -87,6 +87,11 @@
 	   		<if test="params.createTimeTo !=null and params.createTimeTo!=''" >
 	   			<![CDATA[ and t.createTime <= #{params.createTimeTo} ]]>
 	   		</if>
+	   		
+	   		<if test="params._roleLevel &lt; 10" >
+	   			and t.creatorId = #{params._userId} or t.editorId = #{params._userId}
+	   		</if>
+	   		
    		</where>
    		order by t.id desc
     </select>
