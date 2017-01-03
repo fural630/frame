@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.application.libraries.constentEnum.ProductAuditStatusEnum;
 import com.application.libraries.constentEnum.ReturnMessageEnum;
 import com.code.Page;
 import com.code.frame.Constant;
@@ -51,8 +52,6 @@ public class ProductManageController extends MainPage{
 	@ResponseBody
 	public String saveProduct(Product product, 
 			@RequestParam(value = "productImageList[]", required = false) List<String> productImageList) {
-		Dumper.dump(product);
-		Dumper.dump(productImageList);
 		if (null == product.getId()) {
 			productService.createNewProduct(product, productImageList);
 		} else {
@@ -103,7 +102,9 @@ public class ProductManageController extends MainPage{
 			String ids[] = productIds.split(",");
 			if (ids.length > 0) {
 				for (String productIdStr : ids) {
-					productService.saveProductEditUser(userId, Integer.parseInt(productIdStr));
+					Integer productId = Integer.parseInt(productIdStr);
+					productService.saveProductEditUser(userId, productId);
+					productService.updateProductAuditStatus(productId, ProductAuditStatusEnum.WAIT_EDIT);
 				}
 			}
 		} else {

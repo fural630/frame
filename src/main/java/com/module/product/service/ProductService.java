@@ -1,7 +1,5 @@
 package com.module.product.service;
 
-import java.awt.Image;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +18,6 @@ import com.module.product.dao.ProductDao;
 import com.module.product.model.Product;
 import com.module.product.model.ProductAudit;
 import com.module.system.model.User;
-import com.util.Dumper;
 import com.util.Excel;
 import com.util.MyDate;
 import com.util.MyLocale;
@@ -40,7 +37,7 @@ public class ProductService {
 		User user = UserSingleton.getInstance().getUser();
 		MyDate myDate = new MyDate();
 		MyLocale myLocale = new MyLocale();
-		product.setAuditStatus(ProductAuditStatusEnum.WAIT_EDIT.getValue());
+		product.setAuditStatus(ProductAuditStatusEnum.WAIT_DISTRIBUTE.getValue());
 		product.setOptionLog(SysRemark.appendMore("", myLocale.getText("create.product")));
 		product.setCreatorId(user.getId());
 		product.setCreateTime(myDate.getCurrentDateTime());
@@ -78,6 +75,10 @@ public class ProductService {
 			productDao.insertProductImage(productImageMap);
 		}
 	}
+	
+	public void updateProductAuditStatus(Integer productId, ProductAuditStatusEnum status) {
+		productDao.updateProductAuditStatus(productId, status.getValue());
+	}
 
 	public void deleteProductById(Integer id) {
 		productDao.deleteProductById(id);
@@ -114,12 +115,6 @@ public class ProductService {
 			return false;
 		} 
 		return true;
-	}
-	
-	public static void main(String[] args) {
-		Excel excel = new Excel("E:\\test.txt");
-		ProductService productService = new ProductService();
-		productService.uploadPorduct(excel.toArray());
 	}
 
 	public Map uploadPorduct(ArrayList<ArrayList<String>> data) {

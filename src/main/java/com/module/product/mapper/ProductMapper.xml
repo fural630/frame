@@ -390,4 +390,9 @@
     <select id="getProductBySku" parameterType="string" resultType="Product">
     	select * from product where sku = #{sku}
     </select>
+    
+    <update id="updateProductAuditStatus">
+    	update product set auditStatus = #{status}
+    		where id = #{productId}
+    </update>
 </mapper>
