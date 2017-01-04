@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.application.libraries.constentEnum.OpenCloseEnum;
 import com.code.Page;
 import com.code.encryption.DESEncrypt;
+import com.code.session.UserSingleton;
 import com.module.system.dao.UserDao;
 import com.module.system.model.User;
 import com.util.Dumper;
@@ -70,5 +71,10 @@ public class UserService {
 
 	public void deleteUserById(Integer id) {
 		userDao.deleteUserById(id);
+	}
+
+	public Integer getUserRoleLevel() {
+		User user = UserSingleton.getInstance().getUser();
+		return userDao.getUserRoleLevel(user.getId());
 	}
 }

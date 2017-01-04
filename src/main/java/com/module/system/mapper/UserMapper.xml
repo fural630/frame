@@ -119,4 +119,8 @@
    		</where>
    		order by t.id desc
     </select>
+    
+    <select id="getUserRoleLevel" parameterType="int" resultType="int">
+    	select role from user where id = #{id}
+    </select>
 </mapper>  

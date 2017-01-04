@@ -457,6 +457,7 @@
 	</div>
 	
 	<div id="auditProductDialog" style="display:none;">
+		<input type="hidden" name="id"/>
 		<div class="comments">
 		<div id="auditProductComment" style="max-height:360px;overflow: scroll; scroll: both; padding:5px 5px;">
 		  <section class="comments-list">
@@ -467,7 +468,7 @@
 		      <a href="###" class="avatar"><i class="icon-user icon-2x"></i></a>
 		      <form class="form">
 		        <div class="form-group">
-		          <textarea class="form-control new-comment-text" rows="3" placeholder="撰写留言..." style="width:98%"></textarea>
+		          <textarea name="auditMessage" class="form-control new-comment-text" rows="3" placeholder="撰写留言..." style="width:98%"></textarea>
 		        </div>
 		      </form>
 		    </div>

@@ -24,6 +24,7 @@ import com.application.libraries.constentEnum.ProductAuditStatusEnum;
 import com.application.libraries.constentEnum.ReturnMessageEnum;
 import com.code.Page;
 import com.code.frame.Constant;
+import com.code.session.UserSingleton;
 import com.code.view.MainPage;
 import com.code.view.ReturnMessage;
 import com.module.product.model.Product;
@@ -32,6 +33,7 @@ import com.module.product.service.ProductService;
 import com.util.Dumper;
 import com.util.Excel;
 import com.util.JsonUtil;
+import com.util.MyDate;
 
 @Controller
 @RequestMapping("product")
@@ -187,5 +189,20 @@ public class ProductManageController extends MainPage{
 		}
 		model.addAttribute("outputData", outputData);
 		return "template/upload-message-page";
+	}
+	
+	
+	@RequestMapping("submitReview")
+	@ResponseBody
+	public String submitReview(Integer productId, String auditMessage) {
+		ProductAudit productAudit = new ProductAudit();
+		productAudit.setComment(auditMessage);
+		productAudit.setCreateTime(new MyDate().getCurrentDateTime());
+		productAudit.setUserId(UserSingleton.getInstance().getUser().getId());
+		productAudit.setProductId(productId);
+		productService.insertProductAudit(productAudit);
+		productService.updateProductAuditStatus(productId, ProductAuditStatusEnum.WAIT_AUDITED);
+		List<ProductAudit> productAuditList = productService.getProductAuditListByProductId(productId);
+		return JsonUtil.toJsonStr(productAuditList);
 	}
 }

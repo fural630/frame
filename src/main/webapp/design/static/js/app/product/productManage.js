@@ -90,30 +90,8 @@ function initDialog () {
 		width: 800,
 		height: 600,
 		resizable: false,
-		buttons : [ {
-				text : "通过",
-				icons : {
-					primary : "ui-icon-heart"
-				},
-				click : function() { 
-				}
-			},{
-				text : "保存审批语",
-				icons : {
-					primary : "ui-icon-heart"
-				},
-				click : function() {
-				}
-			},{
-				text : "申请审核",
-				icons : {
-					primary : "ui-icon-heart"
-				},
-				click : function() {
-				}
-			}
-		],
 		close: function( event, ui ) {
+			refresh(1000);
 		}
 	});
 	
@@ -480,15 +458,44 @@ function showUploadProductDialog(title) {
 }
 
 function showProductAuditDialog(title) {
+	var roleLevel = getUserRoleLevel();
+	roleLevel = Number(roleLevel);
+	if(roleLevel >=10) {
+		$("#auditProductDialog").dialog("option", "buttons", [ {
+			text : "通过",
+			icons : {
+				primary : "ui-icon-heart"
+			},
+			click : function() {
+			}
+		}, {
+			text : "打回待编辑",
+			icons : {
+				primary : "ui-icon-heart"
+			},
+			click : function() {
+			}
+		} ]);
+	} else {
+		$("#auditProductDialog").dialog("option", "buttons", [ {
+			text : "申请审核",
+			icons : {
+				primary : "ui-icon-heart"
+			},
+			click : function() {
+				submitReview();
+			}
+		}]);
+	}
 	$("#auditProductDialog").dialog("option", "title", title);
 	$("#auditProductDialog").dialog("open");
-	$("#auditProductComment").scrollTop($("#auditProductComment")[0].scrollHeight);		//设置滚动条最底端
+	$("#auditProductComment").scrollTop($("#auditProductComment")[0].scrollHeight);		// 设置滚动条最底端
 }
 
 function showDistributionEditUserDialog(title) {
 	$("#distributionEditUserDialog").dialog("option", "title", title);
 	$("#distributionEditUserDialog").dialog("open");
-//	$("#distributionEditUserDialog").find("select[name='editUserSelect']").chosen({
+// $("#distributionEditUserDialog").find("select[name='editUserSelect']").chosen({
 //	    disable_search_threshold: 5, // 5 个以下的选择项则不显示检索框
 //	    search_contains: true         // 从任意位置开始检索
 //	});
@@ -497,6 +504,48 @@ function showDistributionEditUserDialog(title) {
 function showDistributionPublishUserDialog (title) {
 	$("#distributionPublishUserDialog").dialog("option", "title", title);
 	$("#distributionPublishUserDialog").dialog("open");
+}
+
+function submitReview() {
+	if(validateAuditMessage()) {
+		var dialog = $("#auditProductDialog");
+		var productId = dialog.find("input[name=id]").val();
+		var auditMessage = dialog.find("textarea[name=auditMessage]").val();
+		$.ajax({
+			url : "/product/submitReview",
+			type: 'POST',
+			dataType : "json",
+			data : {
+				productId : productId,
+				auditMessage : auditMessage
+			},
+			success : function (data) {
+				var productAuditList = data;
+				dialog.find("textarea[name=auditMessage]").val("");
+				createProductAuditList(productAuditList);
+				var param = {
+					status : 1
+				};
+				$.message.showMessage(param);
+			}
+		});
+	}
+}
+
+function validateAuditMessage() {
+	var dialog = $("#auditProductDialog");
+	
+	
+	var auditMessage = dialog.find("textarea[name=auditMessage]").val();
+	if ($.trim(auditMessage) == "") {
+		var param = {
+			status : 0,
+			message : "请填写留言"
+		};
+		$.message.showMessage(param);
+		return false;
+	}
+	return true;
 }
 
 function reviewAudit(productId) {
@@ -511,6 +560,7 @@ function reviewAudit(productId) {
 		success : function (data) {
 			var productAuditList = data;
 			createProductAuditList(productAuditList);
+			dialog.find("input[name=id]").val(productId);
 			showProductAuditDialog("审核进度");
 		}
 	});
@@ -680,4 +730,18 @@ function deleteProduct(id) {
 			}
 		}
 	});
+}
+
+function getUserRoleLevel() {
+	var level = 0;
+	$.ajax({
+		url : "/system/getUserRoleLevel",
+		type: 'POST',
+		dataType : "json",
+		async: false,
+		success : function (data) {
+			level = data;
+		}
+	});
+	return level;
 }

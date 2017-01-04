@@ -1,3 +1,4 @@
+
 package com.module.system.controller;
 
 import java.util.List;
@@ -111,5 +112,12 @@ public class UserManagerController extends MainPage{
 			}
 		}
 		return JsonUtil.toJsonStr(returnMessage);
+	}
+	
+	@RequestMapping("getUserRoleLevel")
+	@ResponseBody
+	public String getUserRoleLevel() {
+		Integer roleLevel = userService.getUserRoleLevel();
+		return JsonUtil.toJsonStr(roleLevel);
 	}
 }

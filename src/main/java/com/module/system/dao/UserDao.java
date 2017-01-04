@@ -18,4 +18,5 @@ public interface UserDao {
 	public User getUserByIdAndCreator(@Param("id") Integer id, @Param("loginUserId") Integer loginUserId);
 	public void deleteUserById(Integer id);
 	public List<User> findNoClosedAll();
+	public Integer getUserRoleLevel(Integer id);
 }
