@@ -233,7 +233,7 @@
 										<option value="batchDistributePublishUser">批量分配刊登人</option>
 									</#if>
 									<#if page.params._roleLevel gte 10>
-										<option value="batchApproved">批量通过审核</option>
+										<!--<option value="batchApproved">批量通过审核</option>-->
 									</#if>
 									<#if page.permissionBut?seq_contains("batch.delete.product")>
 										<option value="batchDeleteProduct">批量删除</option>
@@ -314,7 +314,7 @@
 			 	注意：第一张图片为主图，拖拽图片可移动图片位置。删除图片后，点击保存才会生效。
 			</div>
 			<input type="text" class="txt" style="width:80%;" id="imageUrlAddress" placeholder="图片地址/Url" 
-				value="http://www.guphotos.com/images/D/D1816W-EU/D1816W-EU-4-375a.jpg"/>
+				value=""/>
 		  	<button class="btn btn-sm " type="button" onclick="addImageUrlAddress();">
 				<i class="icon icon-plus-sign"></i> 添加
 			</button>

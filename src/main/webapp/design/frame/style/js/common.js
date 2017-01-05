@@ -119,7 +119,7 @@ function pageNoSelectAll() {
 function pageUnselected() {
 	var mainPageCheckBox = $("input[name=main_page_checkbox]");
 	mainPageCheckBox.each(function(){
-		$(this).attr("checked", !this.checked); 
+		$(this).prop("checked", !$(this).is(':checked'));
 	});
 	countCheckbox();
 }

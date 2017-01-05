@@ -395,4 +395,8 @@
     	update product set auditStatus = #{status}
     		where id = #{productId}
     </update>
+    
+    <select id="getProductAuditStatus" parameterType="int" resultType="int">
+    	select auditStatus from product where id = #{productId}
+    </select>
 </mapper>

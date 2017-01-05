@@ -91,7 +91,6 @@ function initDialog () {
 		height: 600,
 		resizable: false,
 		close: function( event, ui ) {
-			refresh(1000);
 		}
 	});
 	
@@ -467,6 +466,7 @@ function showProductAuditDialog(title) {
 				primary : "ui-icon-heart"
 			},
 			click : function() {
+				passProductAudit();
 			}
 		}, {
 			text : "打回待编辑",
@@ -474,8 +474,18 @@ function showProductAuditDialog(title) {
 				primary : "ui-icon-heart"
 			},
 			click : function() {
+				pendingReExamination();
 			}
-		} ]);
+		}, {
+			text : "关闭刷新",
+			icons : {
+				primary : "ui-icon-heart"
+			},
+			click : function() {
+				$(this).dialog("close");
+				refresh(1000);
+			}
+		}]);
 	} else {
 		$("#auditProductDialog").dialog("option", "buttons", [ {
 			text : "申请审核",
@@ -484,6 +494,15 @@ function showProductAuditDialog(title) {
 			},
 			click : function() {
 				submitReview();
+			}
+		}, {
+			text : "关闭刷新",
+			icons : {
+				primary : "ui-icon-heart"
+			},
+			click : function() {
+				$(this).dialog("close");
+				refresh(1000);
 			}
 		}]);
 	}
@@ -520,22 +539,73 @@ function submitReview() {
 				auditMessage : auditMessage
 			},
 			success : function (data) {
-				var productAuditList = data;
-				dialog.find("textarea[name=auditMessage]").val("");
-				createProductAuditList(productAuditList);
-				var param = {
-					status : 1
-				};
-				$.message.showMessage(param);
+				$.message.showMessage(data);
+				if (data.status == 1) {
+					var productAuditList = data.data;
+					dialog.find("textarea[name=auditMessage]").val("");
+					createProductAuditList(productAuditList);
+				}
 			}
 		});
 	}
 }
 
+function pendingReExamination() {
+	if(validateAuditMessage()) {
+		var dialog = $("#auditProductDialog");
+		var productId = dialog.find("input[name=id]").val();
+		var auditMessage = dialog.find("textarea[name=auditMessage]").val();
+		$.ajax({
+			url : "/product/pendingReExamination",
+			type: 'POST',
+			dataType : "json",
+			data : {
+				productId : productId,
+				auditMessage : auditMessage
+			},
+			success : function (data) {
+				$.message.showMessage(data);
+				if (data.status == 1) {
+					var productAuditList = data.data;
+					dialog.find("textarea[name=auditMessage]").val("");
+					createProductAuditList(productAuditList);
+				}
+			}
+		});
+	}
+}
+
+function passProductAudit() {
+	var dialog = $("#auditProductDialog");
+	var productId = dialog.find("input[name=id]").val();
+	
+	var auditStatus = getProductAuditStatus(productId);
+	
+	var auditMessage = "通过";
+	$.ajax({
+		url : "/product/passProductAudit",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			productId : productId,
+			auditMessage : auditMessage
+		},
+		success : function (data) {
+			$.message.showMessage(data);
+			if (data.status == 1) {
+				var productAuditList = data.data;
+				dialog.find("textarea[name=auditMessage]").val("");
+				createProductAuditList(productAuditList);
+			}
+		}
+	});
+}
+
 function validateAuditMessage() {
 	var dialog = $("#auditProductDialog");
-	
-	
+	var productId = dialog.find("inputp[name=id]").val();
+//	var auditStatus = getProductAuditStatus(productId);
+//	auditStatus = Number(auditStatus);
 	var auditMessage = dialog.find("textarea[name=auditMessage]").val();
 	if ($.trim(auditMessage) == "") {
 		var param = {
@@ -546,6 +616,23 @@ function validateAuditMessage() {
 		return false;
 	}
 	return true;
+}
+
+function getProductAuditStatus(productId) {
+	var auditStatus = "";
+	$.ajax({
+		url : "/product/getProductAuditStatus",
+		type: 'POST',
+		dataType : "json",
+		async: false,
+		data : {
+			productId : productId,
+		},
+		success : function (data) {
+			auditStatus = data;
+		}
+	});
+	return auditStatus;
 }
 
 function reviewAudit(productId) {
@@ -562,6 +649,22 @@ function reviewAudit(productId) {
 			createProductAuditList(productAuditList);
 			dialog.find("input[name=id]").val(productId);
 			showProductAuditDialog("审核进度");
+		}
+	});
+}
+
+function updateAuditContent(productId) {
+	var dialog = $("#auditProductDialog");
+	$.ajax({
+		url : "/product/getProductAuditList",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			productId : productId,
+		},
+		success : function (data) {
+			var productAuditList = data;
+			createProductAuditList(productAuditList);
 		}
 	});
 }

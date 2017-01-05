@@ -299,4 +299,8 @@ public class ProductService {
 		outputData.put("messageOutput", messageOutput);
     	return outputData;
 	}
+
+	public Integer getProductAuditStatus(Integer productId) {
+		return productDao.getProductAuditStatus(productId);
+	}
 }

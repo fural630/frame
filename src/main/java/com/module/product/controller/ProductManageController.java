@@ -22,6 +22,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.application.libraries.constentEnum.ProductAuditStatusEnum;
 import com.application.libraries.constentEnum.ReturnMessageEnum;
+import com.application.libraries.select.ProductAuditStatus;
 import com.code.Page;
 import com.code.frame.Constant;
 import com.code.session.UserSingleton;
@@ -34,6 +35,7 @@ import com.util.Dumper;
 import com.util.Excel;
 import com.util.JsonUtil;
 import com.util.MyDate;
+import com.util.MyLocale;
 
 @Controller
 @RequestMapping("product")
@@ -54,12 +56,12 @@ public class ProductManageController extends MainPage{
 	@ResponseBody
 	public String saveProduct(Product product, 
 			@RequestParam(value = "productImageList[]", required = false) List<String> productImageList) {
+		ReturnMessage returnMessage = new ReturnMessage();
 		if (null == product.getId()) {
 			productService.createNewProduct(product, productImageList);
 		} else {
 			productService.updateProduct(product, productImageList);
 		}
-		ReturnMessage returnMessage = new ReturnMessage();
 		return JsonUtil.toJsonStr(returnMessage);
 	}
 	
@@ -195,6 +197,16 @@ public class ProductManageController extends MainPage{
 	@RequestMapping("submitReview")
 	@ResponseBody
 	public String submitReview(Integer productId, String auditMessage) {
+		Integer auditStatus = productService.getProductAuditStatus(productId);
+		ReturnMessage returnMessage = new ReturnMessage();
+		if (auditStatus.intValue() != ProductAuditStatusEnum.WAIT_EDIT.getValue()) {
+			Map<String, String> statusMap = new ProductAuditStatus().getOptions();
+			String statusName = statusMap.get(String.valueOf(auditStatus));
+			String errorMessage = new MyLocale().getText("operation.fail.current.status.is", statusName);
+			returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
+			returnMessage.setMessage(errorMessage);
+			return JsonUtil.toJsonStr(returnMessage);
+		}
 		ProductAudit productAudit = new ProductAudit();
 		productAudit.setComment(auditMessage);
 		productAudit.setCreateTime(new MyDate().getCurrentDateTime());
@@ -203,6 +215,40 @@ public class ProductManageController extends MainPage{
 		productService.insertProductAudit(productAudit);
 		productService.updateProductAuditStatus(productId, ProductAuditStatusEnum.WAIT_AUDITED);
 		List<ProductAudit> productAuditList = productService.getProductAuditListByProductId(productId);
-		return JsonUtil.toJsonStr(productAuditList);
+		returnMessage.setData(productAuditList);
+		return JsonUtil.toJsonStr(returnMessage);
 	}
+	
+	@RequestMapping("pendingReExamination")
+	@ResponseBody
+	public String pendingReExamination(Integer productId, String auditMessage) {
+		ProductAudit productAudit = new ProductAudit();
+		productAudit.setComment(auditMessage);
+		productAudit.setCreateTime(new MyDate().getCurrentDateTime());
+		productAudit.setUserId(UserSingleton.getInstance().getUser().getId());
+		productAudit.setProductId(productId);
+		productService.insertProductAudit(productAudit);
+		productService.updateProductAuditStatus(productId, ProductAuditStatusEnum.WAIT_EDIT);
+		List<ProductAudit> productAuditList = productService.getProductAuditListByProductId(productId);
+		ReturnMessage returnMessage = new ReturnMessage();
+		returnMessage.setData(productAuditList);
+		return JsonUtil.toJsonStr(returnMessage);
+	}
+	
+	@RequestMapping("passProductAudit")
+	@ResponseBody
+	public String passProductAudit(Integer productId, String auditMessage) {
+		ProductAudit productAudit = new ProductAudit();
+		productAudit.setComment(auditMessage);
+		productAudit.setCreateTime(new MyDate().getCurrentDateTime());
+		productAudit.setUserId(UserSingleton.getInstance().getUser().getId());
+		productAudit.setProductId(productId);
+		productService.insertProductAudit(productAudit);
+		productService.updateProductAuditStatus(productId, ProductAuditStatusEnum.AUDITED);
+		List<ProductAudit> productAuditList = productService.getProductAuditListByProductId(productId);
+		ReturnMessage returnMessage = new ReturnMessage();
+		returnMessage.setData(productAuditList);
+		return JsonUtil.toJsonStr(returnMessage);
+	}
+	
 }
