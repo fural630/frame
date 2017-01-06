@@ -12,15 +12,17 @@
     <form action="/product/productManage" id="mainPageForm" method="post">
   	<div class="current_nav_name clearfix">产品中心
 		<div class="fr small_size"> 
-		<#if page.permissionBut?seq_contains("add.product")>
+		<#if page.params._roleLevel gte 10>
+		<#if !page.permissionBut?seq_contains("add.product")>
 			<button class="btn btn-sm " type="button" onclick="showProductDialog('<@s.message "add.product"/>')">
 				<i class="icon icon-plus-sign"></i> <@s.message "add.product"/>
 			</button>
 		</#if>
-		<#if page.permissionBut?seq_contains("batch.import.product")>
+		<#if !page.permissionBut?seq_contains("batch.import.product")>
 			<button class="btn btn-sm " type="button" onclick="showUploadProductDialog('<@s.message "batch.import.product"/>')">
 				<i class="icon icon-upload-alt"></i> <@s.message "batch.import.product"/>
 			</button>
+		</#if>
 		</#if>
 		</div>
 	</div>
@@ -226,17 +228,17 @@
 							<td class="td_right">批量操作&nbsp;&nbsp;
 								<select class="sel" id="batchOptionSelect">
 									<option value="" selected></option>
-									<#if page.permissionBut?seq_contains("batch.distribute.edit.user")>
-										<option value="batchDistributeEditUser">批量分配编辑人</option>
-									</#if>
-									<#if page.permissionBut?seq_contains("batch.distribute.publish.user")>
-										<option value="batchDistributePublishUser">批量分配刊登人</option>
-									</#if>
 									<#if page.params._roleLevel gte 10>
-										<!--<option value="batchApproved">批量通过审核</option>-->
-									</#if>
-									<#if page.permissionBut?seq_contains("batch.delete.product")>
-										<option value="batchDeleteProduct">批量删除</option>
+										<#if !page.permissionBut?seq_contains("batch.distribute.edit.user")>
+											<option value="batchDistributeEditUser">批量分配编辑人</option>
+										</#if>
+										<#if !page.permissionBut?seq_contains("batch.distribute.publish.user")>
+											<option value="batchDistributePublishUser">批量分配刊登人</option>
+										</#if>
+											<!--<option value="batchApproved">批量通过审核</option>-->
+										<#if !page.permissionBut?seq_contains("batch.delete.product")>
+											<option value="batchDeleteProduct">批量删除</option>
+										</#if>
 									</#if>
 								</select>
 								&nbsp; <button class="btn btn-sm" type="button" onclick="batchOptionSubmit()">提交</button>

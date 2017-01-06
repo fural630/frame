@@ -4,11 +4,13 @@
 	</system.manage>
 	<product.center icon="icon-cube-alt" sort="2">
 		<product.manage link="/product/productManage" icon="icon-cubes">
+			<!-- 
 			<add.product link="/product/saveProduct"></add.product>
 			<batch.import.product link="/product/uploadProduct"></batch.import.product>
 			<batch.distribute.edit.user link="/product/saveProductEditUser"></batch.distribute.edit.user>
 			<batch.distribute.publish.user link="/product/saveProductPublishUser"></batch.distribute.publish.user>
 			<batch.delete.product link="/product/deleteProductByIds"></batch.delete.product>
+			 -->
 		</product.manage>
 	</product.center>
 	<navigator.cdiscount.area icon="icon-shopping-cart" sort="3">

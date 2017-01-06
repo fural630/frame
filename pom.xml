@@ -184,6 +184,14 @@
             <artifactId>poi-ooxml</artifactId>
             <version>3.7</version>
         </dependency>
+        
+		<dependency>
+		    <groupId>com.googlecode</groupId>
+		    <artifactId>google-api-translate-java</artifactId>
+		    <version>0.92</version>
+		</dependency>
+
+        
   </dependencies>
 
 <build>
