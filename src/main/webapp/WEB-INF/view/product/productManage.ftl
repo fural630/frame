@@ -294,19 +294,19 @@
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">德语名</td>
-		 			<td colspan="3"><input type="text" class="txt width_98" name="nameDe" required/></td>
+		 			<td colspan="3"><input type="text" class="txt width_90" name="nameDe"/>&nbsp;<button class="btn btn-sm" type="button" onclick="batchOptionSubmit()">翻译</button></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">意大利语名</td>
-		 			<td colspan="3"><input type="text" class="txt width_98" name="nameIt" required/></td>
+		 			<td colspan="3"><input type="text" class="txt width_90" name="nameIt"/>&nbsp;<button class="btn btn-sm" type="button" onclick="batchOptionSubmit()">翻译</button></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">日语名</td>
-		 			<td colspan="3"><input type="text" class="txt width_98" name="nameJp" required/></td>
+		 			<td colspan="3"><input type="text" class="txt width_90" name="nameJp"/>&nbsp;<button class="btn btn-sm" type="button" onclick="batchOptionSubmit()">翻译</button></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">西班牙语名</td>
-		 			<td colspan="3"><input type="text" class="txt width_98" name="nameEs" required/></td>
+		 			<td colspan="3"><input type="text" class="txt width_90" name="nameEs"/>&nbsp;<button class="btn btn-sm" type="button" onclick="batchOptionSubmit()">翻译</button></td>
 		 		</tr>
 		 	</table>
 		  </div>
@@ -374,7 +374,9 @@
 		  </div>
 		  
 		  <div id="tabs-5">
-	  		<table class="popup_tb">
+		  	<button class="btn btn-sm" type="button" onclick="batchOptionSubmit()">一键翻译描述</button>
+	  		<br/>
+	  		<table class="popup_tb" style="margin-top:10px;">
 		 		<tr>
 		 			<td class="title width_100px">中文描述</td>
 		 			<td><textarea id="descriptionCn" name="descriptionCn"></textarea></td>
