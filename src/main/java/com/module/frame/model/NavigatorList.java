@@ -1,4 +1,4 @@
-package com.frame.model;
+package com.module.frame.model;
 
 import java.util.List;
 

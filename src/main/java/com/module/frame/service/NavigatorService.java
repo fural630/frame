@@ -1,4 +1,4 @@
-package com.frame.service;
+package com.module.frame.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.code.session.UserNavigatorSession;
 import com.code.session.UserSingleton;
-import com.frame.dao.NavigatorDao;
-import com.frame.model.Navigator;
-import com.frame.model.NavigatorList;
+import com.module.frame.dao.NavigatorDao;
+import com.module.frame.model.Navigator;
+import com.module.frame.model.NavigatorList;
 import com.module.system.model.User;
 
 @Service

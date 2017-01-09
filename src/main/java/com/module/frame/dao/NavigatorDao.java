@@ -1,11 +1,11 @@
-package com.frame.dao;
+package com.module.frame.dao;
 
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.frame.model.Navigator;
+import com.module.frame.model.Navigator;
 
 public interface NavigatorDao {
 	public void insertNavigator(Navigator navigator);

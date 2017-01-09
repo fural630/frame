@@ -16,8 +16,8 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 import com.code.frame.SpringContextUtil;
-import com.frame.dao.NavigatorDao;
-import com.frame.model.Navigator;
+import com.module.frame.dao.NavigatorDao;
+import com.module.frame.model.Navigator;
 import com.util.MyLocale;
 import com.util.SystemInfo;
 

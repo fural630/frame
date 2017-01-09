@@ -1,8 +1,7 @@
-package com.frame.controller;
+package com.module.frame.controller;
 
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,13 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.application.libraries.constentEnum.YesNoEnum;
 import com.code.encryption.DESEncrypt;
-import com.code.session.UserNavigatorSession;
 import com.code.session.UserSingleton;
-import com.frame.model.NavigatorList;
-import com.frame.service.NavigatorService;
+import com.module.frame.model.NavigatorList;
+import com.module.frame.service.NavigatorService;
 import com.module.system.model.User;
 import com.module.system.service.UserService;
-import com.util.Dumper;
 import com.util.MyLocale;
 
 @Controller

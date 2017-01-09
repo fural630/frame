@@ -2,7 +2,7 @@ package com.code.session;
 
 import java.util.List;
 
-import com.frame.model.NavigatorList;
+import com.module.frame.model.NavigatorList;
 
 public class UserNavigatorSession {
 	
