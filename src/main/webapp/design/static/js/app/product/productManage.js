@@ -848,3 +848,107 @@ function getUserRoleLevel() {
 	});
 	return level;
 }
+
+function translateName(targetLanguage, _this) {
+	var productDialog = $("#productDialog");
+	var text = productDialog.find("input[name=nameEn]").val();
+	
+	if ($.trim(text) == "") {
+		var param = {
+			status : 0,
+			message : "请先填写英文名称"
+		};
+		$.message.showMessage(param);
+		return;
+	}
+	
+	var sourceLanguage = "en";
+	$.ajax({
+		url : "/translate/translateName",
+		type: 'POST',
+		dataType : "json",
+		beforeSend : function (xhr) {
+			$.blockUI({
+				message: '<img src="/design/static/images/common/progressbar10.gif">',
+				timeout: 10000,
+				css:{
+					backgroundColor: "",
+					border:"0"
+				}
+			});
+		},
+		data : {
+			targetLanguage : targetLanguage,
+			sourceLanguage : sourceLanguage,
+			text : text
+		},
+		success : function (data) {
+			if (data.status == 1) {
+				$(_this).prev().val(data.data);
+			}
+			$.message.showMessage(data);
+		}
+	});
+}
+
+function aKeyTranslationDescription() {
+	var descriptionEn = CKEDITOR.instances["descriptionEn"].getData();
+	if ($.trim(descriptionEn) == "") {
+		var param = {
+			status : 0,
+			message : "请先填写英文描述"
+		};
+		$.message.showMessage(param);
+		return;
+	}
+	var targetLanguages = "zh-CN";
+	$.ajax({
+		url : "/translate/aKeyTranslationDescription",
+		type: 'POST',
+		dataType : "json",
+		beforeSend : function (xhr) {
+			$.blockUI({
+				message: '<img src="/design/static/images/common/progressbar10.gif">',
+				timeout: 10000,
+				css:{
+					backgroundColor: "",
+					border:"0"
+				}
+			});
+		},
+		data : {
+			targetLanguages : targetLanguages,
+			text : descriptionEn
+		},
+		success : function (data) {
+			if (data.status == 1) {
+				var translationMap = data.data;
+				console.log(translationMap);
+				$.each(translationMap, function (key, value) {
+					if (key == "zh-CN") {
+						CKEDITOR.instances["descriptionCn"].setData(value);
+					}
+					if (key == "en") {
+						CKEDITOR.instances["descriptionEn"].setData(value);
+					}
+					if (key == "fr") {
+						CKEDITOR.instances["descriptionFr"].setData(value);
+					}
+					if (key == "de") {
+						CKEDITOR.instances["descriptionDe"].setData(value);
+					}
+					if (key == "ja") {
+						CKEDITOR.instances["descriptionJp"].setData(value);
+					}
+					if (key == "es") {
+						CKEDITOR.instances["descriptionEs"].setData(value);
+					}
+					if (key == "it") {
+						CKEDITOR.instances["descriptionIt"].setData(value);
+					}
+				});
+			}
+			$.message.showMessage(data);
+		}
+	});
+}
