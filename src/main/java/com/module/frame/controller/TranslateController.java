@@ -28,7 +28,7 @@ public class TranslateController {
 	@RequestMapping("translateName")
 	@ResponseBody
 	public String translateName(TranslateBean translateBean) {
-		String result = translateService.translate(translateBean, true);
+		String result = translateService.translate(translateBean, false);
 		ReturnMessage returnMessage = new ReturnMessage();
 		if (StringUtils.isEmpty(result)) {
 			returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
@@ -54,6 +54,39 @@ public class TranslateController {
 					translateBean.setSourceLanguage("en");
 					translateBean.setText(text);
 					String result = translateService.translate(translateBean, true);
+					if (StringUtils.isNotEmpty(result)) {
+						resultMap.put(targetLanguage, result);
+					} else {
+						flag = false;
+						break;
+					}
+				}
+			}
+		}
+		if (!flag) {
+			returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
+			returnMessage.setMessage(new MyLocale().getText("translate.fail.try.again"));
+		} else {
+			returnMessage.setData(resultMap);
+		}
+		return JsonUtil.toJsonStr(returnMessage);
+	}
+	
+	@RequestMapping("aKeyTranslateName")
+	@ResponseBody
+	public String aKeyTranslateName(String targetLanguages, String text, String sourceLanguage) {
+		boolean flag = true;
+		ReturnMessage returnMessage = new ReturnMessage();
+		Map<String, String> resultMap = new HashMap<String, String>();
+		if (StringUtils.isNotEmpty(targetLanguages)) {
+			String targetLanguageList[] = targetLanguages.split(",");
+			if (targetLanguageList.length > 0) {
+				for (String targetLanguage : targetLanguageList) {
+					TranslateBean translateBean = new TranslateBean();
+					translateBean.setTargetLanguage(targetLanguage);
+					translateBean.setSourceLanguage(sourceLanguage);
+					translateBean.setText(text);
+					String result = translateService.translate(translateBean, false);
 					if (StringUtils.isNotEmpty(result)) {
 						resultMap.put(targetLanguage, result);
 					} else {

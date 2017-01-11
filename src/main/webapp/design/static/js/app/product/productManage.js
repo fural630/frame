@@ -849,6 +849,84 @@ function getUserRoleLevel() {
 	return level;
 }
 
+function aKeyTranslateName() {
+	var productDialog = $("#productDialog");
+	var sourceLanguage = productDialog.find("select[name=translateNameSelect]").val();
+	var text = "";
+	var message = "";
+	var targetLanguages = "de,it,ja,es,fr";
+	if (sourceLanguage == "zh-CN") {
+		text = productDialog.find("input[name=nameCn]").val();
+		message = "请先填写中文名称";
+		targetLanguages += ",en";
+	} else if (sourceLanguage == "en") {
+		text = productDialog.find("input[name=nameEn]").val();
+		message = "请先填写英文名称";
+		targetLanguages += ",zh-CN";
+	}
+	if ($.trim(text) == "") {
+		var param = {
+			status : 0,
+			message : message
+		};
+		$.message.showMessage(param);
+		return;
+	}
+	
+	$.ajax({
+		url : "/translate/aKeyTranslateName",
+		type: 'POST',
+		dataType : "json",
+		beforeSend : function (xhr) {
+			$.blockUI({
+				message: '<img src="/design/static/images/common/progressbar10.gif">',
+				timeout: 10000,
+				css:{
+					backgroundColor: "",
+					border:"0"
+				}
+			});
+		},
+		data : {
+			targetLanguages : targetLanguages,
+			sourceLanguage : sourceLanguage,
+			text : text
+		},
+		success : function (data) {
+			if (data.status == 1) {
+				var translationMap = data.data;
+				$.each(translationMap, function (key, value) {
+					if (key == "zh-CN") {
+						productDialog.find("input[name=nameCn]").val(value);
+					}
+					if (key == "en") {
+						productDialog.find("input[name=nameEn]").val(value);
+					}
+					if (key == "fr") {
+						productDialog.find("input[name=nameFr]").val(value);
+					}
+					if (key == "de") {
+						productDialog.find("input[name=nameDe]").val(value);
+					}
+					if (key == "ja") {
+						productDialog.find("input[name=nameJp]").val(value);
+					}
+					if (key == "es") {
+						productDialog.find("input[name=nameEs]").val(value);
+					}
+					if (key == "it") {
+						productDialog.find("input[name=nameIt]").val(value);
+					}
+				});
+			}
+			$.message.showMessage(data);
+		}
+	});
+	
+	
+	
+}
+
 function translateName(targetLanguage, _this) {
 	var productDialog = $("#productDialog");
 	var text = productDialog.find("input[name=nameEn]").val();
@@ -901,7 +979,7 @@ function aKeyTranslationDescription() {
 		$.message.showMessage(param);
 		return;
 	}
-	var targetLanguages = "zh-CN";
+	var targetLanguages = "de,it,ja,es,fr";
 	$.ajax({
 		url : "/translate/aKeyTranslationDescription",
 		type: 'POST',
@@ -909,7 +987,7 @@ function aKeyTranslationDescription() {
 		beforeSend : function (xhr) {
 			$.blockUI({
 				message: '<img src="/design/static/images/common/progressbar10.gif">',
-				timeout: 10000,
+				timeout: 20000,
 				css:{
 					backgroundColor: "",
 					border:"0"
@@ -923,7 +1001,6 @@ function aKeyTranslationDescription() {
 		success : function (data) {
 			if (data.status == 1) {
 				var translationMap = data.data;
-				console.log(translationMap);
 				$.each(translationMap, function (key, value) {
 					if (key == "zh-CN") {
 						CKEDITOR.instances["descriptionCn"].setData(value);

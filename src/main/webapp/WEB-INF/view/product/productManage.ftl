@@ -302,22 +302,20 @@
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">日语名</td>
-		 			<td colspan="3"><input type="text" class="txt width_90" name="nameJp"/>&nbsp;<button class="btn btn-sm" type="button" onclick="translateName('jp', this)">翻译</button></td>
+		 			<td colspan="3"><input type="text" class="txt width_90" name="nameJp"/>&nbsp;<button class="btn btn-sm" type="button" onclick="translateName('ja', this)">翻译</button></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">西班牙语名</td>
 		 			<td colspan="3"><input type="text" class="txt width_90" name="nameEs"/>&nbsp;<button class="btn btn-sm" type="button" onclick="translateName('es', this)">翻译</button></td>
 		 		</tr>
 		 	</table>
-		 	<!--
 		 	<br/>
 		 	将：
-		 	<select class="sel width_100px" name="nameTranslate">
-		 		<option value="zh-CN">中文名</option>
+		 	<select class="sel width_100px" name="translateNameSelect">
 		 		<option value="en">英文名</option>
+		 		<option value="zh-CN">中文名</option>
 		 	</select>
-		 	<button class="btn btn-sm" type="button" onclick="batchOptionSubmit()">一键翻译</button>
-		 	-->
+		 	<button class="btn btn-sm" type="button" onclick="aKeyTranslateName()">一键翻译</button>
 		  </div>
 		  
 		  <div id="tabs-2">
@@ -383,12 +381,14 @@
 		  </div>
 		  
 		  <div id="tabs-5">
-		 	将：
+		 	
+		 	<!--
 		 	<select class="sel width_100px" name="descriptionTranslate">
 		 		<option value="zh-CN">中文描述</option>
 		 		<option value="en">英文描述</option>
 		 	</select>
-		 	<button class="btn btn-sm" type="button" onclick="aKeyTranslationDescription()">一键翻译</button>
+		 	-->
+		 	将英语描述：<button class="btn btn-sm" type="button" onclick="aKeyTranslationDescription()">一键翻译</button>
 	  		<br/>
 	  		<table class="popup_tb" style="margin-top:10px;">
 		 		<tr>
