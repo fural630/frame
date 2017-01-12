@@ -1,0 +1,1 @@
+INSERT INTO `user` VALUES ('1', '王单爆', '2028', '2jwecGD86G4=', null, '1', null, null, '2016-12-05 19:46:01', '100');
