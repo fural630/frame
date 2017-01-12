@@ -44,6 +44,6 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>  
     </bean>  
     
-    <tx:annotation-driven transaction-manager="txManager" /> 
+    <tx:annotation-driven transaction-manager="txManager" />
     
 </beans>
