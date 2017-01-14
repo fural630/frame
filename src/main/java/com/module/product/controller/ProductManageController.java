@@ -31,7 +31,6 @@ import com.code.view.ReturnMessage;
 import com.module.product.model.Product;
 import com.module.product.model.ProductAudit;
 import com.module.product.service.ProductService;
-import com.util.Dumper;
 import com.util.Excel;
 import com.util.JsonUtil;
 import com.util.MyDate;
@@ -169,7 +168,7 @@ public class ProductManageController extends MainPage{
 				MultipartFile file = multiRequest.getFile(iter.next().toString());
 				if (file != null) {
 					String path = Constant.TMP_PATH + file.getOriginalFilename();
-					path = "E:\\" + file.getOriginalFilename();
+//					path = "E:\\" + file.getOriginalFilename();
 					File tmpFile = new File(path);
 					try {
 						file.transferTo(tmpFile);
