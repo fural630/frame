@@ -70,7 +70,7 @@ public class InitSystemServlet extends HttpServlet{
 	private void parseElementList(List<Element> childrenElementList, Integer parentId) {
 		for (Element element : childrenElementList) {
 			String navName = element.getName();
-			String nameCn = myLocale.getText(navName);
+			String nameCn = myLocale.getTextNoLogin(navName);
 			String iconClass = element.getAttributeValue("icon");
 			Integer sort = null;
 			if (StringUtils.isNotEmpty(element.getAttributeValue("sort"))) {

@@ -13,7 +13,11 @@
 			 -->
 		</product.manage>
 	</product.center>
-	<navigator.cdiscount.area icon="icon-shopping-cart" sort="3">
+	<navigator.shopee.area icon="icon-shopping-cart" sort="3">
+		<shopee.publish.manage link="/shopee/shopeePublishManage" icon="icon-table"></shopee.publish.manage>
+		<shopee.category.manage link="/shopee/shopeeCategoryManage" icon="icon-bars"></shopee.category.manage>
+	</navigator.shopee.area>
+	<navigator.cdiscount.area icon="icon-shopping-cart" sort="4">
 		<cdiscount.publish.manage link="/cdiscount/cdiscountPublishManage" icon="icon-user"></cdiscount.publish.manage>
 		<cdiscount.ean.manage link="/cdiscount/cdiscountEanManage" icon="icon-user"></cdiscount.ean.manage>
 	</navigator.cdiscount.area>

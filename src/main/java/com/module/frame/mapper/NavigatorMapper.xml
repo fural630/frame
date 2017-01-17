@@ -68,7 +68,7 @@
     </select>
     
     <select id="getNavigatorByParentId" parameterType="int" resultType="Navigator">  
-        select * from navigator where parentId = #{id}
+        select * from navigator where parentId = #{id} order by sort asc
     </select>
     
     <select id="findAll" resultType="Navigator">  

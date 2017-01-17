@@ -32,6 +32,18 @@ public class MyLocale {
 		return text;
 	}
 	
+	public String getTextNoLogin(String key) {
+		key = convert(key);
+		String text = key;
+		try {
+			text = this.resourceBundle.getString(key);
+		} catch (Exception e) {
+		}
+		MyDate mydate = new MyDate();
+		text = text.replaceAll("\\{time\\}", mydate.getCurrentDateTime());
+		return text;
+	}
+	
 	public String getText(String key, String arg) {
 		key = convert(key);
 		String text = key;

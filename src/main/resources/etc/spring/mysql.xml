@@ -22,7 +22,7 @@
 			<value>root</value>
 		</property>
 		<property name="password">
-			<value>cdsmarterp</value>
+			<value>root</value>
 		</property>
 		<property name="validationQuery" value="SELECT 1" />
     	<property name="testOnBorrow" value="true" />
