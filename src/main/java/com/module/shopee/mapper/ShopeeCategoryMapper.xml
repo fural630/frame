@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.module.shopee.dao.ShopeeCategoryDao">  
+     
+    <insert id="insertShopeeCategory" parameterType="ShopeeCategory" useGeneratedKeys="true" keyProperty="id">  
+        insert into shopee_category (
+        	categoryName,
+        	parentId,
+        	level,
+        	categoryId
+        ) values(
+        	#{categoryName},
+        	#{parentId},
+        	#{level},
+        	#{categoryId}
+        )  
+    </insert>
+    
+    <select id="getCategoryByNameAndParentId" resultType="ShopeeCategory">
+    	select * from shopee_category where categoryName = #{categoryName} and parentId = #{parentId}
+    </select>
+    
+    
+    <delete id="deleteAllCategory">  
+        delete from shopee_category
+    </delete>  
+       
+</mapper>  

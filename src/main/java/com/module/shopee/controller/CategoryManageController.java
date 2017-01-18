@@ -54,6 +54,7 @@ public class CategoryManageController extends MainPage{
 					try {
 						file.transferTo(tmpFile);
 						Excel excel = new Excel(tmpFile.toString());
+//						shopeeCategoryService.deleteShopeeCategory();
 						outputData = shopeeCategoryService.uploadCategory(excel.toArray());
 					} catch (IllegalStateException e) {
 						e.printStackTrace();

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.poi.hssf.record.PageBreakRecord.Break;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,27 +25,26 @@ public class ShopeeCategoryService {
 			if (CollectionUtils.isEmpty(row)) {
 				continue;
 			}
-			String firstCategory = row.get(0);
-			String secondCategory = row.get(1);
-			String thirdCategory = row.get(2);
+			Integer parentId = 0;
 			Integer categoryId = Integer.parseInt(row.get(3));
-			ShopeeCategory shopeeCategory1 = shopeeCategoryDao.getCategoryByNameAndParentId(firstCategory, 0);
-			if (null == shopeeCategory1) {
-				shopeeCategory1 = new ShopeeCategory();
-				shopeeCategoryDao.insertShopeeCategory(shopeeCategory1);
-				ShopeeCategory shopeeCategory2 = shopeeCategoryDao.getCategoryByNameAndParentId(secondCategory, shopeeCategory1.getId());
-				if (null == shopeeCategory2) {
-					shopeeCategory2 = new ShopeeCategory();
-					shopeeCategoryDao.insertShopeeCategory(shopeeCategory2);
-					ShopeeCategory shopeeCategory3 = shopeeCategoryDao.getCategoryByNameAndParentId(thirdCategory, shopeeCategory2.getId());
-					if (null == shopeeCategory3) {
-						shopeeCategory3 = new ShopeeCategory();
-						shopeeCategoryDao.insertShopeeCategory(shopeeCategory3);
+			for (int j = 0; j < 3; j++) {
+				String categoryName = row.get(j);
+				ShopeeCategory tempShopeeCategory = shopeeCategoryDao.getCategoryByNameAndParentId(categoryName, parentId);
+				if (null != tempShopeeCategory) {
+					parentId = tempShopeeCategory.getId();
+				} else {
+					ShopeeCategory shopeeCategory = new ShopeeCategory();
+					shopeeCategory.setCategoryName(categoryName);
+					shopeeCategory.setLevel((j+1));
+					shopeeCategory.setParentId(parentId);
+					if (j == 2) {
+						shopeeCategory.setCategoryId(categoryId);
 					}
+					shopeeCategoryDao.insertShopeeCategory(shopeeCategory);
+					parentId = shopeeCategory.getId();
 				}
-			} 
-			
-			
+				
+			}
     	}
 		outputData.put("result", "T");
     	return outputData;

@@ -263,7 +263,13 @@
 		    <li><a href="#tabs-5">描述信息</a></li>
 		  </ul>
 		  <div id="tabs-1">
-		    <table class="popup_tb">
+		 	将：<select class="sel width_100px" name="translateNameSelect">
+		 		<option value="en">英文名</option>
+		 		<option value="zh-CN">中文名</option>
+		 	</select>
+		 	<button class="btn btn-sm" type="button" onclick="aKeyTranslateName()">一键翻译</button>
+		 	<br />
+		    <table class="popup_tb" style="margin-top:10px;">
 		 		<tr>
 		 			<td class="title width_100px">SKU<i class="star">*</i></td>
 		 			<td><input type="text" class="txt width_50" name="sku"/></td>
@@ -309,13 +315,24 @@
 		 			<td colspan="3"><input type="text" class="txt width_90" name="nameEs"/>&nbsp;<button class="btn btn-sm" type="button" onclick="translateName('es', this)">翻译</button></td>
 		 		</tr>
 		 	</table>
-		 	<br/>
-		 	将：
-		 	<select class="sel width_100px" name="translateNameSelect">
-		 		<option value="en">英文名</option>
-		 		<option value="zh-CN">中文名</option>
-		 	</select>
-		 	<button class="btn btn-sm" type="button" onclick="aKeyTranslateName()">一键翻译</button>
+		 	<br />
+		 	<button class="btn btn-sm" type="button" onclick="aKeyTranslateName()">添加变体</button>
+		 	<button class="btn btn-sm" type="button" onclick="aKeyTranslateName()">一件生成SKU</button>
+		 	<table class="popup_tb" style="margin-top:10px;">
+		 		<tr>
+		 			<td class="title" style="text-align:center;" colspan="7">变体SKU</td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title">SKU</td>
+		 			<td><input type="text" class="txt width_50" name="sku"/></td>
+		 			<td class="title">颜色</td>
+		 			<td><input type="text" class="txt width_50" name="sku"/></td>
+		 			<td class="title">尺寸</td>
+		 			<td><input type="text" class="txt width_50" name="sku"/></td>
+		 			<td><button class="btn btn-sm " type="button" onclick=""><i class="icon icon-trash"></i></button></td>
+		 		</tr>
+	 		</table>
+		 	
 		  </div>
 		  
 		  <div id="tabs-2">

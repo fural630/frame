@@ -16,7 +16,7 @@ function initDialog() {
 					primary : "ui-icon-heart"
 				},
 				click : function() {
-//					validateProductFrom();
+					validateCategoryFrom();
 				}
 			},{
 				text : "关闭",
@@ -39,4 +39,26 @@ function initDialog() {
 function showImportCategoryDialog(title) {
 	$("#uploadCategoryDialog").dialog("option", "title", title);
 	$("#uploadCategoryDialog").dialog("open");
+}
+
+function validateCategoryFrom() {
+	var dialog = $("#uploadCategoryDialog");
+	var file = dialog.find("input[name=categoryFile]").val();
+	if (file == "" || file == null || file == undefined) {
+		var param = {
+			status : 0,
+			message : "请选择要上传的文件"
+		};
+		$.message.showMessage(param);
+		return;
+	}
+	$.blockUI({
+		message: '<img src="/design/static/images/common/progressbar10.gif">',
+		timeout: 5000,
+		css:{
+			backgroundColor: "",
+			border:"0"
+		}
+	});
+	dialog.find("form[name=uploadCategoryFrom]").submit();
 }

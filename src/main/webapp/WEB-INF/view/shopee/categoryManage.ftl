@@ -71,7 +71,7 @@
 			<table class="popup_tb">
 		 		<tr>
 		 			<td class="title width_100px">导入文件<i class="star">*</i></td>
-		 			<td><input type="file" name="productFile" class="form-control" value="" style="width:50%"></td>
+		 			<td><input type="file" name="categoryFile" class="form-control" value="" style="width:50%"></td>
 		 		</tr>
 		 		<!--
 		 		<tr>

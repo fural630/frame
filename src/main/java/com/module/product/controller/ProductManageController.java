@@ -57,6 +57,10 @@ public class ProductManageController extends MainPage{
 			@RequestParam(value = "productImageList[]", required = false) List<String> productImageList) {
 		ReturnMessage returnMessage = new ReturnMessage();
 		if (null == product.getId()) {
+//			if (productService.checkSkuExist(product.getSku())) {
+//				returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
+//				returnMessage.setMessage(message)
+//			}
 			productService.createNewProduct(product, productImageList);
 		} else {
 			productService.updateProduct(product, productImageList);
