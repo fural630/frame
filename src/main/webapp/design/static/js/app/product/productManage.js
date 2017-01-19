@@ -1029,3 +1029,67 @@ function aKeyTranslationDescription() {
 		}
 	});
 }
+
+function addSkuRow() {
+	var dialog = $("#productDialog");
+	var multiTable = dialog.find("table[name=multiSkuTable]");
+	var skuRow = '';
+	skuRow += '<tr>';
+	skuRow += 	'<td class="title">SKU</td>';
+	skuRow += 	'<td><input type="text" class="txt width_50" name="multiSku"/></td>';
+	skuRow += 	'<td class="title">颜色</td>';
+	skuRow += 	'<td><input type="text" class="txt width_50" name="multiColor"/></td>';
+	skuRow += 	'<td class="title">尺寸</td>';
+	skuRow += 	'<td><input type="text" class="txt width_50" name="multiSize"/></td>';
+	skuRow += 	'<td><button class="btn btn-sm btn-danger" type="button" onclick="removeMultiSkuRow(this)"><i class="icon icon-trash"></i></button></td>';
+	skuRow += '</tr>';
+	multiTable.append(skuRow);
+}
+
+function removeMultiSkuRow(obj) {
+	$(obj).parent().parent().remove();
+}
+
+function aKeyCreateSku() {
+	var dialog = $("#productDialog");
+	var spu = dialog.find("input[name=spu]").val();
+	if ($.trim(spu) == "") {
+		var param = {
+			status : 0,
+			message : "请先填写SPU"
+		};
+		$.message.showMessage(param);
+		return;
+	}
+	var multiTable = dialog.find("table[name=multiSkuTable]");
+	var flag = false;
+	multiTable.find("tr:gt(0)").each(function () {
+		var sku = spu;
+		var multiColor = $(this).find("input[name=multiColor]").val();
+		var multiSize = $(this).find("input[name=multiSize]").val();
+		if ($.trim(multiColor) != "" || $.trim(multiSize) != "") {
+			flag = true;
+			if ($.trim(multiColor) != "") {
+				sku += "-" + multiColor;
+			}
+			if ($.trim(multiSize) != "") {
+				sku += "-" + multiSize;
+			}
+			$(this).find("input[name=multiSku]").val(sku);
+		}
+	});
+	
+	if (!flag) {
+		var param = {
+			status : 0,
+			message : "请至少有一行填写颜色或尺寸"
+		};
+		$.message.showMessage(param);
+	} else {
+		var param = {
+			status : 1,
+			message : "操作成功"
+		};
+		$.message.showMessage(param);
+	}
+}
