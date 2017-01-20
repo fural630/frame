@@ -54,7 +54,7 @@ function validateCategoryFrom() {
 	}
 	$.blockUI({
 		message: '<img src="/design/static/images/common/progressbar10.gif">',
-		timeout: 5000,
+		timeout: 1000 * 120,
 		css:{
 			backgroundColor: "",
 			border:"0"

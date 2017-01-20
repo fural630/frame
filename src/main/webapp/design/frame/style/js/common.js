@@ -67,6 +67,10 @@ function queryMainPage () {
 }
 
 function submitMainPageForm() {
+	var globalQuery = $(".globalQuery");
+	globalQuery.find("input[type='text']").each(function () {
+		$(this).val($.trim($(this).val()));		//去除空格
+	});
 	var condition = $(".conditionTr");
 	var inputLike = condition.find("input[name$='Like]']");
 	var inputText = condition.find("input[type='text']");

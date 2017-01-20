@@ -6,7 +6,7 @@
     <script type="text/javascript" src="/design/static/js/app/shopee/categoryManage.js"></script>
   </head>
   <body>
-    <form action="/shopee/categoryManage" id="mainPageForm" method="post">
+    <form action="/shopee/shopeeCategoryManage" id="mainPageForm" method="post">
   	<div class="current_nav_name clearfix"><@s.message "shopee.category.manage"/>
 		<div class="fr small_size">
 			<button class="btn btn-sm " type="button" onclick="showImportCategoryDialog('<@s.message "import.category"/>')"><i class="icon icon-plus-sign"></i> <@s.message "import.category"/></button>
@@ -14,7 +14,9 @@
 	</div>
 	<#include "../common/page.ftl"/>
 	<div class="mainbody clearfix"> 
-	<input name="categoryQuery" class="txt width_300px" style="margin:10px 0px 10px 10px;" placeholder="全局搜索类别或类别ID">
+	<div class="globalQuery">
+		<input type="text" name="params[categoryQuery]" value="${page.params.categoryQuery!''}" class="txt width_300px" style="margin:10px 0px 10px 10px;" placeholder="全局搜索类别或类别ID">
+	</div>
 	  <div class="tableview clearfix">
 	    <div class="content">
 	      <table class="tb_border tb_full stripe" id="categoryManageTable" name="pageTable">
@@ -29,32 +31,107 @@
 	          	<td></td>
 	          	<td>
 	          		<ul>
-	          			<li><input type="text" class="txt width_100px" name="params[name]" value="${page.params.name!''}" /></li>
-	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[nameLike]" <#if page.params.nameLike??> checked </#if>></li>
+	          			<li><input type="text" class="txt width_100px" name="params[firstCategory]" value="${page.params.firstCategory!''}" /></li>
+	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[firstCategoryLike]" <#if page.params.firstCategoryLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
 	          	<td>
 	          		<ul>
-	          			<li><input type="text" class="txt width_100px" name="params[username]" value="${page.params.username!''}" /></li>
-	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[usernameLike]" <#if page.params.usernameLike??> checked </#if>></li>
+	          			<li><input type="text" class="txt width_100px" name="params[subcategory]" value="${page.params.subcategory!''}" /></li>
+	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[subcategoryLike]" <#if page.params.subcategoryLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
 	          	<td>
 	          		<ul>
-	          			<li><input type="text" class="txt width_100px" name="params[email]" value="${page.params.email!''}" /></li>
-	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[emailLike]" <#if page.params.emailLike??> checked </#if>></li>
+	          			<li><input type="text" class="txt width_100px" name="params[thirdCategory]" value="${page.params.thirdCategory!''}" /></li>
+	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[thirdCategoryLike]" <#if page.params.thirdCategoryLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
-	          	<td></td>
+	          	<td>
+	          		<ul>
+	          			<li><input type="text" class="txt width_100px" name="params[categoryId]" value="${page.params.categoryId!''}" /></li>
+	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[categoryIdLike]" <#if page.params.categoryIdLike??> checked </#if>></li>
+	          		</ul>
+	          	</td>
 	          </tr>
 	          </form>
-		  		 <tr>
-		            <td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="1" onclick="countCheckbox()" /></td>
-		            <td>name</td>
-		            <td>username</td>
-		            <td>email</td>
-		            <td>123</td>
-		          </tr>
+	          <#assign queryLowcase = ''>
+	          <#if page.params.categoryQuery??>
+	            	<#assign queryLowcase = page.params.categoryQuery?lower_case>
+	          </#if>
+	          <#assign spanStart = "<span style='color:red;background-color:#ffff00'>">
+	          <#assign spanEnd = "</span>">
+	          	<#if collection??>
+	          		<#list collection as obj>
+			  		 <tr>
+			            <td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="1" onclick="countCheckbox()" /></td>
+			            <td>
+			            	<#assign categoryName = obj.firstCategory>
+				            <#if queryLowcase?length gt 0> 
+				            	<#assign categoryLowerCase = categoryName?lower_case>
+				            	<#assign start = categoryLowerCase?index_of(queryLowcase)>
+				            	<#assign end = start + queryLowcase?length>
+				            	<#if end gt 0 && start != -1 > 
+				            		<#assign categoryName = categoryName?substring(0, start) + spanStart + categoryName?substring(start, end) + spanEnd + categoryName?substring(end, categoryName?length)>
+				            		${categoryName}
+				            	<#else>
+				            		${categoryName}
+				            	</#if>
+			            	<#else>
+				            	${categoryName}
+			            	</#if>
+			            </td>
+			            <td>
+			            	<#assign categoryName = obj.subcategory>
+				            <#if queryLowcase?length gt 0> 
+				            	<#assign categoryLowerCase = categoryName?lower_case>
+				            	<#assign start = categoryLowerCase?index_of(queryLowcase)>
+				            	<#assign end = start + queryLowcase?length>
+				            	<#if end gt 0 && start != -1 > 
+				            		<#assign categoryName = categoryName?substring(0, start) + spanStart + categoryName?substring(start, end) + spanEnd + categoryName?substring(end, categoryName?length)>
+				            		${categoryName}
+				            	<#else>
+				            		${categoryName}
+				            	</#if>
+			            	<#else>
+				            	${categoryName}
+			            	</#if>
+			            </td>
+			            <td>
+			            	<#assign categoryName = obj.thirdCategory>
+				            <#if queryLowcase?length gt 0> 
+				            	<#assign categoryLowerCase = categoryName?lower_case>
+				            	<#assign start = categoryLowerCase?index_of(queryLowcase)>
+				            	<#assign end = start + queryLowcase?length>
+				            	<#if end gt 0 && start != -1 > 
+				            		<#assign categoryName = categoryName?substring(0, start) + spanStart + categoryName?substring(start, end) + spanEnd + categoryName?substring(end, categoryName?length)>
+				            		${categoryName}
+				            	<#else>
+				            		${categoryName}
+				            	</#if>
+			            	<#else>
+				            	${categoryName}
+			            	</#if>
+			            </td>
+			            <td>
+			            	<#assign categoryName = obj.categoryId>
+				            <#if queryLowcase?length gt 0> 
+				            	<#assign categoryLowerCase = categoryName?lower_case>
+				            	<#assign start = categoryLowerCase?index_of(queryLowcase)>
+				            	<#assign end = start + queryLowcase?length>
+				            	<#if end gt 0 && start != -1 > 
+				            		<#assign categoryName = categoryName?substring(0, start) + spanStart + categoryName?substring(start, end) + spanEnd + categoryName?substring(end, categoryName?length)>
+				            		${categoryName}
+				            	<#else>
+				            		${categoryName}
+				            	</#if>
+			            	<#else>
+				            	${categoryName}
+			            	</#if>
+			            </td>
+			          </tr>
+		          </#list>
+		  		</#if>
 	      		</table>
 			<div class="paging clearfix">
 				<div class="massaction"></div>

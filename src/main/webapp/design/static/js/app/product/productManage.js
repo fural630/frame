@@ -375,6 +375,11 @@ function cleanProductDialog() {
 	CKEDITOR.instances["briefDescriptionJp"].setData("");
 	CKEDITOR.instances["briefDescriptionEs"].setData("");
 	CKEDITOR.instances["briefDescriptionIt"].setData("");
+	
+	var multiTable = $("#productDialog").find("table[name=multiSkuTable]");
+	multiTable.find("tr:gt(1)").each(function () {
+		$(this).remove();
+	});
 }
 
 function editProduct(id) {
@@ -448,7 +453,13 @@ function fillingProductData(product, imageList) {
 
 function showProductDialog(title) {
 	$("#productDialog").dialog("option", "title", title);
+	if ($("#productDialog").find("input[name=id]").val() != "") {
+		$("#multiSkuArea").hide();
+	} else {
+		$("#multiSkuArea").show();
+	}
 	$("#productDialog").dialog("open");
+	
 }
 
 function showUploadProductDialog(title) {
@@ -1091,5 +1102,19 @@ function aKeyCreateSku() {
 			message : "操作成功"
 		};
 		$.message.showMessage(param);
+	}
+}
+
+function openProcurementLink () {
+	var dialog = $("#productDialog");
+	var link = dialog.find("input[name=purchaseUrl]").val();
+	if ($.trim(link) == "") {
+		var param = {
+			status : 0,
+			message : "未设置采购链接"
+		};
+		$.message.showMessage(param);
+	} else {
+		window.open(link);
 	}
 }

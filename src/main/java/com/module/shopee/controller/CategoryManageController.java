@@ -34,18 +34,18 @@ public class CategoryManageController extends MainPage{
 	@RequestMapping("shopeeCategoryManage")
 	public String shopeeCategoryManage(Model model, Page page){
 		_execute(page, model);
-		List<Map<String, Object>> collection = new ArrayList<>();
+		List<Map<String, Object>> collection = shopeeCategoryService.getCategoryPage(page);
 		model.addAttribute("collection", collection);
 		return "shopee/categoryManage";
 	}
 	
 	@RequestMapping("uploadCategory")
 	public String uploadCategory(HttpServletRequest request, Model model) {
-		Map outputData = new HashMap();
+		boolean flag = false;
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
 		if (multipartResolver.isMultipart(request)) {
 			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-			Iterator iter = multiRequest.getFileNames();
+			Iterator<String> iter = multiRequest.getFileNames();
 			while (iter.hasNext()) {
 				MultipartFile file = multiRequest.getFile(iter.next().toString());
 				if (file != null) {
@@ -54,8 +54,9 @@ public class CategoryManageController extends MainPage{
 					try {
 						file.transferTo(tmpFile);
 						Excel excel = new Excel(tmpFile.toString());
-//						shopeeCategoryService.deleteShopeeCategory();
-						outputData = shopeeCategoryService.uploadCategory(excel.toArray());
+						shopeeCategoryService.deleteShopeeCategory();
+						shopeeCategoryService.uploadCategory(excel.toArray());
+						flag = true;
 					} catch (IllegalStateException e) {
 						e.printStackTrace();
 					} catch (IOException e) {
@@ -64,14 +65,17 @@ public class CategoryManageController extends MainPage{
 				}
 			}
 		}
-		
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		model.addAttribute("outputData", outputData);
-		return "template/upload-message-page";
+		if (flag) {
+			model.addAttribute("result", "success");
+		} else {
+			model.addAttribute("result", "fail");
+		}
+		return "template/upload-success-fail-page";
 	}
 	
 }

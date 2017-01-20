@@ -267,7 +267,8 @@
 		 		<option value="en">英文名</option>
 		 		<option value="zh-CN">中文名</option>
 		 	</select>
-		 	<button class="btn btn-sm" type="button" onclick="aKeyTranslateName()">一键翻译</button>
+		 	<button class="btn btn-sm" type="button" onclick="aKeyTranslateName()">一键翻译</button> | 
+		 	<button class="btn btn-sm" type="button" onclick="openProcurementLink()"><i class="icon icon-link"></i>采购链接</button>
 		 	<br />
 		    <table class="popup_tb" style="margin-top:10px;">
 		 		<tr>
@@ -315,26 +316,27 @@
 		 			<td colspan="3"><input type="text" class="txt width_90" name="nameEs"/>&nbsp;<button class="btn btn-sm" type="button" onclick="translateName('es', this)">翻译</button></td>
 		 		</tr>
 		 	</table>
-		 	<br />
-		 	<button class="btn btn-sm" type="button" onclick="addSkuRow()">
-		 		<i class="icon icon-plus-sign"></i>添加变体
-		 	</button>
-		 	<button class="btn btn-sm" type="button" onclick="aKeyCreateSku()">一键生成SKU</button>
-		 	<table class="popup_tb" style="margin-top:10px;" name="multiSkuTable">
-		 		<tr>
-		 			<td class="title" style="text-align:center;" colspan="7">变体SKU</td>
-		 		</tr>
-		 		<tr>
-		 			<td class="title">SKU</td>
-		 			<td><input type="text" class="txt width_50" name="multiSku"/></td>
-		 			<td class="title">颜色</td>
-		 			<td><input type="text" class="txt width_50" name="multiColor"/></td>
-		 			<td class="title">尺寸</td>
-		 			<td><input type="text" class="txt width_50" name="multiSize"/></td>
-		 			<td><button class="btn btn-sm btn-danger" type="button" onclick="removeMultiSkuRow(this)"><i class="icon icon-trash"></i></button></td>
-		 		</tr>
-	 		</table>
-		 	
+		 	<div id="multiSkuArea" style="display:none;">
+			 	<br />
+			 	<button class="btn btn-sm" type="button" onclick="addSkuRow()">
+			 		<i class="icon icon-plus-sign"></i>添加变体
+			 	</button>
+			 	<button class="btn btn-sm" type="button" onclick="aKeyCreateSku()">一键生成SKU</button>
+			 	<table class="popup_tb" style="margin-top:10px;" name="multiSkuTable">
+			 		<tr>
+			 			<td class="title" style="text-align:center;" colspan="7">变体SKU</td>
+			 		</tr>
+			 		<tr>
+			 			<td class="title">SKU</td>
+			 			<td><input type="text" class="txt width_50" name="multiSku"/></td>
+			 			<td class="title">颜色</td>
+			 			<td><input type="text" class="txt width_50" name="multiColor"/></td>
+			 			<td class="title">尺寸</td>
+			 			<td><input type="text" class="txt width_50" name="multiSize"/></td>
+			 			<td><button class="btn btn-sm btn-danger" type="button" onclick="removeMultiSkuRow(this)"><i class="icon icon-trash"></i></button></td>
+			 		</tr>
+		 		</table>
+		 	</div>
 		  </div>
 		  
 		  <div id="tabs-2">
