@@ -303,4 +303,8 @@ public class ProductService {
 	public Integer getProductAuditStatus(Integer productId) {
 		return productDao.getProductAuditStatus(productId);
 	}
+
+	public String getProductPurchaseUrl(Integer productId) {
+		return productDao.getProductPurchaseUrl(productId);
+	}
 }

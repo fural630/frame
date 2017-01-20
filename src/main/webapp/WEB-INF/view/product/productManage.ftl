@@ -239,6 +239,8 @@
 										<#if !page.permissionBut?seq_contains("batch.delete.product")>
 											<option value="batchDeleteProduct">批量删除</option>
 										</#if>
+									<#else>
+										<option value="batchSubmitAudit">批量提交审核</option>
 									</#if>
 								</select>
 								&nbsp; <button class="btn btn-sm" type="button" onclick="batchOptionSubmit()">提交</button>
@@ -258,7 +260,9 @@
 		  <ul>
 		    <li><a href="#tabs-1">基本信息</a></li>
 		    <li><a href="#tabs-2">视图信息</a></li>
-		    <li><a href="#tabs-3">采购信息</a></li>
+		    <#if page.params._roleLevel gte 10>
+		    	<li><a href="#tabs-3">采购信息</a></li>
+		    </#if>
 		    <li><a href="#tabs-4">尺寸信息</a></li>
 		    <li><a href="#tabs-5">描述信息</a></li>
 		  </ul>
@@ -358,7 +362,7 @@
 			</table>
 			
 	 	  </div>
-	 	  
+	 	  <#if page.params._roleLevel gte 10>
 		  <div id="tabs-3">
 	  		<table class="popup_tb">
 		 		<tr>
@@ -379,7 +383,7 @@
 		 		</tr>
 	 		</table>
 		  </div>
-		  
+		  </#if>
 		  <div id="tabs-4">
 			  <table class="popup_tb">
 		 		<tr>

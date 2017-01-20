@@ -29,5 +29,6 @@ public interface ProductDao {
 	public Product getProductBySku(String sku);
 	public void updateProductAuditStatus(@Param("productId")Integer productId, @Param("status")Integer status);
 	public Integer getProductAuditStatus(Integer productId);
+	public String getProductPurchaseUrl(Integer productId);
 
 }

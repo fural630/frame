@@ -89,7 +89,8 @@
 	   		</if>
 	   		
 	   		<if test="params._roleLevel &lt; 10" >
-	   			and t.creatorId = #{params._userId} or t.editorId = #{params._userId}
+	   			<![CDATA[ and t.auditStatus < 15 ]]>
+	   			and (t.creatorId = #{params._userId} or t.editorId = #{params._userId})
 	   		</if>
 	   		
    		</where>
@@ -398,5 +399,9 @@
     
     <select id="getProductAuditStatus" parameterType="int" resultType="int">
     	select auditStatus from product where id = #{productId}
+    </select>
+    
+    <select id="getProductPurchaseUrl" parameterType="int" resultType="string">
+    	select purchaseUrl from product where id = #{productId}
     </select>
 </mapper>

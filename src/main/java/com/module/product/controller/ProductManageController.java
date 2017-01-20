@@ -22,6 +22,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.application.libraries.constentEnum.ProductAuditStatusEnum;
 import com.application.libraries.constentEnum.ReturnMessageEnum;
+import com.application.libraries.constentEnum.RoleEnum;
 import com.application.libraries.select.ProductAuditStatus;
 import com.code.Page;
 import com.code.frame.Constant;
@@ -31,6 +32,7 @@ import com.code.view.ReturnMessage;
 import com.module.product.model.Product;
 import com.module.product.model.ProductAudit;
 import com.module.product.service.ProductService;
+import com.module.system.model.User;
 import com.util.Excel;
 import com.util.JsonUtil;
 import com.util.MyDate;
@@ -56,6 +58,7 @@ public class ProductManageController extends MainPage{
 	public String saveProduct(Product product, 
 			@RequestParam(value = "productImageList[]", required = false) List<String> productImageList) {
 		ReturnMessage returnMessage = new ReturnMessage();
+		MyLocale myLocale = new MyLocale();
 		if (null == product.getId()) {
 //			if (productService.checkSkuExist(product.getSku())) {
 //				returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
@@ -63,6 +66,19 @@ public class ProductManageController extends MainPage{
 //			}
 			productService.createNewProduct(product, productImageList);
 		} else {
+			User user = UserSingleton.getInstance().getUser();
+			System.out.println(user.getRole().intValue());
+			System.out.println(RoleEnum.EMPLOYEE.getValue());
+			if (user.getRole().intValue() < RoleEnum.SUPERVISOR.getValue()) {
+				Product tmpProduct = productService.getProductById(product.getId());
+				Integer auditStatus = tmpProduct.getAuditStatus().intValue();
+				Map<String, String> statusMap = new ProductAuditStatus().getOptions();
+				String statusName = statusMap.get(String.valueOf(auditStatus));
+				if (auditStatus != ProductAuditStatusEnum.WAIT_EDIT.getValue() && auditStatus != ProductAuditStatusEnum.WAIT_SUBMIT_AUDIT.getValue()) {
+					returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
+					returnMessage.setMessage(myLocale.getText("operation.fail.current.status.is", statusName));
+				}
+			}
 			productService.updateProduct(product, productImageList);
 		}
 		return JsonUtil.toJsonStr(returnMessage);
@@ -202,7 +218,7 @@ public class ProductManageController extends MainPage{
 	public String submitReview(Integer productId, String auditMessage) {
 		Integer auditStatus = productService.getProductAuditStatus(productId);
 		ReturnMessage returnMessage = new ReturnMessage();
-		if (auditStatus.intValue() != ProductAuditStatusEnum.WAIT_EDIT.getValue()) {
+		if (auditStatus.intValue() != ProductAuditStatusEnum.WAIT_SUBMIT_AUDIT.getValue()) {
 			Map<String, String> statusMap = new ProductAuditStatus().getOptions();
 			String statusName = statusMap.get(String.valueOf(auditStatus));
 			String errorMessage = new MyLocale().getText("operation.fail.current.status.is", statusName);
@@ -254,4 +270,57 @@ public class ProductManageController extends MainPage{
 		return JsonUtil.toJsonStr(returnMessage);
 	}
 	
+	@RequestMapping("getProductPurchaseUrl")
+	@ResponseBody
+	public String getProductPurchaseUrl(Integer productId) {
+		String purchaseUrl = productService.getProductPurchaseUrl(productId);
+		return JsonUtil.toJsonStr(purchaseUrl);
+	}
+	
+	@RequestMapping("finishEdit")
+	@ResponseBody
+	public String finishEdit(Integer productId) {
+		ReturnMessage returnMessage = new ReturnMessage();
+		Product product = productService.getProductById(productId);
+		if (null != product && product.getAuditStatus() != ProductAuditStatusEnum.WAIT_EDIT.getValue()) {
+			Integer auditStatus = product.getAuditStatus();
+			Map<String, String> statusMap = new ProductAuditStatus().getOptions();
+			String statusName = statusMap.get(String.valueOf(auditStatus));
+			String errorMessage = new MyLocale().getText("operation.fail.current.status.is", statusName);
+			returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
+			returnMessage.setMessage(errorMessage);
+			return JsonUtil.toJsonStr(returnMessage);
+		} else {
+			productService.updateProductAuditStatus(productId, ProductAuditStatusEnum.WAIT_SUBMIT_AUDIT);
+		}
+		return JsonUtil.toJsonStr(returnMessage);
+	}
+	
+	@RequestMapping("batchSubmitAudit")
+	@ResponseBody
+	public String batchSubmitAudit(String idList) {
+		ReturnMessage returnMessage = new ReturnMessage();
+		MyLocale myLocale = new MyLocale();
+		if (StringUtils.isNotEmpty(idList)) {
+			String ids[] = idList.split(",");
+			if (ids.length > 0) {
+				Map<String, String> statusMap = new ProductAuditStatus().getOptions();
+				String statusName = statusMap.get(String.valueOf(ProductAuditStatusEnum.WAIT_SUBMIT_AUDIT.getValue()));
+				for (String productIdStr : ids) {
+					Product product = productService.getProductById(Integer.parseInt(productIdStr));
+					if (product.getAuditStatus().intValue() != ProductAuditStatusEnum.WAIT_SUBMIT_AUDIT.getValue()) {
+						returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
+						returnMessage.setMessage(myLocale.getText("all.product.status.mast.be", statusName));
+						return JsonUtil.toJsonStr(returnMessage);
+					}
+				}
+				for (String productIdStr : ids) {
+					productService.updateProductAuditStatus(Integer.parseInt(productIdStr), ProductAuditStatusEnum.WAIT_AUDITED);
+				}
+			}
+		} else {
+			returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
+		}
+		return JsonUtil.toJsonStr(returnMessage);
+	}
 }

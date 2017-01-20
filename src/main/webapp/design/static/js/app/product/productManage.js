@@ -36,18 +36,6 @@ function initDialog () {
 		width: 800,
 		height: 600,
 		resizable: false,
-		buttons : [ {
-				text : "保存",
-				icons : {
-					primary : "ui-icon-heart"
-				},
-				click : function() {
-					if (validateProduct()) {
-						saveProduct();
-					}
-				}
-			}
-		],
 		close: function( event, ui ) {
 			cleanProductDialog();
 		}
@@ -458,8 +446,65 @@ function showProductDialog(title) {
 	} else {
 		$("#multiSkuArea").show();
 	}
-	$("#productDialog").dialog("open");
 	
+	var roleLevel = getUserRoleLevel();
+	roleLevel = Number(roleLevel);
+	if(roleLevel >=10) {
+		$("#productDialog").dialog("option", "buttons", [{
+			text : "保存",
+			icons : {
+				primary : "ui-icon-heart"
+			},
+			click : function() {
+				if (validateProduct()) {
+					saveProduct();
+				}
+			}
+		}]);
+	} else {
+		$("#productDialog").dialog("option", "buttons", [{
+			text : "保存",
+			icons : {
+				primary : "ui-icon-heart"
+			},
+			click : function() {
+				if (validateProduct()) {
+					saveProduct();
+				}
+			}
+		}, {
+			text : "完成编辑",
+			icons : {
+				primary : "ui-icon-heart"
+			},
+			click : function() {
+				if (validateProduct()) {
+					finishEdit();
+				}
+			}
+		}]);
+	}
+	$("#productDialog").dialog("open");
+}
+
+function finishEdit() {
+	var dialog = $("#productDialog");
+	var id = dialog.find("input[name=id]").val();
+	$.ajax({
+		url : "/product/finishEdit",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			productId : id
+		},
+		success : function (data) {
+			$.message.showMessage(data);
+			if (data.status == 1) {
+				dialog.dialog("close");
+				refresh(1000);
+			}
+		}
+	});
 }
 
 function showUploadProductDialog(title) {
@@ -537,28 +582,29 @@ function showDistributionPublishUserDialog (title) {
 }
 
 function submitReview() {
-	if(validateAuditMessage()) {
-		var dialog = $("#auditProductDialog");
-		var productId = dialog.find("input[name=id]").val();
-		var auditMessage = dialog.find("textarea[name=auditMessage]").val();
-		$.ajax({
-			url : "/product/submitReview",
-			type: 'POST',
-			dataType : "json",
-			data : {
-				productId : productId,
-				auditMessage : auditMessage
-			},
-			success : function (data) {
-				$.message.showMessage(data);
-				if (data.status == 1) {
-					var productAuditList = data.data;
-					dialog.find("textarea[name=auditMessage]").val("");
-					createProductAuditList(productAuditList);
-				}
-			}
-		});
+	var dialog = $("#auditProductDialog");
+	var productId = dialog.find("input[name=id]").val();
+	var auditMessage = dialog.find("textarea[name=auditMessage]").val();
+	if ("" == auditMessage) {
+		auditMessage = "请审核";
 	}
+	$.ajax({
+		url : "/product/submitReview",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			productId : productId,
+			auditMessage : auditMessage
+		},
+		success : function (data) {
+			$.message.showMessage(data);
+			if (data.status == 1) {
+				var productAuditList = data.data;
+				dialog.find("textarea[name=auditMessage]").val("");
+				createProductAuditList(productAuditList);
+			}
+		}
+	});
 }
 
 function pendingReExamination() {
@@ -1108,13 +1154,54 @@ function aKeyCreateSku() {
 function openProcurementLink () {
 	var dialog = $("#productDialog");
 	var link = dialog.find("input[name=purchaseUrl]").val();
-	if ($.trim(link) == "") {
-		var param = {
-			status : 0,
-			message : "未设置采购链接"
-		};
-		$.message.showMessage(param);
+	var id = dialog.find("input[name=id]").val();
+	if (link == undefined) {
+		if ($.trim(id) != "") {
+			$.ajax({
+				url : "/product/getProductPurchaseUrl",
+				type: 'POST',
+				dataType : "json",
+				data : {
+					productId : id
+				},
+				success : function (data) {
+					var url = data;
+					window.open(url);
+				}
+			});
+		} else {
+			var param = {
+				status : 0,
+				message : "未设置采购链接"
+			};
+			$.message.showMessage(param);
+		}
 	} else {
-		window.open(link);
+		if ($.trim(link) == "") {
+			var param = {
+				status : 0,
+				message : "未设置采购链接"
+			};
+			$.message.showMessage(param);
+		} else {
+			window.open(link);
+		}
 	}
+}
+
+function batchSubmitAudit(idList) {
+	$.ajax({
+		url : "/product/batchSubmitAudit",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			idList : idList
+		},
+		success : function (data) {
+			$.message.showMessage(data);
+			if (data.status == 1) {
+				refresh(1000);
+			}
+		}
+	});
 }
