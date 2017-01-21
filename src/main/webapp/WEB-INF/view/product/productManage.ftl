@@ -277,13 +277,13 @@
 		    <table class="popup_tb" style="margin-top:10px;">
 		 		<tr>
 		 			<td class="title width_100px">SKU<i class="star">*</i></td>
-		 			<td><input type="text" class="txt width_50" name="sku"/></td>
+		 			<td><input type="text" class="txt width_80" name="sku"/></td>
 		 			<td class="title width_100px">颜色</td>
 		 			<td><input type="text" class="txt width_50" name="color" /></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">SPU<i class="star">*</i></td>
-		 			<td><input type="text" class="txt width_50" name="spu"/></td>
+		 			<td><input type="text" class="txt width_80" name="spu"/></td>
 		 			<td class="title width_100px">尺寸</td>
 		 			<td><input type="text" class="txt width_50" name="size" /></td>
 		 		</tr>
@@ -297,11 +297,11 @@
 		 		</tr>
 	 			<tr>
 		 			<td class="title width_100px">中文报关名<i class="star">*</i></td>
-		 			<td colspan="3"><input type="text" class="txt width_98" name="declarationNameCn" required/></td>
+		 			<td colspan="3"><input type="text" class="txt width_98" name="declarationNameCn"/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">英文报关名<i class="star">*</i></td>
-		 			<td colspan="3"><input type="text" class="txt width_98" name="declarationNameEn" required/></td>
+		 			<td colspan="3"><input type="text" class="txt width_98" name="declarationNameEn"/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">德语名</td>
@@ -319,24 +319,28 @@
 		 			<td class="title width_100px">西班牙语名</td>
 		 			<td colspan="3"><input type="text" class="txt width_90" name="nameEs"/>&nbsp;<button class="btn btn-sm" type="button" onclick="translateName('es', this)">翻译</button></td>
 		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">法语名称</td>
+		 			<td colspan="3"><input type="text" class="txt width_90" name="nameFr"/>&nbsp;<button class="btn btn-sm" type="button" onclick="translateName('fr', this)">翻译</button></td>
+		 		</tr>
 		 	</table>
 		 	<div id="multiSkuArea" style="display:none;">
 			 	<br />
 			 	<button class="btn btn-sm" type="button" onclick="addSkuRow()">
 			 		<i class="icon icon-plus-sign"></i>添加变体
 			 	</button>
-			 	<button class="btn btn-sm" type="button" onclick="aKeyCreateSku()">一键生成SKU</button>
+			 	<button class="btn btn-sm" type="button" onclick="aKeyCreateSku()">一键生成SKU</button> 生成格式为：SKU-颜色-尺寸
 			 	<table class="popup_tb" style="margin-top:10px;" name="multiSkuTable">
 			 		<tr>
 			 			<td class="title" style="text-align:center;" colspan="7">变体SKU</td>
 			 		</tr>
 			 		<tr>
 			 			<td class="title">SKU</td>
-			 			<td><input type="text" class="txt width_50" name="multiSku"/></td>
+			 			<td><input type="text" class="txt width_90" name="multiSku"/></td>
 			 			<td class="title">颜色</td>
-			 			<td><input type="text" class="txt width_50" name="multiColor"/></td>
+			 			<td><input type="text" class="txt width_90" name="multiColor"/></td>
 			 			<td class="title">尺寸</td>
-			 			<td><input type="text" class="txt width_50" name="multiSize"/></td>
+			 			<td><input type="text" class="txt width_90" name="multiSize"/></td>
 			 			<td><button class="btn btn-sm btn-danger" type="button" onclick="removeMultiSkuRow(this)"><i class="icon icon-trash"></i></button></td>
 			 		</tr>
 		 		</table>

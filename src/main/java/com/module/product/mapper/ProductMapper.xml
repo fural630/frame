@@ -404,4 +404,8 @@
     <select id="getProductPurchaseUrl" parameterType="int" resultType="string">
     	select purchaseUrl from product where id = #{productId}
     </select>
+    
+    <select id="checkCanUpdateSku" resultType="Product">
+    	select * from product where sku = #{sku} and id != #{productId}
+    </select>
 </mapper>

@@ -222,6 +222,26 @@ function validateProduct() {
 		errorMassage += "&nbsp;*&nbsp;请选择填写SPU";
 	}
 	
+	var nameCn = $.trim(dialog.find("input[name='nameCn']").val());
+	if (nameCn == "") {
+		errorMassage += "&nbsp;*&nbsp;请选择填写中文名称";
+	}
+	
+	var nameEn = $.trim(dialog.find("input[name='nameEn']").val());
+	if (nameEn == "") {
+		errorMassage += "&nbsp;*&nbsp;请选择填写英文名称";
+	}
+	
+	var declarationNameCn = $.trim(dialog.find("input[name='declarationNameCn']").val());
+	if (declarationNameCn == "") {
+		errorMassage += "&nbsp;*&nbsp;请选择填写中文报关名";
+	}
+	
+	var declarationNameEn = $.trim(dialog.find("input[name='declarationNameEn']").val());
+	if (declarationNameEn == "") {
+		errorMassage += "&nbsp;*&nbsp;请选择填写英文报关名";
+	}
+	
 	if (errorMassage != "") {
 		dialog.find(".validateTip").html(errorMassage).show();
 		return false;
@@ -291,6 +311,21 @@ function saveProduct() {
 		}
 	});
 	
+	var multiSkuTable = $("table[name=multiSkuTable]");
+	var multiSkuList = [];
+	var multiColorList = [];
+	var multiSizeList = [];
+	multiSkuTable.find("tr:gt(0)").each(function () {
+		var multiSku = $(this).find("input[name=multiSku]").val();
+		var multiColor = $(this).find("input[name=multiColor]").val();
+		var multiSize = $(this).find("input[name=multiSize]").val();
+		if ($.trim(multiSku) != "") {
+			multiSkuList.push(multiSku);
+			multiColorList.push(multiColor);
+			multiSizeList.push(multiSize);
+		}
+	});
+	
 	$.ajax({
 		url : "/product/saveProduct",
 		type: 'POST',
@@ -333,7 +368,10 @@ function saveProduct() {
 			briefDescriptionEs : briefDescriptionEs,
 			briefDescriptionIt : briefDescriptionIt,
 			productImageList : productImageList,
-			mainImage : mainImage
+			mainImage : mainImage,
+			multiSkuList : multiSkuList,
+			multiColorList : multiColorList,
+			multiSizeList : multiSizeList
 		},
 		success : function (data) {
 			$.message.showMessage(data);
@@ -937,7 +975,7 @@ function aKeyTranslateName() {
 		beforeSend : function (xhr) {
 			$.blockUI({
 				message: '<img src="/design/static/images/common/progressbar10.gif">',
-				timeout: 10000,
+				timeout: 1000 * 60,
 				css:{
 					backgroundColor: "",
 					border:"0"
@@ -1005,7 +1043,7 @@ function translateName(targetLanguage, _this) {
 		beforeSend : function (xhr) {
 			$.blockUI({
 				message: '<img src="/design/static/images/common/progressbar10.gif">',
-				timeout: 10000,
+				timeout: 1000 * 60,
 				css:{
 					backgroundColor: "",
 					border:"0"
@@ -1093,11 +1131,11 @@ function addSkuRow() {
 	var skuRow = '';
 	skuRow += '<tr>';
 	skuRow += 	'<td class="title">SKU</td>';
-	skuRow += 	'<td><input type="text" class="txt width_50" name="multiSku"/></td>';
+	skuRow += 	'<td><input type="text" class="txt width_90" name="multiSku"/></td>';
 	skuRow += 	'<td class="title">颜色</td>';
-	skuRow += 	'<td><input type="text" class="txt width_50" name="multiColor"/></td>';
+	skuRow += 	'<td><input type="text" class="txt width_90" name="multiColor"/></td>';
 	skuRow += 	'<td class="title">尺寸</td>';
-	skuRow += 	'<td><input type="text" class="txt width_50" name="multiSize"/></td>';
+	skuRow += 	'<td><input type="text" class="txt width_90" name="multiSize"/></td>';
 	skuRow += 	'<td><button class="btn btn-sm btn-danger" type="button" onclick="removeMultiSkuRow(this)"><i class="icon icon-trash"></i></button></td>';
 	skuRow += '</tr>';
 	multiTable.append(skuRow);

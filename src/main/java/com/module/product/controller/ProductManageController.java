@@ -2,6 +2,7 @@ package com.module.product.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +36,7 @@ import com.module.product.model.Product;
 import com.module.product.model.ProductAudit;
 import com.module.product.service.ProductService;
 import com.module.system.model.User;
+import com.util.Dumper;
 import com.util.Excel;
 import com.util.JsonUtil;
 import com.util.MyDate;
@@ -56,14 +60,41 @@ public class ProductManageController extends MainPage{
 	@RequestMapping("saveProduct")
 	@ResponseBody
 	public String saveProduct(Product product, 
-			@RequestParam(value = "productImageList[]", required = false) List<String> productImageList) {
+			@RequestParam(value = "productImageList[]", required = false) List<String> productImageList,
+			@RequestParam(value = "multiSkuList[]",required = false) List<String> multiSkuList,
+			@RequestParam(value = "multiColorList[]",required = false) List<String> multiColorList,
+			@RequestParam(value = "multiSizeList[]",required = false) List<String> multiSizeList) {
 		ReturnMessage returnMessage = new ReturnMessage();
 		MyLocale myLocale = new MyLocale();
 		if (null == product.getId()) {
-//			if (productService.checkSkuExist(product.getSku())) {
-//				returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
-//				returnMessage.setMessage(message)
-//			}
+			if (productService.checkSkuExist(product.getSku())) {
+				returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
+				returnMessage.setMessage(myLocale.getText("operating.fail.this.sku.is.exist", product.getSku()));
+				return JsonUtil.toJsonStr(returnMessage);
+			}
+			if (CollectionUtils.isNotEmpty(multiSkuList)) {
+				for (String multiSku : multiSkuList) {
+					if (productService.checkSkuExist(multiSku)) {
+						returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
+						returnMessage.setMessage(myLocale.getText("operating.fail.this.sku.is.exist", multiSku));
+						return JsonUtil.toJsonStr(returnMessage);
+					}
+				}
+				for (int i = 0; i < multiSkuList.size(); i++) {
+					Product multiProduct = new Product();
+					try {
+						BeanUtils.copyProperties(multiProduct, product);
+						multiProduct.setSku(multiSkuList.get(i));
+						multiProduct.setColor(multiColorList.get(i));
+						multiProduct.setSize(multiSizeList.get(i));
+						productService.createNewProduct(multiProduct, productImageList);
+					} catch (IllegalAccessException e) {
+						e.printStackTrace();
+					} catch (InvocationTargetException e) {
+						e.printStackTrace();
+					}
+				}
+			}
 			productService.createNewProduct(product, productImageList);
 		} else {
 			User user = UserSingleton.getInstance().getUser();
@@ -77,9 +108,16 @@ public class ProductManageController extends MainPage{
 				if (auditStatus != ProductAuditStatusEnum.WAIT_EDIT.getValue() && auditStatus != ProductAuditStatusEnum.WAIT_SUBMIT_AUDIT.getValue()) {
 					returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
 					returnMessage.setMessage(myLocale.getText("operation.fail.current.status.is", statusName));
+					return JsonUtil.toJsonStr(returnMessage);
 				}
 			}
-			productService.updateProduct(product, productImageList);
+			if (productService.checkCanUpdateSku(product.getSku(), product.getId())) {
+				productService.updateProduct(product, productImageList);
+			} else {
+				returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
+				returnMessage.setMessage(myLocale.getText("operating.fail.this.sku.is.exist", product.getSku()));
+				return JsonUtil.toJsonStr(returnMessage);
+			}
 		}
 		return JsonUtil.toJsonStr(returnMessage);
 	}

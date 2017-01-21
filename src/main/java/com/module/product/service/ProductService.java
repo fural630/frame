@@ -116,6 +116,15 @@ public class ProductService {
 		} 
 		return true;
 	}
+	
+	public boolean checkCanUpdateSku(String sku, Integer productId) {
+		List<Product> productList = productDao.checkCanUpdateSku(sku, productId);
+		if (CollectionUtils.isNotEmpty(productList)) {
+			return false;
+		} 
+		return true;
+	}
+
 
 	public Map uploadPorduct(ArrayList<ArrayList<String>> data) {
 		MyLocale myLocale = new MyLocale();
