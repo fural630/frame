@@ -81,5 +81,9 @@
 	   		</choose>
 		</where>
     </select>
+    
+    <select id="getShopeeCategoryByParentId" parameterType="int" resultType="ShopeeCategory">
+    	select * from shopee_category where parentId = #{parentId}
+    </select>
        
 </mapper>  

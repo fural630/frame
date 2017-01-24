@@ -10,14 +10,15 @@
     <form action="/shopee/shopeePublishManage" id="mainPageForm" method="post">
   	<div class="current_nav_name clearfix">Shopee<@s.message "shopee.publish.manage"/>
 		<div class="fr small_size">
-			<button class="btn btn-sm" type="button" onclick="showShpeeSkuDialog('获取刊登SKU')"> 获取刊登SKU <span class="label label-badge">12</span></button>
+			<button class="btn btn-sm" type="button" onclick="getShopeeSkuList('获取刊登SKU')"> 获取刊登SKU <span class="label label-badge" id="userShopeeCount">${userShopeeSkuCount}</span></button>
+			<button class="btn btn-sm" type="button" onclick="showShopeeProductDialog('创建刊登')"><i class="icon icon-plus-sign"></i>  创建刊登 </button>
 		</div>
 	</div>
 	<#include "../common/page.ftl"/>
 	<div class="mainbody clearfix"> 
 	  <div class="tableview clearfix">
 	    <div class="content">
-	      <table class="tb_border tb_full stripe" id="categoryManageTable" name="pageTable">
+	      <table class="tb_border tb_full stripe" id="shopeePublishTable" name="pageTable">
 	          <tr>
 	          	<th></th>
 	            <th><i class="icon icon-caret-up"></i>SKU</th>
@@ -97,14 +98,10 @@
 	          		<#list collection as obj>
 			  		 <tr>
 			            <td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="${obj.id}" onclick="countCheckbox()" /></td>
-			            <td>
-			            </td>
-			            <td>
-			            </td>
-			            <td>
-			            </td>
-			            <td>
-			            </td>
+			            <td></td>
+			            <td></td>
+			            <td></td>
+			            <td></td>
 			          </tr>
 		          </#list>
 		  		</#if>
@@ -176,8 +173,8 @@
 	 			<td class="title width_100px">产品类别<i class="star">*</i></td>
 	 			<td>
 	 				<div>
-	 					<button class="btn btn-sm " type="button" onclick="expandCategory()">
-	 						<i class="icon icon-double-angle-down"></i> 展开类别
+	 					<button name="expandCategoryButton" class="btn btn-sm " type="button" onclick="expandCategory()">
+	 						<i class="icon icon-double-angle-down"></i> <span id="categorybtnName">展开类别<span>
 						</button>&nbsp;&nbsp;已选类别 &nbsp;&nbsp;:&nbsp;&nbsp;
 	 					<span id="navigation"></span>
 	 				</div>	
@@ -186,7 +183,7 @@
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">类别ID<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_100px" name="parentSku"/></td>
+	 			<td><input type="text" class="txt width_100px" name="categoryId"/></td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">产品图片<i class="star">*</i></td>
@@ -203,7 +200,7 @@
 	 								</button>
 	 								<!--<a class="btn" onclick="clearImageUrlAddress();">清空</a>-->
 	 							</td>
-	 							<td style="text-align:right;">已选择图片：<span id="selectImageCount">0</span> 张 | 最多 4 张图片</div></td>
+	 							<td style="text-align:right;">已选择图片：<span id="selectImageCount">0</span> 张 <!--| 最多 4 张图片--></div></td>
 	 						</tr>
 	 					</table>
 	 					<div id="image_area">
@@ -214,10 +211,10 @@
 										<table class="width_100 image_operating_table">
 											<tr>
 												<td>
-													<button class="btn btn-sm" type="button" onclick="changeCheckStatus(this)"><i class="icon icon-checked"></i></button>
+													<button name="checkImageButton" class="btn btn-sm" type="button" onclick="changeCheckStatus(this)"><i class="icon icon-checked"></i></button>
 												</td>
 												<td>
-													<button class="btn btn-sm " type="button" onclick="{deleteImage}"><i class="icon icon-trash"></i></button>
+													<button class="btn btn-sm " type="button" onclick="deleteImage(this)"><i class="icon icon-trash"></i></button>
 												</td>
 											</tr>
 										</table>
@@ -229,10 +226,10 @@
 										<table class="width_100 image_operating_table">
 											<tr>
 												<td>
-													<button class="btn btn-sm" type="button" onclick="changeCheckStatus(this)"><i class="icon icon-check-empty"></i></button>
+													<button name="checkImageButton" class="btn btn-sm" type="button" onclick="changeCheckStatus(this)"><i class="icon icon-check-empty"></i></button>
 												</td>
 												<td>
-													<button class="btn btn-sm" type="button" onclick="{deleteImage}"><i class="icon icon-trash"></i></button>
+													<button class="btn btn-sm" type="button" onclick="deleteImage(this)"><i class="icon icon-trash"></i></button>
 												</td>
 											</tr>
 										</table>
@@ -260,15 +257,80 @@
 	 			<td><input type="text" class="txt width_100px" name="parentSku"/></td>
 	 		</tr>
 	 		<tr>
-	 			<td class="title width_100px">送达时间<i class="star">*</i></td>
+	 			<td class="title width_100px">运输时间<i class="star">*</i></td>
+	 			<td><input type="text" class="txt width_100px" name="parentSku"/></td>
+	 		</tr>
+	 		<tr>
+	 			<td class="title width_100px">品牌名<i class="star">*</i></td>
 	 			<td><input type="text" class="txt width_100px" name="parentSku"/></td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">产品描述<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_100px" name="parentSku"/></td>
+	 			<td><textarea class="txt width_96 remark" name="description" style="height:150px;"></textarea></td>
 	 		</tr>
  		</table>
 	</div>
-  
+	
+	<div id="shopeeSkuListDialog" style="display:none;" title="刊登任务">
+		<div class="mainbody clearfix"> 
+			<div class="tableview clearfix">
+				<div class="content">
+					<table class="tb_border tb_full stripe" id="shopeeSkuListTable">
+						<tr>
+							<th></th>
+							<th>SKU</th>
+							<th>SPU</th>
+							<th>图片</th>
+							<th>名称</th>
+						</tr>
+						<tr>
+							<td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="" onclick="countCheckbox()" /></td>
+							<td>DV1-3</td>
+							<td>DV</td>
+							<td><img src="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" data-image="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" class="img-thumbnail" width="110"/></td>
+							<td>测试</td>
+						</tr>
+						<tr>
+							<td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="" onclick="countCheckbox()" /></td>
+							<td>DV1-3</td>
+							<td>DV</td>
+							<td><img src="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" data-image="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" class="img-thumbnail" width="110"/></td>
+							<td>测试</td>
+						</tr>
+						<tr>
+							<td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="" onclick="countCheckbox()" /></td>
+							<td>DV1-3</td>
+							<td>DV</td>
+							<td><img src="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" data-image="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" class="img-thumbnail" width="110"/></td>
+							<td>测试</td>
+						</tr>
+						<tr>
+							<td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="" onclick="countCheckbox()" /></td>
+							<td>DV1-3</td>
+							<td>DV</td>
+							<td><img src="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" data-image="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" class="img-thumbnail" width="110"/></td>
+							<td>测试</td>
+						</tr>
+					</table>
+					<div class="paging clearfix">
+						<div class="massaction">
+							<!--
+							<table class="tb_common">
+								<tr>
+									<td style="width:40%" class="td_left">
+										<a href="javascript:void(0)" onclick="pageSelectAll();">全选</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+										<a href="javascript:void(0)" onclick="pageNoSelectAll();">全不选</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+										<a href="javascript:void(0)" onclick="pageUnselected();">反选</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+										已选择&nbsp;<span id="pageCheckCount">0</span>&nbsp;条
+									</td>
+								</tr>
+							</table>
+							-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
   </body>
 </html>

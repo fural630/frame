@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2017-01-20 18:37:22
+Date: 2017-01-24 16:24:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -54,15 +54,18 @@ CREATE TABLE `navigator_user` (
   `userId` int(11) NOT NULL,
   `navigatorId` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of navigator_user
 -- ----------------------------
 INSERT INTO `navigator_user` VALUES ('1', '3', '48');
 INSERT INTO `navigator_user` VALUES ('2', '3', '49');
-INSERT INTO `navigator_user` VALUES ('3', '4', '48');
-INSERT INTO `navigator_user` VALUES ('4', '4', '49');
+INSERT INTO `navigator_user` VALUES ('5', '4', '48');
+INSERT INTO `navigator_user` VALUES ('6', '4', '49');
+INSERT INTO `navigator_user` VALUES ('7', '4', '53');
+INSERT INTO `navigator_user` VALUES ('8', '4', '54');
+INSERT INTO `navigator_user` VALUES ('9', '4', '55');
 
 -- ----------------------------
 -- Table structure for product
@@ -114,14 +117,22 @@ CREATE TABLE `product` (
   `size` varchar(255) DEFAULT NULL,
   `color` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product
 -- ----------------------------
 INSERT INTO `product` VALUES ('17', 'DV3', 'Y2639', '照片', 'photo', null, null, null, null, null, '电子相册', 'e-photo', 'http://www.guphotos.com/images/D/D1816W-EU/D1816W-EU-4-375a.jpg', '15.3', null, null, '2', '3', '4', '5', null, null, null, null, null, null, null, null, null, null, null, null, null, null, 'http://www.guphotos.com/images/D/D1816W-EU/D1816W-EU-4-375a.jpg', '1: 【于 2016-12-28 23:18:37 由 王单爆 操作, 创建了商品信息】<br/>2: 【于 2017-01-05 10:02:06 由 王单爆 操作, 修改了商品信息】<br/>3: 【于 2017-01-05 15:16:28 由 玄奘-员工 操作, 修改了商品信息】<br/>4: 【于 2017-01-05 16:08:45 由 王单爆 操作, 修改了商品信息】<br/>5: 【于 2017-01-18 17:49:32 由 王单爆 操作, 修改了商品信息】<br/>6: 【于 2017-01-20 18:21:30 由 玄奘-员工 操作, 修改了商品信息】<br/>7: 【于 2017-01-20 18:22:14 由 玄奘-员工 操作, 修改了商品信息】', '2', '4', null, '10', '2016-12-28 23:18:37', '2017-01-20 18:22:14', 'XMt', '红色');
-INSERT INTO `product` VALUES ('18', 'Y2639BL', 'Y2639', 'CAMP607移动式侧板滑轮', 'Lixada 20KN Small Mobile Single Pulley Swing Side Climbing Rigging Rescue', '', 'Lixada 20KN kleine mobile Einzel Pulley Schaukel Side Kletter Rigging-Rettung', 'リギングレスキュークライミングLixada 20KN小型モバイルシングルプーリースイングサイド', 'Lixada 20KN Piccolo mobile singolo puleggia oscillazione laterale arrampicata Rigging Rescue', 'Lixada 20KN Pequeño móvil polea simple swing Escalada Aparejo Rescate Side', '移动式侧板滑轮', 'Mobile Single Pulley', 'http://www.guphotos.com/images/Y/L/Y2639BL/Y2639BL-1-d704-oYyw.jpg', '12.99', '', '', '1', '3', '4', '7', '', 'Hot up your summer collection with this alluring bikini set. It has vintage floral print, off the shoulder top and flattering low-rise bottom. A definite lust worthy piece that will turn heads like no other on beach.<br />\n<br />\n&nbsp;', 'Hot votre collection d&amp;#39;&eacute;t&eacute; avec cet ensemble de bikini s&eacute;duisant. Il a imprim&eacute; floral vintage, du haut de l&amp;#39;&eacute;paule et en bas de faible hauteur flatteur. Une convoitise pi&egrave;ce digne d&eacute;finitive qui fera tourner les t&ecirc;tes comme aucun autre sur la plage.<br />\n&nbsp;', 'Hot up Ihre Sommer-Kollektion mit diesem verf&uuml;hrerischen Bikini-Set. Es hat Jahrgang Blumendruck, weg von der Schulter oben und schmeichelnd Flachbau unten. Eine definitive Lust w&uuml;rdig St&uuml;ck, die K&ouml;pfe wie kein anderer am Strand verwandeln wird.<br />\n&nbsp;', 'ホットアップこの魅力的なビキニセットであなたの夏のコレクション。これは、肩の上部と世辞低層の底から、ヴィンテージの花柄を持っています。ビーチで他に類をみない頭を向けるだろう明確な欲望に値する作品。<br />\n&nbsp;', 'Hot la vostra collezione estiva con questo set bikini seducente. Ha stampa floreale d&amp;#39;epoca, fuori dalla parte superiore della spalla e lusinghiero in basso a vita bassa. Decisamente un desiderio degno pezzo che non passa inosservato come nessun altro sulla spiaggia.<br />\n&nbsp;', 'Caliente hasta su colecci&oacute;n de verano con este conjunto de bikini atractivo. Tiene la impresi&oacute;n floral de la vendimia, de la parte superior del hombro y favorecedor parte inferior de poca altura. Un deseo definitivo pieza digna que har&aacute; girar las cabezas como ning&uacute;n otro en la playa.<br />\n&nbsp;', '', '', '', '', '', '', '', 'http://www.guphotos.com/images/Y/L/Y2639BL/Y2639BL-1-d704-KP3L.jpg', '1: 【于 2017-01-06 09:45:22 由 李四-主管 操作, 创建了商品信息】<br/>2: 【于 2017-01-10 14:11:26 由 王单爆 操作, 修改了商品信息】<br/>3: 【于 2017-01-10 14:12:25 由 王单爆 操作, 修改了商品信息】<br/>4: 【于 2017-01-10 18:33:49 由 王单爆 操作, 修改了商品信息】<br/>5: 【于 2017-01-11 12:29:15 由 王单爆 操作, 修改了商品信息】<br/>6: 【于 2017-01-20 17:12:28 由 玄奘-员工 操作, 修改了商品信息】<br/>7: 【于 2017-01-20 18:11:05 由 玄奘-员工 操作, 修改了商品信息】<br/>8: 【于 2017-01-20 18:12:52 由 玄奘-员工 操作, 修改了商品信息】<br/>9: 【于 2017-01-20 18:15:33 由 玄奘-员工 操作, 修改了商品信息】<br/>10: 【于 2017-01-20 18:16:00 由 王单爆 操作, 修改了商品信息】<br/>11: 【于 2017-01-20 18:20:31 由 玄奘-员工 操作, 修改了商品信息】<br/>12: 【于 2017-01-20 18:20:44 由 玄奘-员工 操作, 修改了商品信息】', '3', '4', null, '20', '2017-01-06 09:45:22', '2017-01-20 18:20:44', 'XL12', '蓝色');
-INSERT INTO `product` VALUES ('19', 'Y2639BL', 'Y2639', '32', '23', '', '', '', '', '', '231', '23', '', null, '', '', null, null, null, null, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '1: 【于 2017-01-18 18:13:02 由 王单爆 操作, 创建了商品信息】', '2', null, null, '10', '2017-01-18 18:13:02', '2017-01-18 18:13:02', '', '');
+INSERT INTO `product` VALUES ('18', 'Y2639BL', 'Y2639', 'CAMP607移动式侧板滑轮', 'Lixada 20KN Small Mobile Single Pulley Swing Side Climbing Rigging Rescue', '', 'Lixada 20KN kleine mobile Einzel Pulley Schaukel Side Kletter Rigging-Rettung', 'リギングレスキュークライミングLixada 20KN小型モバイルシングルプーリースイングサイド', 'Lixada 20KN Piccolo mobile singolo puleggia oscillazione laterale arrampicata Rigging Rescue', 'Lixada 20KN Pequeño móvil polea simple swing Escalada Aparejo Rescate Side', '移动式侧板滑轮', 'Mobile Single Pulley', 'http://www.guphotos.com/images/Y/L/Y2639BL/Y2639BL-1-d704-oYyw.jpg', '12.99', '', '', '1', '3', '4', '7', '', 'Hot up your summer collection with this alluring bikini set. It has vintage floral print, off the shoulder top and flattering low-rise bottom. A definite lust worthy piece that will turn heads like no other on beach.<br />\n<br />\n&nbsp;', 'Hot votre collection d&amp;#39;&eacute;t&eacute; avec cet ensemble de bikini s&eacute;duisant. Il a imprim&eacute; floral vintage, du haut de l&amp;#39;&eacute;paule et en bas de faible hauteur flatteur. Une convoitise pi&egrave;ce digne d&eacute;finitive qui fera tourner les t&ecirc;tes comme aucun autre sur la plage.<br />\n&nbsp;', 'Hot up Ihre Sommer-Kollektion mit diesem verf&uuml;hrerischen Bikini-Set. Es hat Jahrgang Blumendruck, weg von der Schulter oben und schmeichelnd Flachbau unten. Eine definitive Lust w&uuml;rdig St&uuml;ck, die K&ouml;pfe wie kein anderer am Strand verwandeln wird.<br />\n&nbsp;', 'ホットアップこの魅力的なビキニセットであなたの夏のコレクション。これは、肩の上部と世辞低層の底から、ヴィンテージの花柄を持っています。ビーチで他に類をみない頭を向けるだろう明確な欲望に値する作品。<br />\n&nbsp;', 'Hot la vostra collezione estiva con questo set bikini seducente. Ha stampa floreale d&amp;#39;epoca, fuori dalla parte superiore della spalla e lusinghiero in basso a vita bassa. Decisamente un desiderio degno pezzo che non passa inosservato come nessun altro sulla spiaggia.<br />\n&nbsp;', 'Caliente hasta su colecci&oacute;n de verano con este conjunto de bikini atractivo. Tiene la impresi&oacute;n floral de la vendimia, de la parte superior del hombro y favorecedor parte inferior de poca altura. Un deseo definitivo pieza digna que har&aacute; girar las cabezas como ning&uacute;n otro en la playa.<br />\n&nbsp;', '', '', '', '', '', '', '', 'http://www.guphotos.com/images/Y/L/Y2639BL/Y2639BL-1-d704-KP3L.jpg', '1: 【于 2017-01-06 09:45:22 由 李四-主管 操作, 创建了商品信息】<br/>2: 【于 2017-01-10 14:11:26 由 王单爆 操作, 修改了商品信息】<br/>3: 【于 2017-01-10 14:12:25 由 王单爆 操作, 修改了商品信息】<br/>4: 【于 2017-01-10 18:33:49 由 王单爆 操作, 修改了商品信息】<br/>5: 【于 2017-01-11 12:29:15 由 王单爆 操作, 修改了商品信息】<br/>6: 【于 2017-01-20 17:12:28 由 玄奘-员工 操作, 修改了商品信息】<br/>7: 【于 2017-01-20 18:11:05 由 玄奘-员工 操作, 修改了商品信息】<br/>8: 【于 2017-01-20 18:12:52 由 玄奘-员工 操作, 修改了商品信息】<br/>9: 【于 2017-01-20 18:15:33 由 玄奘-员工 操作, 修改了商品信息】<br/>10: 【于 2017-01-20 18:16:00 由 王单爆 操作, 修改了商品信息】<br/>11: 【于 2017-01-20 18:20:31 由 玄奘-员工 操作, 修改了商品信息】<br/>12: 【于 2017-01-20 18:20:44 由 玄奘-员工 操作, 修改了商品信息】', '3', '4', '4', '20', '2017-01-06 09:45:22', '2017-01-20 18:20:44', 'XL12', '蓝色');
+INSERT INTO `product` VALUES ('19', 'Y2639BL', 'Y2639', '32', '23', '', '', '', '', '', '231', '23', '', null, '', '', null, null, null, null, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '1: 【于 2017-01-18 18:13:02 由 王单爆 操作, 创建了商品信息】', '2', null, '4', '10', '2017-01-18 18:13:02', '2017-01-18 18:13:02', '', '');
+INSERT INTO `product` VALUES ('20', 'W3770-B', 'W3770', '医用心脏心血管听诊器', '', '', '', '', '', '', '', '', '', null, '', '', null, null, null, null, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '1: 【于 2017-01-21 12:05:51 由 王单爆 操作, 创建了商品信息】', '2', null, '4', '5', '2017-01-21 12:05:51', '2017-01-21 12:05:51', '', 'B');
+INSERT INTO `product` VALUES ('21', 'W3770-BL', 'W3770', '医用心脏心血管听诊器', '', '', '', '', '', '', '', '', '', null, '', '', null, null, null, null, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '1: 【于 2017-01-21 12:05:52 由 王单爆 操作, 创建了商品信息】', '2', null, null, '5', '2017-01-21 12:05:52', '2017-01-21 12:05:52', '', 'BL');
+INSERT INTO `product` VALUES ('22', 'W3770-PU', 'W3770', '医用心脏心血管听诊器', '', '', '', '', '', '', '', '', '', null, '', '', null, null, null, null, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '1: 【于 2017-01-21 12:05:52 由 王单爆 操作, 创建了商品信息】', '2', null, null, '5', '2017-01-21 12:05:52', '2017-01-21 12:05:52', '', 'PU');
+INSERT INTO `product` VALUES ('23', 'W3770-R', 'W3770', '医用心脏心血管听诊器', '', '', '', '', '', '', '', '', '', null, '', '', null, null, null, null, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '1: 【于 2017-01-21 12:05:52 由 王单爆 操作, 创建了商品信息】<br/>2: 【于 2017-01-21 12:10:17 由 王单爆 操作, 修改了商品信息】', '2', null, null, '5', '2017-01-21 12:05:52', '2017-01-21 12:10:17', '', 'R');
+INSERT INTO `product` VALUES ('24', 'W3770-RT', 'W3770', '', '', '', '', '', '', '', '', '', '', null, '', '', null, null, null, null, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '1: 【于 2017-01-21 12:13:30 由 王单爆 操作, 创建了商品信息】', '2', null, null, '5', '2017-01-21 12:13:30', '2017-01-21 12:13:30', '', '');
+INSERT INTO `product` VALUES ('25', 'W3770-X', 'W3770', '23', '23', '', '', '', '', '', '23', '12', '', null, '', '', null, null, null, null, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '1: 【于 2017-01-21 14:14:10 由 王单爆 操作, 创建了商品信息】', '2', null, null, '5', '2017-01-21 14:14:10', '2017-01-21 14:14:10', '', 'X');
+INSERT INTO `product` VALUES ('26', 'W3770-T', 'W3770', '23', '23', '', '', '', '', '', '23', '12', '', null, '', '', null, null, null, null, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '1: 【于 2017-01-21 14:14:10 由 王单爆 操作, 创建了商品信息】<br/>2: 【于 2017-01-21 14:14:42 由 王单爆 操作, 修改了商品信息】<br/>3: 【于 2017-01-21 14:26:54 由 王单爆 操作, 修改了商品信息】', '2', null, null, '5', '2017-01-21 14:14:10', '2017-01-21 14:26:54', 'D', '');
+INSERT INTO `product` VALUES ('27', 'W3770-23', 'W3770', '23', '23', '', '', '', '', '', '23', '12', '', null, '', '', null, null, null, null, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '1: 【于 2017-01-21 14:14:10 由 王单爆 操作, 创建了商品信息】', '2', null, null, '5', '2017-01-21 14:14:10', '2017-01-21 14:14:10', '', 'dD');
 
 -- ----------------------------
 -- Table structure for product_audit
@@ -957,6 +968,32 @@ INSERT INTO `shopee_category` VALUES ('2180', 'Vacuum Cleaner', '2179', '3', '10
 INSERT INTO `shopee_category` VALUES ('2181', 'Robot Vacuums', '2179', '3', '10072');
 INSERT INTO `shopee_category` VALUES ('2182', 'Power Tools & Accessories', '2179', '3', '10073');
 INSERT INTO `shopee_category` VALUES ('2183', 'Others', '2179', '3', '10070');
+
+-- ----------------------------
+-- Table structure for shopee_publish
+-- ----------------------------
+DROP TABLE IF EXISTS `shopee_publish`;
+CREATE TABLE `shopee_publish` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sku` varchar(255) DEFAULT NULL,
+  `parentSku` varchar(255) DEFAULT NULL,
+  `categoryPath` varchar(255) DEFAULT NULL,
+  `categoryId` int(11) DEFAULT NULL,
+  `productName` varchar(255) DEFAULT NULL,
+  `price` double DEFAULT NULL,
+  `stock` int(11) DEFAULT NULL,
+  `weight` double DEFAULT NULL,
+  `shipOutIn` int(11) DEFAULT NULL,
+  `brand` varchar(255) DEFAULT NULL,
+  `description` text,
+  `status` int(11) DEFAULT NULL,
+  `publishUserId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of shopee_publish
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for user

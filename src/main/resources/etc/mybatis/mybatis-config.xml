@@ -16,7 +16,7 @@
         
         <!-- shopee -->
         <typeAlias alias="ShopeeCategory" type="com.module.shopee.model.ShopeeCategory" />
-        
+        <typeAlias alias="ShopeePublish" type="com.module.shopee.model.ShopeePublish" />
     </typeAliases> 
     
     <plugins><plugin interceptor="com.code.PageInterceptor"/></plugins> 
@@ -27,6 +27,7 @@
         <mapper resource="com/module/product/mapper/ProductMapper.xml" />
         
         <mapper resource="com/module/shopee/mapper/ShopeeCategoryMapper.xml" />
+        <mapper resource="com/module/shopee/mapper/ShopeePublishMapper.xml" />
         
     </mappers> 
 </configuration>    

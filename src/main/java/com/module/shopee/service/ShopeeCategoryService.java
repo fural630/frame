@@ -53,6 +53,10 @@ public class ShopeeCategoryService {
 	public List<Map<String, Object>> getCategoryPage(Page page) {
 		return shopeeCategoryDao.getCategoryPage(page);
 	}
+
+	public List<ShopeeCategory> getShopeeCategoryByParentId(Integer parentId) {
+		return shopeeCategoryDao.getShopeeCategoryByParentId(parentId);
+	}
 	
 	
 	
