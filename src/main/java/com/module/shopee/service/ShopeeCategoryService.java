@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.code.Page;
 import com.module.shopee.dao.ShopeeCategoryDao;
 import com.module.shopee.model.ShopeeCategory;
+import com.util.MyDate;
 
 @Service
 public class ShopeeCategoryService {
@@ -36,6 +37,7 @@ public class ShopeeCategoryService {
 					shopeeCategory.setCategoryName(categoryName);
 					shopeeCategory.setLevel((j+1));
 					shopeeCategory.setParentId(parentId);
+					shopeeCategory.setImportTime(new MyDate().getCurrentDateTime());
 					if (j == 2) {
 						shopeeCategory.setCategoryId(categoryId);
 					}

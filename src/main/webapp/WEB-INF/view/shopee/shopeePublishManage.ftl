@@ -21,13 +21,13 @@
 	      <table class="tb_border tb_full stripe" id="shopeePublishTable" name="pageTable">
 	          <tr>
 	          	<th></th>
-	            <th><i class="icon icon-caret-up"></i>SKU</th>
-	            <th><i class="icon icon-caret-down"></i>SPU</th>
-	            <th>主图</th>
-	            <th>名称</th>
-	            <th>品牌名</th>
+	            <th><!--<i class="icon icon-caret-up"></i>-->SKU</th>
+	            <th><!--<i class="icon icon-caret-down"></i>-->SPU</th>
+	            <th style="width:110px;">主图</th>
+	            <th style="width:160px;">名称</th>
+	            <th style="min-width:80px;">品牌名</th>
 	            <th>CategoryID</th>
-	            <th>价格</th>
+	            <th style="min-width:60px;">价格</th>
 	            <th>库存</th>
 	            <th>产品重量</th>
 	            <th>运输时间</th>
@@ -38,18 +38,25 @@
 	          	<td></td>
 	          	<td>
 	          		<ul>
-	          			<li><input type="text" class="txt width_100px" name="params[firstCategory]" value="${page.params.firstCategory!''}" /></li>
-	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[firstCategoryLike]" <#if page.params.firstCategoryLike??> checked </#if>></li>
+	          			<li><input type="text" class="txt width_100px" name="params[sku]" value="${page.params.sku!''}" /></li>
+	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[skuLike]" <#if page.params.skuLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
 	          	<td>
 	          		<ul>
-	          			<li><input type="text" class="txt width_100px" name="params[subcategory]" value="${page.params.subcategory!''}" /></li>
-	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[subcategoryLike]" <#if page.params.subcategoryLike??> checked </#if>></li>
+	          			<li><input type="text" class="txt width_100px" name="params[parentSku]" value="${page.params.parentSku!''}" /></li>
+	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[parentSkuLike]" <#if page.params.parentSkuLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
 	          	<td>
 	          	</td>
+	          	<td>
+	          		<ul>
+	          			<li><input type="text" class="txt width_100px" name="params[productName]" value="${page.params.productName!''}" /></li>
+	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[productNameLike]" <#if page.params.productNameLike??> checked </#if>></li>
+	          		</ul>
+	          	</td>
+	          	<td></td>
 	          	<td>
 	          		<ul>
 	          			<li><input type="text" class="txt width_100px" name="params[categoryId]" value="${page.params.categoryId!''}" /></li>
@@ -60,48 +67,48 @@
 	          	<td></td>
 	          	<td></td>
 	          	<td></td>
-	          	<td></td>
-	          	<td></td>
-	          	<td></td>
+	          	<td>
+	          		<li>
+          				<#if page.params.status??> 
+          					<@select id="status" name="params[status]" selected="${page.params.status}" optionClass="ShopeeProductStatus"  cssClass="sel width_100px" headerKey="" headerValue=""/>
+          				<#else>
+          					<@select id="status" name="params[status]"  optionClass="ShopeeProductStatus"  cssClass="sel width_60px" headerKey="" headerValue=""/>
+          				</#if>
+          			</li>
+          			<li></li>
+	          	</td>
 	          	<td></td>
 	          </tr>
 	          </form>
-	          <tr>
-	          	<td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="" onclick="countCheckbox()" /></td>
-	          	<td>SKU</td>
-	          	<td>SPU</td>
-	          	<td><img src="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" data-image="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" class="img-thumbnail" width="110"/></td>
-	          	<td>Climbing Rigging Rescue</td>
-	          	<td>Smart</td>
-	          	<td>4782</td>
-	          	<td>20.1</td>
-	          	<td>999</td>
-	          	<td>30</td>
-	          	<td>2</td>
-	          	<td>待编辑</td>
-	            <td class="optionTd" style="width:60px;text-align:center;">
-	            	<div class="btn-group">
-					  <button type="button" class="btn dropdown-toggle btn-sm" data-toggle="dropdown">
-					  	操作
-				  	  <span class="caret"></span>
-					  </button>
-		          		<ul class="dropdown-menu pull-right" role="menu">
-						    <li><a href="javascript:void(0)" onclick="editSku()" ><i class="icon icon-edit"></i> 单体编辑</a></li>
-						    <li><a href="javascript:void(0)" onclick="editMultiSku()" ><i class="icon icon-edit-sign"></i> 变体编辑</a></li>
-						    <li class="divider"></li>
-						    <li><a href="javascript:void(0)" onclick="confirmMsg('deleteProduct()')" ><i class="icon icon-trash"></i> 删除 </a></li>
-					  	</ul>
-					</div>
-	          	</td>
-	          </tr>
 	          	<#if collection??>
 	          		<#list collection as obj>
 			  		 <tr>
 			            <td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="${obj.id}" onclick="countCheckbox()" /></td>
-			            <td></td>
-			            <td></td>
-			            <td></td>
-			            <td></td>
+			            <td>${obj.sku}</td>
+			            <td>${obj.parentSku!""}</td>
+			            <td><img src="${obj.mainImage!''}" data-image="${obj.mainImage!''}" class="img-thumbnail" width="110"/></td>
+			            <td>${obj.productName}</td>
+			            <td>${obj.brand!""}</td>
+			            <td>${obj.categoryId!""}</td>
+			            <td>${obj.price!""}</td>
+			            <td>${obj.stock!""}</td>
+			            <td>${obj.weight}</td>
+			            <td>${obj.shipOutIn!""}</td>
+			            <td><@matchValue key="${obj.status}" optionClass="ShopeeProductStatus"/></td>
+		            	<td class="optionTd" style="width:60px;text-align:center;">
+			            	<div class="btn-group">
+							  <button type="button" class="btn dropdown-toggle btn-sm" data-toggle="dropdown">
+							  	操作
+						  	  <span class="caret"></span>
+							  </button>
+				          		<ul class="dropdown-menu pull-right" role="menu">
+								    <li><a href="javascript:void(0)" onclick="editSku(${obj.id})" ><i class="icon icon-edit"></i> 单体编辑</a></li>
+								    <li><a href="javascript:void(0)" onclick="editMultiSku(${obj.id})" ><i class="icon icon-edit-sign"></i> 变体编辑</a></li>
+								    <li class="divider"></li>
+								    <li><a href="javascript:void(0)" onclick="confirmMsg('deleteShopeeProduct(${obj.id})')" ><i class="icon icon-trash"></i> 删除 </a></li>
+							  	</ul>
+							</div>
+			          	</td>
 			          </tr>
 		          </#list>
 		  		</#if>
@@ -135,7 +142,7 @@
 	
 	<div id="uploadCategoryDialog" style="display:none;">
 		<div class="alert alert-info" style="padding:10px;">
-			注意：请从Shopee平台下载类别模板后直接导入无需修改格式，导入数据后原类别将会被删除覆盖。
+			注意：请从Shopee平台下载类别模板后直接导入无需修改格式。第一行为表头，无需删除，导入数据从第二行开始，导入数据后原类别将会被删除覆盖。
 		</div>
 		<form name="uploadCategoryFrom" action="/shopee/uploadCategory" method="post" enctype="multipart/form-data" target="iframe_shippingData">
 			<table class="popup_tb">
@@ -143,16 +150,6 @@
 		 			<td class="title width_100px">导入文件<i class="star">*</i></td>
 		 			<td><input type="file" name="categoryFile" class="form-control" value="" style="width:50%"></td>
 		 		</tr>
-		 		<!--
-		 		<tr>
-		 			<td class="title width_100px">模板文件下载<i class="star">*</i></td>
-		 			<td>
-		 				<a href="/download/template/productImportTemplate.xls">
-		 					<i class="icon icon-file-excel"></i> 商品导入文件模板下载
-		 				</a>
-		 			</td>
-		 		</tr>
-		 		-->
 	 		</table>
 		</form>
 		<iframe name="iframe_shippingData" width="100%" height="100" frameborder="0"></iframe>
@@ -204,65 +201,34 @@
 	 						</tr>
 	 					</table>
 	 					<div id="image_area">
-	 						<ul id="sortable">
-	 							<li>
-									<div class="iamge_div">
-									<img onclick="changeCheckStatus(this)" name="productImage" src="https://www.guphotos.com/images/H/H4640/H4640-1-d082.jpg" data-image="https://www.guphotos.com/images/H/H4640/H4640-1-d082.jpg" class="img-thumbnail-selected move" title="拖动改变图片顺序" width="110">
-										<table class="width_100 image_operating_table">
-											<tr>
-												<td>
-													<button name="checkImageButton" class="btn btn-sm" type="button" onclick="changeCheckStatus(this)"><i class="icon icon-checked"></i></button>
-												</td>
-												<td>
-													<button class="btn btn-sm " type="button" onclick="deleteImage(this)"><i class="icon icon-trash"></i></button>
-												</td>
-											</tr>
-										</table>
-									</div>
-								</li>
-								<li>
-									<div class="iamge_div">
-									<img onclick="changeCheckStatus(this)" name="productImage" src="https://www.guphotos.com/images/S/S280/S280-2-0853.JPG" data-image="https://www.guphotos.com/images/S/S280/S280-2-0853.JPG" class="img-thumbnail move" title="拖动改变图片顺序" width="110">
-										<table class="width_100 image_operating_table">
-											<tr>
-												<td>
-													<button name="checkImageButton" class="btn btn-sm" type="button" onclick="changeCheckStatus(this)"><i class="icon icon-check-empty"></i></button>
-												</td>
-												<td>
-													<button class="btn btn-sm" type="button" onclick="deleteImage(this)"><i class="icon icon-trash"></i></button>
-												</td>
-											</tr>
-										</table>
-									</div>
-								</li>
-	 						</ul>
+	 						<ul id="sortable"></ul>
 	 					</div>
 	 				</div>
 	 			</td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">产品名称<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_100px" name="parentSku"/></td>
+	 			<td><input type="text" class="txt width_100px" name="productName"/></td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">价格<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_100px" name="parentSku"/></td>
+	 			<td><input type="text" class="txt width_100px" name="price"/></td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">库存<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_100px" name="parentSku"/></td>
+	 			<td><input type="text" class="txt width_100px" name="stock"/></td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">产品重量<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_100px" name="parentSku"/></td>
+	 			<td><input type="text" class="txt width_100px" name="weight"/></td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">运输时间<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_100px" name="parentSku"/></td>
+	 			<td><input type="text" class="txt width_100px" name="shipOutIn"/></td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">品牌名<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_100px" name="parentSku"/></td>
+	 			<td><input type="text" class="txt width_100px" name="brand"/></td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">产品描述<i class="star">*</i></td>
@@ -284,28 +250,28 @@
 							<th>名称</th>
 						</tr>
 						<tr>
-							<td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="" onclick="countCheckbox()" /></td>
+							<td style="text-align:center"><input name="publish_sku_checkbox" type="checkbox" value="" onclick="countCheckbox()" /></td>
 							<td>DV1-3</td>
 							<td>DV</td>
 							<td><img src="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" data-image="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" class="img-thumbnail" width="110"/></td>
 							<td>测试</td>
 						</tr>
 						<tr>
-							<td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="" onclick="countCheckbox()" /></td>
+							<td style="text-align:center"><input name="publish_sku_checkbox" type="checkbox" value="" onclick="countCheckbox()" /></td>
 							<td>DV1-3</td>
 							<td>DV</td>
 							<td><img src="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" data-image="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" class="img-thumbnail" width="110"/></td>
 							<td>测试</td>
 						</tr>
 						<tr>
-							<td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="" onclick="countCheckbox()" /></td>
+							<td style="text-align:center"><input name="publish_sku_checkbox" type="checkbox" value="" onclick="countCheckbox()" /></td>
 							<td>DV1-3</td>
 							<td>DV</td>
 							<td><img src="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" data-image="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" class="img-thumbnail" width="110"/></td>
 							<td>测试</td>
 						</tr>
 						<tr>
-							<td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="" onclick="countCheckbox()" /></td>
+							<td style="text-align:center"><input name="publish_sku_checkbox" type="checkbox" value="" onclick="countCheckbox()" /></td>
 							<td>DV1-3</td>
 							<td>DV</td>
 							<td><img src="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" data-image="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" class="img-thumbnail" width="110"/></td>

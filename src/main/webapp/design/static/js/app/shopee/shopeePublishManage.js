@@ -34,6 +34,7 @@ function initDialog() {
 			
 		],
 		close: function( event, ui ) {
+			cleanShopeeDialog();
 			$.myformPlugins.cleanForm("#shopeeProductDialog");
 		}
 	});
@@ -50,7 +51,7 @@ function initDialog() {
 					primary : "ui-icon-heart"
 				},
 				click : function() {
-					validateCategoryFrom();
+					obtainShopeePublishSku();
 				}
 			},{
 				text : "关闭",
@@ -327,7 +328,7 @@ function getShopeeSkuList() {
 			if (data.length > 0) {
 				$.each(data, function (i, product) {
 					shopeeSkuListHtml += '<tr>';
-					shopeeSkuListHtml += 	'<td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="'+product.id+'" onclick="countCheckbox()" /></td>';
+					shopeeSkuListHtml += 	'<td style="text-align:center"><input name="publish_sku_checkbox" type="checkbox" value="'+product.id+'" onclick="countCheckbox()" /></td>';
 					shopeeSkuListHtml += 	'<td>'+product.sku+'</td>';
 					shopeeSkuListHtml += 	'<td>'+product.spu+'</td>';
 					shopeeSkuListHtml += 	'<td><img src="'+product.mainImage+'" data-image="'+product.mainImage+'" class="img-thumbnail" width="110"/></td>';
@@ -337,6 +338,70 @@ function getShopeeSkuList() {
 			}
 			table.append(shopeeSkuListHtml);
 			showShpeeSkuDialog();
+		}
+	});
+}
+
+function obtainShopeePublishSku() {
+	var publishSkuCheckBox =$("#shopeeSkuListTable").find("input[name=publish_sku_checkbox]");
+	var ids = [];
+	publishSkuCheckBox.each(function(){
+		if ($(this).is(':checked')) {
+			ids.push($(this).val());
+		}
+	});
+	
+	if (ids.length == 0) {
+		var param = {
+			status : 0,
+			message : "请勾选需要获取的SKU"
+		};
+		$.message.showMessage(param);
+		return;
+	}
+	
+	$.ajax({
+		url : "/shopee/obtainShopeePublishSku",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			productIdList : ids
+		},
+		success : function (data) {
+			$.message.showMessage(data);
+			if (data.status == 1) {
+				$("#shopeeSkuListDialog").dialog("close");
+				refresh(1000);
+			}
+		}
+	});
+}
+
+function cleanShopeeDialog() {
+	var dialog = $("#shopeeProductDialog");
+	$("#navigation").html("");
+	$("#categoryArea").html("");
+	var button = $("#shopeeProductDialog button[name=expandCategoryButton] i");
+	button.removeClass("icon-double-angle-up");
+	button.addClass("icon-double-angle-down");
+	$("#categorybtnName").html("展开类别");
+	$("#sortable").html("");
+	$("#selectImageCount").html("0");
+}
+
+function deleteShopeeProduct(id) {
+	$.ajax({
+		url : "/shopee/deleteShopeeProduct",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			id : id
+		},
+		success : function (data) {
+			$.message.showMessage(data);
+			if (data.status == 1) {
+				refresh(1000);
+			}
 		}
 	});
 }

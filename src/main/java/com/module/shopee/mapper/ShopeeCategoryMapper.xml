@@ -8,12 +8,14 @@
         	categoryName,
         	parentId,
         	level,
-        	categoryId
+        	categoryId,
+        	importTime
         ) values(
         	#{categoryName},
         	#{parentId},
         	#{level},
-        	#{categoryId}
+        	#{categoryId},
+        	#{importTime}
         )  
     </insert>
     
@@ -30,7 +32,7 @@
     	select t.categoryName as firstCategory, 
     			tt.categoryName as subcategory, 
     				ttt.categoryName as thirdCategory, 
-    					ttt.categoryId from 
+    					ttt.categoryId, ttt.importTime as importTime from 
     					(select * from shopee_category where parentId = 0) t
 							LEFT JOIN shopee_category tt on t.id = tt.parentId
 								LEFT JOIN shopee_category ttt on tt.id = ttt.parentId

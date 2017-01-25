@@ -15,6 +15,7 @@ public class ShopeePublish {
 	private String description;
 	private Integer status;
 	private Integer publishUserId;
+	private String mainImage;
 	public Integer getId() {
 		return id;
 	}
@@ -98,5 +99,11 @@ public class ShopeePublish {
 	}
 	public void setPublishUserId(Integer publishUserId) {
 		this.publishUserId = publishUserId;
+	}
+	public String getMainImage() {
+		return mainImage;
+	}
+	public void setMainImage(String mainImage) {
+		this.mainImage = mainImage;
 	}
 }

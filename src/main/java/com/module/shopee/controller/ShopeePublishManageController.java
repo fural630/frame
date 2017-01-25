@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.code.Page;
 import com.code.view.MainPage;
+import com.code.view.ReturnMessage;
 import com.module.product.model.Product;
 import com.module.shopee.model.ShopeeCategory;
 import com.module.shopee.service.ShopeeCategoryService;
@@ -28,9 +30,9 @@ public class ShopeePublishManageController extends MainPage{
 	private ShopeePublishService shopeePublishService;
 	
 	@RequestMapping("shopeePublishManage")
-	public String shopeeCategoryManage(Model model, Page page){
+	public String shopeePublishManage(Model model, Page page){
 		_execute(page, model);
-		List<Map<String, Object>> collection = new ArrayList<>();
+		List<Map<String, Object>> collection = shopeePublishService.getShopeePublishManagePage(page);
 		Integer userShopeeSkuCount = shopeePublishService.getUserShopeeSkuCount();
 		model.addAttribute("collection", collection);
 		model.addAttribute("userShopeeSkuCount", userShopeeSkuCount);
@@ -49,5 +51,21 @@ public class ShopeePublishManageController extends MainPage{
 	public String getShopeeSkuList() {
 		List<Product> productList = shopeePublishService.getShopeeSkuList();
 		return JsonUtil.toJsonStr(productList);
+	}
+	
+	@RequestMapping("obtainShopeePublishSku")
+	@ResponseBody
+	public String obtainShopeePublishSku(@RequestParam(value = "productIdList[]", required = false) List<String> productIdList) {
+		ReturnMessage message = new ReturnMessage();
+		boolean flag = shopeePublishService.obtainShopeePublishSku(productIdList);
+		return JsonUtil.toJsonStr(message);
+	}
+	
+	@RequestMapping("deleteShopeeProduct")
+	@ResponseBody
+	public String deleteShopeeProduct(Integer id) {
+		ReturnMessage message = new ReturnMessage();
+		shopeePublishService.deleteShopeeProduct(id);
+		return JsonUtil.toJsonStr(message);
 	}
 }

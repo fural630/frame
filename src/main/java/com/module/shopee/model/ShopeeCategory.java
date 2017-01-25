@@ -6,6 +6,7 @@ public class ShopeeCategory {
 	private Integer parentId;
 	private String categoryName;
 	private Integer level;
+	private String importTime;
 	public Integer getId() {
 		return id;
 	}
@@ -35,5 +36,11 @@ public class ShopeeCategory {
 	}
 	public void setLevel(Integer level) {
 		this.level = level;
+	}
+	public String getImportTime() {
+		return importTime;
+	}
+	public void setImportTime(String importTime) {
+		this.importTime = importTime;
 	}
 }

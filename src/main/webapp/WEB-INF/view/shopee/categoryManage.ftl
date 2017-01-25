@@ -21,38 +21,38 @@
 	    <div class="content">
 	      <table class="tb_border tb_full stripe" id="categoryManageTable" name="pageTable">
 	          <tr>
-	          	<th></th>
 	            <th>Category</th>
 	            <th>Subcategory</th>
 	            <th>3rd Level Category</th>
 	            <th>Category ID</th>
+	            <th>导入时间</th>
 	          </tr>
 	          <tr class="conditionTr">
-	          	<td></td>
 	          	<td>
 	          		<ul>
-	          			<li><input type="text" class="txt width_100px" name="params[firstCategory]" value="${page.params.firstCategory!''}" /></li>
+	          			<li><input type="text" class="txt width_120px" name="params[firstCategory]" value="${page.params.firstCategory!''}" /></li>
 	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[firstCategoryLike]" <#if page.params.firstCategoryLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
 	          	<td>
 	          		<ul>
-	          			<li><input type="text" class="txt width_100px" name="params[subcategory]" value="${page.params.subcategory!''}" /></li>
+	          			<li><input type="text" class="txt width_120px" name="params[subcategory]" value="${page.params.subcategory!''}" /></li>
 	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[subcategoryLike]" <#if page.params.subcategoryLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
 	          	<td>
 	          		<ul>
-	          			<li><input type="text" class="txt width_100px" name="params[thirdCategory]" value="${page.params.thirdCategory!''}" /></li>
+	          			<li><input type="text" class="txt width_120px" name="params[thirdCategory]" value="${page.params.thirdCategory!''}" /></li>
 	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[thirdCategoryLike]" <#if page.params.thirdCategoryLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
 	          	<td>
 	          		<ul>
-	          			<li><input type="text" class="txt width_100px" name="params[categoryId]" value="${page.params.categoryId!''}" /></li>
+	          			<li><input type="text" class="txt width_120px" name="params[categoryId]" value="${page.params.categoryId!''}" /></li>
 	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[categoryIdLike]" <#if page.params.categoryIdLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
+	          	<td></td>
 	          </tr>
 	          </form>
 	          <#assign queryLowcase = ''>
@@ -64,7 +64,6 @@
 	          	<#if collection??>
 	          		<#list collection as obj>
 			  		 <tr>
-			            <td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="1" onclick="countCheckbox()" /></td>
 			            <td>
 			            	<#assign categoryName = obj.firstCategory>
 				            <#if queryLowcase?length gt 0> 
@@ -129,6 +128,7 @@
 				            	${categoryName}
 			            	</#if>
 			            </td>
+			            <td>${obj.importTime!''}</td>
 			          </tr>
 		          </#list>
 		  		</#if>
