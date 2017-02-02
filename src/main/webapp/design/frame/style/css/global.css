@@ -227,4 +227,8 @@ button, input, select, textarea {
 .move {
 	cursor: move;
 }
+
+.pointer {
+	cursor:pointer;
+}
 /*align end*/

@@ -20,7 +20,49 @@
 		}
 	});
 //	copyFreezeTable();
+	sortMainTable();
 });
+
+function sortMainTable() {
+	var pageTable = $("table[name=pageTable]");
+	var firstTr = pageTable.find("tr:first");
+	var down = "<i class='icon icon-caret-down'>";
+	firstTr.find("th").each(function () {
+		if($(this).attr("sort") != undefined) {
+			$(this).addClass("pointer");
+			var flag = false;
+			if ($(this).find("i").length == 0) {
+				$(this).hover(function(){  
+					if ($(this).find("i").length == 0) {
+						$(this).append(down);
+					}
+		        },function(){  
+					if ($(this).find("i").length > 0) {
+						$(this).find("i").remove();
+					}
+		        }); 
+				flag = true;
+			} else {
+				if ($(this).find("i").hasClass("icon-caret-down")) {
+					flag = false;
+				} else {
+					flag = true;
+				}
+			}
+			$(this).click(function(){
+				var sort = "desc";
+				if (flag) {
+					sort = "asc";
+				}
+				var name = "sorts[" + $(this).attr("sort") + "]";
+				$("input[name='"+name+"']").val(sort);
+				submitMainPageForm();
+			});
+		}
+	});
+}
+
+
 
 function commonHover(obj, cla) {
     obj.hover(function () {

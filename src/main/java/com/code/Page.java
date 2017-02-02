@@ -14,6 +14,7 @@ public class Page {
 	private List<Integer> pageList = new ArrayList<Integer>();
 	private Map<String, Object> params = new HashMap<String, Object>();
 	private List<String> permissionBut = new ArrayList<String>();
+	private Map<String, String> sorts = new HashMap<String, String>();
 
 	public Page() {
 		pageList.add(10);
@@ -79,6 +80,14 @@ public class Page {
 
 	public void setPermissionBut(List<String> permissionBut) {
 		this.permissionBut = permissionBut;
+	}
+
+	public Map<String, String> getSorts() {
+		return sorts;
+	}
+
+	public void setSorts(Map<String, String> sorts) {
+		this.sorts = sorts;
 	}
 
 }

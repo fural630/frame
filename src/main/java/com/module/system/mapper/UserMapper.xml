@@ -117,7 +117,15 @@
 	   			<![CDATA[ and t.createTime <= #{params.createTimeTo} ]]>
 	   		</if>
    		</where>
-   		order by t.id desc
+   		
+   		<trim prefix="order by" suffixOverrides=",">  
+	 		<if test="sorts.name!=null and sorts.name !=''">
+	    		t.name ${sorts.name},
+	   		</if>
+	   		<if test="sorts.userName!=null and sorts.userName !=''">
+	    		t.userName ${sorts.userName},
+	   		</if>
+   		</trim>
     </select>
     
     <select id="getUserRoleLevel" parameterType="int" resultType="int">

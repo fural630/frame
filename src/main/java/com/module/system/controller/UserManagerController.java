@@ -17,6 +17,7 @@ import com.code.view.MainPage;
 import com.code.view.ReturnMessage;
 import com.module.system.model.User;
 import com.module.system.service.UserService;
+import com.util.Dumper;
 import com.util.JsonUtil;
 import com.util.MyLocale;
 
@@ -30,6 +31,7 @@ public class UserManagerController extends MainPage{
 	@RequestMapping("userManage")
 	public String userManage(Model model, Page page){
 		_execute(page, model);
+		Dumper.dump(page);
 		List<Map<String, Object>> collection = userService.getUserPage(page);
 		model.addAttribute("collection", collection);
 		return "system/userManage";
