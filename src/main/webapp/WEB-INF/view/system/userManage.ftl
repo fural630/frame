@@ -25,8 +25,8 @@
 	      <table class="tb_border tb_full stripe" id="userManageTable" name="pageTable">
 	          <tr>
 	          	<th></th>
-	            <th sort="name">姓名<input type="text" name="sorts[name]" value="${page.sorts.name!''}"></th>
-	            <th sort="userName">账号<input type="text" name="sorts[userName]" value="${page.sorts.userName!''}"></th>
+	            <th sort="name">姓名<input type="hidden" name="sorts[name]" value="${page.sorts.name!''}"></th>
+	            <th sort="userName">账号<input type="hidden" name="sorts[userName]" value="${page.sorts.userName!''}"></th>
 	            <th>角色</th>
 	            <th>邮箱</th>
 	            <th>电话</th>

@@ -20,7 +20,7 @@
 		}
 	});
 //	copyFreezeTable();
-	sortMainTable();
+//	sortMainTable();
 });
 
 function sortMainTable() {

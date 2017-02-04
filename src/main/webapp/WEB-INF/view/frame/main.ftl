@@ -25,7 +25,7 @@
 			<div class="header_inner">
 				<table class="tb_common">
 					<tr>
-						<td><a href="#" class="logo" style="color:#0099FF">Smart</a></td>
+						<td><a href="/frame/main" class="logo" style="color:#0099FF">Smart</a></td>
 						<td class="loginOut">
 							<a onclick="modifyPersonInfo();" title="点击修改个人信息">
 								<img src="/design/frame/style/img/default.gif"/>&nbsp;
