@@ -149,7 +149,7 @@ function countCheckbox() {
 function pageSelectAll() {
 	var mainPageCheckBox = $("input[name=main_page_checkbox]");
 	mainPageCheckBox.each(function(){
-		$(this).attr("checked", true);
+		$(this).prop("checked", true);
 	});
 	countCheckbox();
 }
@@ -157,7 +157,7 @@ function pageSelectAll() {
 function pageNoSelectAll() {
 	var mainPageCheckBox = $("input[name=main_page_checkbox]");
 	mainPageCheckBox.each(function(){
-		$(this).attr("checked", false);
+		$(this).prop("checked", false);
 	});
 	countCheckbox();
 }

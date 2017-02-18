@@ -387,6 +387,7 @@ function cleanShopeeDialog() {
 	$("#categorybtnName").html("展开类别");
 	$("#sortable").html("");
 	$("#selectImageCount").html("0");
+	$.myformPlugins.cleanForm("#shopeeProductDialog");
 }
 
 function deleteShopeeProduct(id) {
@@ -402,6 +403,51 @@ function deleteShopeeProduct(id) {
 			if (data.status == 1) {
 				refresh(1000);
 			}
+		}
+	});
+}
+
+function getProductInfoBySku() {
+	var dialog = $("#shopeeProductDialog");
+	var sku = $.trim(dialog.find("input[name=sku]").val());
+	if (sku == "") {
+		var param = {
+			status : 0,
+			message : "请先填写SKU"
+		};
+		$.message.showMessage(param);
+		return;
+	}
+	dialog.find("input[name=sku]").val($.trim(sku));
+	
+	$.ajax({
+		url : "/shopee/getProductInfoBySku",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			sku : sku
+		},
+		success : function (data) {
+			if(data.status == "1") {
+				cleanShopeeDialog();
+				var product = data.data;
+				var sku = product.sku;
+				var spu = product.spu;
+				var productName = product.productName;
+				var weight = product.weight;
+				var description = product.description;
+				var imageList = product.imageList;
+				dialog.find("input[name=sku]").val(sku);
+				dialog.find("input[name=parentSku]").val(spu);
+				dialog.find("input[name=productName]").val(productName);
+				dialog.find("input[name=weight]").val(weight);
+				dialog.find("textarea[name=description]").val(description);
+				for (var i = 0 ; i < imageList.length; i++) {
+					var imageUrl = imageList[i];
+					createSelectImageHtml(imageUrl);
+				}
+			}
+			$.message.showMessage(data);
 		}
 	});
 }

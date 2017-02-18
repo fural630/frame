@@ -92,7 +92,7 @@
 			            <td>${obj.categoryId!""}</td>
 			            <td>${obj.price!""}</td>
 			            <td>${obj.stock!""}</td>
-			            <td>${obj.weight}</td>
+			            <td>${obj.weight!""}</td>
 			            <td>${obj.shipOutIn!""}</td>
 			            <td><@matchValue key="${obj.status}" optionClass="ShopeeProductStatus"/></td>
 		            	<td class="optionTd" style="width:60px;text-align:center;">
@@ -140,31 +140,23 @@
 	  </div>
 	</div>
 	
-	<div id="uploadCategoryDialog" style="display:none;">
-		<div class="alert alert-info" style="padding:10px;">
-			注意：请从Shopee平台下载类别模板后直接导入无需修改格式。第一行为表头，无需删除，导入数据从第二行开始，导入数据后原类别将会被删除覆盖。
-		</div>
-		<form name="uploadCategoryFrom" action="/shopee/uploadCategory" method="post" enctype="multipart/form-data" target="iframe_shippingData">
-			<table class="popup_tb">
-		 		<tr>
-		 			<td class="title width_100px">导入文件<i class="star">*</i></td>
-		 			<td><input type="file" name="categoryFile" class="form-control" value="" style="width:50%"></td>
-		 		</tr>
-	 		</table>
-		</form>
-		<iframe name="iframe_shippingData" width="100%" height="100" frameborder="0"></iframe>
-	</div>
-	
 	<div id="shopeeProductDialog" style="display:none;">
 		<input type="hidden" name="id"/>
 		<table class="popup_tb">
 	 		<tr>
 	 			<td class="title width_100px">SKU<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_100px" name="sku"/></td>
+	 			<td>
+	 				<input type="text" class="txt width_100px" name="sku"/>
+					&nbsp;<button class="btn btn-sm" type="button" onclick="getProductInfoBySku()">获取商品信息</button>	 			
+	 			</td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">Parent SKU<i class="star">*</i></td>
 	 			<td><input type="text" class="txt width_100px" name="parentSku"/></td>
+	 		</tr>
+	 		<tr>
+	 			<td class="title width_100px">产品名称<i class="star">*</i></td>
+	 			<td><input type="text" class="txt width_50" name="productName"/></td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">产品类别<i class="star">*</i></td>
@@ -186,7 +178,7 @@
 	 			<td class="title width_100px">产品图片<i class="star">*</i></td>
 	 			<td>
 	 				<div class="image_box">
-	 					<div class="image_title">SKU1 选择图片</div>
+	 					<div class="image_title">选择图片</div>
 	 					<div class="image_count_info">
 	 					<table class="image_info_table">
 	 						<tr>
@@ -205,10 +197,6 @@
 	 					</div>
 	 				</div>
 	 			</td>
-	 		</tr>
-	 		<tr>
-	 			<td class="title width_100px">产品名称<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_100px" name="productName"/></td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">价格<i class="star">*</i></td>
@@ -233,6 +221,27 @@
 	 		<tr>
 	 			<td class="title width_100px">产品描述<i class="star">*</i></td>
 	 			<td><textarea class="txt width_96 remark" name="description" style="height:150px;"></textarea></td>
+	 		</tr>
+ 		</table>
+ 		
+ 		<br />
+	 	<button class="btn btn-sm" type="button" onclick="addSkuRow()">
+	 		<i class="icon icon-plus-sign"></i>添加变体
+	 	</button>
+ 		<table class="popup_tb" style="margin-top:10px;" name="multiSkuTable">
+	 		<tr>
+	 			<td class="title" style="text-align:center;" colspan="9">变体SKU</td>
+	 		</tr>
+	 		<tr>
+	 			<td class="title">SKU</td>
+	 			<td class="width_100px"><input type="text" class="txt width_90" name="multiSku"/></td>
+	 			<td class="title">价格</td>
+	 			<td class="width_100px"><input type="text" class="txt width_90" name="multiPrice"/></td>
+	 			<td class="title">库存</td>
+	 			<td class="width_100px"><input type="text" class="txt width_90" name="multiStock"/></td>
+	 			<td class="title">名称</td>
+	 			<td><input type="text" class="txt width_90" name="multiProductName"/></td>
+	 			<td class="width_50px"><button class="btn btn-sm btn-danger" type="button" onclick="removeMultiSkuRow(this)"><i class="icon icon-trash"></i></button></td>
 	 		</tr>
  		</table>
 	</div>

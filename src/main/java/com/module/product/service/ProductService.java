@@ -124,7 +124,10 @@ public class ProductService {
 		} 
 		return true;
 	}
-
+	
+	public Product getProductBySku(String sku) {
+		return productDao.getProductBySku(sku);
+	}
 
 	public Map uploadPorduct(ArrayList<ArrayList<String>> data) {
 		MyLocale myLocale = new MyLocale();
