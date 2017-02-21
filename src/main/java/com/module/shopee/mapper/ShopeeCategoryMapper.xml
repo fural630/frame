@@ -87,5 +87,13 @@
     <select id="getShopeeCategoryByParentId" parameterType="int" resultType="ShopeeCategory">
     	select * from shopee_category where parentId = #{parentId} order by categoryName
     </select>
+    
+    <select id="getShopeeCategoryById" parameterType="int" resultType="ShopeeCategory">
+    	select * from shopee_category where id = #{id}
+    </select>
+    
+    <select id="getShopeeCategoryByCategoryId" parameterType="int" resultType="ShopeeCategory">
+    	select * from shopee_category where categoryId = #{categoryId}
+    </select>
        
 </mapper>  

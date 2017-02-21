@@ -31,5 +31,6 @@ public interface ProductDao {
 	public Integer getProductAuditStatus(Integer productId);
 	public String getProductPurchaseUrl(Integer productId);
 	public List<Product> checkCanUpdateSku(@Param("sku")String sku, @Param("productId")Integer productId);
+	public List<Product> getProductBySpu(String spu);
 
 }

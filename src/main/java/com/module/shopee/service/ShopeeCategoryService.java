@@ -59,6 +59,20 @@ public class ShopeeCategoryService {
 	public List<ShopeeCategory> getShopeeCategoryByParentId(Integer parentId) {
 		return shopeeCategoryDao.getShopeeCategoryByParentId(parentId);
 	}
+
+	public String appendCategoryPath(Integer categoryId) {
+		String categoryPath = "";
+		ShopeeCategory shopeeCategory3 = shopeeCategoryDao.getShopeeCategoryByCategoryId(categoryId);
+		if (null == shopeeCategory3) {
+			return categoryPath;
+		}
+		categoryPath += shopeeCategory3.getCategoryName() + " > ";
+		ShopeeCategory shopeeCategory2 = shopeeCategoryDao.getShopeeCategoryById(shopeeCategory3.getParentId());
+		categoryPath += shopeeCategory2.getCategoryName() + " > ";
+		ShopeeCategory shopeeCategory1 = shopeeCategoryDao.getShopeeCategoryById(shopeeCategory2.getParentId());
+		categoryPath += shopeeCategory1.getCategoryName();
+		return categoryPath;
+	}
 	
 	
 	

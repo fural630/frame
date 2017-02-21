@@ -1,10 +1,9 @@
 $(function () {
 	initDialog();
-	initSortable();
 });
 
-function initSortable() {
-	$("#sortable").sortable();
+function initSortable(rowId) {
+	$("#sortable_" + rowId).sortable();
 }
 
 function initDialog() {
@@ -80,7 +79,7 @@ function editSku(id) {
 	showShopeeProductDialog("单体编辑");
 }
 
-function changeCheckStatus(element) {
+function changeCheckStatus(element, rowId) {
 	var tagName = $(element)[0].tagName;
 	if (tagName == "IMG" || tagName == "img") {
 		var icon = $(element).next().find("button:first i");
@@ -111,18 +110,18 @@ function changeCheckStatus(element) {
 			elm.addClass("img-thumbnail-selected");
 		}
 	}
-	countSelectImg();
+	countSelectImg(rowId);
 }
 
-function countSelectImg() {
-	var button = $("#shopeeProductDialog button[name=checkImageButton] i");
+function countSelectImg(rowId) {
+	var button = $("#shopeeProductDialog button[name=checkImageButton_"+rowId+"] i");
 	var count = 0;
 	button.each(function () {
 		if($(this).hasClass("icon-checked")) {
 			count++;
 		}
 	});
-	$("#selectImageCount").html(count);
+	$("#selectImageCount_" + rowId).html(count);
 }
 
 function changeCategoryStatus() {
@@ -253,8 +252,8 @@ function getShopeeCategory (parentId, categoryLevel) {
 	});
 }
 
-function addImageUrlAddress() {
-	var imageUrlAddress = $.trim($("#imageUrlAddress").val());
+function addImageUrlAddress(rowId) {
+	var imageUrlAddress = $.trim($("#imageUrlAddress_" + rowId).val());
 	if (imageUrlAddress == "") {
 		var param = {
 			status : 0,
@@ -264,18 +263,18 @@ function addImageUrlAddress() {
 		return;
 	} 
 	
-	createSelectImageHtml(imageUrlAddress);
+	createSelectImageHtml(imageUrlAddress, rowId);
 }
 
-function createSelectImageHtml(imageUrlAddress) {
+function createSelectImageHtml(imageUrlAddress, rowId) {
 	var imageHtml = "";
 	imageHtml += '<li>';
 	imageHtml += 	'<div class="iamge_div">';
-	imageHtml += 		'<img onclick="changeCheckStatus(this)" name="productImage" src="{imageUrlAddress}" data-image="{imageUrlAddress}" class="img-thumbnail move" title="拖动改变图片顺序" width="110">';
+	imageHtml += 		'<img onclick="changeCheckStatus(this, {rowId})" name="productImage" src="{imageUrlAddress}" data-image="{imageUrlAddress}" class="img-thumbnail move" title="拖动改变图片顺序" width="110">';
 	imageHtml += 		'<table class="width_100 image_operating_table">';
 	imageHtml += 			'<tr>';
 	imageHtml += 				'<td>';
-	imageHtml += 					'<button name="checkImageButton" class="btn btn-sm" type="button" onclick="changeCheckStatus(this)"><i class="icon icon-check-empty"></i></button>';
+	imageHtml += 					'<button name="checkImageButton_{rowId}" class="btn btn-sm" type="button" onclick="changeCheckStatus(this,{rowId})"><i class="icon icon-check-empty"></i></button>';
 	imageHtml += 				'</td>';
 	imageHtml += 				'<td>';
 	imageHtml += 					'<button class="btn btn-sm " type="button" onclick="deleteImage(this)"><i class="icon icon-trash"></i></button>';
@@ -286,9 +285,10 @@ function createSelectImageHtml(imageUrlAddress) {
 	imageHtml += '</li>';
 	
 	imageHtml = imageHtml.replace(/{imageUrlAddress}/g, imageUrlAddress);
-	$("#sortable").append(imageHtml);
-	clearImageUrlAddress();
-	initSortable();
+	imageHtml = imageHtml.replace(/{rowId}/g, rowId);
+	$("#sortable_" + rowId).append(imageHtml);
+	clearImageUrlAddress(rowId);
+	initSortable(rowId);
 }
 
 function deleteImage(element) {
@@ -297,8 +297,8 @@ function deleteImage(element) {
 	}
 }
 
-function clearImageUrlAddress() {
-	$("#imageUrlAddress").val("");
+function clearImageUrlAddress(rowId) {
+	$("#imageUrlAddress_" + rowId).val("");
 }
 
 function showShpeeSkuDialog() {
@@ -385,8 +385,8 @@ function cleanShopeeDialog() {
 	button.removeClass("icon-double-angle-up");
 	button.addClass("icon-double-angle-down");
 	$("#categorybtnName").html("展开类别");
-	$("#sortable").html("");
-	$("#selectImageCount").html("0");
+	$("#sortable_0").html("");
+	$("#selectImageCount_0").html("0");
 	$.myformPlugins.cleanForm("#shopeeProductDialog");
 }
 
@@ -444,10 +444,189 @@ function getProductInfoBySku() {
 				dialog.find("textarea[name=description]").val(description);
 				for (var i = 0 ; i < imageList.length; i++) {
 					var imageUrl = imageList[i];
-					createSelectImageHtml(imageUrl);
+					createSelectImageHtml(imageUrl, 0);
 				}
 			}
 			$.message.showMessage(data);
 		}
 	});
+}
+
+function cleanMultiSkuTable() {
+	$("table[name=multiSkuTable] tr:gt(0)").remove();
+}
+
+function getProductInfoBySpu() {
+	var dialog = $("#shopeeProductDialog");
+	
+	var sku = $.trim(dialog.find("input[name=sku]").val());
+	if (sku == "") {
+		var param = {
+			status : 0,
+			message : "请先填写SKU"
+		};
+		$.message.showMessage(param);
+		return;
+	}
+	dialog.find("input[name=sku]").val($.trim(sku));
+	
+	var spu = $.trim(dialog.find("input[name=parentSku]").val());
+	if (spu == "") {
+		var param = {
+			status : 0,
+			message : "请先填写Parent SKU"
+		};
+		$.message.showMessage(param);
+		return;
+	}
+	dialog.find("input[name=parentSku]").val($.trim(spu));
+	
+	$.ajax({
+		url : "/shopee/getProductInfoBySpu",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			spu : spu
+		},
+		success : function (data) {
+			if(data.status == "1") {
+				cleanMultiSkuTable();
+				var productList = data.data;
+				for (var i = 0; i < productList.length; i++) {
+					var product = productList[i];
+					var mainSku = product.sku;
+					if (sku == mainSku) {
+						continue;
+					}
+					addShopeeMultiSkuRow(product);
+				}
+			}
+			$.message.showMessage(data);
+		}
+	});
+}
+
+function addShopeeMultiSkuRow(product) {
+	var lastTr = $("table[name=multiSkuTable] tr[id^=multiRow_]:last");
+	var lastId;
+	var maxId;
+	if (lastTr.length == 0) {
+		maxId = 1;
+	} else {
+		lastId = lastTr.attr("id").split("_")[1];
+		maxId = Number(lastId) + 1;
+	}
+	
+	var html = "";
+	html += '<tr id="multiRow_{rowId}">';
+	html += 	'<td class="title">SKU</td>';
+	html += 	'<td class="width_170px">';
+	html += 		'<input type="text" class="txt width_80px" value="{multiSku}" name="multiSku_{rowId}"/>';
+	html += 		'&nbsp;<button class="btn btn-sm" type="button" onclick="getmultiSkuProductInfo({rowId})">加载信息</button>';
+	html += 	'</td>';
+	html += 	'<td class="title">价格</td>';
+	html += 	'<td class="width_100px"><input type="text" class="txt width_90" name="multiPrice_{rowId}"/></td>';
+	html += 	'<td class="title">库存</td>';
+	html += 	'<td class="width_100px"><input type="text" class="txt width_90" name="multiStock_{rowId}"/></td>';
+	html += 	'<td class="title">名称</td>';
+	html += 	'<td><input type="text" class="txt width_99" value="{multiProductName}" name="multiProductName_{rowId}"/></td>';
+	html += 	'<td class="width_50px" rowspan="2"><button class="btn btn-sm btn-danger" type="button" onclick="removeMultiSkuRow({rowId})"><i class="icon icon-trash"></i></button></td>';
+	html += '</tr>';
+	html += '<tr id="multiImage_{rowId}">';
+	html += 	'<td colspan="8">';
+	html += 		'<div class="image_box">';
+	html += 			'<div class="image_title">选择图片</div>';
+	html += 			'<div class="image_count_info">';
+	html += 			'<table class="image_info_table">';
+	html += 				'<tr>';
+	html += 					'<td style="text-align:left;width:70%">';
+	html += 						'<input type="text" class="txt" style="width:400px;" id="imageUrlAddress_{rowId}" placeholder="图片地址/Url"/>';
+	html += 						'<button class="btn btn-sm " type="button" onclick="addImageUrlAddress({rowId})">';
+	html += 							'添加图片地址';
+	html += 						'</button>';
+	html += 					'</td>';
+	html += 					'<td style="text-align:right;">已选择图片：<span id="selectImageCount_{rowId}">0</span> 张 <!--| 最多 4 张图片--></div></td>';
+	html += 				'</tr>';
+	html += 			'</table>';
+	html += 			'<div id="image_area">';
+	html += 				'<ul id="sortable_{rowId}">';
+	html += 				'</ul>';
+	html += 			'</div>';
+	html += 		'</div>';
+	html += 	'</td>';
+	html += '</tr>';
+	
+	
+	html = html.replace(/{rowId}/g, maxId);
+	if (product != undefined) {
+		html = html.replace(/{multiSku}/g, product.sku);
+		html = html.replace(/{multiProductName}/g, product.productName);
+	} else {
+		html = html.replace(/{multiSku}/g, "");
+		html = html.replace(/{multiProductName}/g, "");
+	}
+	$("table[name=multiSkuTable]").append(html);
+	initSortable(maxId);
+	if (product != undefined) {
+		createSelectImageHtml(product.imageList, maxId);
+	}
+}
+
+function removeMultiSkuRow(rowId) {
+	$("table[name=multiSkuTable] tr[id='multiRow_"+rowId+"']").remove();
+	$("table[name=multiSkuTable] tr[id='multiImage_"+rowId+"']").remove();
+}
+
+function getmultiSkuProductInfo(rowId) {
+	var sku = $.trim($("table[name=multiSkuTable]").find("input[name='multiSku_"+rowId+"']").val());
+	if (sku == "") {
+		var param = {
+			status : 0,
+			message : "请先填写SKU"
+		};
+		$.message.showMessage(param);
+		return;
+	}
+	
+	$.ajax({
+		url : "/shopee/getShopeeMultiSkuInfo",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			sku : sku
+		},
+		success : function (data) {
+			if(data.status == "1") {
+				var product = data.data;
+				var imageList = product.imageList;
+				$("table[name=multiSkuTable]").find("input[name='multiProductName_"+rowId+"']").val(product.productName);
+				for (var i = 0; i < imageList.length; i++) {
+					createSelectImageHtml(imageList[i], rowId);
+				}
+			}
+			$.message.showMessage(data);
+		}
+	});
+}
+
+function getCategoryById() {
+	var dialog = $("#shopeeProductDialog");
+	var categoryId = $.trim(dialog.find("input[name=categoryId]").val());
+	if (categoryId != "") {
+		dialog.find("input[name=categoryId]").val(categoryId);
+		$.ajax({
+			url : "/shopee/getShopeeCategoryPath",
+			type: 'POST',
+			dataType : "json",
+			data : {
+				categoryId : categoryId
+			},
+			success : function (data) {
+				if(data.status == "1") {
+					$("#navigation").html(data.data);
+				}
+				$.message.showMessage(data);
+			}
+		});
+	}
 }

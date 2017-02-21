@@ -152,7 +152,10 @@
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">Parent SKU<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_100px" name="parentSku"/></td>
+	 			<td>
+	 				<input type="text" class="txt width_100px" name="parentSku"/>
+	 				&nbsp;<button class="btn btn-sm" type="button" onclick="getProductInfoBySpu()">获取变体信息</button>
+	 			</td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">产品名称<i class="star">*</i></td>
@@ -172,7 +175,7 @@
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">类别ID<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_100px" name="categoryId"/></td>
+	 			<td><input type="text" class="txt width_100px" name="categoryId" onBlur="getCategoryById()"/></td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">产品图片<i class="star">*</i></td>
@@ -183,17 +186,17 @@
 	 					<table class="image_info_table">
 	 						<tr>
 	 							<td style="text-align:left;width:70%">
-	 								<input type="text" class="txt" style="width:400px;" id="imageUrlAddress" placeholder="图片地址/Url"/>
-	 								<button class="btn btn-sm " type="button" onclick="addImageUrlAddress()">
+	 								<input type="text" class="txt" style="width:400px;" id="imageUrlAddress_0" placeholder="图片地址/Url"/>
+	 								<button class="btn btn-sm " type="button" onclick="addImageUrlAddress(0)">
 	 									添加图片地址
 	 								</button>
 	 								<!--<a class="btn" onclick="clearImageUrlAddress();">清空</a>-->
 	 							</td>
-	 							<td style="text-align:right;">已选择图片：<span id="selectImageCount">0</span> 张 <!--| 最多 4 张图片--></div></td>
+	 							<td style="text-align:right;">已选择图片：<span id="selectImageCount_0">0</span> 张 <!--| 最多 4 张图片--></div></td>
 	 						</tr>
 	 					</table>
 	 					<div id="image_area">
-	 						<ul id="sortable"></ul>
+	 						<ul id="sortable_0"></ul>
 	 					</div>
 	 				</div>
 	 			</td>
@@ -225,23 +228,49 @@
  		</table>
  		
  		<br />
-	 	<button class="btn btn-sm" type="button" onclick="addSkuRow()">
+	 	<button class="btn btn-sm" type="button" onclick="addShopeeMultiSkuRow()">
 	 		<i class="icon icon-plus-sign"></i>添加变体
 	 	</button>
  		<table class="popup_tb" style="margin-top:10px;" name="multiSkuTable">
 	 		<tr>
 	 			<td class="title" style="text-align:center;" colspan="9">变体SKU</td>
 	 		</tr>
-	 		<tr>
-	 			<td class="title">SKU</td>
-	 			<td class="width_100px"><input type="text" class="txt width_90" name="multiSku"/></td>
-	 			<td class="title">价格</td>
-	 			<td class="width_100px"><input type="text" class="txt width_90" name="multiPrice"/></td>
-	 			<td class="title">库存</td>
-	 			<td class="width_100px"><input type="text" class="txt width_90" name="multiStock"/></td>
-	 			<td class="title">名称</td>
-	 			<td><input type="text" class="txt width_90" name="multiProductName"/></td>
-	 			<td class="width_50px"><button class="btn btn-sm btn-danger" type="button" onclick="removeMultiSkuRow(this)"><i class="icon icon-trash"></i></button></td>
+	 		<tr id="multiRow_1">
+	 			<td class="title">SKU<i class="star">*</i></td>
+	 			<td class="width_170px">
+	 				<input type="text" class="txt width_80px" name="multiSku_1"/>
+	 				&nbsp;<button class="btn btn-sm" type="button" onclick="getmultiSkuProductInfo(1)">加载信息</button>
+	 			</td>
+	 			<td class="title">价格<i class="star">*</i></td>
+	 			<td class="width_100px"><input type="text" class="txt width_90" name="multiPrice_1"/></td>
+	 			<td class="title">库存<i class="star">*</i></td>
+	 			<td class="width_100px"><input type="text" class="txt width_90" name="multiStock_1"/></td>
+	 			<td class="title">名称<i class="star">*</i></td>
+	 			<td><input type="text" class="txt width_99" name="multiProductName_1"/></td>
+	 			<td class="width_50px" rowspan="2"><button class="btn btn-sm btn-danger" type="button" onclick="removeMultiSkuRow(1)"><i class="icon icon-trash"></i></button></td>
+	 		</tr>
+	 		<tr id="multiImage_1">
+	 			<td colspan="8">
+	 				<div class="image_box">
+	 					<div class="image_title">选择图片</div>
+	 					<div class="image_count_info">
+	 					<table class="image_info_table">
+	 						<tr>
+	 							<td style="text-align:left;width:70%">
+	 								<input type="text" class="txt" style="width:400px;" id="imageUrlAddress_1" placeholder="图片地址/Url"/>
+	 								<button class="btn btn-sm " type="button" onclick="addImageUrlAddress(1)">
+	 									添加图片地址
+	 								</button>
+	 							</td>
+	 							<td style="text-align:right;">已选择图片：<span id="selectImageCount_1">0</span> 张 <!--| 最多 4 张图片--></div></td>
+	 						</tr>
+	 					</table>
+	 					<div id="image_area">
+	 						<ul id="sortable_1">
+	 						</ul>
+	 					</div>
+	 				</div>
+	 			</td>
 	 		</tr>
  		</table>
 	</div>

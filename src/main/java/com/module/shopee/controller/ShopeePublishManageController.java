@@ -1,9 +1,11 @@
 package com.module.shopee.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -97,6 +99,64 @@ public class ShopeePublishManageController extends MainPage{
 			resutMap.put("description", tempDescription);
 			resutMap.put("imageList", imageList);
 			message.setData(resutMap);
+		}
+		return JsonUtil.toJsonStr(message);
+	}
+	
+	@RequestMapping("getProductInfoBySpu")
+	@ResponseBody
+	public String getProductInfoBySpu(String spu) {
+		List<Product> productList = productService.getProductBySpu(spu);
+		List<Map<String, Object>> resultListMap = new ArrayList<Map<String,Object>>();
+		ReturnMessage message = new ReturnMessage();
+		if (CollectionUtils.isNotEmpty(productList)) {
+			for (Product product : productList) {
+				Map<String, Object> productMap = new HashMap<String, Object>();
+				List<String> imageList = productService.getProductImage(product.getId());
+				productMap.put("sku", product.getSku());
+				productMap.put("productName", product.getNameEn());
+				productMap.put("imageList", imageList);
+				resultListMap.add(productMap);
+			}
+			message.setData(resultListMap);
+		} else {
+			MyLocale myLocale = new MyLocale();
+			message.setStatus(ReturnMessageEnum.WARRING.getValue());
+			message.setMessage(myLocale.getText("not.found.product.info.by.spu", spu));
+		}
+		return JsonUtil.toJsonStr(message);
+	}
+	
+	@RequestMapping("getShopeeMultiSkuInfo")
+	@ResponseBody
+	public String getShopeeMultiSkuInfo(String sku) {
+		Product product = productService.getProductBySku(sku);
+		ReturnMessage message = new ReturnMessage();
+		Map<String, Object> productMap = new HashMap<String, Object>();
+		if (null == product) {
+			MyLocale myLocale = new MyLocale();
+			message.setStatus(ReturnMessageEnum.WARRING.getValue());
+			message.setMessage(myLocale.getText("not.found.product.info.by.sku", sku));
+		} else {
+			List<String> imageList = productService.getProductImage(product.getId());
+			productMap.put("imageList", imageList);
+			productMap.put("productName", product.getNameEn());
+			message.setData(productMap);
+		}
+		return JsonUtil.toJsonStr(message);
+	}
+	
+	@RequestMapping("getShopeeCategoryPath")
+	@ResponseBody
+	public String getShopeeCategoryPath(Integer categoryId) {
+		String categoryPath = shopeeCategoryService.appendCategoryPath(categoryId);
+		ReturnMessage message = new ReturnMessage();
+		if (StringUtils.isNotEmpty(categoryPath)) {
+			message.setData(categoryPath);
+		} else {
+			MyLocale myLocale = new MyLocale();
+			message.setStatus(ReturnMessageEnum.WARRING.getValue());
+			message.setMessage(myLocale.getText("shopee.categroy.no.import.or.id.error", String.valueOf(categoryId)));
 		}
 		return JsonUtil.toJsonStr(message);
 	}

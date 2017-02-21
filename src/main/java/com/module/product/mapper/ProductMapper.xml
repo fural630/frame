@@ -408,4 +408,8 @@
     <select id="checkCanUpdateSku" resultType="Product">
     	select * from product where sku = #{sku} and id != #{productId}
     </select>
+    
+    <select id="getProductBySpu" resultType="Product" parameterType="string">
+    	select * from product where spu = #{spu}
+    </select>
 </mapper>

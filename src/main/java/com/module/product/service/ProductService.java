@@ -319,4 +319,8 @@ public class ProductService {
 	public String getProductPurchaseUrl(Integer productId) {
 		return productDao.getProductPurchaseUrl(productId);
 	}
+
+	public List<Product> getProductBySpu(String spu) {
+		return productDao.getProductBySpu(spu);
+	}
 }

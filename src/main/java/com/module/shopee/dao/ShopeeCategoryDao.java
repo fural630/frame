@@ -19,5 +19,9 @@ public interface ShopeeCategoryDao {
 	public List<Map<String, Object>> getCategoryPage(Page page);
 	
 	public List<ShopeeCategory> getShopeeCategoryByParentId(Integer parentId);
+	
+	public ShopeeCategory getShopeeCategoryById(Integer id);
+
+	public ShopeeCategory getShopeeCategoryByCategoryId(Integer categoryId);
 
 }
