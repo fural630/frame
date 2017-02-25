@@ -214,32 +214,32 @@ function validateProduct() {
 	var dialog = $("#productDialog");
 	var sku = $.trim(dialog.find("input[name='sku']").val());
 	if (sku == "") {
-		errorMassage += "&nbsp;*&nbsp;请选择填写SKU";
+		errorMassage += "&nbsp;*&nbsp;请填写SKU";
 	}
 	
 	var spu = $.trim(dialog.find("input[name='spu']").val());
 	if (spu == "") {
-		errorMassage += "&nbsp;*&nbsp;请选择填写SPU";
+		errorMassage += "&nbsp;*&nbsp;请填写SPU";
 	}
 	
 	var nameCn = $.trim(dialog.find("input[name='nameCn']").val());
 	if (nameCn == "") {
-		errorMassage += "&nbsp;*&nbsp;请选择填写中文名称";
+		errorMassage += "&nbsp;*&nbsp;请填写中文名称";
 	}
 	
 	var nameEn = $.trim(dialog.find("input[name='nameEn']").val());
 	if (nameEn == "") {
-		errorMassage += "&nbsp;*&nbsp;请选择填写英文名称";
+		errorMassage += "&nbsp;*&nbsp;请填写英文名称";
 	}
 	
 	var declarationNameCn = $.trim(dialog.find("input[name='declarationNameCn']").val());
 	if (declarationNameCn == "") {
-		errorMassage += "&nbsp;*&nbsp;请选择填写中文报关名";
+		errorMassage += "&nbsp;*&nbsp;请填写中文报关名";
 	}
 	
 	var declarationNameEn = $.trim(dialog.find("input[name='declarationNameEn']").val());
 	if (declarationNameEn == "") {
-		errorMassage += "&nbsp;*&nbsp;请选择填写英文报关名";
+		errorMassage += "&nbsp;*&nbsp;请填写英文报关名";
 	}
 	
 	if (errorMassage != "") {

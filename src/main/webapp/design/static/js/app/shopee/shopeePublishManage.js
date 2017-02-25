@@ -18,7 +18,7 @@ function initDialog() {
 					primary : "ui-icon-heart"
 				},
 				click : function() {
-					validateCategoryFrom();
+					saveShopeeProduct();
 				}
 			},{
 				text : "完成编辑",
@@ -34,7 +34,6 @@ function initDialog() {
 		],
 		close: function( event, ui ) {
 			cleanShopeeDialog();
-			$.myformPlugins.cleanForm("#shopeeProductDialog");
 		}
 	});
 	
@@ -67,7 +66,107 @@ function initDialog() {
 			$.myformPlugins.cleanForm("#shopeeSkuListDialog");
 		}
 	});
+}
+
+function saveShopeeProduct() {
+	validateShopeeProduct();
+}
+
+function validateShopeeProduct() {
+	var errorMassage = "";
+	var dialog = $("#shopeeProductDialog");
+	var sku = $.trim(dialog.find("input[name='sku']").val());
+	if (sku == "") {
+		errorMassage += "&nbsp;*&nbsp;请填写SKU";
+	}
 	
+	var categoryId = $.trim(dialog.find("input[name='categoryId']").val());
+	if (categoryId == "") {
+		errorMassage += "&nbsp;*&nbsp;请选择产品类别或填写类别ID";
+	}
+	
+	var productName = $.trim(dialog.find("input[name='productName']").val());
+	if (productName == "") {
+		errorMassage += "&nbsp;*&nbsp;请填写产品名称";
+	}
+	
+	var button = $("#shopeeProductDialog button[name=checkImageButton_0] i");
+	var count = 0;
+	button.each(function () {
+		if($(this).hasClass("icon-checked")) {
+			count++;
+		}
+	});
+	if (count == 0) {
+		errorMassage += "&nbsp;*&nbsp;请选择图片";
+	}
+	
+	var price = $.trim(dialog.find("input[name='price']").val());
+	if (price == "") {
+		errorMassage += "&nbsp;*&nbsp;请填写价格";
+	}
+	
+	var stock = $.trim(dialog.find("input[name='stock']").val());
+	if (stock == "") {
+		errorMassage += "&nbsp;*&nbsp;请填写库存";
+	}
+	
+	var weight = $.trim(dialog.find("input[name='weight']").val());
+	if (weight == "") {
+		errorMassage += "&nbsp;*&nbsp;请填写产品重量";
+	}
+	
+	var shipOutIn = $.trim(dialog.find("input[name='shipOutIn']").val());
+	if (shipOutIn == "") {
+		errorMassage += "&nbsp;*&nbsp;请填写运输时间";
+	}
+	
+	var brand = $.trim(dialog.find("input[name='brand']").val());
+	if (brand == "") {
+		errorMassage += "&nbsp;*&nbsp;请填写品牌名";
+	}
+	
+	var description = $.trim(dialog.find("textarea[name='description']").val());
+	if (description == "") {
+		errorMassage += "&nbsp;*&nbsp;请填写产品描述";
+	}
+	
+	$("table[name='multiSkuTable'] input[name^='multiSku_']").each(function () {
+		var rowId = $(this).attr("name").split("_")[1];
+		var multiSku = $.trim($(this).val());
+		if (multiSku != "") {
+			var multiPrice = $("input[name='multiPrice_"+rowId+"']").val();
+			if (multiPrice == "") {
+				errorMassage += "&nbsp;*&nbsp;请填写  \"" + multiSku + "\" 的价格";
+			}
+			var multiStock = $("input[name='multiStock_"+rowId+"']").val();
+			if (multiStock == "") {
+				errorMassage += "&nbsp;*&nbsp;请填写  \"" + multiSku + "\" 的库存";
+			}
+			var multiProductName = $("input[name='multiProductName_"+rowId+"']").val();
+			if (multiProductName == "") {
+				errorMassage += "&nbsp;*&nbsp;请填写  \"" + multiSku + "\" 的名称";
+			}
+			
+			var multiButton = $("#shopeeProductDialog button[name=checkImageButton_"+rowId+"] i");
+			var multiCount = 0;
+			multiButton.each(function () {
+				if($(this).hasClass("icon-checked")) {
+					multiCount++;
+				}
+			});
+			if (multiCount == 0) {
+				errorMassage += "&nbsp;*&nbsp;请选择  \"" + multiSku + "\" 的图片";
+			}
+		}
+	});
+	if (errorMassage != "") {
+		dialog.find(".validateTip").html(errorMassage).show();
+		return false;
+	} else {
+		dialog.find(".validateTip").hide();
+	}
+	return true; 
 }
 
 function showShopeeProductDialog(title) {
@@ -387,6 +486,8 @@ function cleanShopeeDialog() {
 	$("#categorybtnName").html("展开类别");
 	$("#sortable_0").html("");
 	$("#selectImageCount_0").html("0");
+	$("#shopeeProductDialog input[name='stock']").val("");
+	cleanMultiSkuTable();
 	$.myformPlugins.cleanForm("#shopeeProductDialog");
 }
 
@@ -525,9 +626,9 @@ function addShopeeMultiSkuRow(product) {
 	html += 		'&nbsp;<button class="btn btn-sm" type="button" onclick="getmultiSkuProductInfo({rowId})">加载信息</button>';
 	html += 	'</td>';
 	html += 	'<td class="title">价格</td>';
-	html += 	'<td class="width_100px"><input type="text" class="txt width_90" name="multiPrice_{rowId}"/></td>';
+	html += 	'<td class="width_100px"><input type="text" class="txt width_90" name="multiPrice_{rowId}" onkeyup="inputNumOnly(this)"/></td>';
 	html += 	'<td class="title">库存</td>';
-	html += 	'<td class="width_100px"><input type="text" class="txt width_90" name="multiStock_{rowId}"/></td>';
+	html += 	'<td class="width_100px"><input type="number" class="txt width_90" name="multiStock_{rowId}" onkeyup="inputNumOnly(this)"/></td>';
 	html += 	'<td class="title">名称</td>';
 	html += 	'<td><input type="text" class="txt width_99" value="{multiProductName}" name="multiProductName_{rowId}"/></td>';
 	html += 	'<td class="width_50px" rowspan="2"><button class="btn btn-sm btn-danger" type="button" onclick="removeMultiSkuRow({rowId})"><i class="icon icon-trash"></i></button></td>';
@@ -569,12 +670,17 @@ function addShopeeMultiSkuRow(product) {
 	initSortable(maxId);
 	if (product != undefined) {
 		createSelectImageHtml(product.imageList, maxId);
+	} else {
+		var param = {status : 1};
+		$.message.showMessage(param);
 	}
 }
 
 function removeMultiSkuRow(rowId) {
 	$("table[name=multiSkuTable] tr[id='multiRow_"+rowId+"']").remove();
 	$("table[name=multiSkuTable] tr[id='multiImage_"+rowId+"']").remove();
+	var param = {status : 1};
+	$.message.showMessage(param);
 }
 
 function getmultiSkuProductInfo(rowId) {
@@ -629,4 +735,52 @@ function getCategoryById() {
 			}
 		});
 	}
+}
+
+function copyToSpuProductName() {
+	var productName = $("#shopeeProductDialog input[name='productName']").val();
+	if ($.trim(productName) == "") {
+		var param = {status : 0, message : '请先填写产品名称'};
+		$.message.showMessage(param);
+		return;
+	}
+	$("table[name='multiSkuTable'] input[name^='multiProductName_']").each(function() {
+		$(this).val(productName);
+	});
+	var param = {status : 1};
+	$.message.showMessage(param);
+}
+
+function copyToSpuPrice() {
+	var price = $("#shopeeProductDialog input[name='price']").val();
+	if ($.trim(price) == "") {
+		var param = {status : 0, message : '请先填写价格'};
+		$.message.showMessage(param);
+		return;
+	}
+	$("table[name='multiSkuTable'] input[name^='multiPrice_']").each(function() {
+		$(this).val(price);
+	});
+	var param = {status : 1};
+	$.message.showMessage(param);
+}
+
+function copyToSpuStock() {
+	var stock = $("#shopeeProductDialog input[name='stock']").val();
+	if ($.trim(stock) == "") {
+		var param = {status : 0, message : '请先填写库存'};
+		$.message.showMessage(param);
+		return;
+	}
+	var re = /^[0-9]+$/;
+	if (!re.test(stock)) {
+		var param = {status : 0, message : "库存必须为正整数"};
+		$.message.showMessage(param);
+		return;
+	}
+	$("table[name='multiSkuTable'] input[name^='multiStock_']").each(function() {
+		$(this).val(stock);
+	});
+	var param = {status : 1};
+	$.message.showMessage(param);
 }

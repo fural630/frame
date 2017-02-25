@@ -151,15 +151,11 @@
 	 			</td>
 	 		</tr>
 	 		<tr>
-	 			<td class="title width_100px">Parent SKU<i class="star">*</i></td>
+	 			<td class="title width_100px">Parent SKU</td>
 	 			<td>
 	 				<input type="text" class="txt width_100px" name="parentSku"/>
 	 				&nbsp;<button class="btn btn-sm" type="button" onclick="getProductInfoBySpu()">获取变体信息</button>
 	 			</td>
-	 		</tr>
-	 		<tr>
-	 			<td class="title width_100px">产品名称<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_50" name="productName"/></td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">产品类别<i class="star">*</i></td>
@@ -176,6 +172,13 @@
 	 		<tr>
 	 			<td class="title width_100px">类别ID<i class="star">*</i></td>
 	 			<td><input type="text" class="txt width_100px" name="categoryId" onBlur="getCategoryById()"/></td>
+	 		</tr>
+	 		<tr>
+	 			<td class="title width_100px">产品名称<i class="star">*</i></td>
+	 			<td>
+	 				<input type="text" class="txt width_60" style="height:30px;" name="productName"/>
+	 				&nbsp;<button class="btn btn-sm" type="button" onclick="copyToSpuProductName()">粘贴到所有变体名称</button>
+	 			</td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">产品图片<i class="star">*</i></td>
@@ -203,11 +206,18 @@
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">价格<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_100px" name="price"/></td>
+	 			<td>
+	 				<input type="text" class="txt width_100px" name="price" onkeyup="inputNumOnly(this)"/>
+	 				&nbsp;<button class="btn btn-sm" type="button" onclick="copyToSpuPrice()">粘贴到所有变体价格</button>
+	 			</td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">库存<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_100px" name="stock"/></td>
+	 			<td class="form-condensed">
+	 				<!--<input type="text" class="txt width_100px" name="stock"/>-->
+	 				<input type="number" class="txt width_100px" name="stock" onkeyup="inputNumOnly(this)"/>
+	 				&nbsp;<button class="btn btn-sm" type="button" onclick="copyToSpuStock()">粘贴到所有变体库存</button>
+	 			</td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">产品重量<i class="star">*</i></td>
@@ -231,21 +241,23 @@
 	 	<button class="btn btn-sm" type="button" onclick="addShopeeMultiSkuRow()">
 	 		<i class="icon icon-plus-sign"></i>添加变体
 	 	</button>
+	 	
  		<table class="popup_tb" style="margin-top:10px;" name="multiSkuTable">
 	 		<tr>
 	 			<td class="title" style="text-align:center;" colspan="9">变体SKU</td>
 	 		</tr>
+	 		<!--
 	 		<tr id="multiRow_1">
-	 			<td class="title">SKU<i class="star">*</i></td>
+	 			<td class="title">SKU</td>
 	 			<td class="width_170px">
 	 				<input type="text" class="txt width_80px" name="multiSku_1"/>
 	 				&nbsp;<button class="btn btn-sm" type="button" onclick="getmultiSkuProductInfo(1)">加载信息</button>
 	 			</td>
-	 			<td class="title">价格<i class="star">*</i></td>
-	 			<td class="width_100px"><input type="text" class="txt width_90" name="multiPrice_1"/></td>
-	 			<td class="title">库存<i class="star">*</i></td>
-	 			<td class="width_100px"><input type="text" class="txt width_90" name="multiStock_1"/></td>
-	 			<td class="title">名称<i class="star">*</i></td>
+	 			<td class="title">价格</td>
+	 			<td class="width_100px"><input type="text" class="txt width_90" name="multiPrice_1" onkeyup="inputNumOnly(this)"/></td>
+	 			<td class="title">库存</td>
+	 			<td class="width_100px"><input type="number" class="txt width_90" name="multiStock_1" onkeyup="inputNumOnly(this)"/></td>
+	 			<td class="title">名称</td>
 	 			<td><input type="text" class="txt width_99" name="multiProductName_1"/></td>
 	 			<td class="width_50px" rowspan="2"><button class="btn btn-sm btn-danger" type="button" onclick="removeMultiSkuRow(1)"><i class="icon icon-trash"></i></button></td>
 	 		</tr>
@@ -262,7 +274,7 @@
 	 									添加图片地址
 	 								</button>
 	 							</td>
-	 							<td style="text-align:right;">已选择图片：<span id="selectImageCount_1">0</span> 张 <!--| 最多 4 张图片--></div></td>
+	 							<td style="text-align:right;">已选择图片：<span id="selectImageCount_1">0</span> 张</div></td>
 	 						</tr>
 	 					</table>
 	 					<div id="image_area">
@@ -272,7 +284,9 @@
 	 				</div>
 	 			</td>
 	 		</tr>
+	 		-->
  		</table>
+ 		<div class="validateTip"></div>
 	</div>
 	
 	<div id="shopeeSkuListDialog" style="display:none;" title="刊登任务">
