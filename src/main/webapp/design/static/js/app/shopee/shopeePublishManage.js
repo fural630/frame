@@ -18,7 +18,7 @@ function initDialog() {
 					primary : "ui-icon-heart"
 				},
 				click : function() {
-					saveShopeeProduct();
+					saveShopeeProduct(5);
 				}
 			},{
 				text : "完成编辑",
@@ -26,6 +26,7 @@ function initDialog() {
 					primary : "ui-icon-heart"
 				},
 				click : function() {
+					saveShopeeProduct(10);
 					$("#uploadCategoryDialog").dialog("close");
 					refresh(1000);
 				}
@@ -68,8 +69,96 @@ function initDialog() {
 	});
 }
 
-function saveShopeeProduct() {
-	validateShopeeProduct();
+function saveShopeeProduct(status) {
+	if (validateShopeeProduct()) {
+		var dialog = $("#shopeeProductDialog");
+		var id = dialog.find("input[name=id]").val();
+		if (id == "") {
+			id = null;
+		}
+		var sku = $.trim(dialog.find("input[name=sku]").val());
+		var parentSku = $.trim(dialog.find("input[name=parentSku]").val());
+		var categoryPath = $("#navigation").text();
+		var categoryId = $.trim(dialog.find("input[name=categoryId]").val());
+		var productName = $.trim(dialog.find("input[name=productName]").val());
+		var price = $.trim(dialog.find("input[name=price]").val());
+		var stock = $.trim(dialog.find("input[name=stock]").val());
+		var weight = $.trim(dialog.find("input[name=weight]").val());
+		var shipOutIn = $.trim(dialog.find("input[name=shipOutIn]").val());
+		var brand = $.trim(dialog.find("input[name=brand]").val());
+		var description = $.trim(dialog.find("textarea[name=description]").val());
+		
+		var imageList = getCheckedImageUrl('0');
+		
+		var shopeePublish = {
+			id : id,
+			sku : sku,
+			parentSku : parentSku,
+			categoryPath : categoryPath,
+			categoryId : categoryId,
+			productName : productName,
+			price : price,
+			stock : stock,
+			weight : weight,
+			shipOutIn : shipOutIn,
+			brand : brand,
+			description : description,
+			imageStr : JSON.stringify(imageList),
+			mainImage : imageList[0],
+			status : status
+		};
+		
+		var shopeePublishList = new Array();
+		shopeePublishList.push(shopeePublish);
+		
+		$("table[name='multiSkuTable'] input[name^='multiSku_']").each(function () {
+			var rowId = $(this).attr("name").split("_")[1];
+			var multiSku = $.trim($(this).val());
+			if (multiSku != "") {
+				var multiPrice = $("input[name='multiPrice_" + rowId + "']").val();
+				var multiStock = $("input[name='multiStock_" + rowId + "']").val();
+				var multiProductName = $("input[name='multiProductName_" + rowId + "']").val();
+				var multiId = $("input[name='multiId_" + rowId + "']").val();
+				if (multiId == "") {
+					multiId = null;
+				}
+				var mulitImageList = getCheckedImageUrl(rowId);
+				var multiShopeePublish = {
+					id : multiId,
+					parentSku : parentSku,
+					sku : multiSku,
+					categoryPath : categoryPath,
+					categoryId : categoryId,
+					productName : multiProductName,
+					price : multiPrice,
+					stock : multiStock,
+					weight : weight,
+					shipOutIn : shipOutIn,
+					brand : brand,
+					description : description,
+					imageStr : JSON.stringify(mulitImageList),
+					mainImage : mulitImageList[0],
+					status : status
+				};
+				shopeePublishList.push(multiShopeePublish);
+			}
+		});
+		$.ajax({
+			url : "/shopee/saveShopeeProduct",
+			type: 'POST',
+			contentType : 'application/json;charset=utf-8',
+			dataType : "json",
+			data : JSON.stringify(shopeePublishList),
+			success : function (data) {
+				$.message.showMessage(data);
+				if (data.status == "1") {
+//					$("#shopeeSkuListDialog").dialog("close");
+//					refresh(1000);
+				}
+			}
+		});
+
+	}
 }
 
 function validateShopeeProduct() {
@@ -373,7 +462,7 @@ function createSelectImageHtml(imageUrlAddress, rowId) {
 	imageHtml += 		'<table class="width_100 image_operating_table">';
 	imageHtml += 			'<tr>';
 	imageHtml += 				'<td>';
-	imageHtml += 					'<button name="checkImageButton_{rowId}" class="btn btn-sm" type="button" onclick="changeCheckStatus(this,{rowId})"><i class="icon icon-check-empty"></i></button>';
+	imageHtml += 					'<button imageurl="{imageUrlAddress}" name="checkImageButton_{rowId}" class="btn btn-sm" type="button" onclick="changeCheckStatus(this,{rowId})"><i class="icon icon-check-empty"></i></button>';
 	imageHtml += 				'</td>';
 	imageHtml += 				'<td>';
 	imageHtml += 					'<button class="btn btn-sm " type="button" onclick="deleteImage(this)"><i class="icon icon-trash"></i></button>';
@@ -623,6 +712,7 @@ function addShopeeMultiSkuRow(product) {
 	html += 	'<td class="title">SKU</td>';
 	html += 	'<td class="width_170px">';
 	html += 		'<input type="text" class="txt width_80px" value="{multiSku}" name="multiSku_{rowId}"/>';
+	html += 		'<input type="hidden" class="txt width_10px" value="{multiId}" name="multiId_{rowId}"/>';
 	html += 		'&nbsp;<button class="btn btn-sm" type="button" onclick="getmultiSkuProductInfo({rowId})">加载信息</button>';
 	html += 	'</td>';
 	html += 	'<td class="title">价格</td>';
@@ -660,16 +750,21 @@ function addShopeeMultiSkuRow(product) {
 	
 	html = html.replace(/{rowId}/g, maxId);
 	if (product != undefined) {
+		var productId = product.id == undefined ? "" : product.id;
+		html = html.replace(/{multiId}/g, productId);
 		html = html.replace(/{multiSku}/g, product.sku);
 		html = html.replace(/{multiProductName}/g, product.productName);
 	} else {
+		html = html.replace(/{multiId}/g, "");
 		html = html.replace(/{multiSku}/g, "");
 		html = html.replace(/{multiProductName}/g, "");
 	}
 	$("table[name=multiSkuTable]").append(html);
 	initSortable(maxId);
 	if (product != undefined) {
-		createSelectImageHtml(product.imageList, maxId);
+		for (var j = 0; j < product.imageList.length; j++) {
+			createSelectImageHtml(product.imageList[j], maxId);
+		}
 	} else {
 		var param = {status : 1};
 		$.message.showMessage(param);
@@ -783,4 +878,17 @@ function copyToSpuStock() {
 	});
 	var param = {status : 1};
 	$.message.showMessage(param);
+}
+
+function getCheckedImageUrl(rowId) {
+	var button = $("#shopeeProductDialog button[name=checkImageButton_"+rowId+"] i");
+	var count = 0;
+	var imageList = new Array();
+	button.each(function () {
+		if($(this).hasClass("icon-checked")) {
+			var imageUrl = $(this).parent().attr("imageurl");
+			imageList.push(imageUrl);
+		}
+	});
+	return imageList;
 }

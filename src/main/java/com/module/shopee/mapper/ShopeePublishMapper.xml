@@ -39,7 +39,8 @@
     		description,
     		status,
     		publishUserId,
-    		mainImage
+    		mainImage,
+    		imageStr
     	) values (
     		#{sku},
     		#{parentSku},
@@ -54,12 +55,69 @@
     		#{description},
     		#{status},
     		#{publishUserId},
-    		#{mainImage}
+    		#{mainImage},
+    		#{imageStr}
     	)
     </insert>
     
     <delete id="deleteShopeeProduct" parameterType="int">
     	delete from shopee_publish where id = #{id}
     </delete>
+    
+    <select id="getShopeePublishById" parameterType="int" resultType="ShopeePublish">
+    	select * from shopee_publish where id = #{id}
+    </select>
+    
+    <update id="updateShopeePublish" parameterType="ShopeePublish">
+    	update shopee_publish 
+    	<set>
+       		<if test="sku !=null and sku !=''">
+				sku = #{sku},
+			</if>
+			<if test="parentSku !=null and parentSku !=''">
+				parentSku = #{parentSku},
+			</if>
+			<if test="categoryPath !=null and categoryPath !=''">
+				categoryPath = #{categoryPath},
+			</if>
+			<if test="categoryId !=null and categoryId !=''">
+				categoryId = #{categoryId},
+			</if>
+			<if test="productName !=null and productName !=''">
+				productName = #{productName},
+			</if>
+			<if test="price !=null and price !=''">
+				price = #{price},
+			</if>
+			<if test="stock !=null and stock !=''">
+				stock = #{stock},
+			</if>
+			<if test="weight !=null and weight !=''">
+				weight = #{weight},
+			</if>
+			<if test="shipOutIn !=null and shipOutIn !=''">
+				shipOutIn = #{shipOutIn},
+			</if>
+			<if test="brand !=null and brand !=''">
+				brand = #{brand},
+			</if>
+			<if test="description !=null and description !=''">
+				description = #{description},
+			</if>
+			<if test="status !=null and status !=''">
+				status = #{status},
+			</if>
+			<if test="publishUserId !=null and publishUserId !=''">
+				publishUserId = #{publishUserId},
+			</if>
+			<if test="mainImage !=null and mainImage !=''">
+				mainImage = #{mainImage},
+			</if>
+			<if test="imageStr !=null and imageStr !=''">
+				imageStr = #{imageStr},
+			</if>
+       	</set>
+        where id = #{id}   
+    </update>
     
 </mapper>

@@ -9,13 +9,13 @@ $(function () {
 	CKEDITOR.replace('descriptionEs');
 	CKEDITOR.replace('descriptionIt');
 	
-	CKEDITOR.replace('briefDescriptionCn');
-	CKEDITOR.replace('briefDescriptionEn');
-	CKEDITOR.replace('briefDescriptionFr');
-	CKEDITOR.replace('briefDescriptionDe');
-	CKEDITOR.replace('briefDescriptionJp');
-	CKEDITOR.replace('briefDescriptionEs');
-	CKEDITOR.replace('briefDescriptionIt');
+//	CKEDITOR.replace('briefDescriptionCn');
+//	CKEDITOR.replace('briefDescriptionEn');
+//	CKEDITOR.replace('briefDescriptionFr');
+//	CKEDITOR.replace('briefDescriptionDe');
+//	CKEDITOR.replace('briefDescriptionJp');
+//	CKEDITOR.replace('briefDescriptionEs');
+//	CKEDITOR.replace('briefDescriptionIt');
 	
 	$('#userSelect').chosen({
 	    disable_search_threshold: 5, // 5 个以下的选择项则不显示检索框
@@ -290,13 +290,13 @@ function saveProduct() {
 	var descriptionJp = CKEDITOR.instances["descriptionJp"].getData();
 	var descriptionEs = CKEDITOR.instances["descriptionEs"].getData();
 	var descriptionIt = CKEDITOR.instances["descriptionIt"].getData();
-	var briefDescriptionCn = CKEDITOR.instances["briefDescriptionCn"].getData();
-	var briefDescriptionEn = CKEDITOR.instances["briefDescriptionEn"].getData();
-	var briefDescriptionFr = CKEDITOR.instances["briefDescriptionFr"].getData();
-	var briefDescriptionDe = CKEDITOR.instances["briefDescriptionDe"].getData();
-	var briefDescriptionJp = CKEDITOR.instances["briefDescriptionJp"].getData();
-	var briefDescriptionEs = CKEDITOR.instances["briefDescriptionEs"].getData();
-	var briefDescriptionIt = CKEDITOR.instances["briefDescriptionIt"].getData();
+//	var briefDescriptionCn = CKEDITOR.instances["briefDescriptionCn"].getData();
+//	var briefDescriptionEn = CKEDITOR.instances["briefDescriptionEn"].getData();
+//	var briefDescriptionFr = CKEDITOR.instances["briefDescriptionFr"].getData();
+//	var briefDescriptionDe = CKEDITOR.instances["briefDescriptionDe"].getData();
+//	var briefDescriptionJp = CKEDITOR.instances["briefDescriptionJp"].getData();
+//	var briefDescriptionEs = CKEDITOR.instances["briefDescriptionEs"].getData();
+//	var briefDescriptionIt = CKEDITOR.instances["briefDescriptionIt"].getData();
 	
 	var imageElements = dialog.find("img[name=productImage]");
 	var mainImage = "";
@@ -360,13 +360,13 @@ function saveProduct() {
 			descriptionJp : descriptionJp,
 			descriptionEs : descriptionEs,
 			descriptionIt : descriptionIt,
-			briefDescriptionCn : briefDescriptionCn,
-			briefDescriptionEn : briefDescriptionEn,
-			briefDescriptionFr : briefDescriptionFr,
-			briefDescriptionDe : briefDescriptionDe,
-			briefDescriptionJp : briefDescriptionJp,
-			briefDescriptionEs : briefDescriptionEs,
-			briefDescriptionIt : briefDescriptionIt,
+//			briefDescriptionCn : briefDescriptionCn,
+//			briefDescriptionEn : briefDescriptionEn,
+//			briefDescriptionFr : briefDescriptionFr,
+//			briefDescriptionDe : briefDescriptionDe,
+//			briefDescriptionJp : briefDescriptionJp,
+//			briefDescriptionEs : briefDescriptionEs,
+//			briefDescriptionIt : briefDescriptionIt,
 			productImageList : productImageList,
 			mainImage : mainImage,
 			multiSkuList : multiSkuList,
@@ -393,14 +393,14 @@ function cleanProductDialog() {
 	CKEDITOR.instances["descriptionJp"].setData("");
 	CKEDITOR.instances["descriptionEs"].setData("");
 	CKEDITOR.instances["descriptionIt"].setData("");
-	CKEDITOR.instances["briefDescriptionCn"].setData("");
-	CKEDITOR.instances["briefDescriptionEn"].setData("");
-	CKEDITOR.instances["briefDescriptionFr"].setData("");
-	CKEDITOR.instances["briefDescriptionCn"].setData("");
-	CKEDITOR.instances["briefDescriptionDe"].setData("");
-	CKEDITOR.instances["briefDescriptionJp"].setData("");
-	CKEDITOR.instances["briefDescriptionEs"].setData("");
-	CKEDITOR.instances["briefDescriptionIt"].setData("");
+//	CKEDITOR.instances["briefDescriptionCn"].setData("");
+//	CKEDITOR.instances["briefDescriptionEn"].setData("");
+//	CKEDITOR.instances["briefDescriptionFr"].setData("");
+//	CKEDITOR.instances["briefDescriptionCn"].setData("");
+//	CKEDITOR.instances["briefDescriptionDe"].setData("");
+//	CKEDITOR.instances["briefDescriptionJp"].setData("");
+//	CKEDITOR.instances["briefDescriptionEs"].setData("");
+//	CKEDITOR.instances["briefDescriptionIt"].setData("");
 	
 	var multiTable = $("#productDialog").find("table[name=multiSkuTable]");
 	multiTable.find("tr:gt(1)").each(function () {
@@ -460,13 +460,13 @@ function fillingProductData(product, imageList) {
 	CKEDITOR.instances["descriptionJp"].setData(product.descriptionJp);
 	CKEDITOR.instances["descriptionEs"].setData(product.descriptionEs);
 	CKEDITOR.instances["descriptionIt"].setData(product.descriptionIt);
-	CKEDITOR.instances["briefDescriptionCn"].setData(product.briefDescriptionCn);
-	CKEDITOR.instances["briefDescriptionEn"].setData(product.briefDescriptionEn);
-	CKEDITOR.instances["briefDescriptionFr"].setData(product.briefDescriptionFr);
-	CKEDITOR.instances["briefDescriptionDe"].setData(product.briefDescriptionDe);
-	CKEDITOR.instances["briefDescriptionJp"].setData(product.briefDescriptionJp);
-	CKEDITOR.instances["briefDescriptionEs"].setData(product.briefDescriptionEs);
-	CKEDITOR.instances["briefDescriptionIt"].setData(product.briefDescriptionIt);
+//	CKEDITOR.instances["briefDescriptionCn"].setData(product.briefDescriptionCn);
+//	CKEDITOR.instances["briefDescriptionEn"].setData(product.briefDescriptionEn);
+//	CKEDITOR.instances["briefDescriptionFr"].setData(product.briefDescriptionFr);
+//	CKEDITOR.instances["briefDescriptionDe"].setData(product.briefDescriptionDe);
+//	CKEDITOR.instances["briefDescriptionJp"].setData(product.briefDescriptionJp);
+//	CKEDITOR.instances["briefDescriptionEs"].setData(product.briefDescriptionEs);
+//	CKEDITOR.instances["briefDescriptionIt"].setData(product.briefDescriptionIt);
 	
 	$("#sortable").html("");
 	if (imageList != undefined && imageList.length > 0) {

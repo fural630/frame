@@ -58,6 +58,8 @@ public class ShopeePublishService {
 	}
 	
 	public void insertShopeePublish(ShopeePublish shopeePublish) {
+		User user = UserSingleton.getInstance().getUser();
+		shopeePublish.setPublishUserId(user.getId());
 		shopeePublishDao.insertShopeePublish(shopeePublish);
 	}
 
@@ -67,6 +69,14 @@ public class ShopeePublishService {
 
 	public void deleteShopeeProduct(Integer id) {
 		shopeePublishDao.deleteShopeeProduct(id);
+	}
+
+	public ShopeePublish getShopeePublishById(Integer id) {
+		return shopeePublishDao.getShopeePublishById(id);
+	}
+
+	public void updateShopeePublish(ShopeePublish shopeePublish) {
+		shopeePublishDao.updateShopeePublish(shopeePublish);
 	}
 	
 }

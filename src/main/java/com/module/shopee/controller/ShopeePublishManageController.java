@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +22,7 @@ import com.code.view.ReturnMessage;
 import com.module.product.model.Product;
 import com.module.product.service.ProductService;
 import com.module.shopee.model.ShopeeCategory;
+import com.module.shopee.model.ShopeePublish;
 import com.module.shopee.service.ShopeeCategoryService;
 import com.module.shopee.service.ShopeePublishService;
 import com.util.JsonUtil;
@@ -158,6 +160,22 @@ public class ShopeePublishManageController extends MainPage{
 			message.setStatus(ReturnMessageEnum.WARRING.getValue());
 			message.setMessage(myLocale.getText("shopee.categroy.no.import.or.id.error", String.valueOf(categoryId)));
 		}
+		return JsonUtil.toJsonStr(message);
+	}
+	
+	@RequestMapping("saveShopeeProduct")
+	@ResponseBody
+	public String saveShopeeProduct(@RequestBody List<ShopeePublish> shopeePublishList) {
+		if (CollectionUtils.isNotEmpty(shopeePublishList)) {
+			for (ShopeePublish shopeePublish : shopeePublishList) {
+				if (null == shopeePublish.getId()) {
+					shopeePublishService.insertShopeePublish(shopeePublish);
+				} else {
+					shopeePublishService.updateShopeePublish(shopeePublish);
+				}
+			}
+		}
+		ReturnMessage message = new ReturnMessage();
 		return JsonUtil.toJsonStr(message);
 	}
 }

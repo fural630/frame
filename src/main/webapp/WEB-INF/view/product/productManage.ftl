@@ -448,6 +448,7 @@
 		 			<td class="title width_100px">意大利语描述</td>
 		 			<td><textarea id="descriptionIt" name="descriptionIt"></textarea></td>
 		 		</tr>
+		 		<!--
 		 		<tr>
 		 			<td class="title width_100px">中文简述</td>
 		 			<td><textarea id="briefDescriptionCn" name="briefDescriptionCn"></textarea></td>
@@ -476,6 +477,7 @@
 		 			<td class="title width_100px">意大利语简述</td>
 		 			<td><textarea id="briefDescriptionIt" name="briefDescriptionIt"></textarea></td>
 		 		</tr>
+		 		-->
 	 		</table>
 		  </div>
 		  

@@ -18,5 +18,9 @@ public interface ShopeePublishDao {
 	public List<Map<String, Object>> getShopeePublishManagePage(Page page);
 
 	public void deleteShopeeProduct(Integer id);
+
+	public ShopeePublish getShopeePublishById(Integer id);
+	
+	public void updateShopeePublish(ShopeePublish shopeePublish);
 	
 }
