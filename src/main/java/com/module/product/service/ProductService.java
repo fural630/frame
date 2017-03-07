@@ -1,5 +1,6 @@
 package com.module.product.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,12 +8,18 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.application.libraries.constentEnum.ProductAuditStatusEnum;
 import com.code.Page;
+import com.code.frame.Constant;
 import com.code.session.UserSingleton;
 import com.module.product.dao.ProductDao;
 import com.module.product.model.Product;
@@ -322,5 +329,73 @@ public class ProductService {
 
 	public List<Product> getProductBySpu(String spu) {
 		return productDao.getProductBySpu(spu);
+	}
+
+	public File exportProductData(String params) {
+		if (StringUtils.isNotEmpty(params)) {
+			List<Integer> ids = new ArrayList<Integer>();
+			String idList[] = params.split(",");
+			if (idList.length > 0) {
+				for (int i = 0; i < idList.length; i++) {
+					Integer productId = Integer.parseInt(idList[i]);
+					ids.add(productId);
+				}
+				
+			}
+			if (CollectionUtils.isNotEmpty(ids)) {
+				ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>> ();
+				ArrayList<String> titleList = new ArrayList<String>();
+				MyLocale myLocale = new MyLocale();
+				titleList.add(myLocale.getText("export.product.sku"));
+				titleList.add(myLocale.getText("export.product.name.cn"));
+				titleList.add(myLocale.getText("export.product.weight"));
+				titleList.add(myLocale.getText("export.product.length"));
+				titleList.add(myLocale.getText("export.product.width"));
+				titleList.add(myLocale.getText("export.product.height"));
+				titleList.add(myLocale.getText("export.product.price"));
+				
+				titleList.add(myLocale.getText("export.product.declaration.name.cn"));
+				titleList.add(myLocale.getText("export.product.declaration.name.en"));
+				titleList.add(myLocale.getText("export.product.declared.value"));
+				titleList.add(myLocale.getText("export.product.tag"));
+				titleList.add(myLocale.getText("export.product.image.url"));
+				titleList.add(myLocale.getText("export.product.warehouse"));
+				
+				titleList.add(myLocale.getText("export.product.shelf.position"));
+				titleList.add(myLocale.getText("export.product.stock"));
+				titleList.add(myLocale.getText("export.product.fbc.freight"));
+				data.add(titleList);
+				
+				for (Integer id : ids) {
+					ArrayList<String> contentList = new ArrayList<String>();
+					Product product = productDao.getProductById(id);
+					contentList.add(StringUtils.isEmpty(product.getSku()) ? "" : product.getSku());
+					contentList.add(StringUtils.isEmpty(product.getNameCn()) ? "" : product.getNameCn());
+					contentList.add(product.getPackageWeight() == null ? "" : String.valueOf(product.getPackageWeight()));
+					contentList.add(product.getPackageLength() == null ? "" : String.valueOf(product.getPackageLength()));
+					contentList.add(product.getPackageWidth() == null ? "" :  String.valueOf(product.getPackageWidth()));
+					contentList.add(product.getPackageHeight() == null ? "" :  String.valueOf(product.getPackageHeight()));
+					contentList.add(product.getPurchasePrice() == null ? "" : String.valueOf(product.getPurchasePrice()));
+					contentList.add(StringUtils.isEmpty(product.getDeclarationNameCn()) ? "" : product.getDeclarationNameCn());
+					contentList.add(StringUtils.isEmpty(product.getDeclarationNameEn()) ? "" : product.getDeclarationNameEn());
+					contentList.add("");
+					contentList.add("");
+					contentList.add(StringUtils.isEmpty(product.getMainImage()) ? "" : product.getMainImage());
+					contentList.add("");
+					contentList.add("");
+					contentList.add("");
+					contentList.add("");
+					data.add(contentList);
+				}
+				
+				if (CollectionUtils.isNotEmpty(data)) {
+					String fileName = "exportProductInfo_" + new MyDate().getCurrentFullDateTime() + "." +Constant.XSLEXTENSION;
+					Excel excel = new Excel(fileName);
+					File file = excel.arrayToXSL(data);
+					return file;
+				}
+			}
+		}
+		return null;
 	}
 }

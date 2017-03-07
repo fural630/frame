@@ -239,6 +239,7 @@
 										<#if !page.permissionBut?seq_contains("batch.delete.product")>
 											<option value="batchDeleteProduct">批量删除</option>
 										</#if>
+										<option value="exportProductData">导出商品数据</option>
 									<#else>
 										<option value="batchSubmitAudit">批量提交审核</option>
 									</#if>

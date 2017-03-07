@@ -12,8 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +42,6 @@ import com.module.product.model.Product;
 import com.module.product.model.ProductAudit;
 import com.module.product.service.ProductService;
 import com.module.system.model.User;
-import com.util.Dumper;
 import com.util.Excel;
 import com.util.JsonUtil;
 import com.util.MyDate;
@@ -45,6 +50,8 @@ import com.util.MyLocale;
 @Controller
 @RequestMapping("product")
 public class ProductManageController extends MainPage{
+	
+	private static Logger logger = Logger.getLogger(ProductManageController.class);  
 	
 	@Autowired
 	private ProductService productService;
@@ -360,5 +367,19 @@ public class ProductManageController extends MainPage{
 			returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
 		}
 		return JsonUtil.toJsonStr(returnMessage);
+	}
+	
+	@RequestMapping("exportProductData")
+	public ResponseEntity<byte[]> exportProductData(String params) throws Exception{
+		logger.info("==> params : " + params);
+		File file = productService.exportProductData(params);
+		if (null != file) {
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+			headers.setContentDispositionFormData("attachment", file.getName());
+			return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
+					headers, HttpStatus.CREATED);
+		}
+		return null;
 	}
 }

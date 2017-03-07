@@ -24,13 +24,15 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Excel {
 	private final String fileName;
+//	private final String basePath = "/tmp/";
+	private final String basePath = "E:\\tmp\\";
 
 	public Excel(String fileName) {
 		this.fileName = fileName;
 	}
 
 	public ArrayList<ArrayList<String>> toArray() {
-		ArrayList<ArrayList<String>> result = new ArrayList();
+		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
 		try {
 			InputStream is = new FileInputStream(this.fileName);
 			Filename fn = new Filename(this.fileName);
@@ -52,7 +54,7 @@ public class Excel {
 	}
 
 	public ArrayList<ArrayList<String>> toArray(boolean keepDigital) {
-		ArrayList<ArrayList<String>> result = new ArrayList();
+		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
 		try {
 			InputStream is = new FileInputStream(this.fileName);
 			Filename fn = new Filename(this.fileName);
@@ -73,7 +75,7 @@ public class Excel {
 	}
 
 	public File arrayToXSL(ArrayList<ArrayList<String>> data, String sheetName) {
-		String path = "/tmp/" + this.fileName;
+		String path = basePath + this.fileName;
 		try {
 			FileOutputStream file = new FileOutputStream(path);
 			HSSFWorkbook workbook = new HSSFWorkbook();
@@ -84,13 +86,13 @@ public class Excel {
 				sheet = workbook.createSheet();
 			}
 			for (int i = 0; i < data.size(); i++) {
-				HSSFRow row = sheet.createRow(i++);
-				List r = data.get(i);
+				HSSFRow row = sheet.createRow(i);
+				List<String> r = data.get(i);
 				if (CollectionUtils.isEmpty(r)) {
 					continue;
 				}
 				for (int j = 0; j < r.size(); j++) {
-					HSSFCell cell = row.createCell(j++);
+					HSSFCell cell = row.createCell(j);
 					Object column = r.get(j);
 					if (column == null) {
 						cell.setCellValue("");
@@ -109,7 +111,7 @@ public class Excel {
 
 	public File arrayToXSLNewline(ArrayList<ArrayList<String>> data,
 			String sheetName) {
-		String path = "/tmp/" + this.fileName;
+		String path = basePath + this.fileName;
 		try {
 			FileOutputStream file = new FileOutputStream(path);
 			HSSFWorkbook workbook = new HSSFWorkbook();
@@ -120,13 +122,13 @@ public class Excel {
 				sheet = workbook.createSheet();
 			}
 			for (int i = 0; i < data.size(); i++) {
-				HSSFRow row = sheet.createRow(i++);
-				List r = data.get(i);
+				HSSFRow row = sheet.createRow(i);
+				List<String> r = data.get(i);
 				if (CollectionUtils.isEmpty(r)) {
 					continue;
 				}
 				for (int j = 0; j < r.size(); j++) {
-					HSSFCell cell = row.createCell(j++);
+					HSSFCell cell = row.createCell(j);
 					Object column = r.get(j);
 					if (column == null) {
 						cell.setCellValue("");
@@ -145,12 +147,12 @@ public class Excel {
 
 	private ArrayList<ArrayList<String>> _parseXSL(InputStream is,
 			boolean keepDigital) throws Exception {
-		ArrayList<ArrayList<String>> result = new ArrayList();
+		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
 		Workbook workbook = new HSSFWorkbook(is);
 		HSSFSheet aSheet = (HSSFSheet) workbook.getSheetAt(0);
 		for (int rowNumOfSheet = 0; rowNumOfSheet <= aSheet.getLastRowNum(); rowNumOfSheet++) {
 			HSSFRow aRow = aSheet.getRow(rowNumOfSheet);
-			ArrayList<String> row = new ArrayList();
+			ArrayList<String> row = new ArrayList<String>();
 			if (aRow != null) {
 				for (int cellNumOfRow = 0; cellNumOfRow < aRow.getLastCellNum(); cellNumOfRow++) {
 					HSSFCell aCell = aRow.getCell(cellNumOfRow);
@@ -192,12 +194,12 @@ public class Excel {
 
 	private ArrayList<ArrayList<String>> _parseXSLX(InputStream is)
 			throws Exception {
-		ArrayList<ArrayList<String>> result = new ArrayList();
+		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
 		Workbook workbook = new XSSFWorkbook(is);
 		XSSFSheet aSheet = (XSSFSheet) workbook.getSheetAt(0);
 		for (int rowNumOfSheet = 0; rowNumOfSheet <= aSheet.getLastRowNum(); rowNumOfSheet++) {
 			XSSFRow aRow = aSheet.getRow(rowNumOfSheet);
-			ArrayList<String> row = new ArrayList();
+			ArrayList<String> row = new ArrayList<String>();
 
 			if (aRow != null) {
 				for (int cellNumOfRow = 0; cellNumOfRow < aRow.getLastCellNum(); cellNumOfRow++) {
@@ -239,7 +241,7 @@ public class Excel {
 
 	public File arrayToXSLFormat(ArrayList<ArrayList<String>> data,
 			String sheetName) {
-		String path = "/tmp/" + this.fileName;
+		String path = basePath + this.fileName;
 		try {
 			FileOutputStream file = new FileOutputStream(path);
 			HSSFWorkbook workbook = new HSSFWorkbook();
@@ -250,13 +252,13 @@ public class Excel {
 				sheet = workbook.createSheet();
 			}
 			for (int i = 0; i < data.size(); i++) {
-				HSSFRow row = sheet.createRow(i++);
-				List r = data.get(i);
+				HSSFRow row = sheet.createRow(i);
+				List<String> r = data.get(i);
 				if (CollectionUtils.isEmpty(r)) {
 					continue;
 				}
 				for (int j = 0; j < r.size(); j++) {
-					HSSFCell cell = row.createCell(j++);
+					HSSFCell cell = row.createCell(j);
 					Object column = r.get(j);
 					if (column == null) {
 						cell.setCellValue("");

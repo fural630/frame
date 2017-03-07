@@ -1243,3 +1243,20 @@ function batchSubmitAudit(idList) {
 		}
 	});
 }
+
+function exportProductData(idList) {
+	if ($("#exportProductForm").length > 0) {
+		$("#exportProductForm").remove();
+	}
+	var turnForm = document.createElement("form");   
+	document.body.appendChild(turnForm);
+	turnForm.method = 'post';
+	turnForm.id = 'exportProductForm';
+	var newElement = document.createElement("input");
+	newElement.setAttribute("name","params");
+    newElement.setAttribute("type","hidden");
+    newElement.setAttribute("value", idList);
+	turnForm.appendChild(newElement);
+	turnForm.action = "/product/exportProductData";
+	turnForm.submit();
+}
