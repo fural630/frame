@@ -24,8 +24,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Excel {
 	private final String fileName;
-//	private final String basePath = "/tmp/";
-	private final String basePath = "E:\\tmp\\";
+	private final String basePath = "/tmp/";
+//	private final String basePath = "E:\\tmp\\";
 
 	public Excel(String fileName) {
 		this.fileName = fileName;
