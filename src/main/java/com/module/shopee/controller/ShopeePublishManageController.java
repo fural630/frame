@@ -19,6 +19,8 @@ import com.application.libraries.constentEnum.ReturnMessageEnum;
 import com.code.Page;
 import com.code.view.MainPage;
 import com.code.view.ReturnMessage;
+import com.google.api.client.json.Json;
+import com.google.gson.Gson;
 import com.module.product.model.Product;
 import com.module.product.service.ProductService;
 import com.module.shopee.model.ShopeeCategory;
@@ -109,18 +111,19 @@ public class ShopeePublishManageController extends MainPage{
 	@ResponseBody
 	public String getProductInfoBySpu(String spu) {
 		List<Product> productList = productService.getProductBySpu(spu);
-		List<Map<String, Object>> resultListMap = new ArrayList<Map<String,Object>>();
+		List<ShopeePublish> shopeePublishList = new ArrayList<ShopeePublish>();
 		ReturnMessage message = new ReturnMessage();
+		Gson gson = new Gson();
 		if (CollectionUtils.isNotEmpty(productList)) {
 			for (Product product : productList) {
-				Map<String, Object> productMap = new HashMap<String, Object>();
 				List<String> imageList = productService.getProductImage(product.getId());
-				productMap.put("sku", product.getSku());
-				productMap.put("productName", product.getNameEn());
-				productMap.put("imageList", imageList);
-				resultListMap.add(productMap);
+				ShopeePublish shopeePublish = new ShopeePublish();
+				shopeePublish.setSku(product.getSku());
+				shopeePublish.setProductName(product.getNameEn());
+				shopeePublish.setImageStr(gson.toJson(imageList));
+				shopeePublishList.add(shopeePublish);
 			}
-			message.setData(resultListMap);
+			message.setData(shopeePublishList);
 		} else {
 			MyLocale myLocale = new MyLocale();
 			message.setStatus(ReturnMessageEnum.WARRING.getValue());
@@ -176,6 +179,37 @@ public class ShopeePublishManageController extends MainPage{
 			}
 		}
 		ReturnMessage message = new ReturnMessage();
+		return JsonUtil.toJsonStr(message);
+	}
+	
+	@RequestMapping("getShopeeInfoById")
+	@ResponseBody
+	public String getShopeeInfoById(Integer id) {
+		ShopeePublish shopeePublish = shopeePublishService.getShopeePublishById(id);
+		return JsonUtil.toJsonStr(shopeePublish);
+	}
+	
+	@RequestMapping("getMultiShopeeInfo")
+	@ResponseBody
+	public String getMultiShopeeInfo(Integer id) {
+		ReturnMessage message = new ReturnMessage();
+		List<ShopeePublish> shopeePublishs = new ArrayList<ShopeePublish>();
+		MyLocale myLocale = new MyLocale();
+		ShopeePublish shopeePublish = shopeePublishService.getShopeePublishById(id);
+		if (null != shopeePublish) {
+			shopeePublishs.add(shopeePublish);
+			String parentSku = shopeePublish.getParentSku();
+			if (StringUtils.isNotEmpty(parentSku)) {
+				List<ShopeePublish> shopeePublishList = shopeePublishService.getShopeePublishBySpuNoEnId(parentSku, id);
+				if (CollectionUtils.isNotEmpty(shopeePublishList)) {
+					shopeePublishs.addAll(shopeePublishList);
+				}
+			} else {
+				message.setStatus(ReturnMessageEnum.WARRING.getValue());
+				message.setMessage(myLocale.getText("this.sku.without.parentSku"));
+			}
+		}
+		message.setData(shopeePublishs);
 		return JsonUtil.toJsonStr(message);
 	}
 }

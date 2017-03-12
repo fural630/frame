@@ -382,4 +382,13 @@ public class ProductManageController extends MainPage{
 		}
 		return null;
 	}
+	
+	
+	@RequestMapping("getProductImageBySku")
+	@ResponseBody
+	public String getProductImageBySku(String sku) {
+		Product product = productService.getProductBySku(sku);
+		List<String> imageList = productService.getProductImage(product.getId());
+		return JsonUtil.toJsonStr(imageList);
+	}
 }

@@ -78,5 +78,9 @@ public class ShopeePublishService {
 	public void updateShopeePublish(ShopeePublish shopeePublish) {
 		shopeePublishDao.updateShopeePublish(shopeePublish);
 	}
+
+	public List<ShopeePublish> getShopeePublishBySpuNoEnId(String parentSku, Integer id) {
+		return shopeePublishDao.getShopeePublishBySpuNoEnId(parentSku, id);
+	}
 	
 }

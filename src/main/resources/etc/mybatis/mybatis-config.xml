@@ -4,12 +4,15 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd"> 
 <configuration>
     <typeAliases>  
+    
+    	<typeAlias alias="Page" type="com.code.Page" />
+    
     	<!-- system -->
         <typeAlias alias="User" type="com.module.system.model.User" />
         <typeAlias alias="Role" type="com.module.system.model.Role" />
         <typeAlias alias="Navigator" type="com.module.frame.model.Navigator" />
         <typeAlias alias="ProductAudit" type="com.module.product.model.ProductAudit" />
-        <typeAlias alias="Page" type="com.code.Page" />
+        <typeAlias alias="Platform" type="com.module.system.model.Platform" />
         
         <!-- product -->
         <typeAlias alias="Product" type="com.module.product.model.Product" />
@@ -23,6 +26,8 @@
     <mappers>  
         <mapper resource="com/module/system/mapper/UserMapper.xml" />
         <mapper resource="com/module/system/mapper/RoleMapper.xml" />
+        <mapper resource="com/module/system/mapper/PlatformMapper.xml" />
+        
         <mapper resource="com/module/frame/mapper/NavigatorMapper.xml" />
         <mapper resource="com/module/product/mapper/ProductMapper.xml" />
         

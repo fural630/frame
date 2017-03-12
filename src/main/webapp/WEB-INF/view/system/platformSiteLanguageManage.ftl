@@ -137,5 +137,15 @@
 	 		</tr>
 	 	</table>
 	</div>
+	
+	<div id="editPlatformDialog" style="display:none;">
+		<input type="hidden" name="id">
+		<table class="popup_tb">
+	 		<tr>
+	 			<td class="title width_100px">平台名称<i class="star">*</i></td>
+	 			<td><input type="text" class="txt width_50" name="name"/></td>
+	 		</tr>
+	 	</table>
+	</div>
   </body>
 </html>

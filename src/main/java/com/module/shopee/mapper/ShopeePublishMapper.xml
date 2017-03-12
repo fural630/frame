@@ -120,4 +120,8 @@
         where id = #{id}   
     </update>
     
+    <select id="getShopeePublishBySpuNoEnId" parameterType="hashMap" resultType="ShopeePublish">
+    	select * from shopee_publish where parentSku = #{parentSku} and id != #{id}
+    </select>
+    
 </mapper>

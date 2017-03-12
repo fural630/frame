@@ -27,8 +27,6 @@ function initDialog() {
 				},
 				click : function() {
 					saveShopeeProduct(10);
-					$("#uploadCategoryDialog").dialog("close");
-					refresh(1000);
 				}
 			}
 			
@@ -152,8 +150,8 @@ function saveShopeeProduct(status) {
 			success : function (data) {
 				$.message.showMessage(data);
 				if (data.status == "1") {
-//					$("#shopeeSkuListDialog").dialog("close");
-//					refresh(1000);
+					$("#shopeeSkuListDialog").dialog("close");
+					refresh(1000);
 				}
 			}
 		});
@@ -264,7 +262,99 @@ function showShopeeProductDialog(title) {
 }
 
 function editSku(id) {
-	showShopeeProductDialog("单体编辑");
+	$.ajax({
+		url : "/shopee/getShopeeInfoById",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			id : id
+		},
+		success : function (data) {
+			if (data != null) {
+				var shopeeProductDialog = $("#shopeeProductDialog");
+				shopeeProductDialog.find("input[name='id']").val(data.id);
+				shopeeProductDialog.find("input[name='sku']").val(data.sku);
+				shopeeProductDialog.find("input[name='parentSku']").val(data.parentSku);
+				$("#navigation").text(data.categoryPath); 
+				shopeeProductDialog.find("input[name='categoryId']").val(data.categoryId);
+				shopeeProductDialog.find("input[name='productName']").val(data.productName);
+				shopeeProductDialog.find("input[name='price']").val(data.price);
+				shopeeProductDialog.find("input[name='stock']").val(data.stock);
+				shopeeProductDialog.find("input[name='weight']").val(data.weight);
+				shopeeProductDialog.find("input[name='shipOutIn']").val(data.shipOutIn);
+				shopeeProductDialog.find("input[name='brand']").val(data.brand);
+				shopeeProductDialog.find("textarea[name='description']").val(data.description);
+				
+				spliceSelectImageProductImage(data.imageStr, data.sku, 0);
+				showShopeeProductDialog("单体编辑");
+			}
+		}
+	});
+}
+
+function editMultiSku(id) {
+	var shopeeProductDialog = $("#shopeeProductDialog");
+	$.ajax({
+		url : "/shopee/getMultiShopeeInfo",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			id : id
+		},
+		success : function (data) {
+			var shopeePublishList = data.data;
+			if (data.status != "1") {
+				$.message.showMessage(data);
+			}
+			if (shopeePublishList.length > 0) {
+				for (var i = 0; i < shopeePublishList.length; i++) {
+					var shopeePublish = shopeePublishList[i];
+					if (i == 0) {
+						shopeeProductDialog.find("input[name='id']").val(shopeePublish.id);
+						shopeeProductDialog.find("input[name='sku']").val(shopeePublish.sku);
+						shopeeProductDialog.find("input[name='parentSku']").val(shopeePublish.parentSku);
+						$("#navigation").text(shopeePublish.categoryPath); 
+						shopeeProductDialog.find("input[name='categoryId']").val(shopeePublish.categoryId);
+						shopeeProductDialog.find("input[name='productName']").val(shopeePublish.productName);
+						shopeeProductDialog.find("input[name='price']").val(shopeePublish.price);
+						shopeeProductDialog.find("input[name='stock']").val(shopeePublish.stock);
+						shopeeProductDialog.find("input[name='weight']").val(shopeePublish.weight);
+						shopeeProductDialog.find("input[name='shipOutIn']").val(shopeePublish.shipOutIn);
+						shopeeProductDialog.find("input[name='brand']").val(shopeePublish.brand);
+						shopeeProductDialog.find("textarea[name='description']").val(shopeePublish.description);
+						spliceSelectImageProductImage(shopeePublish.imageStr, shopeePublish.sku, 0);
+					} else {
+						addShopeeMultiSkuRow(shopeePublish);
+					}
+				}
+			}
+			showShopeeProductDialog("变体编辑");
+		}
+	});
+	
+}
+
+function spliceSelectImageProductImage(selectImage, productSku, rowId) {
+	var selectImageList = eval('(' + selectImage + ')');
+	for (var i = 0; i < selectImageList.length; i++) {
+		createSelectImageHtml(selectImageList[i], rowId, true);
+	}
+	$.ajax({
+		url : "/product/getProductImageBySku",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			sku : productSku
+		},
+		success : function (data) {
+			for (var i = 0; i < data.length; i++) {
+				if ($.inArray(data[i],selectImageList) == -1) {
+					createSelectImageHtml(data[i], rowId);
+				}
+			}
+		}
+	});
+	
 }
 
 function changeCheckStatus(element, rowId) {
@@ -454,15 +544,15 @@ function addImageUrlAddress(rowId) {
 	createSelectImageHtml(imageUrlAddress, rowId);
 }
 
-function createSelectImageHtml(imageUrlAddress, rowId) {
+function createSelectImageHtml(imageUrlAddress, rowId, isChecked) {
 	var imageHtml = "";
 	imageHtml += '<li>';
 	imageHtml += 	'<div class="iamge_div">';
-	imageHtml += 		'<img onclick="changeCheckStatus(this, {rowId})" name="productImage" src="{imageUrlAddress}" data-image="{imageUrlAddress}" class="img-thumbnail move" title="拖动改变图片顺序" width="110">';
+	imageHtml += 		'<img onclick="changeCheckStatus(this, {rowId})" name="productImage" src="{imageUrlAddress}" data-image="{imageUrlAddress}" class="{imageClass} move" title="拖动改变图片顺序" width="110">';
 	imageHtml += 		'<table class="width_100 image_operating_table">';
 	imageHtml += 			'<tr>';
 	imageHtml += 				'<td>';
-	imageHtml += 					'<button imageurl="{imageUrlAddress}" name="checkImageButton_{rowId}" class="btn btn-sm" type="button" onclick="changeCheckStatus(this,{rowId})"><i class="icon icon-check-empty"></i></button>';
+	imageHtml += 					'<button imageurl="{imageUrlAddress}" name="checkImageButton_{rowId}" class="btn btn-sm" type="button" onclick="changeCheckStatus(this,{rowId})"><i class="icon {iconCheckClass}"></i></button>';
 	imageHtml += 				'</td>';
 	imageHtml += 				'<td>';
 	imageHtml += 					'<button class="btn btn-sm " type="button" onclick="deleteImage(this)"><i class="icon icon-trash"></i></button>';
@@ -474,6 +564,13 @@ function createSelectImageHtml(imageUrlAddress, rowId) {
 	
 	imageHtml = imageHtml.replace(/{imageUrlAddress}/g, imageUrlAddress);
 	imageHtml = imageHtml.replace(/{rowId}/g, rowId);
+	if (isChecked == undefined) {
+		imageHtml = imageHtml.replace(/{imageClass}/g, "img-thumbnail");
+		imageHtml = imageHtml.replace(/{iconCheckClass}/g, "icon-check-empty");
+	} else {
+		imageHtml = imageHtml.replace(/{imageClass}/g, "img-thumbnail-selected");
+		imageHtml = imageHtml.replace(/{iconCheckClass}/g, "icon-checked");
+	}
 	$("#sortable_" + rowId).append(imageHtml);
 	clearImageUrlAddress(rowId);
 	initSortable(rowId);
@@ -681,14 +778,14 @@ function getProductInfoBySpu() {
 		success : function (data) {
 			if(data.status == "1") {
 				cleanMultiSkuTable();
-				var productList = data.data;
-				for (var i = 0; i < productList.length; i++) {
-					var product = productList[i];
-					var mainSku = product.sku;
+				var shopeeProductList = data.data;
+				for (var i = 0; i < shopeeProductList.length; i++) {
+					var shopeePublish = shopeeProductList[i];
+					var mainSku = shopeePublish.sku;
 					if (sku == mainSku) {
 						continue;
 					}
-					addShopeeMultiSkuRow(product);
+					addShopeeMultiSkuRow(shopeePublish);
 				}
 			}
 			$.message.showMessage(data);
@@ -696,7 +793,7 @@ function getProductInfoBySpu() {
 	});
 }
 
-function addShopeeMultiSkuRow(product) {
+function addShopeeMultiSkuRow(shopeePublish) {
 	var lastTr = $("table[name=multiSkuTable] tr[id^=multiRow_]:last");
 	var lastId;
 	var maxId;
@@ -716,9 +813,9 @@ function addShopeeMultiSkuRow(product) {
 	html += 		'&nbsp;<button class="btn btn-sm" type="button" onclick="getmultiSkuProductInfo({rowId})">加载信息</button>';
 	html += 	'</td>';
 	html += 	'<td class="title">价格</td>';
-	html += 	'<td class="width_100px"><input type="text" class="txt width_90" name="multiPrice_{rowId}" onkeyup="inputNumOnly(this)"/></td>';
+	html += 	'<td class="width_100px"><input type="text" class="txt width_90" name="multiPrice_{rowId}" value="{multiPrice}" onkeyup="inputNumOnly(this)"/></td>';
 	html += 	'<td class="title">库存</td>';
-	html += 	'<td class="width_100px"><input type="number" class="txt width_90" name="multiStock_{rowId}" onkeyup="inputNumOnly(this)"/></td>';
+	html += 	'<td class="width_100px"><input type="number" class="txt width_90" name="multiStock_{rowId}" value="{multiStock}" onkeyup="inputNumOnly(this)"/></td>';
 	html += 	'<td class="title">名称</td>';
 	html += 	'<td><input type="text" class="txt width_99" value="{multiProductName}" name="multiProductName_{rowId}"/></td>';
 	html += 	'<td class="width_50px" rowspan="2"><button class="btn btn-sm btn-danger" type="button" onclick="removeMultiSkuRow({rowId})"><i class="icon icon-trash"></i></button></td>';
@@ -749,21 +846,33 @@ function addShopeeMultiSkuRow(product) {
 	
 	
 	html = html.replace(/{rowId}/g, maxId);
-	if (product != undefined) {
-		var productId = product.id == undefined ? "" : product.id;
-		html = html.replace(/{multiId}/g, productId);
-		html = html.replace(/{multiSku}/g, product.sku);
-		html = html.replace(/{multiProductName}/g, product.productName);
+	if (shopeePublish != undefined) {
+		var shopeePublishId = shopeePublish.id == undefined ? "" : shopeePublish.id;
+		html = html.replace(/{multiId}/g, shopeePublishId);
+		html = html.replace(/{multiSku}/g, shopeePublish.sku);
+		html = html.replace(/{multiProductName}/g, shopeePublish.productName);
+		html = html.replace(/{multiProductName}/g, shopeePublish.productName);
+		var price = shopeePublish.price == undefined ? "" : shopeePublish.price;
+		var stock = shopeePublish.stock == undefined ? "" : shopeePublish.stock;
+		html = html.replace(/{multiPrice}/g, price);
+		html = html.replace(/{multiStock}/g, stock);
 	} else {
 		html = html.replace(/{multiId}/g, "");
 		html = html.replace(/{multiSku}/g, "");
 		html = html.replace(/{multiProductName}/g, "");
+		html = html.replace(/{multiPrice}/g, "");
+		html = html.replace(/{multiStock}/g, "");
 	}
 	$("table[name=multiSkuTable]").append(html);
 	initSortable(maxId);
-	if (product != undefined) {
-		for (var j = 0; j < product.imageList.length; j++) {
-			createSelectImageHtml(product.imageList[j], maxId);
+	if (shopeePublish != undefined) {
+		var imageList = eval('(' + shopeePublish.imageStr + ')');
+		if (shopeePublish.id != null) {
+			spliceSelectImageProductImage(shopeePublish.imageStr, shopeePublish.sku, maxId);
+		} else {
+			for (var j = 0; j < imageList.length; j++) {
+				createSelectImageHtml(imageList[j], maxId);
+			}
 		}
 	} else {
 		var param = {status : 1};
