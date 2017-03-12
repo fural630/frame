@@ -27,7 +27,7 @@ function initDialog() {
 				},
 				click : function() {
 					saveShopeeProduct(10);
-				}
+				} 
 			}
 			
 		],
