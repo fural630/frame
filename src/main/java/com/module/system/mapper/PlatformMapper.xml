@@ -37,4 +37,8 @@
     	select * from platform where name = #{name}
     </select>
     
+    <select id="getPlatformByNameNeId" resultType="Platform" parameterType="hashMap">
+    	select * from platform where name = #{platformName} and id != #{id}
+    </select>
+    
 </mapper>  

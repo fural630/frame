@@ -116,34 +116,25 @@
 	</div>
 	
 	<div id="platFormDialog" style="display:none;">
-	 	<table class="popup_tb">
+		<div class="ta_r">
+			<button class="btn btn-sm" type="button" onclick="showEditPlatformDialog('<@s.message "add.platform"/>')">
+				<i class="icon icon-plus-sign"></i><@s.message "add.platform"/>
+			</button>
+		</div>
+	 	<table class="popup_tb tb_border" id="platformListTable" style="margin-top:10px;">
 	 		<tr>
-	 			<td class="title width_100px">新增平台名称<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_50" name="name"/>（点击保存，创建一个新的平台）</td>
-	 		</tr>
-	 	</table>
-	 	<br/>
-	 	<table class="popup_tb" id="platformListTable">
-	 		<tr>
-	 			<td class="title width_80" style="text-align:center">平台列表</td>
-	 			<td class="title width_20" style="text-align:center">操作</td>
-	 		</tr>
-	 		<tr>
-	 			<td>Shopee</td>
-	 			<td style="text-align:center">
-	 				<button class="btn btn-sm" type="button" title="修改" onclick="editPlatform(1)"><i class="icon icon-edit-sign"></i></button>&nbsp;
-	 				<button class="btn btn-sm" type="button" title="删除" onclick="removePlatform(1)"><i class="icon icon-trash"></i></button>
-	 			</td>
+	 			<th class="width_80" style="text-align:center">平台列表</th>
+	 			<th class="width_20" style="text-align:center">操作</th>
 	 		</tr>
 	 	</table>
 	</div>
 	
-	<div id="editPlatformDialog" style="display:none;">
+	<div id="editPlatFormDialog" style="display:none;">
 		<input type="hidden" name="id">
 		<table class="popup_tb">
 	 		<tr>
 	 			<td class="title width_100px">平台名称<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_50" name="name"/></td>
+	 			<td><input type="text" class="txt width_80" name="name"/></td>
 	 		</tr>
 	 	</table>
 	</div>

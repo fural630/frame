@@ -262,33 +262,29 @@ $(window).scroll(function () {
 });
 
 function confirmMsg(fun, msg) {
-	var confirmSmModal = $("#confirmSmModal");
-	if (confirmSmModal.length > 0) {
-		if (msg != undefined) {
-			confirmSmModal.find("#confirmContent").html(msg);
-		} else {
-			confirmSmModal.find("#confirmContent").html("确认删除？");
-		}
+	$("#confirmSmModal").remove();
+	var modal = "";
+	modal += '<div class="modal fade" id="confirmSmModal">';
+	modal += 	'<div class="modal-dialog modal-sm">';
+	modal += 		'<div class="modal-content">';
+	modal += 			'<div class="modal-header">';
+	modal += 				'<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>';
+	modal += 			'</div>';
+	modal += 			'<div class="modal-body" id="confirmContent">';
+	if (msg != undefined) {
+		modal += msg;
 	} else {
-		var modal = "";
-		modal += '<div class="modal fade" id="confirmSmModal">';
-		modal += 	'<div class="modal-dialog modal-sm">';
-		modal += 		'<div class="modal-content">';
-		modal += 			'<div class="modal-header">';
-		modal += 				'<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>';
-		modal += 			'</div>';
-		modal += 			'<div class="modal-body" id="confirmContent">';
-		modal += 				'确定删除？';
-		modal += 			'</div>';
-		modal += 			'<div class="modal-footer">';
-		modal += 				'<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="' + fun + '">确定</button>';
-		modal += 				'<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>';
-		modal += 			'</div>';
-		modal += 		'</div>';
-		modal += 	'</div>';
-		modal += '</div>';
-		$('body').append(modal);
+		modal += '确定删除？';
 	}
+	modal += 			'</div>';
+	modal += 			'<div class="modal-footer">';
+	modal += 				'<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="' + fun + '">确定</button>';
+	modal += 				'<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>';
+	modal += 			'</div>';
+	modal += 		'</div>';
+	modal += 	'</div>';
+	modal += '</div>';
+	$('body').append(modal);
 	$('#confirmSmModal').modal().show();
 }
 

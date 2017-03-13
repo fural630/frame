@@ -2,6 +2,8 @@ package com.module.system.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.module.system.model.Platform;
 
 public interface PlatformDao {
@@ -17,5 +19,8 @@ public interface PlatformDao {
 	public Platform getPlatformByName(String name);
 	
 	public void insertPlatform(Platform platform);
+
+	public List<Platform> getPlatformByNameNeId(@Param("platformName")String platformName, @Param("id")Integer id);
+
 
 }
