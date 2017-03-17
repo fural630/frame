@@ -412,4 +412,12 @@
     <select id="getProductBySpu" resultType="Product" parameterType="string">
     	select * from product where spu = #{spu}
     </select>
+    
+    <select id="getSpuList" resultType="string">
+    	select DISTINCT t.spu from product t
+    </select>
+    
+    <select id="getSkuListBySpu" resultType="string" parameterType="string">
+    	select t.sku from product t where t.spu = #{spu}
+    </select>
 </mapper>

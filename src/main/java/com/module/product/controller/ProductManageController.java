@@ -3,6 +3,7 @@ package com.module.product.controller;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -42,6 +43,8 @@ import com.module.product.model.Product;
 import com.module.product.model.ProductAudit;
 import com.module.product.service.ProductService;
 import com.module.system.model.User;
+import com.module.product.model.ZtreeNode;
+import com.util.Dumper;
 import com.util.Excel;
 import com.util.JsonUtil;
 import com.util.MyDate;
@@ -390,5 +393,45 @@ public class ProductManageController extends MainPage{
 		Product product = productService.getProductBySku(sku);
 		List<String> imageList = productService.getProductImage(product.getId());
 		return JsonUtil.toJsonStr(imageList);
+	}
+	
+	@RequestMapping("loadEditorUserTree")
+	@ResponseBody
+	public String loadEditorUserTree() {
+		List<String> spuList = productService.getSpuList();
+		List<ZtreeNode> ztreeNodeList = new ArrayList<>();
+		if (CollectionUtils.isNotEmpty(spuList)) {
+			for (String spu : spuList) {
+				ZtreeNode spuNode = new ZtreeNode();
+				spuNode.setName(spu);
+				List<String> skuList = productService.getSkuListBySpu(spu);
+				if (CollectionUtils.isNotEmpty(skuList)) {
+					spuNode.setOpen(true);
+					List<ZtreeNode> childNoteList = new ArrayList<>();
+					for (String sku : skuList) {
+						ZtreeNode skuNode = new ZtreeNode();
+						skuNode.setName(sku);
+						childNoteList.add(skuNode);
+					}
+					spuNode.setChildren(childNoteList);
+				}
+				ztreeNodeList.add(spuNode);
+			}
+		}
+		
+		Dumper.dump(ztreeNodeList);
+//		Map<String, Object> map1 = new HashMap<>();
+//		map1.put("name", "SPU1");
+//		List<Map<String, Object>> childMapList = new ArrayList<Map<String,Object>>();
+//		Map<String, Object> skuMap = new HashMap<>();
+//		skuMap.put("name", "sku1");
+//		Map<String, Object> skuMap2 = new HashMap<>();
+//		skuMap2.put("name", "sku2");
+//		childMapList.add(skuMap);
+//		childMapList.add(skuMap2);
+//		map1.put("children", childMapList);
+//		zTreeData.add(map1);
+//		Dumper.dump(zTreeData);
+		return JsonUtil.toJsonStr(ztreeNodeList);
 	}
 }

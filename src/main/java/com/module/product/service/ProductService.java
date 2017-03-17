@@ -398,4 +398,12 @@ public class ProductService {
 		}
 		return null;
 	}
+
+	public List<String> getSpuList() {
+		return productDao.getSpuList();
+	}
+
+	public List<String> getSkuListBySpu(String spu) {
+		return productDao.getSkuListBySpu(spu);
+	}
 }

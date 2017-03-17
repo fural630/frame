@@ -880,9 +880,8 @@ function distributionPublishUser(productId) {
 	});
 }
 
-function batchDistributeEditUser(idList) {
-	var dialog = $("#distributionEditUserDialog");
-	dialog.find("input[name=id]").val(idList);
+function batchDistributeEditUser() {
+	loadEditorUserTree();
 	showDistributionEditUserDialog("批量分配编辑人员");
 }
 
@@ -1259,4 +1258,21 @@ function exportProductData(idList) {
 	turnForm.appendChild(newElement);
 	turnForm.action = "/product/exportProductData";
 	turnForm.submit();
+}
+
+function loadEditorUserTree(userId) {
+	var setting = {
+		check: {
+			enable: true,
+			chkboxType : { "Y" : "ps", "N" : "s" }
+		},
+		async: {
+			enable: true,
+			url:"/product/loadEditorUserTree",
+			dataType : "json",
+			otherParam: {"userId": userId},
+			type: "post",
+		}
+	};
+	$.fn.zTree.init($("#navigatorTree"), setting);
 }

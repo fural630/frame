@@ -7,6 +7,9 @@
     <script type="text/javascript" src="/design/static/js/app/product/productManage.js"></script>
 	<link rel="stylesheet" type="text/css" href="/design/frame/zui/lib/chosen/chosen.css"/>
     <link rel="stylesheet" type="text/css" href="/design/static/css/product/productManage.css"/>
+	<link rel="stylesheet" type="text/css" href="/design/frame/jquery/zTree_v3-master/css/zTreeStyle/zTreeStyle.css"/>
+	<script type="text/javascript" src="/design/frame/jquery/zTree_v3-master/js/jquery.ztree.core.js"></script>
+	<script type="text/javascript" src="/design/frame/jquery/zTree_v3-master/js/jquery.ztree.excheck.min.js"></script>
   </head>
   <body>
     <form action="/product/productManage" id="mainPageForm" method="post">
@@ -230,7 +233,7 @@
 									<option value="" selected></option>
 									<#if page.params._roleLevel gte 10>
 										<#if !page.permissionBut?seq_contains("batch.distribute.edit.user")>
-											<option value="batchDistributeEditUser">批量分配编辑人</option>
+											<option limit="0" value="batchDistributeEditUser">批量分配编辑人</option>
 										</#if>
 										<#if !page.permissionBut?seq_contains("batch.distribute.publish.user")>
 											<option value="batchDistributePublishUser">批量分配刊登人</option>
@@ -537,6 +540,7 @@
 	 			</td>
 	 		</tr>
  		</table>
+ 		<div id="navigatorTree" class="ztree"></div>
 	</div>
 	
 	<div id="distributionPublishUserDialog" style="display:none;">

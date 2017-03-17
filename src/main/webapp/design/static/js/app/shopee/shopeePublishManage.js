@@ -335,9 +335,11 @@ function editMultiSku(id) {
 }
 
 function spliceSelectImageProductImage(selectImage, productSku, rowId) {
-	var selectImageList = eval('(' + selectImage + ')');
-	for (var i = 0; i < selectImageList.length; i++) {
-		createSelectImageHtml(selectImageList[i], rowId, true);
+	if (selectImage!= undefined) {
+		var selectImageList = eval('(' + selectImage + ')');
+		for (var i = 0; i < selectImageList.length; i++) {
+			createSelectImageHtml(selectImageList[i], rowId, true);
+		}
 	}
 	$.ajax({
 		url : "/product/getProductImageBySku",

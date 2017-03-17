@@ -293,17 +293,22 @@ function batchOptionSubmit () {
 	if (batchOption == "") {
 		return;
 	} 
-	var idList = getBatchOptionIds();//获取勾选的数据Id
-	if (idList.length == 0) {
-		var param = {
-			status : 0,
-			message : "请勾选需要操作的数据"
-		};
-		$.message.showMessage(param);
-		return;
+	var limit = $("#batchOptionSelect").find("option:selected").attr("limit");
+	if (limit != undefined && limit == "0") {
+		eval(batchOption + "();");
+	} else {
+		var idList = getBatchOptionIds();//获取勾选的数据Id
+		if (idList.length == 0) {
+			var param = {
+				status : 0,
+				message : "请勾选需要操作的数据"
+			};
+			$.message.showMessage(param);
+			return;
+		}
+		var ids = idList.join();
+		eval(batchOption + "('" + ids + "');");
 	}
-	var ids = idList.join();
-	eval(batchOption + "('" + ids + "');");
 }
 
 function unblock() {
