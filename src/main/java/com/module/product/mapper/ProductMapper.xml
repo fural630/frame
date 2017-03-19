@@ -420,4 +420,13 @@
     <select id="getSkuListBySpu" resultType="string" parameterType="string">
     	select t.sku from product t where t.spu = #{spu}
     </select>
+    
+    <select id="getEditorBySpu" resultType="string" parameterType="string">
+    	select tt.name from product t LEFT JOIN user tt on t.editorId = tt.id where t.spu = #{spu}
+    </select>
+    
+    <select id="getPublishUserBySpu" resultType="string" parameterType="string">
+    	select tt.name from product t LEFT JOIN user tt on t.publishUserId = tt.id where t.spu = #{spu}
+    </select>
+    
 </mapper>

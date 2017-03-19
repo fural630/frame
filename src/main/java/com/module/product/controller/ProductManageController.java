@@ -167,15 +167,17 @@ public class ProductManageController extends MainPage{
 	
 	@RequestMapping("saveProductEditUser")
 	@ResponseBody
-	public String saveProductEditUser(Integer userId, String productIds) {
+	public String saveProductEditUser(Integer userId, String spuList) {
 		ReturnMessage returnMessage = new ReturnMessage();
-		if (StringUtils.isNotEmpty(productIds)) {
-			String ids[] = productIds.split(",");
-			if (ids.length > 0) {
-				for (String productIdStr : ids) {
-					Integer productId = Integer.parseInt(productIdStr);
-					productService.saveProductEditUser(userId, productId);
-					productService.updateProductAuditStatus(productId, ProductAuditStatusEnum.WAIT_EDIT);
+		if (StringUtils.isNotEmpty(spuList)) {
+			String spus[] = spuList.split(",");
+			if (spus.length > 0) {
+				for (String spu : spus) {
+					List<Product> products = productService.getProductBySpu(spu);
+					for (Product product : products) {
+						productService.saveProductEditUser(userId, product.getId());
+						productService.updateProductAuditStatus(product.getId(), ProductAuditStatusEnum.WAIT_EDIT);
+					}
 				}
 			}
 		} else {
@@ -186,13 +188,16 @@ public class ProductManageController extends MainPage{
 	
 	@RequestMapping("saveProductPublishUser")
 	@ResponseBody
-	public String saveProductPublishUser(Integer userId, String productIds) {
+	public String saveProductPublishUser(Integer userId, String spuList) {
 		ReturnMessage returnMessage = new ReturnMessage();
-		if (StringUtils.isNotEmpty(productIds)) {
-			String ids[] = productIds.split(",");
-			if (ids.length > 0) {
-				for (String productIdStr : ids) {
-					productService.saveProductPublishUser(userId, Integer.parseInt(productIdStr));
+		if (StringUtils.isNotEmpty(spuList)) {
+			String spus[] = spuList.split(",");
+			if (spus.length > 0) {
+				for (String spu : spus) {
+					List<Product> products = productService.getProductBySpu(spu);
+					for (Product product : products) {
+						productService.saveProductPublishUser(userId, product.getId());
+					}
 				}
 			}
 		} else {
@@ -400,13 +405,20 @@ public class ProductManageController extends MainPage{
 	public String loadEditorUserTree() {
 		List<String> spuList = productService.getSpuList();
 		List<ZtreeNode> ztreeNodeList = new ArrayList<>();
+		MyLocale myLocale = new MyLocale();
+		String defaultName = myLocale.getText("not.assigned");
 		if (CollectionUtils.isNotEmpty(spuList)) {
 			for (String spu : spuList) {
 				ZtreeNode spuNode = new ZtreeNode();
-				spuNode.setName(spu);
+				List<String> editorNameList = productService.getEditorBySpu(spu);
+				if (CollectionUtils.isNotEmpty(editorNameList) && StringUtils.isNotEmpty(editorNameList.get(0))) {
+					spuNode.setName(spu + "("+editorNameList.get(0)+")");
+				} else {
+					spuNode.setName(spu + "("+defaultName+")");
+				}
 				List<String> skuList = productService.getSkuListBySpu(spu);
 				if (CollectionUtils.isNotEmpty(skuList)) {
-					spuNode.setOpen(true);
+//					spuNode.setOpen(true);
 					List<ZtreeNode> childNoteList = new ArrayList<>();
 					for (String sku : skuList) {
 						ZtreeNode skuNode = new ZtreeNode();
@@ -418,20 +430,41 @@ public class ProductManageController extends MainPage{
 				ztreeNodeList.add(spuNode);
 			}
 		}
-		
 		Dumper.dump(ztreeNodeList);
-//		Map<String, Object> map1 = new HashMap<>();
-//		map1.put("name", "SPU1");
-//		List<Map<String, Object>> childMapList = new ArrayList<Map<String,Object>>();
-//		Map<String, Object> skuMap = new HashMap<>();
-//		skuMap.put("name", "sku1");
-//		Map<String, Object> skuMap2 = new HashMap<>();
-//		skuMap2.put("name", "sku2");
-//		childMapList.add(skuMap);
-//		childMapList.add(skuMap2);
-//		map1.put("children", childMapList);
-//		zTreeData.add(map1);
-//		Dumper.dump(zTreeData);
+		return JsonUtil.toJsonStr(ztreeNodeList);
+	}
+	
+	@RequestMapping("loadPublishUserTree")
+	@ResponseBody
+	public String loadPublishUserTree() {
+		List<String> spuList = productService.getSpuList();
+		List<ZtreeNode> ztreeNodeList = new ArrayList<>();
+		MyLocale myLocale = new MyLocale();
+		String defaultName = myLocale.getText("not.assigned");
+		if (CollectionUtils.isNotEmpty(spuList)) {
+			for (String spu : spuList) {
+				ZtreeNode spuNode = new ZtreeNode();
+				List<String> publishUserNameList = productService.getPublishUserBySpu(spu);
+				if (CollectionUtils.isNotEmpty(publishUserNameList) && StringUtils.isNotEmpty(publishUserNameList.get(0))) {
+					spuNode.setName(spu + "("+publishUserNameList.get(0)+")");
+				} else {
+					spuNode.setName(spu + "("+defaultName+")");
+				}
+				List<String> skuList = productService.getSkuListBySpu(spu);
+				if (CollectionUtils.isNotEmpty(skuList)) {
+//					spuNode.setOpen(true);
+					List<ZtreeNode> childNoteList = new ArrayList<>();
+					for (String sku : skuList) {
+						ZtreeNode skuNode = new ZtreeNode();
+						skuNode.setName(sku);
+						childNoteList.add(skuNode);
+					}
+					spuNode.setChildren(childNoteList);
+				}
+				ztreeNodeList.add(spuNode);
+			}
+		}
+		Dumper.dump(ztreeNodeList);
 		return JsonUtil.toJsonStr(ztreeNodeList);
 	}
 }

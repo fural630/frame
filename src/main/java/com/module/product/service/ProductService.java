@@ -406,4 +406,12 @@ public class ProductService {
 	public List<String> getSkuListBySpu(String spu) {
 		return productDao.getSkuListBySpu(spu);
 	}
+
+	public List<String> getEditorBySpu(String spu) {
+		return productDao.getEditorBySpu(spu);
+	}
+
+	public List<String> getPublishUserBySpu(String spu) {
+		return productDao.getPublishUserBySpu(spu);
+	}
 }

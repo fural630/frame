@@ -7,6 +7,7 @@ public class ZtreeNode {
 	private String name;
 	private boolean open;
 	private boolean isParent;
+	private boolean nocheck;
 	private List<ZtreeNode> children;
 	
 	public String getName() {
@@ -32,5 +33,11 @@ public class ZtreeNode {
 	}
 	public void setChildren(List<ZtreeNode> children) {
 		this.children = children;
+	}
+	public boolean isNocheck() {
+		return nocheck;
+	}
+	public void setNocheck(boolean nocheck) {
+		this.nocheck = nocheck;
 	}
 }

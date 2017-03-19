@@ -34,5 +34,7 @@ public interface ProductDao {
 	public List<Product> getProductBySpu(String spu);
 	public List<String> getSpuList();
 	public List<String> getSkuListBySpu(String spu);
-
+	
+	public List<String> getEditorBySpu(String spu);
+	public List<String> getPublishUserBySpu(String spu);
 }

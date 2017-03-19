@@ -199,8 +199,10 @@
 						  	<#if page.params._roleLevel gte 10>
 							    <li><a href="javascript:void(0)" onclick="editProduct(${obj.id})"><i class="icon icon-edit"></i> 编辑 </a></li>
 							    <li><a href="javascript:void(0)" onclick="reviewAudit(${obj.id})" ><i class="icon icon-check-board"></i> 查看审核 </a></li>
+							    <!--
 							    <li><a href="javascript:void(0)" onclick="distributionEditUser(${obj.id})" ><i class="icon icon-hand-right"></i> 分配编辑人</a></li>
 							    <li><a href="javascript:void(0)" onclick="distributionPublishUser(${obj.id})" ><i class="icon icon-hand-right"></i> 分配刊登人</a></li>
+							    -->
 							    <li class="divider"></li>
 							    <li><a href="javascript:void(0)" onclick="confirmMsg('deleteProduct(${obj.id})')" ><i class="icon icon-trash"></i> 删除 </a></li>
 						  	<#else>
@@ -236,7 +238,7 @@
 											<option limit="0" value="batchDistributeEditUser">批量分配编辑人</option>
 										</#if>
 										<#if !page.permissionBut?seq_contains("batch.distribute.publish.user")>
-											<option value="batchDistributePublishUser">批量分配刊登人</option>
+											<option limit="0" value="batchDistributePublishUser">批量分配刊登人</option>
 										</#if>
 											<!--<option value="batchApproved">批量通过审核</option>-->
 										<#if !page.permissionBut?seq_contains("batch.delete.product")>
@@ -540,7 +542,23 @@
 	 			</td>
 	 		</tr>
  		</table>
- 		<div id="navigatorTree" class="ztree"></div>
+ 		<table style="margin:5px 0px;width:100%">
+ 			<tr>
+ 				<td style="width:50%;">
+ 					<!--
+ 					过滤类型 ：<select class="sel" name="allocationTpye">
+			 			<option>全部</option>
+			 			<option>未分配</option>
+			 			<option>已分配</option>
+			 		</select>
+			 		-->
+ 				</td>
+ 				<td style="text-align:right;">
+ 					已选择 <span id="editorSelectCount">0</span> 个 (只计算根节点)
+ 				</td>
+ 			</tr>
+ 		</table>
+ 		<div id="editorUserTree" class="ztree"></div>
 	</div>
 	
 	<div id="distributionPublishUserDialog" style="display:none;">
@@ -553,6 +571,23 @@
 	 			</td>
 	 		</tr>
  		</table>
+ 		<table style="margin:5px 0px;width:100%">
+ 			<tr>
+ 				<td style="width:50%;">
+ 					<!--
+ 					过滤类型 ：<select class="sel" name="allocationTpye">
+			 			<option>全部</option>
+			 			<option>未分配</option>
+			 			<option>已分配</option>
+			 		</select>
+			 		-->
+ 				</td>
+ 				<td style="text-align:right;">
+ 					已选择 <span id="publishUserSelectCount">0</span> 个 (只计算根节点)
+ 				</td>
+ 			</tr>
+ 		</table>
+ 		<div id="publishUserTree" class="ztree"></div>
 	</div>
 	
   </body>

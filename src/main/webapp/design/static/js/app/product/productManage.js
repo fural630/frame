@@ -85,8 +85,8 @@ function initDialog () {
 	$("#distributionEditUserDialog").dialog({
 		autoOpen: false,
 		modal: true,
-		width: 450,
-		height: 420,
+		width: 550,
+		height: 520,
 		resizable: false,
 		buttons : [ {
 				text : "保存",
@@ -96,17 +96,26 @@ function initDialog () {
 				click : function() { 
 					saveProductEditUser();
 				}
+			},{
+				text : "关闭",
+				icons : {
+					primary : "ui-icon-heart"
+				},
+				click : function() { 
+					$(this).dialog("close");
+				}
 			}
 		],
 		close: function( event, ui ) {
+			refresh();
 		}
 	});
 	
 	$("#distributionPublishUserDialog").dialog({
 		autoOpen: false,
 		modal: true,
-		width: 450,
-		height: 420,
+		width: 550,
+		height: 520,
 		resizable: false,
 		buttons : [ {
 				text : "保存",
@@ -116,9 +125,18 @@ function initDialog () {
 				click : function() { 
 					saveProductPublishUser();
 				}
+			},{
+				text : "关闭",
+				icons : {
+					primary : "ui-icon-heart"
+				},
+				click : function() { 
+					$(this).dialog("close");
+				}
 			}
 		],
 		close: function( event, ui ) {
+			refresh();
 		}
 	});
 	
@@ -149,7 +167,6 @@ function validateProductFrom() {
 function saveProductEditUser() {
 	var dialog = $("#distributionEditUserDialog");
 	var userId = dialog.find("select[name='editUserSelect']").val();
-	var productIds = dialog.find("input[name='id']").val();
 	if (null == userId || "" == userId) {
 		var param = {
 				status : 0,
@@ -159,20 +176,25 @@ function saveProductEditUser() {
 		return;
 	}
 	
+	var spus = getTreeSpuList("editorUserTree");
+	
+	if (spus.length == 0) {
+		var param = {status : 0,message : "请勾选要分配的SKU或SPU"};
+		$.message.showMessage(param);
+	}
+	
+	var spuList = spus.join();
+	
 	$.ajax({
 		url : "/product/saveProductEditUser",
 		type: 'POST',
 		dataType : "json",
 		data : {
 			userId : userId,
-			productIds : productIds
+			spuList : spuList
 		},
 		success : function (data) {
 			$.message.showMessage(data);
-			if (data.status == 1){
-				dialog.dialog("close");
-				refresh(1000);
-			}
 		}
 	});
 	
@@ -181,7 +203,6 @@ function saveProductEditUser() {
 function saveProductPublishUser() {
 	var dialog = $("#distributionPublishUserDialog");
 	var userId = dialog.find("select[name='publishUserSelect']").val();
-	var productIds = dialog.find("input[name='id']").val();
 	if (null == userId || "" == userId) {
 		var param = {
 				status : 0,
@@ -191,20 +212,25 @@ function saveProductPublishUser() {
 		return;
 	}
 	
+	var spus = getTreeSpuList("publishUserTree");
+	
+	if (spus.length == 0) {
+		var param = {status : 0,message : "请勾选要分配的SKU或SPU"};
+		$.message.showMessage(param);
+	}
+	
+	var spuList = spus.join();
+	
 	$.ajax({
 		url : "/product/saveProductPublishUser",
 		type: 'POST',
 		dataType : "json",
 		data : {
 			userId : userId,
-			productIds : productIds
+			spuList : spuList
 		},
 		success : function (data) {
 			$.message.showMessage(data);
-			if (data.status == 1){
-				dialog.dialog("close");
-				refresh(1000);
-			}
 		}
 	});
 }
@@ -606,6 +632,7 @@ function showProductAuditDialog(title) {
 }
 
 function showDistributionEditUserDialog(title) {
+	$("#editorSelectCount").text("0");
 	$("#distributionEditUserDialog").dialog("option", "title", title);
 	$("#distributionEditUserDialog").dialog("open");
 // $("#distributionEditUserDialog").find("select[name='editUserSelect']").chosen({
@@ -615,6 +642,7 @@ function showDistributionEditUserDialog(title) {
 }
 
 function showDistributionPublishUserDialog (title) {
+	$("#publishUserSelectCount").text("0");
 	$("#distributionPublishUserDialog").dialog("option", "title", title);
 	$("#distributionPublishUserDialog").dialog("open");
 }
@@ -886,8 +914,7 @@ function batchDistributeEditUser() {
 }
 
 function batchDistributePublishUser(idList) {
-	var dialog = $("#distributionPublishUserDialog");
-	dialog.find("input[name=id]").val(idList);
+	loadPublishUserTree();
 	showDistributionPublishUserDialog("批量分配刊登人员");
 }
 
@@ -1260,7 +1287,26 @@ function exportProductData(idList) {
 	turnForm.submit();
 }
 
-function loadEditorUserTree(userId) {
+function loadPublishUserTree() {
+	var setting = {
+		check: {
+			enable: true,
+			chkboxType : { "Y" : "ps", "N" : "s" }
+		},
+		async: {
+			enable: true,
+			url:"/product/loadPublishUserTree",
+			dataType : "json",
+			type: "post",
+		},
+		callback: {
+			onCheck: editorUserTreezOnCheck
+		}
+	};
+	$.fn.zTree.init($("#publishUserTree"), setting);
+}
+
+function loadEditorUserTree() {
 	var setting = {
 		check: {
 			enable: true,
@@ -1270,9 +1316,41 @@ function loadEditorUserTree(userId) {
 			enable: true,
 			url:"/product/loadEditorUserTree",
 			dataType : "json",
-			otherParam: {"userId": userId},
 			type: "post",
+		},
+		callback: {
+			onCheck: editorUserTreezOnCheck
 		}
 	};
-	$.fn.zTree.init($("#navigatorTree"), setting);
+	$.fn.zTree.init($("#editorUserTree"), setting);
+}
+
+function editorUserTreezOnCheck(event, treeId, treeNode) {
+	var count = 0;
+	var treeObj = $.fn.zTree.getZTreeObj("editorUserTree");
+	var nodes = treeObj.getCheckedNodes(true);
+	for (var i = 0; i < nodes.length; i++) {
+		var node = nodes[i];
+		if (node.isParent) {
+			count++;
+		}
+	}
+	$("#editorSelectCount").text(count);
+}
+
+function getTreeSpuList(selector) {
+	var spuList = [];
+	var treeObj = $.fn.zTree.getZTreeObj(selector);
+	var nodes = treeObj.getCheckedNodes(true);
+	for (var i = 0; i < nodes.length; i++) {
+		var node = nodes[i];
+		if (node.isParent) {
+			var name = node.name;
+			if (name.indexOf("(") > -1) {
+				name = name.split("(")[0];
+			}
+			spuList.push(name);
+		}
+	}
+	return spuList;
 }
