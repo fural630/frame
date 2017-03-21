@@ -120,7 +120,8 @@ function saveShopeeProduct(status) {
 				if (multiId == "") {
 					multiId = null;
 				}
-				var mulitImageList = getCheckedImageUrl(rowId);
+//				var mulitImageList = getCheckedImageUrl(rowId);
+				var mulitImageList = imageList;
 				var multiShopeePublish = {
 					id : multiId,
 					parentSku : parentSku,
@@ -235,16 +236,16 @@ function validateShopeeProduct() {
 				errorMassage += "&nbsp;*&nbsp;请填写  \"" + multiSku + "\" 的名称";
 			}
 			
-			var multiButton = $("#shopeeProductDialog button[name=checkImageButton_"+rowId+"] i");
-			var multiCount = 0;
-			multiButton.each(function () {
-				if($(this).hasClass("icon-checked")) {
-					multiCount++;
-				}
-			});
-			if (multiCount == 0) {
-				errorMassage += "&nbsp;*&nbsp;请选择  \"" + multiSku + "\" 的图片";
-			}
+//			var multiButton = $("#shopeeProductDialog button[name=checkImageButton_"+rowId+"] i");
+//			var multiCount = 0;
+//			multiButton.each(function () {
+//				if($(this).hasClass("icon-checked")) {
+//					multiCount++;
+//				}
+//			});
+//			if (multiCount == 0) {
+//				errorMassage += "&nbsp;*&nbsp;请选择  \"" + multiSku + "\" 的图片";
+//			}
 		}
 	});
 	if (errorMassage != "") {
@@ -261,36 +262,35 @@ function showShopeeProductDialog(title) {
 	$("#shopeeProductDialog").dialog("open");
 }
 
-function editSku(id) {
-	$.ajax({
-		url : "/shopee/getShopeeInfoById",
-		type: 'POST',
-		dataType : "json",
-		data : {
-			id : id
-		},
-		success : function (data) {
-			if (data != null) {
-				var shopeeProductDialog = $("#shopeeProductDialog");
-				shopeeProductDialog.find("input[name='id']").val(data.id);
-				shopeeProductDialog.find("input[name='sku']").val(data.sku);
-				shopeeProductDialog.find("input[name='parentSku']").val(data.parentSku);
-				$("#navigation").text(data.categoryPath); 
-				shopeeProductDialog.find("input[name='categoryId']").val(data.categoryId);
-				shopeeProductDialog.find("input[name='productName']").val(data.productName);
-				shopeeProductDialog.find("input[name='price']").val(data.price);
-				shopeeProductDialog.find("input[name='stock']").val(data.stock);
-				shopeeProductDialog.find("input[name='weight']").val(data.weight);
-				shopeeProductDialog.find("input[name='shipOutIn']").val(data.shipOutIn);
-				shopeeProductDialog.find("input[name='brand']").val(data.brand);
-				shopeeProductDialog.find("textarea[name='description']").val(data.description);
-				
-				spliceSelectImageProductImage(data.imageStr, data.sku, 0);
-				showShopeeProductDialog("单体编辑");
-			}
-		}
-	});
-}
+//function editSku(id) {
+//	$.ajax({
+//		url : "/shopee/getShopeeInfoById",
+//		type: 'POST',
+//		dataType : "json",
+//		data : {
+//			id : id
+//		},
+//		success : function (data) {
+//			if (data != null) {
+//				var shopeeProductDialog = $("#shopeeProductDialog");
+//				shopeeProductDialog.find("input[name='id']").val(data.id);
+//				shopeeProductDialog.find("input[name='sku']").val(data.sku);
+//				shopeeProductDialog.find("input[name='parentSku']").val(data.parentSku);
+//				$("#navigation").text(data.categoryPath); 
+//				shopeeProductDialog.find("input[name='categoryId']").val(data.categoryId);
+//				shopeeProductDialog.find("input[name='productName']").val(data.productName);
+//				shopeeProductDialog.find("input[name='price']").val(data.price);
+//				shopeeProductDialog.find("input[name='stock']").val(data.stock);
+//				shopeeProductDialog.find("input[name='weight']").val(data.weight);
+//				shopeeProductDialog.find("input[name='shipOutIn']").val(data.shipOutIn);
+//				shopeeProductDialog.find("input[name='brand']").val(data.brand);
+//				shopeeProductDialog.find("textarea[name='description']").val(data.description);
+//				spliceSelectImageProductImage(data.imageStr, data.parentSku, 0);
+//				showShopeeProductDialog("单体编辑");
+//			}
+//		}
+//	});
+//}
 
 function editMultiSku(id) {
 	var shopeeProductDialog = $("#shopeeProductDialog");
@@ -322,7 +322,7 @@ function editMultiSku(id) {
 						shopeeProductDialog.find("input[name='shipOutIn']").val(shopeePublish.shipOutIn);
 						shopeeProductDialog.find("input[name='brand']").val(shopeePublish.brand);
 						shopeeProductDialog.find("textarea[name='description']").val(shopeePublish.description);
-						spliceSelectImageProductImage(shopeePublish.imageStr, shopeePublish.sku, 0);
+						spliceSelectImageProductImage(shopeePublish.imageStr, shopeePublish.parentSku, 0);
 					} else {
 						addShopeeMultiSkuRow(shopeePublish);
 					}
@@ -334,7 +334,7 @@ function editMultiSku(id) {
 	
 }
 
-function spliceSelectImageProductImage(selectImage, productSku, rowId) {
+function spliceSelectImageProductImage(selectImage, parentSku, rowId) {
 	if (selectImage!= undefined) {
 		var selectImageList = eval('(' + selectImage + ')');
 		for (var i = 0; i < selectImageList.length; i++) {
@@ -342,21 +342,22 @@ function spliceSelectImageProductImage(selectImage, productSku, rowId) {
 		}
 	}
 	$.ajax({
-		url : "/product/getProductImageBySku",
+		url : "/shopee/getAllProductImageBySpu",
 		type: 'POST',
 		dataType : "json",
 		data : {
-			sku : productSku
+			spu : parentSku
 		},
 		success : function (data) {
-			for (var i = 0; i < data.length; i++) {
-				if ($.inArray(data[i],selectImageList) == -1) {
-					createSelectImageHtml(data[i], rowId);
+			var productImageList = data.data;
+			for (var i = 0; i < productImageList.length; i++) {
+				if ($.inArray(productImageList[i],selectImageList) == -1) {
+					createSelectImageHtml(productImageList[i], rowId);
 				}
 			}
 		}
 	});
-	
+	countSelectImg(rowId);
 }
 
 function changeCheckStatus(element, rowId) {
@@ -719,22 +720,26 @@ function getProductInfoBySku() {
 		success : function (data) {
 			if(data.status == "1") {
 				cleanShopeeDialog();
-				var product = data.data;
-				var sku = product.sku;
-				var spu = product.spu;
-				var productName = product.productName;
-				var weight = product.weight;
-				var description = product.description;
-				var imageList = product.imageList;
+				var shopeePublish = data.data;
+				var sku = shopeePublish.sku;
+				var parentSku = shopeePublish.parentSku;
+				var productName = shopeePublish.productName;
+				var weight = shopeePublish.weight;
+				var description = shopeePublish.description;
+				var imageStr = shopeePublish.imageStr;
 				dialog.find("input[name=sku]").val(sku);
-				dialog.find("input[name=parentSku]").val(spu);
+				dialog.find("input[name=parentSku]").val(parentSku);
 				dialog.find("input[name=productName]").val(productName);
 				dialog.find("input[name=weight]").val(weight);
 				dialog.find("textarea[name=description]").val(description);
-				for (var i = 0 ; i < imageList.length; i++) {
-					var imageUrl = imageList[i];
-					createSelectImageHtml(imageUrl, 0);
+				if (null != imageStr) {
+					var imageList = eval('(' + imageStr + ')');
+					for (var i = 0 ; i < imageList.length; i++) {
+						var imageUrl = imageList[i];
+						createSelectImageHtml(imageUrl, 0);
+					}
 				}
+				getProductInfoBySpu(parentSku, sku);
 			}
 			$.message.showMessage(data);
 		}
@@ -745,54 +750,32 @@ function cleanMultiSkuTable() {
 	$("table[name=multiSkuTable] tr:gt(0)").remove();
 }
 
-function getProductInfoBySpu() {
-	var dialog = $("#shopeeProductDialog");
-	
-	var sku = $.trim(dialog.find("input[name=sku]").val());
-	if (sku == "") {
-		var param = {
-			status : 0,
-			message : "请先填写SKU"
-		};
-		$.message.showMessage(param);
-		return;
-	}
-	dialog.find("input[name=sku]").val($.trim(sku));
-	
-	var spu = $.trim(dialog.find("input[name=parentSku]").val());
-	if (spu == "") {
-		var param = {
-			status : 0,
-			message : "请先填写Parent SKU"
-		};
-		$.message.showMessage(param);
-		return;
-	}
-	dialog.find("input[name=parentSku]").val($.trim(spu));
-	
-	$.ajax({
-		url : "/shopee/getProductInfoBySpu",
-		type: 'POST',
-		dataType : "json",
-		data : {
-			spu : spu
-		},
-		success : function (data) {
-			if(data.status == "1") {
-				cleanMultiSkuTable();
-				var shopeeProductList = data.data;
-				for (var i = 0; i < shopeeProductList.length; i++) {
-					var shopeePublish = shopeeProductList[i];
-					var mainSku = shopeePublish.sku;
-					if (sku == mainSku) {
-						continue;
+function getProductInfoBySpu(parentSku, sku) {
+	if (null != parentSku && parentSku != undefined) {
+		$.ajax({
+			url : "/shopee/getProductInfoBySpu",
+			type: 'POST',
+			dataType : "json",
+			data : {
+				spu : parentSku
+			},
+			success : function (data) {
+				if(data.status == "1") {
+					cleanMultiSkuTable();
+					var shopeeProductList = data.data;
+					for (var i = 0; i < shopeeProductList.length; i++) {
+						var shopeePublish = shopeeProductList[i];
+						var mainSku = shopeePublish.sku;
+						if (sku == mainSku) {
+							continue;
+						}
+						addShopeeMultiSkuRow(shopeePublish);
 					}
-					addShopeeMultiSkuRow(shopeePublish);
 				}
+//				$.message.showMessage(data);
 			}
-			$.message.showMessage(data);
-		}
-	});
+		});
+	}
 }
 
 function addShopeeMultiSkuRow(shopeePublish) {
@@ -820,8 +803,10 @@ function addShopeeMultiSkuRow(shopeePublish) {
 	html += 	'<td class="width_100px"><input type="number" class="txt width_90" name="multiStock_{rowId}" value="{multiStock}" onkeyup="inputNumOnly(this)"/></td>';
 	html += 	'<td class="title">名称</td>';
 	html += 	'<td><input type="text" class="txt width_99" value="{multiProductName}" name="multiProductName_{rowId}"/></td>';
-	html += 	'<td class="width_50px" rowspan="2"><button class="btn btn-sm btn-danger" type="button" onclick="removeMultiSkuRow({rowId})"><i class="icon icon-trash"></i></button></td>';
+	html += 	'<td class="width_50px"><button class="btn btn-sm btn-danger" type="button" onclick="removeMultiSkuRow({rowId})"><i class="icon icon-trash"></i></button></td>';
 	html += '</tr>';
+	
+	/*
 	html += '<tr id="multiImage_{rowId}">';
 	html += 	'<td colspan="8">';
 	html += 		'<div class="image_box">';
@@ -845,14 +830,13 @@ function addShopeeMultiSkuRow(shopeePublish) {
 	html += 		'</div>';
 	html += 	'</td>';
 	html += '</tr>';
-	
+	*/
 	
 	html = html.replace(/{rowId}/g, maxId);
 	if (shopeePublish != undefined) {
 		var shopeePublishId = shopeePublish.id == undefined ? "" : shopeePublish.id;
 		html = html.replace(/{multiId}/g, shopeePublishId);
 		html = html.replace(/{multiSku}/g, shopeePublish.sku);
-		html = html.replace(/{multiProductName}/g, shopeePublish.productName);
 		html = html.replace(/{multiProductName}/g, shopeePublish.productName);
 		var price = shopeePublish.price == undefined ? "" : shopeePublish.price;
 		var stock = shopeePublish.stock == undefined ? "" : shopeePublish.stock;
@@ -866,17 +850,22 @@ function addShopeeMultiSkuRow(shopeePublish) {
 		html = html.replace(/{multiStock}/g, "");
 	}
 	$("table[name=multiSkuTable]").append(html);
-	initSortable(maxId);
-	if (shopeePublish != undefined) {
-		var imageList = eval('(' + shopeePublish.imageStr + ')');
-		if (shopeePublish.id != null) {
-			spliceSelectImageProductImage(shopeePublish.imageStr, shopeePublish.sku, maxId);
-		} else {
-			for (var j = 0; j < imageList.length; j++) {
-				createSelectImageHtml(imageList[j], maxId);
-			}
-		}
-	} else {
+//	initSortable(maxId);
+//	if (shopeePublish != undefined) {
+//		var imageList = eval('(' + shopeePublish.imageStr + ')');
+//		if (shopeePublish.id != null) {
+//			spliceSelectImageProductImage(shopeePublish.imageStr, shopeePublish.sku, 0);
+//		} else {
+//			for (var j = 0; j < imageList.length; j++) {
+//				createSelectImageHtml(imageList[j], 0);
+//			}
+//		}
+//	} else {
+//		var param = {status : 1};
+//		$.message.showMessage(param);
+//	}
+	
+	if (shopeePublish == undefined) {
 		var param = {status : 1};
 		$.message.showMessage(param);
 	}
@@ -913,7 +902,7 @@ function getmultiSkuProductInfo(rowId) {
 				var imageList = product.imageList;
 				$("table[name=multiSkuTable]").find("input[name='multiProductName_"+rowId+"']").val(product.productName);
 				for (var i = 0; i < imageList.length; i++) {
-					createSelectImageHtml(imageList[i], rowId);
+					createSelectImageHtml(imageList[i], 0);
 				}
 			}
 			$.message.showMessage(data);

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.hamcrest.core.IsNot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,6 @@ import com.application.libraries.constentEnum.ReturnMessageEnum;
 import com.code.Page;
 import com.code.view.MainPage;
 import com.code.view.ReturnMessage;
-import com.google.api.client.json.Json;
 import com.google.gson.Gson;
 import com.module.product.model.Product;
 import com.module.product.service.ProductService;
@@ -85,24 +85,36 @@ public class ShopeePublishManageController extends MainPage{
 	@RequestMapping("getProductInfoBySku")
 	@ResponseBody
 	public String getProductInfoBySku(String sku) {
-		Product product = productService.getProductBySku(sku);
+		Gson gson = new Gson();
 		ReturnMessage message = new ReturnMessage();
+		Product product = productService.getProductBySku(sku);
 		if (null == product) {
 			MyLocale myLocale = new MyLocale();
 			message.setStatus(ReturnMessageEnum.WARRING.getValue());
 			message.setMessage(myLocale.getText("not.found.product.info.by.sku", sku));
 		} else {
-			Map<String, Object> resutMap = new HashMap<String, Object>();
-			List<String> imageList = productService.getProductImage(product.getId());
-			resutMap.put("sku", sku);
-			resutMap.put("spu", product.getSpu());
-			resutMap.put("productName", product.getNameEn());
-			resutMap.put("weight", product.getPackageWeight());
-			String descriptionEn = product.getDescriptionEn();
-			String tempDescription = TextAreaUtil.removeHtmlTag(descriptionEn);
-			resutMap.put("description", tempDescription);
-			resutMap.put("imageList", imageList);
-			message.setData(resutMap);
+			ShopeePublish shopeePublish = new ShopeePublish();
+			shopeePublish.setSku(product.getSku());
+			shopeePublish.setParentSku(product.getSpu());
+			shopeePublish.setProductName(product.getNameCn());
+			shopeePublish.setWeight(product.getPackageWeight());
+			String descriptionCn = product.getDescriptionCn();
+			String tempDescription = TextAreaUtil.removeHtmlTag(descriptionCn);
+			shopeePublish.setDescription(tempDescription);
+			shopeePublish.setImageStr(gson.toJson(productService.getProductImage(product.getId())));
+			if (StringUtils.isNotEmpty(product.getSpu())) {
+				List<Product> productList = productService.getProductBySpu(product.getSpu());
+				if (CollectionUtils.isNotEmpty(productList)) {
+					List<String> spuImageList = new ArrayList<String>();
+					for (Product spuProduct : productList) {
+						List<String> images = productService.getProductImage(spuProduct.getId());
+						spuImageList.addAll(images);
+					}
+					shopeePublish.setImageStr(null);	//有spu的时候先清空
+					shopeePublish.setImageStr(gson.toJson(spuImageList));
+				}
+			}
+			message.setData(shopeePublish);
 		}
 		return JsonUtil.toJsonStr(message);
 	}
@@ -119,7 +131,7 @@ public class ShopeePublishManageController extends MainPage{
 				List<String> imageList = productService.getProductImage(product.getId());
 				ShopeePublish shopeePublish = new ShopeePublish();
 				shopeePublish.setSku(product.getSku());
-				shopeePublish.setProductName(product.getNameEn());
+				shopeePublish.setProductName(product.getNameCn());
 				shopeePublish.setImageStr(gson.toJson(imageList));
 				shopeePublishList.add(shopeePublish);
 			}
@@ -145,7 +157,7 @@ public class ShopeePublishManageController extends MainPage{
 		} else {
 			List<String> imageList = productService.getProductImage(product.getId());
 			productMap.put("imageList", imageList);
-			productMap.put("productName", product.getNameEn());
+			productMap.put("productName", product.getNameCn());
 			message.setData(productMap);
 		}
 		return JsonUtil.toJsonStr(message);
@@ -210,6 +222,21 @@ public class ShopeePublishManageController extends MainPage{
 			}
 		}
 		message.setData(shopeePublishs);
+		return JsonUtil.toJsonStr(message);
+	}
+	
+	@RequestMapping("getAllProductImageBySpu")
+	@ResponseBody
+	public String getAllProductImageBySpu(String spu) {
+		ReturnMessage message = new ReturnMessage();
+		List<String> imageList = new ArrayList<String>();
+		List<Product> productList = productService.getProductBySpu(spu);
+		if (CollectionUtils.isNotEmpty(productList)) {
+			for (Product product : productList) {
+				imageList.addAll(productService.getProductImage(product.getId()));
+			}
+		}
+		message.setData(imageList);
 		return JsonUtil.toJsonStr(message);
 	}
 }

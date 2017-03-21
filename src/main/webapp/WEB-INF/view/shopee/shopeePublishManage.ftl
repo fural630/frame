@@ -102,8 +102,7 @@
 						  	  <span class="caret"></span>
 							  </button>
 				          		<ul class="dropdown-menu pull-right" role="menu">
-								    <li><a href="javascript:void(0)" onclick="editSku(${obj.id})" ><i class="icon icon-edit"></i> 单体编辑</a></li>
-								    <li><a href="javascript:void(0)" onclick="editMultiSku(${obj.id})" ><i class="icon icon-edit-sign"></i> 变体编辑</a></li>
+								    <li><a href="javascript:void(0)" onclick="editMultiSku(${obj.id})" ><i class="icon icon-edit"></i> 编辑</a></li>
 								    <li class="divider"></li>
 								    <li><a href="javascript:void(0)" onclick="confirmMsg('deleteShopeeProduct(${obj.id})')" ><i class="icon icon-trash"></i> 删除 </a></li>
 							  	</ul>
@@ -154,7 +153,6 @@
 	 			<td class="title width_100px">Parent SKU</td>
 	 			<td>
 	 				<input type="text" class="txt width_100px" name="parentSku"/>
-	 				&nbsp;<button class="btn btn-sm" type="button" onclick="getProductInfoBySpu()">获取变体信息</button>
 	 			</td>
 	 		</tr>
 	 		<tr>
@@ -300,34 +298,6 @@
 							<th>SPU</th>
 							<th>图片</th>
 							<th>名称</th>
-						</tr>
-						<tr>
-							<td style="text-align:center"><input name="publish_sku_checkbox" type="checkbox" value="" onclick="countCheckbox()" /></td>
-							<td>DV1-3</td>
-							<td>DV</td>
-							<td><img src="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" data-image="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" class="img-thumbnail" width="110"/></td>
-							<td>测试</td>
-						</tr>
-						<tr>
-							<td style="text-align:center"><input name="publish_sku_checkbox" type="checkbox" value="" onclick="countCheckbox()" /></td>
-							<td>DV1-3</td>
-							<td>DV</td>
-							<td><img src="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" data-image="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" class="img-thumbnail" width="110"/></td>
-							<td>测试</td>
-						</tr>
-						<tr>
-							<td style="text-align:center"><input name="publish_sku_checkbox" type="checkbox" value="" onclick="countCheckbox()" /></td>
-							<td>DV1-3</td>
-							<td>DV</td>
-							<td><img src="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" data-image="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" class="img-thumbnail" width="110"/></td>
-							<td>测试</td>
-						</tr>
-						<tr>
-							<td style="text-align:center"><input name="publish_sku_checkbox" type="checkbox" value="" onclick="countCheckbox()" /></td>
-							<td>DV1-3</td>
-							<td>DV</td>
-							<td><img src="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" data-image="https://www.guphotos.com/images/W/L/W3770BL/W3770BL-1-e87c-dmkq.jpg" class="img-thumbnail" width="110"/></td>
-							<td>测试</td>
 						</tr>
 					</table>
 					<div class="paging clearfix">

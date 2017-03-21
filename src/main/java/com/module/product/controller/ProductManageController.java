@@ -404,7 +404,7 @@ public class ProductManageController extends MainPage{
 	@ResponseBody
 	public String loadEditorUserTree() {
 		List<String> spuList = productService.getSpuList();
-		List<ZtreeNode> ztreeNodeList = new ArrayList<>();
+		List<ZtreeNode> ztreeNodeList = new ArrayList<ZtreeNode>();
 		MyLocale myLocale = new MyLocale();
 		String defaultName = myLocale.getText("not.assigned");
 		if (CollectionUtils.isNotEmpty(spuList)) {
@@ -419,7 +419,7 @@ public class ProductManageController extends MainPage{
 				List<String> skuList = productService.getSkuListBySpu(spu);
 				if (CollectionUtils.isNotEmpty(skuList)) {
 //					spuNode.setOpen(true);
-					List<ZtreeNode> childNoteList = new ArrayList<>();
+					List<ZtreeNode> childNoteList = new ArrayList<ZtreeNode>();
 					for (String sku : skuList) {
 						ZtreeNode skuNode = new ZtreeNode();
 						skuNode.setName(sku);
@@ -438,7 +438,7 @@ public class ProductManageController extends MainPage{
 	@ResponseBody
 	public String loadPublishUserTree() {
 		List<String> spuList = productService.getSpuList();
-		List<ZtreeNode> ztreeNodeList = new ArrayList<>();
+		List<ZtreeNode> ztreeNodeList = new ArrayList<ZtreeNode>();
 		MyLocale myLocale = new MyLocale();
 		String defaultName = myLocale.getText("not.assigned");
 		if (CollectionUtils.isNotEmpty(spuList)) {
@@ -453,7 +453,7 @@ public class ProductManageController extends MainPage{
 				List<String> skuList = productService.getSkuListBySpu(spu);
 				if (CollectionUtils.isNotEmpty(skuList)) {
 //					spuNode.setOpen(true);
-					List<ZtreeNode> childNoteList = new ArrayList<>();
+					List<ZtreeNode> childNoteList = new ArrayList<ZtreeNode>();
 					for (String sku : skuList) {
 						ZtreeNode skuNode = new ZtreeNode();
 						skuNode.setName(sku);

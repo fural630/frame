@@ -29,7 +29,7 @@ public class PlatformSiteLanguageManageController extends MainPage{
 	@RequestMapping("platformSiteLanguageManage")
 	public String platfromSiteLanguageManage(Model model, Page page) {
 		_execute(page, model);
-		List<Map<String, Object>> collection = new ArrayList<>();
+		List<Map<String, Object>> collection = new ArrayList<Map<String, Object>>();
 		model.addAttribute("collection", collection);
 		return "system/platformSiteLanguageManage";
 	}

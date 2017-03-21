@@ -1,8 +1,9 @@
 <navigator> 
 	<system.manage icon="icon-wrench" sort="1">
 		<navigator.user.manage link="/system/userManage" icon="icon-user"></navigator.user.manage>
-		<!--<announcement.manage link="/system/announcementManage" icon="icon-bullhorn"></announcement.manage>-->
+		<!--<announcement.manage link="/system/announcementManage" icon="icon-bullhorn"></announcement.manage>
 		<platform.site.language link="/system/platformSiteLanguageManage" icon="icon-branch"></platform.site.language>
+		-->
 	</system.manage>
 	<product.center icon="icon-cube-alt" sort="2">
 		<product.manage link="/product/productManage" icon="icon-cubes">
