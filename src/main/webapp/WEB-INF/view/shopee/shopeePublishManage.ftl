@@ -126,7 +126,7 @@
 								<select class="sel" id="batchOptionSelect">
 									<option value="" selected></option>
 									<#if page.params._roleLevel gte 10>
-										<option value="batchDistributeEditUser">生成平台上传文件</option>
+										<option value="exportUploadFile">生成平台上传文件</option>
 									</#if>
 								</select>
 								&nbsp; <button class="btn btn-sm" type="button" onclick="batchOptionSubmit()">提交</button>

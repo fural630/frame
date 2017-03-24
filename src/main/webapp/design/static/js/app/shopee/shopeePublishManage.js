@@ -176,6 +176,10 @@ function validateShopeeProduct() {
 	var productName = $.trim(dialog.find("input[name='productName']").val());
 	if (productName == "") {
 		errorMassage += "&nbsp;*&nbsp;请填写产品名称";
+	} else {
+		if (productName.length > 60) {
+			errorMassage += "&nbsp;*&nbsp;\"" + sku + "\" 的产品名称字符长度为 " + productName.length + " 不允许超过60";
+		}
 	}
 	
 	var button = $("#shopeeProductDialog button[name=checkImageButton_0] i");
@@ -217,6 +221,10 @@ function validateShopeeProduct() {
 	var description = $.trim(dialog.find("textarea[name='description']").val());
 	if (description == "") {
 		errorMassage += "&nbsp;*&nbsp;请填写产品描述";
+	} else {
+		if (description.length > 3000) {
+			errorMassage += "&nbsp;*&nbsp;\"" + sku + "\" 产品描述字符长度为 " + description.length + " 不允许超过3000";
+		}
 	}
 	
 	$("table[name='multiSkuTable'] input[name^='multiSku_']").each(function () {
@@ -234,6 +242,10 @@ function validateShopeeProduct() {
 			var multiProductName = $("input[name='multiProductName_"+rowId+"']").val();
 			if (multiProductName == "") {
 				errorMassage += "&nbsp;*&nbsp;请填写  \"" + multiSku + "\" 的名称";
+			} else {
+				if (multiProductName.length > 60) {
+					errorMassage += "&nbsp;*&nbsp;\"" + multiSku + "\" 的名称字符长度为 " + multiProductName.length + " 不允许超过60";
+				}
 			}
 			
 //			var multiButton = $("#shopeeProductDialog button[name=checkImageButton_"+rowId+"] i");
@@ -991,4 +1003,23 @@ function getCheckedImageUrl(rowId) {
 		}
 	});
 	return imageList;
+}
+
+
+
+function exportUploadFile(idList) {
+	if ($("#exportShopeeUploadForm").length > 0) {
+		$("#exportShopeeUploadForm").remove();
+	}
+	var turnForm = document.createElement("form");   
+	document.body.appendChild(turnForm);
+	turnForm.method = 'post';
+	turnForm.id = 'exportShopeeUploadForm';
+	var newElement = document.createElement("input");
+	newElement.setAttribute("name","params");
+    newElement.setAttribute("type","hidden");
+    newElement.setAttribute("value", idList);
+	turnForm.appendChild(newElement);
+	turnForm.action = "/shopee/exportShopeeUploadData";
+	turnForm.submit();
 }

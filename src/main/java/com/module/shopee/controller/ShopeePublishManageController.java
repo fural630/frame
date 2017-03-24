@@ -1,14 +1,20 @@
 package com.module.shopee.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
-import org.hamcrest.core.IsNot;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +40,8 @@ import com.util.TextAreaUtil;
 @Controller
 @RequestMapping("shopee")
 public class ShopeePublishManageController extends MainPage{
+	
+	private static Logger logger = Logger.getLogger(ShopeePublishManageController.class);  
 	
 	@Autowired
 	private ShopeeCategoryService shopeeCategoryService;
@@ -238,5 +246,19 @@ public class ShopeePublishManageController extends MainPage{
 		}
 		message.setData(imageList);
 		return JsonUtil.toJsonStr(message);
+	}
+	
+	@RequestMapping("exportShopeeUploadData")
+	public ResponseEntity<byte[]> exportShopeeUploadData(String params) throws Exception{
+		logger.info("==> params : " + params);
+		File file = shopeePublishService.exportShopeeUploadData(params);
+		if (null != file) {
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+			headers.setContentDispositionFormData("attachment", file.getName());
+			return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
+					headers, HttpStatus.CREATED);
+		}
+		return null;
 	}
 }
