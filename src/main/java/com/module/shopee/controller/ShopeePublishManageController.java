@@ -110,18 +110,18 @@ public class ShopeePublishManageController extends MainPage{
 			String tempDescription = TextAreaUtil.removeHtmlTag(descriptionCn);
 			shopeePublish.setDescription(tempDescription);
 			shopeePublish.setImageStr(gson.toJson(productService.getProductImage(product.getId())));
-			if (StringUtils.isNotEmpty(product.getSpu())) {
-				List<Product> productList = productService.getProductBySpu(product.getSpu());
-				if (CollectionUtils.isNotEmpty(productList)) {
-					List<String> spuImageList = new ArrayList<String>();
-					for (Product spuProduct : productList) {
-						List<String> images = productService.getProductImage(spuProduct.getId());
-						spuImageList.addAll(images);
-					}
-					shopeePublish.setImageStr(null);	//有spu的时候先清空
-					shopeePublish.setImageStr(gson.toJson(spuImageList));
-				}
-			}
+//			if (StringUtils.isNotEmpty(product.getSpu())) {
+//				List<Product> productList = productService.getProductBySpu(product.getSpu());
+//				if (CollectionUtils.isNotEmpty(productList)) {
+//					List<String> spuImageList = new ArrayList<String>();
+//					for (Product spuProduct : productList) {
+//						List<String> images = productService.getProductImage(spuProduct.getId());
+//						spuImageList.addAll(images);
+//					}
+//					shopeePublish.setImageStr(null);	//有spu的时候先清空
+//					shopeePublish.setImageStr(gson.toJson(spuImageList));
+//				}
+//			}
 			message.setData(shopeePublish);
 		}
 		return JsonUtil.toJsonStr(message);
@@ -261,4 +261,14 @@ public class ShopeePublishManageController extends MainPage{
 		}
 		return null;
 	}
+	
+	@RequestMapping("getProductVariation")
+	@ResponseBody
+	public String getProductVariation(String sku) {
+		ReturnMessage message = new ReturnMessage();
+		List<String> variationList = productService.getProductVariation(sku);
+		message.setData(variationList);
+		return JsonUtil.toJsonStr(message);
+	}
+	
 }

@@ -17,6 +17,7 @@ public class ShopeePublish {
 	private Integer publishUserId;
 	private String mainImage;
 	private String imageStr;
+	private String variationName;
 	public Integer getId() {
 		return id;
 	}
@@ -112,5 +113,11 @@ public class ShopeePublish {
 	}
 	public void setImageStr(String imageStr) {
 		this.imageStr = imageStr;
+	}
+	public String getVariationName() {
+		return variationName;
+	}
+	public void setVariationName(String variationName) {
+		this.variationName = variationName;
 	}
 }

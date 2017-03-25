@@ -8,13 +8,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.application.libraries.constentEnum.ProductAuditStatusEnum;
@@ -397,6 +392,18 @@ public class ProductService {
 			}
 		}
 		return null;
+	}
+	
+	public List<String> getProductVariation(String sku) {
+		Product product = productDao.getProductBySku(sku);
+		List<String> variationList = new ArrayList<String>();
+		String size = product.getSize();
+		String color = product.getColor();
+		if (StringUtils.isNotEmpty(size)) {
+			variationList.add(size);
+			variationList.add(color);
+		}
+		return variationList;
 	}
 
 	public List<String> getSpuList() {
