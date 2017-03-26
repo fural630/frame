@@ -164,10 +164,10 @@
 	 	-->
  		<table class="popup_tb" style="margin-top:10px;" name="multiSkuTable">
 	 		<tr>
-	 			<td class="title" style="width:30%">SKU</td>
-	 			<td class="title" style="width:40%">变体名称</td>
-	 			<td class="title" style="width:15%">价格</td>
-	 			<td class="title" style="width:15%">库存</td>
+	 			<td class="title" style="width:30%">SKU<i class="star">*</i></td>
+	 			<td class="title" style="width:40%">变体名称<i class="star">*</i></td>
+	 			<td class="title" style="width:15%">价格<i class="star">*</i></td>
+	 			<td class="title" style="width:15%">库存<i class="star">*</i></td>
 	 		</tr>
 	 		<!--
 	 		<tr id="multiRow_0">
@@ -207,6 +207,14 @@
 	 		<tr>
 	 			<td class="title width_100px">类别ID<i class="star">*</i></td>
 	 			<td><input type="text" class="txt width_100px" name="categoryId" onBlur="getCategoryById()"/></td>
+	 		</tr>
+	 		<tr>
+	 			<td class="title width_100px">产品重量<i class="star">*</i></td>
+	 			<td><input type="text" class="txt width_100px" name="weight"/></td>
+	 		</tr>
+	 		<tr>
+	 			<td class="title width_100px">运输时间<i class="star">*</i></td>
+	 			<td><input type="text" class="txt width_100px" name="shipOutIn"/></td>
 	 		</tr>
 	 		<tr>
 	 			<td class="title width_100px">产品名称<i class="star">*</i></td>
@@ -253,14 +261,6 @@
 	 			</td>
 	 		</tr>
 	 		-->
-	 		<tr>
-	 			<td class="title width_100px">产品重量<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_100px" name="weight"/></td>
-	 		</tr>
-	 		<tr>
-	 			<td class="title width_100px">运输时间<i class="star">*</i></td>
-	 			<td><input type="text" class="txt width_100px" name="shipOutIn"/></td>
-	 		</tr>
 	 		<!--
 	 		<tr>
 	 			<td class="title width_100px">品牌名<i class="star">*</i></td>

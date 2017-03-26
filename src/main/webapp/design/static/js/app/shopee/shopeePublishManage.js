@@ -70,44 +70,42 @@ function initDialog() {
 function saveShopeeProduct(status) {
 	if (validateShopeeProduct()) {
 		var dialog = $("#shopeeProductDialog");
-		var id = dialog.find("input[name=id]").val();
-		if (id == "") {
-			id = null;
-		}
-		var sku = $.trim(dialog.find("input[name=sku]").val());
+//		var id = dialog.find("input[name=id]").val();
+//		if (id == "") {
+//			id = null;
+//		}
+//		var sku = $.trim(dialog.find("input[name=sku]").val());
 		var parentSku = $.trim(dialog.find("input[name=parentSku]").val());
 		var categoryPath = $("#navigation").text();
 		var categoryId = $.trim(dialog.find("input[name=categoryId]").val());
 		var productName = $.trim(dialog.find("input[name=productName]").val());
-		var price = $.trim(dialog.find("input[name=price]").val());
-		var stock = $.trim(dialog.find("input[name=stock]").val());
+//		var price = $.trim(dialog.find("input[name=price]").val());
+//		var stock = $.trim(dialog.find("input[name=stock]").val());
 		var weight = $.trim(dialog.find("input[name=weight]").val());
 		var shipOutIn = $.trim(dialog.find("input[name=shipOutIn]").val());
-		var brand = $.trim(dialog.find("input[name=brand]").val());
+//		var brand = $.trim(dialog.find("input[name=brand]").val());
 		var description = $.trim(dialog.find("textarea[name=description]").val());
-		
 		var imageList = getCheckedImageUrl('0');
 		
-		var shopeePublish = {
-			id : id,
-			sku : sku,
-			parentSku : parentSku,
-			categoryPath : categoryPath,
-			categoryId : categoryId,
-			productName : productName,
-			price : price,
-			stock : stock,
-			weight : weight,
-			shipOutIn : shipOutIn,
-			brand : brand,
-			description : description,
-			imageStr : JSON.stringify(imageList),
-			mainImage : imageList[0],
-			status : status
-		};
+//		var shopeePublish = {
+//			id : id,
+//			sku : sku,
+//			parentSku : parentSku,
+//			categoryPath : categoryPath,
+//			categoryId : categoryId,
+//			productName : productName,
+//			price : price,
+//			stock : stock,
+//			weight : weight,
+//			shipOutIn : shipOutIn,
+//			brand : brand,
+//			description : description,
+//			imageStr : JSON.stringify(imageList),
+//			mainImage : imageList[0],
+//			status : status
+//		};
 		
 		var shopeePublishList = new Array();
-		shopeePublishList.push(shopeePublish);
 		
 		$("table[name='multiSkuTable'] input[name^='multiSku_']").each(function () {
 			var rowId = $(this).attr("name").split("_")[1];
@@ -115,12 +113,11 @@ function saveShopeeProduct(status) {
 			if (multiSku != "") {
 				var multiPrice = $("input[name='multiPrice_" + rowId + "']").val();
 				var multiStock = $("input[name='multiStock_" + rowId + "']").val();
-				var multiProductName = $("input[name='multiProductName_" + rowId + "']").val();
+				var multiVariationName = $("input[name='multiVariationName_" + rowId + "']").val();
 				var multiId = $("input[name='multiId_" + rowId + "']").val();
 				if (multiId == "") {
 					multiId = null;
 				}
-//				var mulitImageList = getCheckedImageUrl(rowId);
 				var mulitImageList = imageList;
 				var multiShopeePublish = {
 					id : multiId,
@@ -128,12 +125,12 @@ function saveShopeeProduct(status) {
 					sku : multiSku,
 					categoryPath : categoryPath,
 					categoryId : categoryId,
-					productName : multiProductName,
+					productName : productName,
+					variationName : multiVariationName,
 					price : multiPrice,
 					stock : multiStock,
 					weight : weight,
 					shipOutIn : shipOutIn,
-					brand : brand,
 					description : description,
 					imageStr : JSON.stringify(mulitImageList),
 					mainImage : mulitImageList[0],
@@ -173,6 +170,16 @@ function validateShopeeProduct() {
 		errorMassage += "&nbsp;*&nbsp;请选择产品类别或填写类别ID";
 	}
 	
+	var weight = $.trim(dialog.find("input[name='weight']").val());
+	if (weight == "") {
+		errorMassage += "&nbsp;*&nbsp;请填写产品重量";
+	}
+	
+	var shipOutIn = $.trim(dialog.find("input[name='shipOutIn']").val());
+	if (shipOutIn == "") {
+		errorMassage += "&nbsp;*&nbsp;请填写运输时间";
+	}
+	
 	var productName = $.trim(dialog.find("input[name='productName']").val());
 	if (productName == "") {
 		errorMassage += "&nbsp;*&nbsp;请填写产品名称";
@@ -193,30 +200,21 @@ function validateShopeeProduct() {
 		errorMassage += "&nbsp;*&nbsp;请选择图片";
 	}
 	
-	var price = $.trim(dialog.find("input[name='price']").val());
-	if (price == "") {
-		errorMassage += "&nbsp;*&nbsp;请填写价格";
-	}
+//	var price = $.trim(dialog.find("input[name='price']").val());
+//	if (price == "") {
+//		errorMassage += "&nbsp;*&nbsp;请填写价格";
+//	}
+//	
+//	var stock = $.trim(dialog.find("input[name='stock']").val());
+//	if (stock == "") {
+//		errorMassage += "&nbsp;*&nbsp;请填写库存";
+//	}
 	
-	var stock = $.trim(dialog.find("input[name='stock']").val());
-	if (stock == "") {
-		errorMassage += "&nbsp;*&nbsp;请填写库存";
-	}
 	
-	var weight = $.trim(dialog.find("input[name='weight']").val());
-	if (weight == "") {
-		errorMassage += "&nbsp;*&nbsp;请填写产品重量";
-	}
-	
-	var shipOutIn = $.trim(dialog.find("input[name='shipOutIn']").val());
-	if (shipOutIn == "") {
-		errorMassage += "&nbsp;*&nbsp;请填写运输时间";
-	}
-	
-	var brand = $.trim(dialog.find("input[name='brand']").val());
-	if (brand == "") {
-		errorMassage += "&nbsp;*&nbsp;请填写品牌名";
-	}
+//	var brand = $.trim(dialog.find("input[name='brand']").val());
+//	if (brand == "") {
+//		errorMassage += "&nbsp;*&nbsp;请填写品牌名";
+//	}
 	
 	var description = $.trim(dialog.find("textarea[name='description']").val());
 	if (description == "") {
@@ -231,6 +229,14 @@ function validateShopeeProduct() {
 		var rowId = $(this).attr("name").split("_")[1];
 		var multiSku = $.trim($(this).val());
 		if (multiSku != "") {
+			var multiVariationName = $("input[name='multiVariationName_"+rowId+"']").val();
+			if (multiVariationName == "") {
+				errorMassage += "&nbsp;*&nbsp;请填写  \"" + multiSku + "\" 的变体名称";
+			} else {
+				if (multiVariationName.length > 20) {
+					errorMassage += "&nbsp;*&nbsp;\"" + multiSku + "\" 的名称字符长度为 " + multiVariationName.length + " 不允许超过20";
+				}
+			}
 			var multiPrice = $("input[name='multiPrice_"+rowId+"']").val();
 			if (multiPrice == "") {
 				errorMassage += "&nbsp;*&nbsp;请填写  \"" + multiSku + "\" 的价格";
@@ -238,14 +244,6 @@ function validateShopeeProduct() {
 			var multiStock = $("input[name='multiStock_"+rowId+"']").val();
 			if (multiStock == "") {
 				errorMassage += "&nbsp;*&nbsp;请填写  \"" + multiSku + "\" 的库存";
-			}
-			var multiProductName = $("input[name='multiProductName_"+rowId+"']").val();
-			if (multiProductName == "") {
-				errorMassage += "&nbsp;*&nbsp;请填写  \"" + multiSku + "\" 的名称";
-			} else {
-				if (multiProductName.length > 60) {
-					errorMassage += "&nbsp;*&nbsp;\"" + multiSku + "\" 的名称字符长度为 " + multiProductName.length + " 不允许超过60";
-				}
 			}
 			
 //			var multiButton = $("#shopeeProductDialog button[name=checkImageButton_"+rowId+"] i");
@@ -319,6 +317,8 @@ function editMultiSku(id) {
 				$.message.showMessage(data);
 			}
 			if (shopeePublishList.length > 0) {
+				var selectedImageStr = "";
+				var parentSku = "";
 				for (var i = 0; i < shopeePublishList.length; i++) {
 					var shopeePublish = shopeePublishList[i];
 					if (i == 0) {
@@ -330,15 +330,18 @@ function editMultiSku(id) {
 						shopeeProductDialog.find("input[name='weight']").val(shopeePublish.weight);
 						shopeeProductDialog.find("input[name='shipOutIn']").val(shopeePublish.shipOutIn);
 						shopeeProductDialog.find("textarea[name='description']").val(shopeePublish.description);
-//						spliceSelectImageProductImage(shopeePublish.imageStr, shopeePublish.parentSku, 0);
+						parentSku = shopeePublish.parentSku;
+						selectedImageStr = shopeePublish.imageStr;
 					} 
 					addShopeeMultiSkuRow(shopeePublish);
+				}
+				if ("" != selectedImageStr && parentSku != "") {
+					spliceSelectImageProductImage(selectedImageStr, parentSku, 0);
 				}
 			}
 			showShopeeProductDialog("变体编辑");
 		}
 	});
-	
 }
 
 function spliceSelectImageProductImage(selectImage, parentSku, rowId) {
@@ -359,7 +362,7 @@ function spliceSelectImageProductImage(selectImage, parentSku, rowId) {
 			var productImageList = data.data;
 			for (var i = 0; i < productImageList.length; i++) {
 				if ($.inArray(productImageList[i],selectImageList) == -1) {
-					createSelectImageHtml(productImageList[i], rowId);
+					createSelectImageHtml(productImageList[i], rowId, false);
 				}
 			}
 		}
@@ -834,7 +837,7 @@ function addShopeeMultiSkuRow(shopeePublish) {
 	html += 	'<tr id="multiRow_{rowId}">';
 	html += 	'<td>';
 	html += 		'<input type="text" class="txt width_120px" value="{multiSku}" name="multiSku_{rowId}"/>';
-	html += 		'<input type="text" class="txt width_30px" value="{multiId}" name="multiId_{rowId}"/>';
+	html += 		'<input type="hidden" class="txt width_30px" value="{multiId}" name="multiId_{rowId}"/>';
 	html += 	'</td>';
 	html += 	'<td>';
 	html += 		'<input type="text" class="txt width_100px" name="multiVariationName_{rowId}" value="{multiVariationName}">';
