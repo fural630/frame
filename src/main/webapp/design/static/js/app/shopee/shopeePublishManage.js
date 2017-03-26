@@ -871,7 +871,7 @@ function addShopeeMultiSkuRow(shopeePublish) {
 	if (shopeePublish == undefined) {
 		var param = {status : 1};
 		$.message.showMessage(param);
-	}
+	} 
 }
 
 function removeMultiSkuRow(rowId) {
