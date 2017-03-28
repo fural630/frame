@@ -115,7 +115,7 @@ public class ShopeePublishService {
 			if (CollectionUtils.isNotEmpty(ids)) {
 				Gson gson = new Gson();
 				CopyOnWriteArrayList<ArrayList<String>> productData = new CopyOnWriteArrayList<ArrayList<String>>();
-				String fileName = "upload-shopee-product-" + new MyDate().getCurrentFullDateTime() + ".xls";
+				String fileName = "upload-shopee-product-" + new MyDate().getCurrentFullDateTime() + ".xlsm";
 				String path = SystemInfo.getAppPath()+"download/template/shopee_product.xls";
 				try {
 					XSSFWorkbook wb = new XSSFWorkbook(path);
@@ -149,7 +149,6 @@ public class ShopeePublishService {
 							String stock = String.valueOf(baseShopeePublish.getStock());
 							String weight = String.valueOf(baseShopeePublish.getWeight());
 							String shopInOut = String.valueOf(baseShopeePublish.getShipOutIn());
-							String brand = baseShopeePublish.getBrand();
 							String imageStr = baseShopeePublish.getImageStr();
 							List<String> imageList = gson.fromJson(imageStr, ArrayList.class);
 							row.add(categoryId);
@@ -159,26 +158,25 @@ public class ShopeePublishService {
 							row.add(stock);
 							row.add(weight);
 							row.add(shopInOut);
-							row.add(brand);
 							row.add(parentSku);
 							row.add("");
 							if (shopeePublishList.size() < 15){
 								for (int i = 0; i < shopeePublishList.size(); i++) {
 									row.add(shopeePublishList.get(i).getSku()); // Variation 1: SKU Ref. No. ：SKU 1
-									row.add(shopeePublishList.get(i).getProductName()); 
+									row.add(shopeePublishList.get(i).getVariationName()); 
 									row.add(String.valueOf(shopeePublishList.get(i).getPrice())); 
 									row.add(String.valueOf(shopeePublishList.get(i).getStock()));
 								}
 								for(int i = 0 ; i < 15 - shopeePublishList.size(); i++){
-									row.add("");
-									row.add("");
-									row.add("");
-									row.add("");
+									row.add(null);
+									row.add(null);
+									row.add(null);
+									row.add(null);
 								}
 							}else{
 								for (int i = 0; i < 15; i++) {
 									row.add(shopeePublishList.get(i).getSku()); // Variation 1: SKU Ref. No. ：SKU 1
-									row.add(shopeePublishList.get(i).getProductName()); 
+									row.add(shopeePublishList.get(i).getVariationName()); 
 									row.add(String.valueOf(shopeePublishList.get(i).getPrice())); 
 									row.add(String.valueOf(shopeePublishList.get(i).getStock()));
 								}
@@ -208,7 +206,7 @@ public class ShopeePublishService {
 	
 	public File arrayToXSL(ArrayList<ArrayList<String>> data, XSSFWorkbook workbook, boolean flag, String fileName) {
 		MyLocale myLocale = new MyLocale();
-		String path = "E:\\" + fileName;
+		String path = "/tmp/" + fileName;
 		FileOutputStream file = null;
 		try {
 			List<ArrayList<String>> arrayList = data;
@@ -225,10 +223,10 @@ public class ShopeePublishService {
 				for (int i = 6; i < size + 6; i++) {
 					row = sheet.createRow(i);
 					for (int j = 0; j < arrayList.get(i-6).size(); j++) {
-						XSSFCell cell = row.createCell(j);
 						if (null == arrayList.get(i-6).get(j)) {
-							cell.setCellValue("");
+							continue;
 						} else {
+							XSSFCell cell = row.createCell(j);
 							String value = arrayList.get(i-6).get(j);
 							if (value.length() >= 32767) {
 								value = myLocale.getText("value.beyond.cell.limit.maximum.length");

@@ -22,10 +22,11 @@
 	          <tr>
 	          	<th></th>
 	            <th><!--<i class="icon icon-caret-up"></i>-->SKU</th>
-	            <th><!--<i class="icon icon-caret-down"></i>-->SPU</th>
+	            <th><!--<i class="icon icon-caret-down"></i>-->ParentSku</th>
 	            <th style="width:110px;">主图</th>
 	            <th style="width:160px;">名称</th>
-	            <th style="min-width:80px;">品牌名</th>
+	            <!--<th style="min-width:80px;">品牌名</th>-->
+	            <th>多属性名称</th>
 	            <th>CategoryID</th>
 	            <th style="min-width:60px;">价格</th>
 	            <th>库存</th>
@@ -56,6 +57,7 @@
 	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[productNameLike]" <#if page.params.productNameLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
+	          	<!--<td></td>-->
 	          	<td></td>
 	          	<td>
 	          		<ul>
@@ -88,7 +90,8 @@
 			            <td>${obj.parentSku!""}</td>
 			            <td><img src="${obj.mainImage!''}" data-image="${obj.mainImage!''}" class="img-thumbnail" width="110"/></td>
 			            <td>${obj.productName}</td>
-			            <td>${obj.brand!""}</td>
+			            <!--<td>${obj.brand!""}</td>-->
+			            <td>${obj.variationName!""}</td>
 			            <td>${obj.categoryId!""}</td>
 			            <td>${obj.price!""}</td>
 			            <td>${obj.stock!""}</td>
