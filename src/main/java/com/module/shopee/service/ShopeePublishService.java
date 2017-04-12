@@ -62,8 +62,8 @@ public class ShopeePublishService {
 				ShopeePublish shopeePublish = new ShopeePublish();
 				shopeePublish.setSku(product.getSku());
 				shopeePublish.setParentSku(product.getSpu());
-				shopeePublish.setDescription(product.getDescriptionEn());
-				shopeePublish.setProductName(product.getNameEn());
+				shopeePublish.setDescription(product.getDescriptionCn());
+				shopeePublish.setProductName(product.getNameCn());
 				shopeePublish.setPublishUserId(product.getPublishUserId());
 				Double weight = product.getPackageWeight() == null ? null :  product.getPackageWeight() / 1000;
 				shopeePublish.setWeight(weight);
