@@ -145,6 +145,16 @@ function saveShopeeProduct(status) {
 			contentType : 'application/json;charset=utf-8',
 			dataType : "json",
 			data : JSON.stringify(shopeePublishList),
+			beforeSend : function (xhr) {
+				$.blockUI({
+					message: '<img src="/design/static/images/common/progressbar10.gif">',
+					timeout: 10000,
+					css:{
+						backgroundColor: "",
+						border:"0"
+					}
+				});
+			},
 			success : function (data) {
 				$.message.showMessage(data);
 				if (data.status == "1") {
