@@ -271,4 +271,20 @@ public class ShopeePublishManageController extends MainPage{
 		return JsonUtil.toJsonStr(message);
 	}
 	
+	@RequestMapping("deleteShopeePublishByIds")
+	@ResponseBody
+	public String deleteShopeePublishByIds(String idList) {
+		ReturnMessage returnMessage = new ReturnMessage();
+		if (StringUtils.isNotEmpty(idList)) {
+			String ids[] = idList.split(",");
+			if (ids.length > 0) {
+				for (String idStr : ids) {
+					shopeePublishService.deleteShopeeProduct(Integer.parseInt(idStr));
+				}
+			}
+		} else {
+			returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
+		}
+		return JsonUtil.toJsonStr(returnMessage);
+	}
 }

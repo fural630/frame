@@ -636,7 +636,7 @@ function getShopeeSkuList() {
 			if (data.length > 0) {
 				$.each(data, function (i, product) {
 					shopeeSkuListHtml += '<tr>';
-					shopeeSkuListHtml += 	'<td style="text-align:center"><input name="publish_sku_checkbox" type="checkbox" value="'+product.id+'" onclick="countCheckbox()" /></td>';
+					shopeeSkuListHtml += 	'<td style="text-align:center"><input name="publish_sku_checkbox" type="checkbox" value="'+product.id+'" onclick="countShopeeSkuListCheckbox()" /></td>';
 					shopeeSkuListHtml += 	'<td>'+product.sku+'</td>';
 					shopeeSkuListHtml += 	'<td>'+product.spu+'</td>';
 					shopeeSkuListHtml += 	'<td><img src="'+product.mainImage+'" data-image="'+product.mainImage+'" class="img-thumbnail" width="110"/></td>';
@@ -1033,3 +1033,62 @@ function updateInputeValueBy(obj, selectorName) {
 		$.message.showMessage(param);
 	}
 }
+
+function batchDeleteShopeePublish(idList) {
+	confirmMsg("deleteShopeePublishByIds('"+idList+"')");
+}
+
+function deleteShopeePublishByIds(idList) {
+	$.ajax({
+		url : "/shopee/deleteShopeePublishByIds",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			idList : idList
+		},
+		success : function (data) {
+			$.message.showMessage(data);
+			if (data.status == 1){
+				refresh(1000);
+			}
+		}
+	});
+}
+
+function shopeeSkuListSelectAll() {
+	var mainPageCheckBox = $("input[name=publish_sku_checkbox]");
+	mainPageCheckBox.each(function(){
+		$(this).prop("checked", true);
+	});
+	countShopeeSkuListCheckbox();
+}
+
+function shopeeSkuListNoSelectAll() {
+	var mainPageCheckBox = $("input[name=publish_sku_checkbox]");
+	mainPageCheckBox.each(function(){
+		$(this).prop("checked", false);
+	});
+	countShopeeSkuListCheckbox();
+}
+
+function shopeeSkuListUnselected() {
+	var mainPageCheckBox = $("input[name=publish_sku_checkbox]");
+	mainPageCheckBox.each(function(){
+		$(this).prop("checked", !$(this).is(':checked'));
+	});
+	countShopeeSkuListCheckbox();
+}
+
+function countShopeeSkuListCheckbox() {
+	var mainPageCheckbox = $("input[name=publish_sku_checkbox]");
+	var count = 0;
+	mainPageCheckbox.each(function() {
+		if ($(this).is(':checked')) {
+			count++;
+		}
+	});
+	$("#shopeeSkuListCheckCount").html(count);
+}
+
+
+

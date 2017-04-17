@@ -131,6 +131,7 @@
 									<#if page.params._roleLevel gte 10>
 										<option value="exportUploadFile">生成平台上传文件</option>
 									</#if>
+									<option value="batchDeleteShopeePublish">批量删除</option>
 								</select>
 								&nbsp; <button class="btn btn-sm" type="button" onclick="batchOptionSubmit()">提交</button>
 							</td>
@@ -293,18 +294,16 @@
 					</table>
 					<div class="paging clearfix">
 						<div class="massaction">
-							<!--
 							<table class="tb_common">
 								<tr>
 									<td style="width:40%" class="td_left">
-										<a href="javascript:void(0)" onclick="pageSelectAll();">全选</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-										<a href="javascript:void(0)" onclick="pageNoSelectAll();">全不选</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-										<a href="javascript:void(0)" onclick="pageUnselected();">反选</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-										已选择&nbsp;<span id="pageCheckCount">0</span>&nbsp;条
+										<a href="javascript:void(0)" onclick="shopeeSkuListSelectAll();">全选</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+										<a href="javascript:void(0)" onclick="shopeeSkuListNoSelectAll();">全不选</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+										<a href="javascript:void(0)" onclick="shopeeSkuListUnselected();">反选</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+										已选择&nbsp;<span id="shopeeSkuListCheckCount">0</span>&nbsp;条
 									</td>
 								</tr>
 							</table>
-							-->
 						</div>
 					</div>
 				</div>
