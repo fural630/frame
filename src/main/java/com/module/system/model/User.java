@@ -1,5 +1,6 @@
 package com.module.system.model;
 
+
 public class User {
 	private Integer id;
 	private String userName;

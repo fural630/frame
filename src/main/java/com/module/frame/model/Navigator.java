@@ -1,5 +1,6 @@
 package com.module.frame.model;
 
+
 public class Navigator {
 	private Integer id;
 	private String name;
