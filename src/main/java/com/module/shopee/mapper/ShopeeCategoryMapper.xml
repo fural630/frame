@@ -95,5 +95,13 @@
     <select id="getShopeeCategoryByCategoryId" parameterType="int" resultType="ShopeeCategory">
     	select * from shopee_category where categoryId = #{categoryId}
     </select>
+    
+    <select id="getDistinctCategoryName" resultType="string">
+    	select distinct categoryName from shopee_category
+    </select>
+    
+    <update id="updateCategoryToCn">
+    	update shopee_category set categoryName = #{value} where categoryName = #{categoryNameEn}
+    </update>
        
 </mapper>  

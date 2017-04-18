@@ -2,8 +2,8 @@ package com.module.frame.model;
 
 public class TranslateBean {
 	private String text;
-	private String targetLanguage;
-	private String sourceLanguage;
+	private String targetLanguage;		//要翻译的语言
+	private String sourceLanguage;		//原语言
 	public String getText() {
 		return text;
 	}

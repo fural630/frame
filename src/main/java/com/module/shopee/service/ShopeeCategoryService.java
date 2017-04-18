@@ -1,14 +1,18 @@
 package com.module.shopee.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.code.Page;
+import com.module.frame.model.TranslateBean;
+import com.module.frame.service.TranslateService;
 import com.module.shopee.dao.ShopeeCategoryDao;
 import com.module.shopee.model.ShopeeCategory;
 import com.util.MyDate;
@@ -18,6 +22,9 @@ public class ShopeeCategoryService {
 	
 	@Autowired(required = false)
 	private ShopeeCategoryDao shopeeCategoryDao;
+	
+	@Autowired
+	private TranslateService translateService;
 
 	public void uploadCategory(ArrayList<ArrayList<String>> data) {
     	for (int i = 1; i < data.size(); i++) {
@@ -72,6 +79,27 @@ public class ShopeeCategoryService {
 		ShopeeCategory shopeeCategory1 = shopeeCategoryDao.getShopeeCategoryById(shopeeCategory2.getParentId());
 		categoryPath += shopeeCategory1.getCategoryName();
 		return categoryPath;
+	}
+
+	public void translateToCn() {
+		List<String> categoryNameList = shopeeCategoryDao.getDistinctCategoryName();
+		if (CollectionUtils.isNotEmpty(categoryNameList)) {
+			for (String categoryNameEn : categoryNameList) {
+				String text = categoryNameEn;
+				System.out.println("==== 89 ===> " + text);
+				TranslateBean translateBean = new TranslateBean();
+				translateBean.setText(text);
+				translateBean.setSourceLanguage("en");
+				translateBean.setTargetLanguage("zh-CN");
+				String result = translateService.translate(translateBean, false);
+				System.out.println("==== 97 ===> " + result);
+				if (StringUtils.isNotEmpty(result)) {
+					String categoryNameCn = result;
+					String value = categoryNameEn + "(" + categoryNameCn + ")";
+					shopeeCategoryDao.updateCategoryToCn(categoryNameEn, value);
+				}
+			}
+		}
 	}
 	
 	

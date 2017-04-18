@@ -162,7 +162,9 @@
 		 		-->
 	 		</table>
 		</form>
-		<iframe name="iframe_shippingData" width="100%" height="100" frameborder="0"></iframe>
+		<iframe name="iframe_shippingData" width="100%" height="100" frameborder="0">
+		$.unblockUI();
+		</iframe>
 	</div>
   
   </body>

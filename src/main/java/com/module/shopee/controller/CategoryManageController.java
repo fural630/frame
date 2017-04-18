@@ -2,8 +2,6 @@ package com.module.shopee.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +54,7 @@ public class CategoryManageController extends MainPage{
 						Excel excel = new Excel(tmpFile.toString());
 						shopeeCategoryService.deleteShopeeCategory();
 						shopeeCategoryService.uploadCategory(excel.toArray());
+						shopeeCategoryService.translateToCn();
 						flag = true;
 					} catch (IllegalStateException e) {
 						e.printStackTrace();

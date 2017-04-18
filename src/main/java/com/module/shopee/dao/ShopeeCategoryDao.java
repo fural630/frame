@@ -24,4 +24,8 @@ public interface ShopeeCategoryDao {
 
 	public ShopeeCategory getShopeeCategoryByCategoryId(Integer categoryId);
 
+	public List<String> getDistinctCategoryName();
+
+	public void updateCategoryToCn(@Param("categoryNameEn")String categoryNameEn,@Param("value") String value);
+
 }
