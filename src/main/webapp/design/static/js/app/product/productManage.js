@@ -1300,7 +1300,7 @@ function loadPublishUserTree() {
 			type: "post",
 		},
 		callback: {
-			onCheck: editorUserTreezOnCheck
+			onCheck: publishUserTreezOnCheck
 		}
 	};
 	$.fn.zTree.init($("#publishUserTree"), setting);
@@ -1336,6 +1336,19 @@ function editorUserTreezOnCheck(event, treeId, treeNode) {
 		}
 	}
 	$("#editorSelectCount").text(count);
+}
+
+function publishUserTreezOnCheck(event, treeId, treeNode) {
+	var count = 0;
+	var treeObj = $.fn.zTree.getZTreeObj("publishUserTree");
+	var nodes = treeObj.getCheckedNodes(true);
+	for (var i = 0; i < nodes.length; i++) {
+		var node = nodes[i];
+		if (node.isParent) {
+			count++;
+		}
+	}
+	$("#publishUserSelectCount").text(count);
 }
 
 function getTreeSpuList(selector) {
