@@ -357,8 +357,23 @@
 			<div class="alert alert-info" style="padding:10px;">
 			 	注意：第一张图片为主图，拖拽图片可移动图片位置。删除图片后，点击保存才会生效。
 			</div>
-			<input type="text" class="txt" style="width:80%;" id="imageUrlAddress" placeholder="图片地址/Url" 
-				value=""/>
+			<form name="uploadProductImageFrom" action="/product/uploadProductImage" method="post" enctype="multipart/form-data" target="iframe_uploadProductImage">
+				<table>
+					<tr>
+						<td>
+							<input type="file" name="imageFile" class="form-control" value="" style="width:200px;">
+						</td>
+						<td>
+							<button class="btn btn-sm " type="button" onclick="uploadImages();">
+								<i class="icon icon-upload-alt"></i> 上传图片
+							</button>
+							<iframe name="iframe_uploadProductImage" width="0" height="0" frameborder="0"></iframe>
+						</td>
+					</tr>
+				</table>
+			</form>
+			<br/>
+			<input type="text" class="txt" style="width:80%;" id="imageUrlAddress" placeholder="图片地址/Url" value=""/>
 		  	<button class="btn btn-sm " type="button" onclick="addImageUrlAddress();">
 				<i class="icon icon-plus-sign"></i> 添加
 			</button>

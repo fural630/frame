@@ -164,6 +164,36 @@ function validateProductFrom() {
 	dialog.find("form[name=uploadProductFrom]").submit();
 }
 
+function uploadImages() {
+	var file = $("input[name=imageFile]").val();
+	var prefix = file.substring(file.lastIndexOf(".") + 1, file.length);
+	if (file == "" || file == null || file == undefined) {
+		var param = {
+			status : 0,
+			message : "请选择要上传的图片"
+		};
+		$.message.showMessage(param);
+		return;
+	}
+	var prefix = file.substring(file.lastIndexOf(".") + 1, file.length).toLocaleLowerCase();
+	if ( prefix != 'bmp' && prefix != 'jpg' && prefix != 'jpeg' && prefix != 'png' && prefix != 'gif') {
+		var param = {
+			status : 0,
+			message : "只允许上传图片格式后缀为 BMP、JPG、JPEG、PNG、GIF 的图片"
+		};
+		$.message.showMessage(param);
+		return;
+	}
+	$.blockUI({
+		message: '<img src="/design/static/images/common/progressbar10.gif">',
+		timeout: 5000,
+		css:{
+			backgroundColor: "",
+			border:"0"
+		}
+	});
+	$("form[name=uploadProductImageFrom]").submit();
+}
 function saveProductEditUser() {
 	var dialog = $("#distributionEditUserDialog");
 	var userId = dialog.find("select[name='editUserSelect']").val();

@@ -41,9 +41,9 @@ import com.code.view.MainPage;
 import com.code.view.ReturnMessage;
 import com.module.product.model.Product;
 import com.module.product.model.ProductAudit;
+import com.module.product.model.ZtreeNode;
 import com.module.product.service.ProductService;
 import com.module.system.model.User;
-import com.module.product.model.ZtreeNode;
 import com.util.Dumper;
 import com.util.Excel;
 import com.util.JsonUtil;
@@ -466,5 +466,42 @@ public class ProductManageController extends MainPage{
 		}
 		Dumper.dump(ztreeNodeList);
 		return JsonUtil.toJsonStr(ztreeNodeList);
+	}
+	
+	@RequestMapping("uploadProductImage")
+	public String uploadProductImage(HttpServletRequest request, Model model) {
+		List<String> imageList = new ArrayList<String>();
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+		if (multipartResolver.isMultipart(request)) {
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+			Iterator iter = multiRequest.getFileNames();
+			while (iter.hasNext()) {
+				MultipartFile file = multiRequest.getFile(iter.next().toString());
+				if (file != null) {
+//					String path = "E:\\" + file.getOriginalFilename();
+					String path = Constant.TMP_PATH + file.getOriginalFilename();
+					File tmpFile = new File(path);
+					try {
+						file.transferTo(tmpFile);
+						String imageUrl = productService.uploadProductImage(tmpFile);
+						if (StringUtils.isNotEmpty(imageUrl)) {
+							imageList.add(imageUrl);
+						}
+						tmpFile.delete();
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		model.addAttribute("imageList", imageList);
+		return "template/upload-image-result";
 	}
 }

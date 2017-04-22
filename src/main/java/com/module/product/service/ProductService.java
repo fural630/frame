@@ -1,13 +1,22 @@
 package com.module.product.service;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.multipart.FilePart;
+import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
+import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -404,6 +413,39 @@ public class ProductService {
 			variationList.add(color);
 		}
 		return variationList;
+	}
+	
+	public String uploadProductImage(File uploadFile) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle("etc/conf/uploadImage");
+		String url = resourceBundle.getString("url");
+		HttpClient httpClient = new HttpClient();
+		PostMethod postMethod = new PostMethod(url);
+		String resultPath = "";
+		try {
+			FilePart fp = new FilePart("filedata", uploadFile);
+			fp.setContentType(uploadFile.getAbsolutePath());
+			System.out.println("uploadFileAbsolutepath = " + uploadFile.getAbsolutePath());
+			Part[] parts = { fp };  
+			MultipartRequestEntity multipartRequestEntity = new MultipartRequestEntity(parts, postMethod.getParams());  
+			postMethod.setRequestEntity(multipartRequestEntity);  
+			httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(5000);
+			int statusCode = httpClient.executeMethod(postMethod);
+			System.out.println("statusCode = " + statusCode);
+			if (statusCode == HttpStatus.SC_OK) {
+				resultPath = postMethod.getResponseBodyAsString();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}  catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			 postMethod.releaseConnection(); 
+		}
+		if (StringUtils.isNotEmpty(resultPath)) {
+			System.out.println("resultPath ===> " + resultPath);
+			return resultPath;
+		}
+		return null;
 	}
 
 	public List<String> getSpuList() {
