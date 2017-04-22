@@ -17,17 +17,17 @@
      
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName">
-			<value>${driverClassName}</value>
+			<value>${mysql.className}</value>
 		</property>
 		<property name="url">
-			<value>${url}</value>
+			<value>${mysql.url}</value>
 		</property>
 		<property name="username">
-			<value>${username}</value>
+			<value>${mysql.user}</value>
 		</property>
 		<property name="password">
-			<!--<value>smarterp</value> -->
-			<value>${password}</value>
+			<value>${mysql.password}</value> 
+			<!--<value>${password}</value>-->
 		</property>
 		<property name="validationQuery" value="SELECT 1" />
     	<property name="testOnBorrow" value="true" />
