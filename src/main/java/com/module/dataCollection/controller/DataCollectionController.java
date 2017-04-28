@@ -34,7 +34,7 @@ public class DataCollectionController extends MainPage{
 		_execute(page, model);
 		List<Map<String, Object>> collection = new ArrayList<>();
 		model.addAttribute("collection", collection);
-		return "dataCollection/dataCollectionManage";
+		return "dataCollection/dataCollectionManage"; 
 	}
 	
 	@RequestMapping("startCollection") 
