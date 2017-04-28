@@ -37,7 +37,7 @@ public class DataCollectionController extends MainPage{
 		return "dataCollection/dataCollectionManage";
 	}
 	
-	@RequestMapping("startCollection")
+	@RequestMapping("startCollection") 
 	@ResponseBody
 	public String startCollection(String collectionUrl) {
 		ReturnMessage message = new ReturnMessage();
