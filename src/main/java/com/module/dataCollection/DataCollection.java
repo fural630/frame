@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.axis2.databinding.types.soapencoding.Array;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -27,20 +26,17 @@ import com.util.Dumper;
 
 public class DataCollection {
 	
-//	private String url = "https://detail.1688.com/offer/43204628325.html";
-//	private String url = "https://detail.1688.com/offer/544194014037.html";
-//	private String url = "https://detail.1688.com/offer/532801295431.html";
-	private String url = "https://detail.1688.com/offer/42882683215.html?spm=a262l.8315111.j1oag3t7.50.FC2qRD";
+	private String url; 
 	
-	public static void main(String[] args) {
-		DataCollection dataCollection = new DataCollection();
-		dataCollection.split1688Product();
+	public DataCollection(String url) {
+		this.url = url;
 	}
 	
-	public void split1688Product() {
+	public List<AliProduct> split1688Product() {
 		WebClient client = initNewWebClient();
+		List<AliProduct> aliProductList = new ArrayList<AliProduct>();
 		try {
-			HtmlPage page = client.getPage(url);
+			HtmlPage page = client.getPage(this.url);
 			HtmlElement htmlElementBody = page.getBody();
 			DomNodeList<HtmlElement> scriptList = htmlElementBody.getElementsByTagName("script");
 			DetailConfig detailConfig = new DetailConfig();
@@ -53,15 +49,17 @@ public class DataCollection {
 					break;
 				}
 			}
-			String freight = calculateFreight(detailConfig);
-			analysisSkuMap(skuMap, detailConfig, freight);
+			aliProductList = analysisSkuMap(skuMap, detailConfig);
 		} catch (FailingHttpStatusCodeException e) {
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			client.close();
 		}
+		return aliProductList;
 	}
 	
 	private String getWidgetListDoUrlParam(DetailConfig detailConfig) {
@@ -79,9 +77,8 @@ public class DataCollection {
 		return paramUrl;
 	}
 	
-	private String calculateFreight(DetailConfig detailConfig) {
+	private String calculateFreight(DetailConfig detailConfig, Map<String, Object> offerdetailDittoPostageMap) {
 		Gson gson = new Gson();
-		Map<String, Object> offerdetailDittoPostageMap = getUnitWeight(detailConfig);
 		String freightUrl = getFreightDoUrlParam(offerdetailDittoPostageMap, detailConfig);
 		JavaScriptPage page;
 		WebClient client = initNewWebClient();
@@ -132,7 +129,11 @@ public class DataCollection {
 	}
 
 
-
+	/**
+	 * 获取商品重量等信息
+	 * @param detailConfig
+	 * @return
+	 */
 	private Map<String, Object> getUnitWeight(DetailConfig detailConfig) {
 		WebClient client = initNewWebClient();
 		try {
@@ -153,11 +154,19 @@ public class DataCollection {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			client.close();
 		}
 		return null;
 	}
 
-	private void analysisSkuMap(Map<String, Object> skuMap, DetailConfig detailConfig, String freight) {
+	private List<AliProduct> analysisSkuMap(Map<String, Object> skuMap, DetailConfig detailConfig) {
+		
+		List<AliProduct> aliProductList = new ArrayList<AliProduct>();
+		
+		Map<String, Object> offerdetailDittoPostageMap = getUnitWeight(detailConfig);
+		String freight = calculateFreight(detailConfig, offerdetailDittoPostageMap);
+		
 		List<Object> skuProps =  (List<Object>) skuMap.get("skuProps");
 		Map<String, Object> variatonColorMap = (Map<String, Object>) skuProps.get(0);
 		List<Object> variationColorList = (List<Object>) variatonColorMap.get("value");
@@ -180,20 +189,20 @@ public class DataCollection {
 						Map<String, String> detailVariationSizeMap = (Map<String, String>) variationSizeObj;
 						String variationSizeName = detailVariationSizeMap.get("name");
 						String variationKey = variationColorName + "&gt;" + variationSizeName;
-						mergeAliProduct(variationKey, variaitonDetailMap, imageUrl, detailConfig, freight);
-						
+						AliProduct aliProduct = mergeAliProduct(variationKey, variaitonDetailMap, imageUrl, detailConfig, freight);
+						aliProductList.add(aliProduct);
 					}
 				} else {
 					String variationKey = variationColorName;
-					mergeAliProduct(variationKey, variaitonDetailMap, imageUrl, detailConfig, freight);
+					AliProduct aliProduct = mergeAliProduct(variationKey, variaitonDetailMap, imageUrl, detailConfig, freight);
+					aliProductList.add(aliProduct);
 				}
 			}
 		}
+		return aliProductList;
 	}
 
-
-
-	private void mergeAliProduct(String variationKey,
+	private AliProduct mergeAliProduct(String variationKey,
 			Map<String, Object> variaitonDetailMap, String imageUrl, DetailConfig detailConfig, String freight) {
 		Map<String, Object> detailMap = (Map<String, Object>) variaitonDetailMap.get(variationKey);
 
@@ -222,12 +231,17 @@ public class DataCollection {
 		aliProduct.setImageUrl(imageUrl);
 		aliProduct.setSaleCount(saleCount);
 		aliProduct.setSize(size);
-		aliProduct.setFeight(Double.valueOf(freight));
+		aliProduct.setFreight(Double.valueOf(freight));
 		Dumper.dump(aliProduct);
+		return aliProduct;
 	}
 
 
-
+	/**
+	 * 解析
+	 * @param scriptData
+	 * @return
+	 */
 	private Map<String, Object> paraseDetialData(String scriptData) {
 		Gson gson = new Gson();
 		String detailDataStr = scriptData;
@@ -241,7 +255,12 @@ public class DataCollection {
 	}
 
 
-
+	
+	/**
+	 * 解析DetailConfig 保存成对象
+	 * @param scriptData
+	 * @return
+	 */
 	private DetailConfig parseDetailConfig(String scriptData) {
 		Gson gson = new Gson();
 		int start = scriptData.indexOf("iDetailConfig = ");
@@ -252,6 +271,11 @@ public class DataCollection {
 		return detailConfig;
 	}
 	
+	/**
+	 * 去除空格空白等信息
+	 * @param data
+	 * @return
+	 */
 	private String removeSpace(String data) {
 		if (StringUtils.isNotEmpty(data)) {
             Pattern p = Pattern.compile("\\s*|\t|\r|\n");
@@ -262,6 +286,10 @@ public class DataCollection {
 		return data;
 	}
 	
+	/**
+	 * 初始化webclient
+	 * @return
+	 */
 	public WebClient initNewWebClient() {
 		WebClient client = new WebClient();
 		WebClientOptions webClientOptions = client.getOptions();

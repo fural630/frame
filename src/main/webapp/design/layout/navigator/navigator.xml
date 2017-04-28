@@ -17,7 +17,11 @@
 		</product.manage>
 	</product.center>
 	
-	<navigator.shopee.area icon="icon-shopping-cart" sort="3">
+	<collection.center icon="icon-cloud-download" sort="3">
+		<collection.data link="/dataCollection/dataCollectionManage" icon="icon-stack"></collection.data>
+	</collection.center>
+	
+	<navigator.shopee.area icon="icon-shopping-cart" sort="4">
 		<shopee.publish.manage link="/shopee/shopeePublishManage" icon="icon-table"></shopee.publish.manage>
 		<shopee.category.manage link="/shopee/shopeeCategoryManage" icon="icon-bars"></shopee.category.manage>
 	</navigator.shopee.area>

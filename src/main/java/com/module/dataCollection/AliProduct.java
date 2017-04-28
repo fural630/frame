@@ -9,7 +9,7 @@ public class AliProduct {
 	private Integer beginAmount;
 	private Double refPrice;
 	private Double weight;
-	private Double feight;
+	private Double freight;
 	public String getColor() {
 		return color;
 	}
@@ -58,10 +58,10 @@ public class AliProduct {
 	public void setWeight(Double weight) {
 		this.weight = weight;
 	}
-	public Double getFeight() {
-		return feight;
+	public Double getFreight() {
+		return freight;
 	}
-	public void setFeight(Double feight) {
-		this.feight = feight;
+	public void setFreight(Double freight) {
+		this.freight = freight;
 	}
 }
