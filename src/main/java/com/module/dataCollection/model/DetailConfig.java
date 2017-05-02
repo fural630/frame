@@ -1,4 +1,4 @@
-package com.module.dataCollection;
+package com.module.dataCollection.model;
 
 public class DetailConfig {
 	private String pageType;

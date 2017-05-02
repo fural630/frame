@@ -1,6 +1,6 @@
-package com.module.dataCollection;
+package com.module.dataCollection.model;
 
-public class AliProduct {
+public class DataCollection {
 	private String color;
 	private String size;
 	private String imageUrl;

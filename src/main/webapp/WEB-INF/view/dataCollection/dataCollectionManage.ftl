@@ -8,13 +8,43 @@
   </head>
   <body>
     <form action="/dataCollection/dataCollectionManage" id="mainPageForm" method="post">
+    
+    <div style="margin:0px 10px;">
+		<table style="width:100%; margin-top:10px;">
+			<tr>
+				<td colspan="2">
+					<textarea class="txt width_100 remark form-control" name="collectionUrl" style="height:60px;" placeholder="请填写要采集的产品网址"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div style="color: #03a2b6;">* 目前支持：1688网站采集，请勿输入多个网址，单次只允许采集一个网址的产品信息。</div>
+				</td>
+				<td>
+					<div class="fr small_size" style="margin-top:10px;margin-bottom: 10px;"> 
+						<button class="btn btn-sm btn-primary" type="button" onclick="startCollection()">
+							开始采集
+						</button>
+						<button class="btn btn-sm" type="button" onclick="resetCollectionUrl()">
+							清空
+						</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<hr style="margin-top: 0px;margin-bottom: 0px;border: 0; border-top: 1px solid #e5e5e5;"/>
+	</div>
+	
   	<div class="current_nav_name clearfix"> 数据采集
+  		<!--
 		<div class="fr small_size"> 
 			<button class="btn btn-sm " type="button" onclick="showCollectionDialog()">
 				<i class="icon icon-plus-sign"></i> <@s.message "product.collection"/>
 			</button>
 		</div>
+		-->
 	</div>
+	
 	<#include "../common/page.ftl"/>
 	<div class="mainbody clearfix"> 
 	  <div class="tableview clearfix">
@@ -79,7 +109,8 @@
 	      		 <tr>
 		            <td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="1" onclick="countCheckbox()" /></td>
 		            <td>
-		            	<img src="https://cbu01.alicdn.com/img/ibank/2017/042/158/3915851240_1619311604.jpg" data-image="https://cbu01.alicdn.com/img/ibank/2017/042/158/3915851240_1619311604.jpg" class="img-thumbnail" width="80"/>
+            			<img src="https://cbu01.alicdn.com/img/ibank/2017/042/158/3915851240_1619311604.jpg" data-image="https://cbu01.alicdn.com/img/ibank/2017/042/158/3915851240_1619311604.jpg" class="img-thumbnail" width="80"/>
+        				<br/><a href="#">采集链接</a>
 		            </td>
 		            <td>
 		            	sk1
@@ -162,6 +193,7 @@
 	  </div>
 	</div>
 	
+	<!--
 	<div id="dataCollectionDialog" style="display:none;" title="产品采集">
 		<div class="alert alert-info" style="padding:10px;">
 		 	目前支持：1688网站采集，请勿输入多个网址，单次只允许采集一个网址的产品信息。
@@ -189,7 +221,7 @@
 		SPU&nbsp;:&nbsp;<input type="text" class="txt width_100px" name="firstSku"/>
 		<button class="btn btn-sm" type="button" onclick="aKeyCreateSku()">
 		一键生成SKU</button> 生成格式为：SPU-颜色-尺寸
-		<table class="tb_border tb_full stripe" style="margin-top:10px;">
+		<table class="tb_border tb_full stripe" style="margin-top:10px;" name="collectionResultTable">
 			<tr>
 				<th></th>
 				<th>主图</th>
@@ -203,27 +235,10 @@
 				<th>起批数量</th>
 				<th>操作</th>
 			</tr>
-			<tr>
-				<td style="text-align:center"><input name="" type="checkbox" value="1" onclick="countCheckbox()" /></td>
-				<td>
-					<img src="https://cbu01.alicdn.com/img/ibank/2017/042/158/3915851240_1619311604.jpg" data-image="https://cbu01.alicdn.com/img/ibank/2017/042/158/3915851240_1619311604.jpg" class="img-thumbnail" width="80"/>
-				</td>
-				<td><input type="text" class="txt width_100px" name="sku"/></td>
-				<td><input type="text" class="txt width_100px" name="parentSku"/></td>
-				<td><input type="text" class="txt width_100px" name="color"/></td>
-				<td><input type="text" class="txt width_100px" name="size"/></td>
-				<td><input type="text" class="txt width_80px" name="price"/></td>
-				<td><input type="text" class="txt width_80px" name="weight"/></td>
-				<td><input type="text" class="txt width_80px" name="freight"/></td>
-				<td><input type="text" class="txt width_80px" name="beginAmount"/></td>
-				<td>
-					<button class="btn btn-sm btn-danger" type="button" onclick="removeMultiSkuRow(this)"><i class="icon icon-trash"></i></button>
-				</td>
-			</tr>
 		</table>
 		
 	</div>
-	
+	-->
 	
   </body>
 </html>

@@ -22,19 +22,21 @@ import com.gargoylesoftware.htmlunit.html.DomNodeList;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.google.gson.Gson;
+import com.module.dataCollection.model.DataCollection;
+import com.module.dataCollection.model.DetailConfig;
 import com.util.Dumper;
 
-public class DataCollection {
+public class DataCollectionUtil {
 	
 	private String url; 
 	
-	public DataCollection(String url) {
+	public DataCollectionUtil(String url) {
 		this.url = url;
 	}
 	
-	public List<AliProduct> split1688Product() {
+	public List<DataCollection> split1688Product() {
 		WebClient client = initNewWebClient();
-		List<AliProduct> aliProductList = new ArrayList<AliProduct>();
+		List<DataCollection> aliProductList = new ArrayList<DataCollection>();
 		try {
 			HtmlPage page = client.getPage(this.url);
 			HtmlElement htmlElementBody = page.getBody();
@@ -160,9 +162,9 @@ public class DataCollection {
 		return null;
 	}
 
-	private List<AliProduct> analysisSkuMap(Map<String, Object> skuMap, DetailConfig detailConfig) {
+	private List<DataCollection> analysisSkuMap(Map<String, Object> skuMap, DetailConfig detailConfig) {
 		
-		List<AliProduct> aliProductList = new ArrayList<AliProduct>();
+		List<DataCollection> aliProductList = new ArrayList<DataCollection>();
 		
 		Map<String, Object> offerdetailDittoPostageMap = getUnitWeight(detailConfig);
 		String freight = calculateFreight(detailConfig, offerdetailDittoPostageMap);
@@ -189,12 +191,12 @@ public class DataCollection {
 						Map<String, String> detailVariationSizeMap = (Map<String, String>) variationSizeObj;
 						String variationSizeName = detailVariationSizeMap.get("name");
 						String variationKey = variationColorName + "&gt;" + variationSizeName;
-						AliProduct aliProduct = mergeAliProduct(variationKey, variaitonDetailMap, imageUrl, detailConfig, freight);
+						DataCollection aliProduct = mergeAliProduct(variationKey, variaitonDetailMap, imageUrl, detailConfig, freight);
 						aliProductList.add(aliProduct);
 					}
 				} else {
 					String variationKey = variationColorName;
-					AliProduct aliProduct = mergeAliProduct(variationKey, variaitonDetailMap, imageUrl, detailConfig, freight);
+					DataCollection aliProduct = mergeAliProduct(variationKey, variaitonDetailMap, imageUrl, detailConfig, freight);
 					aliProductList.add(aliProduct);
 				}
 			}
@@ -202,7 +204,7 @@ public class DataCollection {
 		return aliProductList;
 	}
 
-	private AliProduct mergeAliProduct(String variationKey,
+	private DataCollection mergeAliProduct(String variationKey,
 			Map<String, Object> variaitonDetailMap, String imageUrl, DetailConfig detailConfig, String freight) {
 		Map<String, Object> detailMap = (Map<String, Object>) variaitonDetailMap.get(variationKey);
 
@@ -214,7 +216,7 @@ public class DataCollection {
 			saleCount = new Integer((int) (double) new Double(detailMap.get("saleCount").toString()));
 		}
 		
-		AliProduct aliProduct = new AliProduct();
+		DataCollection aliProduct = new DataCollection();
 		aliProduct.setBeginAmount(Integer.parseInt(detailConfig.getBeginAmount()));
 		aliProduct.setCanBookCount(saleCount);
 		String color = "";

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.code.Page;
 import com.code.view.MainPage;
 import com.code.view.ReturnMessage;
-import com.module.dataCollection.AliProduct;
+import com.module.dataCollection.model.DataCollection;
 import com.module.dataCollection.service.DataCollectionService;
 import com.util.Dumper;
 import com.util.JsonUtil;
@@ -42,9 +43,11 @@ public class DataCollectionController extends MainPage{
 	public String startCollection(String collectionUrl) {
 		ReturnMessage message = new ReturnMessage();
 		if (StringUtils.isNotEmpty(collectionUrl)) {
-			List<AliProduct> aliProductList = dataCollectionService.spiderProduct(collectionUrl);
+			List<DataCollection> aliProductList = dataCollectionService.spiderProduct(collectionUrl);
 			Dumper.dump(aliProductList);
-			message.setData(aliProductList);
+			if (CollectionUtils.isNotEmpty(aliProductList)) {
+				dataCollectionService.saveCollectionResult(aliProductList);
+			}
 		} else {
 			
 		}
