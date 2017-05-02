@@ -1,6 +1,5 @@
 package com.module.dataCollection.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.application.libraries.constentEnum.ReturnMessageEnum;
 import com.code.Page;
 import com.code.view.MainPage;
 import com.code.view.ReturnMessage;
@@ -33,7 +33,7 @@ public class DataCollectionController extends MainPage{
 	@RequestMapping("dataCollectionManage")
 	public String dataCollectionManage(Model model, Page page){
 		_execute(page, model);
-		List<Map<String, Object>> collection = new ArrayList<>();
+		List<Map<String, Object>> collection = dataCollectionService.getCollectionPage(page);
 		model.addAttribute("collection", collection);
 		return "dataCollection/dataCollectionManage"; 
 	}
@@ -52,5 +52,31 @@ public class DataCollectionController extends MainPage{
 			
 		}
 		return JsonUtil.toJsonStr(message);
+	}
+	
+	
+	@RequestMapping("deleteDataCollectionByIds")
+	@ResponseBody
+	public String deleteDataCollectionByIds(String idList) {
+		ReturnMessage returnMessage = new ReturnMessage();
+		if (StringUtils.isNotEmpty(idList)) {
+			String ids[] = idList.split(",");
+			if (ids.length > 0) {
+				for (String idStr : ids) {
+					dataCollectionService.deleteDataCollectionById(Integer.parseInt(idStr));
+				}
+			}
+		} else {
+			returnMessage.setStatus(ReturnMessageEnum.FAIL.getValue());
+		}
+		return JsonUtil.toJsonStr(returnMessage);
+	}
+	
+	@RequestMapping("deleteDataCollectionById")
+	@ResponseBody
+	public String deleteDataCollectionById(Integer id) {
+		dataCollectionService.deleteDataCollectionById(id);
+		ReturnMessage returnMessage = new ReturnMessage();
+		return JsonUtil.toJsonStr(returnMessage);
 	}
 }

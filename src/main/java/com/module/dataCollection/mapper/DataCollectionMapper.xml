@@ -3,24 +3,71 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.module.dataCollection.dao.DataCollectionDao">  
      
-    <insert id="insertDataCollection" parameterType="AliProduct" useGeneratedKeys="true" keyProperty="id">  
-        insert into aliProduct (
-        	name,
-        	nameCn,
+    <insert id="insertDataCollection" parameterType="DataCollection" useGeneratedKeys="true" keyProperty="id">  
+        insert into data_collection (
+        	sku,
+        	spu,
+        	status,
         	url,
-        	iconClass,
-        	isParent,
-        	parentId,
-        	sort
+        	color,
+        	size,
+        	imageUrl,
+        	canBookCount,
+        	beginAmount,
+        	price,
+        	weight,
+        	freight,
+        	collectionTime
         ) values(
-        	#{name},
-        	#{nameCn},
+       		#{sku},
+        	#{spu},
+        	#{status},
         	#{url},
-        	#{iconClass},
-        	#{isParent},
-        	#{parentId},
-        	#{sort}
+        	#{color},
+        	#{size},
+        	#{imageUrl},
+        	#{canBookCount},
+        	#{beginAmount},
+        	#{price},
+        	#{weight},
+        	#{freight},
+        	#{collectionTime}
         )  
     </insert>
+    
+    <select id="getCollectionPage" resultType="hashMap" parameterType="Page">
+    	select * from data_collection t
+    	<where>
+	    	<choose>
+				<when test="params.skuLike!=null and params.skuLike!='' ">
+					and t.sku like CONCAT('%','${params.sku}','%')  
+				</when>
+				<when test="params.sku!=null and params.sku!=''">
+					and t.sku = #{params.sku}
+				</when> 		
+	   		</choose>
+	   		<choose>
+				<when test="params.spuLike!=null and params.spuLike!='' ">
+					and t.spu like CONCAT('%','${params.spu}','%')  
+				</when>
+				<when test="params.spu!=null and params.spu!=''">
+					and t.spu = #{params.spu}
+				</when>
+	   		</choose>
+	   		<if test="params.status !=null and params.status !=''">
+	 			and t.status = #{params.status}
+	   		</if>
+	   		<if test="params.collectionTimeFrom !=null and params.collectionTimeFrom !=''" >
+	   			<![CDATA[ and t.collectionTime >= #{params.collectionTimeFrom} ]]>
+	   		</if>
+	   		<if test="params.collectionTimeTo !=null and params.collectionTimeTo!=''" >
+	   			<![CDATA[ and t.collectionTime <= #{params.collectionTimeTo} ]]>
+	   		</if>
+   		</where>
+    </select>
+    
+    <delete id="deleteDataCollectionById" parameterType="int">
+    	delete from data_collection where id = #{id}
+    </delete>
     
 </mapper>  

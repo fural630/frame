@@ -9,6 +9,7 @@
     	<package name="com.module.product.model"/>
     	<package name="com.module.shopee.model"/>
     	<package name="com.module.system.model"/>
+    	<package name="com.module.dataCollection.model"/>
     </typeAliases> 
     
     <plugins><plugin interceptor="com.code.PageInterceptor"/></plugins> 

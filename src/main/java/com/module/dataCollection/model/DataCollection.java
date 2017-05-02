@@ -1,15 +1,59 @@
 package com.module.dataCollection.model;
 
+import com.application.libraries.constentEnum.DataCollectionStatusEnum;
+
 public class DataCollection {
+	private Integer id;
+	private String sku;
+	private String spu;
+	private Integer status = DataCollectionStatusEnum.WAIT_EDIT.getValue();
+	private String url;
 	private String color;
 	private String size;
 	private String imageUrl;
 	private Integer canBookCount;
-	private Integer saleCount;
 	private Integer beginAmount;
-	private Double refPrice;
+	private Double price;
 	private Double weight;
 	private Double freight;
+	private String collectionTime;
+	
+	public String getSku() {
+		return sku;
+	}
+	public void setSku(String sku) {
+		this.sku = sku;
+	}
+	public String getSpu() {
+		return spu;
+	}
+	public void setSpu(String spu) {
+		this.spu = spu;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	public String getCollectionTime() {
+		return collectionTime;
+	}
+	public void setCollectionTime(String collectionTime) {
+		this.collectionTime = collectionTime;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
 	public String getColor() {
 		return color;
 	}
@@ -34,23 +78,11 @@ public class DataCollection {
 	public void setCanBookCount(Integer canBookCount) {
 		this.canBookCount = canBookCount;
 	}
-	public Integer getSaleCount() {
-		return saleCount;
-	}
-	public void setSaleCount(Integer saleCount) {
-		this.saleCount = saleCount;
-	}
 	public Integer getBeginAmount() {
 		return beginAmount;
 	}
 	public void setBeginAmount(Integer beginAmount) {
 		this.beginAmount = beginAmount;
-	}
-	public Double getRefPrice() {
-		return refPrice;
-	}
-	public void setRefPrice(Double refPrice) {
-		this.refPrice = refPrice;
 	}
 	public Double getWeight() {
 		return weight;
@@ -63,5 +95,11 @@ public class DataCollection {
 	}
 	public void setFreight(Double freight) {
 		this.freight = freight;
+	}
+	public Double getPrice() {
+		return price;
+	}
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 }

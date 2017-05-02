@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
+import com.application.libraries.constentEnum.DataCollectionStatusEnum;
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.JavaScriptPage;
 import com.gargoylesoftware.htmlunit.WebClient;
@@ -25,6 +26,7 @@ import com.google.gson.Gson;
 import com.module.dataCollection.model.DataCollection;
 import com.module.dataCollection.model.DetailConfig;
 import com.util.Dumper;
+import com.util.MyDate;
 
 public class DataCollectionUtil {
 	
@@ -216,9 +218,9 @@ public class DataCollectionUtil {
 			saleCount = new Integer((int) (double) new Double(detailMap.get("saleCount").toString()));
 		}
 		
-		DataCollection aliProduct = new DataCollection();
-		aliProduct.setBeginAmount(Integer.parseInt(detailConfig.getBeginAmount()));
-		aliProduct.setCanBookCount(saleCount);
+		DataCollection dataCollection = new DataCollection();
+		dataCollection.setBeginAmount(Integer.parseInt(detailConfig.getBeginAmount()));
+		dataCollection.setCanBookCount(saleCount);
 		String color = "";
 		String size = null;
 		if (variationKey.contains("&gt;")) {
@@ -227,15 +229,17 @@ public class DataCollectionUtil {
 		} else {
 			color = variationKey;
 		}
-		aliProduct.setColor(color);
-		aliProduct.setRefPrice(Double.valueOf(detailConfig.getRefPrice()));
-		aliProduct.setCanBookCount(canBookCount);
-		aliProduct.setImageUrl(imageUrl);
-		aliProduct.setSaleCount(saleCount);
-		aliProduct.setSize(size);
-		aliProduct.setFreight(Double.valueOf(freight));
-		Dumper.dump(aliProduct);
-		return aliProduct;
+		dataCollection.setColor(color);
+		dataCollection.setPrice(Double.valueOf(detailConfig.getRefPrice()));
+		dataCollection.setCanBookCount(canBookCount);
+		dataCollection.setImageUrl(imageUrl);
+		dataCollection.setSize(size);
+		dataCollection.setFreight(Double.valueOf(freight));
+		dataCollection.setUrl(this.url);
+		dataCollection.setStatus(DataCollectionStatusEnum.WAIT_EDIT.getValue());
+		dataCollection.setCollectionTime(new MyDate().getCurrentDateTime());
+		Dumper.dump(dataCollection);
+		return dataCollection;
 	}
 
 
