@@ -46,7 +46,7 @@ function startCollection() {
 		beforeSend : function (xhr) {
 			$.blockUI({
 				message: '<img src="/design/static/images/common/progressbar10.gif">',
-				timeout: 10000,
+				timeout: 30000,
 				css:{
 					backgroundColor: "",
 					border:"0"

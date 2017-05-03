@@ -58,9 +58,9 @@
 	            <th>SPU</th>
 	            <th>颜色</th>
 	            <th>尺寸</th>
-	            <th>价格</th>
-	            <th>重量</th>
-	            <th>运费</th>
+	            <th>价格（¥）</th>
+	            <th>单件重量（Kg）</th>
+	            <th>运费（¥）</th>
 	            <th>起批数量</th>
 	            <th>采集状态</th>
 	            <th>采集时间</th>
@@ -71,13 +71,13 @@
 	          	<td></td>
 	          	<td>
 	          		<ul>
-	          			<li><input type="text" class="txt width_100px" name="params[sku]" value="${page.params.sku!''}" /></li>
+	          			<li><input type="text" class="txt width_80px" name="params[sku]" value="${page.params.sku!''}" /></li>
 	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[skuLike]" <#if page.params.skuLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
 	          	<td>
 	          		<ul>
-	          			<li><input type="text" class="txt width_100px" name="params[spu]" value="${page.params.spu!''}" /></li>
+	          			<li><input type="text" class="txt width_80px" name="params[spu]" value="${page.params.spu!''}" /></li>
           				<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[spuLike]" <#if page.params.spuLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
@@ -137,7 +137,7 @@
 		            	${obj.weight!""}
 		            </td>
 		            <td>${obj.freight!""}</td>
-		            <td>${obj.beginAmount!""}</td>
+		            <td>${obj.beginAmount!""}${obj.unit!""}</td>
 		            <td>
 		           		<@matchValue key="${obj.status}" optionClass="DataCollectionStatus"/>
 		            </td>

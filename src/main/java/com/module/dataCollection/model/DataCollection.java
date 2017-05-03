@@ -17,6 +17,7 @@ public class DataCollection {
 	private Double weight;
 	private Double freight;
 	private String collectionTime;
+	private String unit;
 	
 	public String getSku() {
 		return sku;
@@ -101,5 +102,11 @@ public class DataCollection {
 	}
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 }

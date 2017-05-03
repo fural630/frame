@@ -17,7 +17,8 @@
         	price,
         	weight,
         	freight,
-        	collectionTime
+        	collectionTime,
+        	unit
         ) values(
        		#{sku},
         	#{spu},
@@ -31,7 +32,8 @@
         	#{price},
         	#{weight},
         	#{freight},
-        	#{collectionTime}
+        	#{collectionTime},
+        	#{unit}
         )  
     </insert>
     
@@ -64,6 +66,7 @@
 	   			<![CDATA[ and t.collectionTime <= #{params.collectionTimeTo} ]]>
 	   		</if>
    		</where>
+   		order by t.id desc
     </select>
     
     <delete id="deleteDataCollectionById" parameterType="int">

@@ -32,13 +32,20 @@ public class DataCollectionUtil {
 	
 	private String url; 
 	
+	public static void main(String[] args) {
+		String url = "https://detail.1688.com/offer/546058450516.html?spm=a2604.8561485.ivxhcv2q.19.pnfzBN";
+//		DataCollectionUtil dataCollectionUtil = new DataCollectionUtil(url);
+//		List<DataCollection> dataCollections = dataCollectionUtil.split1688Product();
+//		Dumper.dump(dataCollections);
+	}
+	
 	public DataCollectionUtil(String url) {
 		this.url = url;
 	}
 	
 	public List<DataCollection> split1688Product() {
 		WebClient client = initNewWebClient();
-		List<DataCollection> aliProductList = new ArrayList<DataCollection>();
+		List<DataCollection> dataCollection = new ArrayList<DataCollection>();
 		try {
 			HtmlPage page = client.getPage(this.url);
 			HtmlElement htmlElementBody = page.getBody();
@@ -53,7 +60,7 @@ public class DataCollectionUtil {
 					break;
 				}
 			}
-			aliProductList = analysisSkuMap(skuMap, detailConfig);
+			dataCollection = analysisSkuMap(skuMap, detailConfig);
 		} catch (FailingHttpStatusCodeException e) {
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
@@ -63,7 +70,7 @@ public class DataCollectionUtil {
 		} finally {
 			client.close();
 		}
-		return aliProductList;
+		return dataCollection;
 	}
 	
 	private String getWidgetListDoUrlParam(DetailConfig detailConfig) {
@@ -171,6 +178,9 @@ public class DataCollectionUtil {
 		Map<String, Object> offerdetailDittoPostageMap = getUnitWeight(detailConfig);
 		String freight = calculateFreight(detailConfig, offerdetailDittoPostageMap);
 		
+		Double unitWeight = new Double(offerdetailDittoPostageMap.get("unitWeight").toString());
+		String unit = offerdetailDittoPostageMap.get("unit").toString();
+		
 		List<Object> skuProps =  (List<Object>) skuMap.get("skuProps");
 		Map<String, Object> variatonColorMap = (Map<String, Object>) skuProps.get(0);
 		List<Object> variationColorList = (List<Object>) variatonColorMap.get("value");
@@ -193,12 +203,14 @@ public class DataCollectionUtil {
 						Map<String, String> detailVariationSizeMap = (Map<String, String>) variationSizeObj;
 						String variationSizeName = detailVariationSizeMap.get("name");
 						String variationKey = variationColorName + "&gt;" + variationSizeName;
-						DataCollection aliProduct = mergeAliProduct(variationKey, variaitonDetailMap, imageUrl, detailConfig, freight);
+						DataCollection aliProduct = mergeAliProduct(variationKey, 
+								variaitonDetailMap, imageUrl, detailConfig, freight, unitWeight, unit);
 						aliProductList.add(aliProduct);
 					}
 				} else {
 					String variationKey = variationColorName;
-					DataCollection aliProduct = mergeAliProduct(variationKey, variaitonDetailMap, imageUrl, detailConfig, freight);
+					DataCollection aliProduct = mergeAliProduct(variationKey, 
+							variaitonDetailMap, imageUrl, detailConfig, freight, unitWeight, unit);
 					aliProductList.add(aliProduct);
 				}
 			}
@@ -207,7 +219,8 @@ public class DataCollectionUtil {
 	}
 
 	private DataCollection mergeAliProduct(String variationKey,
-			Map<String, Object> variaitonDetailMap, String imageUrl, DetailConfig detailConfig, String freight) {
+			Map<String, Object> variaitonDetailMap, String imageUrl, 
+			DetailConfig detailConfig, String freight, Double unitWeight, String unit) {
 		Map<String, Object> detailMap = (Map<String, Object>) variaitonDetailMap.get(variationKey);
 
 		Integer canBookCount = 0;
@@ -238,6 +251,8 @@ public class DataCollectionUtil {
 		dataCollection.setUrl(this.url);
 		dataCollection.setStatus(DataCollectionStatusEnum.WAIT_EDIT.getValue());
 		dataCollection.setCollectionTime(new MyDate().getCurrentDateTime());
+		dataCollection.setWeight(unitWeight);
+		dataCollection.setUnit(unit);
 		Dumper.dump(dataCollection);
 		return dataCollection;
 	}

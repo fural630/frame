@@ -18,8 +18,8 @@ import com.code.view.MainPage;
 import com.code.view.ReturnMessage;
 import com.module.dataCollection.model.DataCollection;
 import com.module.dataCollection.service.DataCollectionService;
-import com.util.Dumper;
 import com.util.JsonUtil;
+import com.util.MyLocale;
 
 @Controller
 @RequestMapping("dataCollection")
@@ -42,14 +42,30 @@ public class DataCollectionController extends MainPage{
 	@ResponseBody
 	public String startCollection(String collectionUrl) {
 		ReturnMessage message = new ReturnMessage();
+		MyLocale myLocale = new MyLocale();
+		String resultMessage = "";
 		if (StringUtils.isNotEmpty(collectionUrl)) {
+			if (!(collectionUrl.contains("1688.com") && collectionUrl.contains("offer"))) {
+				resultMessage = myLocale.getText("this.url.is.not.allowed.to.spider", collectionUrl);
+				message.setStatus(ReturnMessageEnum.FAIL.getValue());
+				message.setMessage(resultMessage);
+				return JsonUtil.toJsonStr(message);
+			}
+			if (collectionUrl.contains("?")) {
+				collectionUrl = collectionUrl.substring(0, collectionUrl.indexOf("?"));		//截去地址问号后的参数
+			}
 			List<DataCollection> aliProductList = dataCollectionService.spiderProduct(collectionUrl);
-			Dumper.dump(aliProductList);
 			if (CollectionUtils.isNotEmpty(aliProductList)) {
 				dataCollectionService.saveCollectionResult(aliProductList);
+			} else {
+				resultMessage = myLocale.getText("no.data.return.connect.admin");
 			}
 		} else {
-			
+			resultMessage = myLocale.getText("system.error");
+		}
+		if (StringUtils.isNotEmpty(resultMessage)) {
+			message.setStatus(ReturnMessageEnum.FAIL.getValue());
+			message.setMessage(resultMessage);
 		}
 		return JsonUtil.toJsonStr(message);
 	}
