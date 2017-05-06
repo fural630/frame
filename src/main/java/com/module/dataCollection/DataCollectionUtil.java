@@ -13,6 +13,10 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.application.libraries.constentEnum.DataCollectionStatusEnum;
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
@@ -20,6 +24,7 @@ import com.gargoylesoftware.htmlunit.JavaScriptPage;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebClientOptions;
 import com.gargoylesoftware.htmlunit.html.DomNodeList;
+import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.google.gson.Gson;
@@ -33,10 +38,33 @@ public class DataCollectionUtil {
 	private String url; 
 	
 	public static void main(String[] args) {
-		String url = "https://detail.1688.com/offer/546058450516.html?spm=a2604.8561485.ivxhcv2q.19.pnfzBN";
-//		DataCollectionUtil dataCollectionUtil = new DataCollectionUtil(url);
-//		List<DataCollection> dataCollections = dataCollectionUtil.split1688Product();
-//		Dumper.dump(dataCollections);
+		String url = "https://detail.1688.com/offer/549003619896.html";
+		WebClient client = new WebClient();
+		WebClientOptions webClientOptions = client.getOptions();
+		webClientOptions.setJavaScriptEnabled(false);
+		webClientOptions.setCssEnabled(false);
+		webClientOptions.setThrowExceptionOnScriptError(false);
+		
+		HtmlPage page;
+		try {
+			page = client.getPage(url);
+			HtmlElement htmlElementBody = page.getBody();
+			HtmlDivision div = (HtmlDivision) page.getByXPath("//div[@class='tab-content-container']").get(0);
+			Document document = Jsoup.parse(div.asXml());
+			Elements elements = document.select("li.tab-trigger");
+			for (Element element : elements) {
+				System.out.println(element.attr("data-imgs"));
+			}
+		} catch (FailingHttpStatusCodeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public DataCollectionUtil(String url) {
@@ -48,6 +76,22 @@ public class DataCollectionUtil {
 		List<DataCollection> dataCollection = new ArrayList<DataCollection>();
 		try {
 			HtmlPage page = client.getPage(this.url);
+			
+			HtmlDivision div = (HtmlDivision) page.getByXPath("//div[@class='tab-content-container']").get(0);
+			Document imageDocument = Jsoup.parse(div.asXml());
+			Elements imageLiElements = imageDocument.select("li.tab-trigger");
+			String mainImage = "";
+			if (CollectionUtils.isNotEmpty(imageLiElements)) {
+				Gson gson = new Gson();
+				Element imageLiElement = imageLiElements.get(0);
+				String imageJson = removeSpace(imageLiElement.attr("data-imgs"));
+				if (StringUtils.isNotBlank(imageJson)) {
+					Map<String, String> imageMap = gson.fromJson(imageJson, Map.class);
+					if (!imageMap.isEmpty()) {
+						mainImage = imageMap.get("original");
+					}
+				}
+			}
 			HtmlElement htmlElementBody = page.getBody();
 			DomNodeList<HtmlElement> scriptList = htmlElementBody.getElementsByTagName("script");
 			DetailConfig detailConfig = new DetailConfig();
@@ -60,7 +104,7 @@ public class DataCollectionUtil {
 					break;
 				}
 			}
-			dataCollection = analysisSkuMap(skuMap, detailConfig);
+			dataCollection = analysisSkuMap(skuMap, detailConfig, mainImage);
 		} catch (FailingHttpStatusCodeException e) {
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
@@ -171,7 +215,7 @@ public class DataCollectionUtil {
 		return null;
 	}
 
-	private List<DataCollection> analysisSkuMap(Map<String, Object> skuMap, DetailConfig detailConfig) {
+	private List<DataCollection> analysisSkuMap(Map<String, Object> skuMap, DetailConfig detailConfig, String mainImage) {
 		
 		List<DataCollection> aliProductList = new ArrayList<DataCollection>();
 		
@@ -197,6 +241,9 @@ public class DataCollectionUtil {
 			for (Object variationColorObj : variationColorList) {
 				Map<String, String> detailVariationColorMap = (Map<String, String>) variationColorObj;
 				String imageUrl = detailVariationColorMap.get("imageUrl");
+				if (StringUtils.isEmpty(imageUrl)) {
+					imageUrl = mainImage;
+				}
 				String variationColorName = detailVariationColorMap.get("name");
 				if (CollectionUtils.isNotEmpty(variationSizeList)) {
 					for (Object variationSizeObj : variationSizeList) {
@@ -251,7 +298,7 @@ public class DataCollectionUtil {
 		dataCollection.setUrl(this.url);
 		dataCollection.setStatus(DataCollectionStatusEnum.WAIT_EDIT.getValue());
 		dataCollection.setCollectionTime(new MyDate().getCurrentDateTime());
-		dataCollection.setWeight(unitWeight);
+		dataCollection.setWeight(unitWeight * 1000);
 		dataCollection.setUnit(unit);
 		Dumper.dump(dataCollection);
 		return dataCollection;

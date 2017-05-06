@@ -53,20 +53,22 @@
 	      <table class="tb_border tb_full stripe" id="userManageTable" name="pageTable">
 	          <tr>
 	          	<th></th>
+	          	<th>ID</th>
 	          	<th>主图</th>
 	            <th>SKU</th>
 	            <th>SPU</th>
 	            <th>颜色</th>
 	            <th>尺寸</th>
 	            <th>价格（¥）</th>
-	            <th>单件重量（Kg）</th>
+	            <th>重量（g）</th>
 	            <th>运费（¥）</th>
 	            <th>起批数量</th>
 	            <th>采集状态</th>
-	            <th>采集时间</th>
+	            <th style="min-width:170px;">采集时间</th>
 	            <th>操作</th>
 	          </tr>
 	          <tr class="conditionTr">
+	          	<td></td>
 	          	<td></td>
 	          	<td></td>
 	          	<td>
@@ -91,9 +93,9 @@
 	          		<ul>
 	          			<li>
 	          				<#if page.params.status??> 
-	          					<@select id="status" name="params[status]" selected="${page.params.status}" optionClass="DataCollectionStatus"  cssClass="sel width_100px" headerKey="" headerValue=""/>
+	          					<@select id="status" name="params[status]" selected="${page.params.status}" optionClass="DataCollectionStatus"  cssClass="sel width_60px" headerKey="" headerValue=""/>
 	          				<#else>
-	          					<@select id="status" name="params[status]"  optionClass="DataCollectionStatus"  cssClass="sel width_100px" headerKey="" headerValue=""/>
+	          					<@select id="status" name="params[status]"  optionClass="DataCollectionStatus"  cssClass="sel width_60px" headerKey="" headerValue=""/>
 	          				</#if>
 	          			</li>
 	          			<li></li>
@@ -118,6 +120,7 @@
 	          		<#list collection as obj>
 	      		 <tr>
 		            <td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="${obj.id}" onclick="countCheckbox()" /></td>
+		            <td>${obj.id}</td>
 		            <td>
             			<img src="${obj.imageUrl!""}" data-image="${obj.imageUrl!""}" class="img-thumbnail" width="80"/>
         				<br/><a href="${obj.url!"#"}" target="_blank">采集链接</a>
@@ -151,7 +154,7 @@
 						  	<span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu pull-right" role="menu">
-							    <li><a href="javascript:void(0)" onclick="editProduct()"><i class="icon icon-edit"></i> 编辑 </a></li>
+							    <li><a href="javascript:void(0)" onclick="editDataCollection(${obj.id})"><i class="icon icon-edit"></i> 编辑 </a></li>
 							    <li class="divider"></li>
 							    <li><a href="javascript:void(0)" onclick="confirmMsg('deleteDataCollection(${obj.id})')" ><i class="icon icon-trash"></i> 删除 </a></li>
 						  </ul>
@@ -175,7 +178,7 @@
 								<select class="sel" id="batchOptionSelect">
 									<option value="" selected></option>
 									<option value="batchDeleteDataCollection">批量删除</option>
-									<option value="batchSubmitAudit">批量移送产品中心</option>
+									<option value="batchMoveToProduct">批量移送产品中心</option>
 								</select>
 								&nbsp; <button class="btn btn-sm" type="button" onclick="batchOptionSubmit()">提交</button>
 							</td>
@@ -187,52 +190,33 @@
 	  </div>
 	</div>
 	
-	<!--
-	<div id="dataCollectionDialog" style="display:none;" title="产品采集">
-		<div class="alert alert-info" style="padding:10px;">
-		 	目前支持：1688网站采集，请勿输入多个网址，单次只允许采集一个网址的产品信息。
-		</div>
-		<table style="width:100%">
-			<tr>
-				<td>
-					<textarea class="txt width_100 remark" name="collectionUrl" style="height:60px;" placeholder="请填写要采集的产品网址"></textarea>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div class="fr small_size" style="margin-top:10px;margin-bottom: 10px;"> 
-						<button class="btn btn-sm btn-primary" type="button" onclick="startCollection()">
-							开始采集
-						</button>
-						<button class="btn btn-sm" type="button" onclick="resetCollectionUrl()">
-							清空
-						</button>
-					</div>
-				</td>
-			</tr>
-		</table>
-		
-		SPU&nbsp;:&nbsp;<input type="text" class="txt width_100px" name="firstSku"/>
+	<div id="dataCollectionDialog" style="display:none;" title="编辑">
+		SPU&nbsp;:&nbsp;<input type="text" class="txt width_100px" name="globalSku"/>
 		<button class="btn btn-sm" type="button" onclick="aKeyCreateSku()">
-		一键生成SKU</button> 生成格式为：SPU-颜色-尺寸
-		<table class="tb_border tb_full stripe" style="margin-top:10px;" name="collectionResultTable">
+		一键生成SKU</button> 生成格式为：SPU-颜色-尺寸&nbsp;|&nbsp;
+		价格&nbsp;:&nbsp;<input type="text" class="txt width_50px" name="globalPrice"/>&nbsp;|&nbsp;
+		重量&nbsp;:&nbsp;<input type="text" class="txt width_50px" name="globalWeight"/>&nbsp;|&nbsp;
+		运费&nbsp;:&nbsp;<input type="text" class="txt width_50px" name="globalFreight"/>
+		<button class="btn btn-sm" type="button" onclick="aKeyCoverData()">一键覆盖数据</button>
+		
+		<input type="hidden" class="width_10px" name="editSpiderUrl" value=""/>
+		<button class="btn btn-sm" type="button" onclick="openSpiderLink()"><i class="icon icon-link"></i>采购链接</button>
+		统计：一共&nbsp;<span id="spiderTotal">0</span>&nbsp;条数据
+		<table class="tb_border tb_full stripe" style="margin-top:10px;" name="collectionEditTable">
 			<tr>
-				<th></th>
+				<th>ID</th>
 				<th>主图</th>
 				<th>SKU</th>
 				<th>SPU</th>
 				<th>颜色</th>
 				<th>尺寸</th>
-				<th>价格</th>
-				<th>重量</th>
-				<th>运费</th>
-				<th>起批数量</th>
+				<th>价格（¥）</th>
+				<th>重量（g）</th>
+				<th>运费（¥）</th>
 				<th>操作</th>
 			</tr>
 		</table>
-		
 	</div>
-	-->
 	
   </body>
 </html>

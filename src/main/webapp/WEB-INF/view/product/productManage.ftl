@@ -37,12 +37,12 @@
 	      <table class="tb_border tb_full stripe" id="userManageTable" name="pageTable">
 	          <tr>
 	          	<th></th>
+	          	<th style="min-width:110px;">主图</th>
 	            <th>SKU</th>
 	            <th>SPU</th>
 	            <th>基本信息</th>
 	            <th>颜色</th>
 	            <th>尺寸</th>
-	            <th style="min-width:110px;">主图</th>
 	            <!--
 	            <th>尺寸信息</th>
 	            -->
@@ -54,6 +54,7 @@
 	            <th>操作</th>
 	          </tr>
 	          <tr class="conditionTr">
+	          	<td></td>
 	          	<td></td>
 	          	<td>
 	          		<ul>
@@ -92,7 +93,6 @@
           				<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[productSizeLike]" <#if page.params.productSizeLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
-	          	<td></td>
 	          	<td></td>
 	          	<td>
 	          		<ul>
@@ -145,6 +145,10 @@
 	      		 <tr>
 		            <td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="${obj.id}" onclick="countCheckbox()" /></td>
 		            <td>
+		            	<img src="${obj.mainImage!''}" data-image="${obj.mainImage!''}" class="img-thumbnail" width="110"/>
+		            	<!--<img src="${obj.mainImage!''}" width="100" height="100"/>-->
+		            </td>
+		            <td>
 		            	${obj.sku!''}
 		            </td>
 		            <td>
@@ -156,10 +160,6 @@
 		            </td>
 		            <td>${obj.color!''}</td>
 		            <td>${obj.size!''}</td>
-		            <td>
-		            	<img src="${obj.mainImage!''}" data-image="${obj.mainImage!''}" class="img-thumbnail" width="110"/>
-		            	<!--<img src="${obj.mainImage!''}" width="100" height="100"/>-->
-		            </td>
 		            <!--
 		            <td>
 		            	包裹长度：10（cm）<br/>

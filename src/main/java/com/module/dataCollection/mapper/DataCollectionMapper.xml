@@ -73,4 +73,61 @@
     	delete from data_collection where id = #{id}
     </delete>
     
+    <select id="getDataCollectionById" parameterType="int" resultType="DataCollection">
+    	select * from data_collection where id = #{id}
+    </select>
+    
+    <select id="getDataCollectionListByUrl" parameterType="string" resultType="DataCollection">
+    	select * from data_collection where url = #{url}
+    </select>
+    
+    <update id="updateDataCollection" parameterType="DataCollection">
+    	update data_collection 
+    	<set>
+       		<if test="sku !=null and sku !=''">
+				sku = #{sku},
+			</if>
+			<if test="spu !=null and spu !=''">
+				spu = #{spu},
+			</if>
+			<if test="status !=null and status !=''">
+				status = #{status},
+			</if>
+			<if test="url !=null and url !=''">
+				url = #{url},
+			</if>
+			<if test="color !=null and color !=''">
+				color = #{color},
+			</if>
+			<if test="size !=null and size !=''">
+				size = #{size},
+			</if>
+			<if test="imageUrl !=null and imageUrl !=''">
+				imageUrl = #{imageUrl},
+			</if>
+			<if test="canBookCount !=null and canBookCount !=''">
+				canBookCount = #{canBookCount},
+			</if>
+			<if test="beginAmount !=null and beginAmount !=''">
+				beginAmount = #{beginAmount},
+			</if>
+			<if test="price !=null and price !=''">
+				price = #{price},
+			</if>
+			<if test="weight !=null and weight !=''">
+				weight = #{weight},
+			</if>
+			<if test="freight !=null and freight !=''">
+				freight = #{freight},
+			</if>
+			<if test="collectionTime !=null and collectionTime !=''">
+				collectionTime = #{collectionTime},
+			</if>
+			<if test="unit !=null and unit !=''">
+				unit = #{unit},
+			</if>
+       	</set>
+        where id = #{id}   
+    </update>
+    
 </mapper>  

@@ -12,4 +12,10 @@ public interface DataCollectionDao {
 	public List<Map<String, Object>> getCollectionPage(Page page);
 
 	public void deleteDataCollectionById(Integer id);
+
+	public DataCollection getDataCollectionById(Integer id);
+
+	public List<DataCollection> getDataCollectionListByUrl(String url);
+
+	public void updateDataCollection(DataCollection dataCollection);
 }
