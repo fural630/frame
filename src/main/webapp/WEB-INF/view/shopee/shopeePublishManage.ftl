@@ -89,7 +89,7 @@
 			            <td>${obj.sku}</td>
 			            <td>${obj.parentSku!""}</td>
 			            <td><img src="${obj.mainImage!''}" data-image="${obj.mainImage!''}" class="img-thumbnail" width="110"/></td>
-			            <td>${obj.productName}</td>
+			            <td>${obj.productName!''}</td>
 			            <!--<td>${obj.brand!""}</td>-->
 			            <td>${obj.variationName!""}</td>
 			            <td>${obj.categoryId!""}</td>
