@@ -57,6 +57,8 @@ public class Product {
 	private String createTime;
 	private String updateTime;
 	
+	private Double freight;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -320,6 +322,12 @@ public class Product {
 	}
 	public void setSize(String size) {
 		this.size = size;
+	}
+	public Double getFreight() {
+		return freight;
+	}
+	public void setFreight(Double freight) {
+		this.freight = freight;
 	}
 	
 }

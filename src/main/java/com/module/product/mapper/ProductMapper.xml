@@ -139,7 +139,8 @@
 			createTime,
 			updateTime,
 			size,
-			color
+			color,
+			freight
    		) values (
    			#{sku},
 			#{spu},
@@ -181,7 +182,8 @@
 			#{createTime},
 			#{updateTime},
 			#{size},
-			#{color}
+			#{color},
+			#{freight}
    		)
     </insert>
     
@@ -335,6 +337,9 @@
 			</if>
 			<if test="color !=null and color !=''">
 				color = #{color},
+			</if>
+			<if test="freight !=null and freight !=''">
+				freight = #{freight},
 			</if>
        	</set>
         where id = #{id}   

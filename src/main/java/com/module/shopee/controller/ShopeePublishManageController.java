@@ -287,4 +287,22 @@ public class ShopeePublishManageController extends MainPage{
 		}
 		return JsonUtil.toJsonStr(returnMessage);
 	}
+	
+	@RequestMapping("getPurchasePriceAndFreight")
+	@ResponseBody
+	public String getPurchasePriceAndFreight(String sku) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		Product product = productService.getProductBySku(sku);
+		String purchasePrice = "";
+		String freight = "";
+		if (null != product) {
+			purchasePrice = product.getPurchasePrice() == null ? "" : String.valueOf(product.getPurchasePrice());
+			freight = product.getFreight() == null ? "" : String.valueOf(product.getFreight());;
+		}
+		resultMap.put("purchasePrice", purchasePrice);
+		resultMap.put("freight", freight);
+		ReturnMessage returnMessage = new ReturnMessage();
+		returnMessage.setData(resultMap);
+		return JsonUtil.toJsonStr(returnMessage);
+	}
 }

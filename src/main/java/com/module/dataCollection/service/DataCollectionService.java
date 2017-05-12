@@ -136,6 +136,7 @@ public class DataCollectionService {
 					product.setPackageWeight(dataCollection.getWeight());
 					product.setAuditStatus(ProductAuditStatusEnum.WAIT_DISTRIBUTE.getValue());
 					product.setOptionLog(SysRemark.appendMore("", myLocale.getText("create.by.spider")));
+					product.setFreight(dataCollection.getFreight());
 					
 					productDao.insertProduct(product);
 					

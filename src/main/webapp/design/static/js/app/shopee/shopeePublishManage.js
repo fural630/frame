@@ -790,6 +790,32 @@ function getVariationSelect(sku, rowId) {
 	});
 }
 
+function getPurchasePriceAndFreight(sku, rowId) {
+	$.ajax({
+		url : "/shopee/getPurchasePriceAndFreight",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			sku : sku
+		},
+		success : function (data) {
+			if(data.status == "1") {
+				var returnDataMap = data.data;
+				var purchasePrice = returnDataMap.purchasePrice;
+				var freight = returnDataMap.freight;
+				if ($.trim(purchasePrice) == "") {
+					purchasePrice = "未设置";
+				}
+				if ($.trim(freight) == "") {
+					freight = "未设置";
+				}
+				$("#shopeeProductDialog").find("#multiPurchasePrice_"+ rowId).text(purchasePrice);
+				$("#shopeeProductDialog").find("#multiFreight_"+ rowId).text(freight);
+			}
+		}
+	});
+}
+
 function cleanMultiSkuTable() {
 	$("table[name=multiSkuTable] tr:gt(0)").remove();
 }
@@ -861,6 +887,12 @@ function addShopeeMultiSkuRow(shopeePublish) {
 	html += 		'<input type="number" class="txt width_90px" name="multiStock_{rowId}" value="{multiStock}" onkeyup="inputNumOnly(this)"/>';
 	//html += 		'&nbsp;<button class="btn btn-sm" type="button" onclick="copyToSpuStock()">粘贴到所有库存</button>';
 	html += 	'</td>';
+	html += 	'<td>';
+	html += 		'<span id="multiPurchasePrice_{rowId}">0<span>';
+	html += 	'</td>';
+	html += 	'<td>';
+	html += 		'<span id="multiFreight_{rowId}">0<span>';
+	html += 	'</td>';
 	html += '</tr>';
 	
 	html = html.replace(/{rowId}/g, maxId);
@@ -877,6 +909,7 @@ function addShopeeMultiSkuRow(shopeePublish) {
 	html = html.replace(/{multiStock}/g, stock);
 	$("table[name=multiSkuTable]").append(html);
 	getVariationSelect(shopeePublish.sku, maxId);
+	getPurchasePriceAndFreight(shopeePublish.sku, maxId);
 	
 	if (shopeePublish == undefined) {
 		var param = {status : 1};

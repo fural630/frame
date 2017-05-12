@@ -170,6 +170,7 @@
 		            -->
 		            <td>
 		            	采购价：${obj.purchasePrice!''}<br/>
+		            	采购运费：${obj.freight!''}<br/>
 		            	采购链接：<a href="${obj.purchaseUrl!''}" target="_blank" >打开链接</a><br/>
 		            	采购备注：${obj.purchaseNotes!''}
 		            </td>
@@ -393,6 +394,10 @@
 		 		<tr>
 		 			<td class="title width_100px">采购价格</td>
 		 			<td><input type="text" class="txt width_100px" name="purchasePrice"/></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="title width_100px">采购运费</td>
+		 			<td><input type="text" class="txt width_100px" name="freight"/></td>
 		 		</tr>
 		 		<tr>
 		 			<td class="title width_100px">采购链接</td>

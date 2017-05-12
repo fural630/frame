@@ -330,6 +330,7 @@ function saveProduct() {
 	var declarationNameEn = $.trim(dialog.find("input[name=declarationNameEn]").val());
 	
 	var purchasePrice = $.trim(dialog.find("input[name=purchasePrice]").val());
+	var freight = $.trim(dialog.find("input[name=freight]").val());
 	var purchaseUrl = $.trim(dialog.find("input[name=purchaseUrl]").val());
 	var purchaseNotes = $.trim(dialog.find("textarea[name=purchaseNotes]").val());
 	var salesNotes = $.trim(dialog.find("textarea[name=salesNotes]").val());
@@ -402,6 +403,7 @@ function saveProduct() {
 			declarationNameCn : declarationNameCn,
 			declarationNameEn : declarationNameEn,
 			purchasePrice : purchasePrice,
+			freight : freight,
 			purchaseUrl : purchaseUrl,
 			purchaseNotes : purchaseNotes,
 			salesNotes : salesNotes,
@@ -500,6 +502,7 @@ function fillingProductData(product, imageList) {
 	dialog.find("input[name=declarationNameEn]").val(product.declarationNameEn);
 	
 	dialog.find("input[name=purchasePrice]").val(product.purchasePrice);
+	dialog.find("input[name=freight]").val(product.freight);
 	dialog.find("input[name=purchaseUrl]").val(product.purchaseUrl);
 	dialog.find("textarea[name=purchaseNotes]").val(product.purchaseNotes);
 	dialog.find("textarea[name=salesNotes]").val(product.salesNotes);

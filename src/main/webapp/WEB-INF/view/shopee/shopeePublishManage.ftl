@@ -168,10 +168,12 @@
 	 	-->
  		<table class="popup_tb" style="margin-top:10px;" name="multiSkuTable">
 	 		<tr>
-	 			<td class="title" style="width:30%">SKU<i class="star">*</i></td>
-	 			<td class="title" style="width:40%">变体名称<i class="star">*</i></td>
-	 			<td class="title" style="width:15%">价格<i class="star">*</i></td>
+	 			<td class="title" style="width:25%">SKU<i class="star">*</i></td>
+	 			<td class="title" style="width:30%">变体名称<i class="star">*</i></td>
+	 			<td class="title" style="width:10%">价格<i class="star">*</i></td>
 	 			<td class="title" style="width:15%">库存<i class="star">*</i></td>
+	 			<td class="title" style="width:10%">采购价(¥)</td>
+	 			<td class="title" style="width:10%">运费(¥)</td>
 	 		</tr>
 	 		<!--
 	 		<tr id="multiRow_0">
