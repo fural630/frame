@@ -6,39 +6,39 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.module.system.dao.PlatformDao;
-import com.module.system.model.Platform;
+import com.module.system.dao.PlatformSiteDao;
+import com.module.system.model.PlatformSite;
 
 @Service
-public class PlatformService {
+public class PlatformSiteService {
 	
 	@Autowired(required = false)
-	private PlatformDao platformDao;
+	private PlatformSiteDao platformDao;
 
-	public List<Platform> getPlatformList() {
+	public List<PlatformSite> getPlatformList() {
 		return platformDao.getPlatformList();
 	}
 
-	public Platform getPlatformById(Integer id) {
+	public PlatformSite getPlatformById(Integer id) {
 		return platformDao.getPlatformById(id);
 	}
 
-	public Platform getPlatformByName(String platfromName) {
+	public PlatformSite getPlatformByName(String platfromName) {
 		return platformDao.getPlatformByName(platfromName);
 	}
 
-	public void insertPlatform(Platform platform) {
+	public void insertPlatform(PlatformSite platform) {
 		platformDao.insertPlatform(platform);
 	}
 
-	public boolean checkPlatformCanSave(Platform platform) {
+	public boolean checkPlatformCanSave(PlatformSite platform) {
 		if (platform.getId() == null) {	//create
-			Platform temPlatform = getPlatformByName(platform.getName());
+			PlatformSite temPlatform = getPlatformByName(platform.getName());
 			if (temPlatform == null) {
 				return true;
 			}
 		} else {	//edit
-			List<Platform> platformList = getPlatformByNameNeId(platform.getName(), platform.getId());
+			List<PlatformSite> platformList = getPlatformByNameNeId(platform.getName(), platform.getId());
 			if (CollectionUtils.isEmpty(platformList)) {
 				return true;
 			}
@@ -46,11 +46,11 @@ public class PlatformService {
 		return false;
 	}
 	
-	public List<Platform> getPlatformByNameNeId(String platformName, Integer id) {
+	public List<PlatformSite> getPlatformByNameNeId(String platformName, Integer id) {
 		return platformDao.getPlatformByNameNeId(platformName, id);
 	}
 
-	public void updatePlatform(Platform platform) {
+	public void updatePlatform(PlatformSite platform) {
 		platformDao.updatePlatform(platform);
 	}
 	

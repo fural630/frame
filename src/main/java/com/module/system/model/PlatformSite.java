@@ -1,6 +1,6 @@
 package com.module.system.model;
 
-public class Platform {
+public class PlatformSite {
 	private Integer id;
 	private String name;
 	public Integer getId() {
