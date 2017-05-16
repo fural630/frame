@@ -56,7 +56,7 @@ function savePlatformSite() {
 		alert(message);
 		return;
 	}
-	
+	 
 	
 }
 
