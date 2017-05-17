@@ -28,6 +28,7 @@ function initDialog () {
 function savePlatformSite() {
 	var dialog = $("#platFormSiteDialog");
 	
+	var id = $.trim(dialog.find("input[name='id']").val());
 	var platformId = dialog.find("select[name='platformId']").val();
 	var currency = dialog.find("select[name='currency']").val();
 	var language = dialog.find("select[name='language']").val();
@@ -56,8 +57,70 @@ function savePlatformSite() {
 		alert(message);
 		return;
 	}
-	 
 	
+	$.ajax({
+		url : "/system/savePlatformSite",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			id : id,
+			platformId : platformId,
+			currencyId : currency,
+			language : language,
+			siteNameCn : siteNameCn,
+			siteNameEn : siteNameEn
+		},
+		success : function (data) {
+			$.message.showMessage(data);
+			if (data.status == 1){
+				refresh(1000);
+			}
+		}
+	});
+}
+
+function editPlatformSite(id) {
+	var dialog = $("#platFormSiteDialog");
+	dialog.find("input[name='id']").val(id);
+	
+	$.ajax({
+		url : "/system/editPlatformSite",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			id : id
+		},
+		success : function (data) {
+			if (data.status == "1") {
+				var platformSite = data.data;
+				dialog.find("select[name='platformId']").val(platformSite.platformId);
+				dialog.find("select[name='currency']").val(platformSite.currencyId);
+				dialog.find("select[name='language']").val(platformSite.language);
+				dialog.find("input[name='siteNameCn']").val(platformSite.siteNameCn);
+				dialog.find("input[name='siteNameEn']").val(platformSite.siteNameEn);
+				showPlatformSiteDialog("编辑平台与站点配置");
+			} else {
+				$.message.showMessage(data);
+			}
+		}
+	});
+}
+
+function deletePlatformSite(id) {
+	$.ajax({
+		url : "/system/deletePlatformById",
+		type: 'POST',
+		dataType : "json",
+		data : {
+			id : id
+		},
+		success : function (data) {
+			$.message.showMessage(data);
+			if (data.status == 1){
+				refresh(1000);
+			}
+		}
+	});
 }
 
 function showPlatformSiteDialog(title) {

@@ -21,10 +21,10 @@
 	    
 	      <table class="tb_border tb_full stripe" id="userManageTable" name="pageTable">
 	          <tr>
-	          	<th>ID</th>
+	          	<th></th>
 	            <th>平台</th>
-	            <th>站点</th>
-	            <th>英文标识</th>
+	            <th>站点中文</th>
+	            <th>站点英文</th>
 	            <th>货币代码</th>
 	            <th>语言</th>
 	            <th>操作</th>
@@ -33,38 +33,47 @@
 	          	<td></td>
 	          	<td>
 	          		<ul>
+	          			<li>
 	          			<#if page.params.platformId??> 
           					<@select id="platformId" name="params[platformId]" selected="${page.params.platformId}" optionClass="Platform"  cssClass="sel width_100px" headerKey="" headerValue=""/>
           				<#else>
           					<@select id="platformId" name="params[platformId]"  optionClass="Platform"  cssClass="sel width_100px" headerKey="" headerValue=""/>
           				</#if>
+          				</li>
+	          			<li></li>
 	          		</ul>
 	          	</td>
 	          	<td>
 	          		<ul>
-	          			<li><input type="text" class="txt width_100px" name="params[sku]" value="${page.params.sku!''}" /></li>
-	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[skuLike]" <#if page.params.skuLike??> checked </#if>></li>
+	          			<li><input type="text" class="txt width_100px" name="params[siteNameCn]" value="${page.params.siteNameCn!''}" /></li>
+	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[siteNameCnLike]" <#if page.params.siteNameCnLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
 	          	<td>
 	          		<ul>
-	          			<li><input type="text" class="txt width_100px" name="params[sku]" value="${page.params.sku!''}" /></li>
-	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[skuLike]" <#if page.params.skuLike??> checked </#if>></li>
+	          			<li><input type="text" class="txt width_100px" name="params[siteNameEn]" value="${page.params.siteNameEn!''}" /></li>
+	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[siteNameEnLike]" <#if page.params.siteNameEnLike??> checked </#if>></li>
 	          		</ul>
 	          	</td>
 	          	<td>
 	          		<ul>
-	          			<li><input type="text" class="txt width_100px" name="params[sku]" value="${page.params.sku!''}" /></li>
-	          			<li>*&nbsp;<input type="checkbox" title="勾选启用模糊查找" name="params[skuLike]" <#if page.params.skuLike??> checked </#if>></li>
+          				<li>
+	          				<#if page.params.currencyId??> 
+	          					<@select id="currencyId" name="params[currencyId]" selected="${page.params.currencyId}" optionClass="Currency"  cssClass="sel width_100px" headerKey="" headerValue=""/>
+	          				<#else>
+	          					<@select id="currencyId" name="params[currencyId]"  optionClass="Currency"  cssClass="sel width_100px" headerKey="" headerValue=""/>
+	          				</#if>
+	          			</li>
+	          			<li></li>
 	          		</ul>
 	          	</td>
 	          	<td>
 	          		<ul>
 	          			<li>
-	          				<#if page.params.role??> 
-	          					<@select id="role" name="params[role]" selected="${page.params.role}" optionClass="Role"  cssClass="sel width_100px" headerKey="" headerValue=""/>
+	          				<#if page.params.language??> 
+	          					<@select id="language" name="params[language]" selected="${page.params.language}" optionClass="Language"  cssClass="sel width_100px" headerKey="" headerValue=""/>
 	          				<#else>
-	          					<@select id="role" name="params[role]"  optionClass="Role"  cssClass="sel width_100px" headerKey="" headerValue=""/>
+	          					<@select id="language" name="params[language]"  optionClass="Language"  cssClass="sel width_100px" headerKey="" headerValue=""/>
 	          				</#if>
 	          			</li>
 	          			<li></li>
@@ -73,17 +82,15 @@
 	          	<td></td>
 	          </tr>
 	          </form>
-	          <#--
 	          	<#if collection??>
 	          		<#list collection as obj>
-	          -->
 	      		 <tr>
-		            <td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="1" onclick="countCheckbox()" /></td>
-		            <td></td>
-		            <td></td>
-		            <td></td>
-		            <td></td>
-		            <td></td>
+		            <td style="text-align:center"><input name="main_page_checkbox" type="checkbox" value="${obj.id}" onclick="countCheckbox()" /></td>
+		            <td><@matchValue key="${obj.platformId}" optionClass="Platform"/></td>
+		            <td>${obj.siteNameCn}</td>
+		            <td>${obj.siteNameEn}</td>
+		            <td><@matchValue key="${obj.currencyId}" optionClass="Currency"/></td>
+		            <td><@matchValue key="${obj.language}" optionClass="Language"/></td>
 		            <td class="optionTd" style="width:60px;text-align:center;">
 		            	<div class="btn-group">
 						  <button type="button" class="btn dropdown-toggle btn-sm" data-toggle="dropdown">
@@ -91,18 +98,15 @@
 						  	<span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu pull-right" role="menu">
-						    <li><a href="javascript:void(0)" onclick="editUserInfo()" ><i class="icon icon-pencil"></i> 编辑 </a></li>
-						    <li><a href="javascript:void(0)" onclick="permissionEdit()" ><i class="icon icon-eye-open"></i> 导航权限设置</a></li>
+						    <li><a href="javascript:void(0)" onclick="editPlatformSite(${obj.id})" ><i class="icon icon-pencil"></i> 编辑 </a></li>
 						    <li class="divider"></li>
-						    <li><a href="javascript:void(0)" onclick="confirmMsg('deleteUser()')" ><i class="icon icon-trash"></i> 删除 </a></li>
+						    <li><a href="javascript:void(0)" onclick="confirmMsg('deletePlatformSite(${obj.id})')" ><i class="icon icon-trash"></i> 删除 </a></li>
 						  </ul>
 						</div>
 		            </td>
 		          </tr>
-		          <#--
 		          </#list>
 		  		</#if>
-		  		-->
 	      </table>
 	      
 			<div class="paging clearfix">

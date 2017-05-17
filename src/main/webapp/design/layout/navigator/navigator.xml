@@ -4,6 +4,7 @@
 		<!--<announcement.manage link="/system/announcementManage" icon="icon-bullhorn"></announcement.manage>
 		-->
 		<platform.site.config link="/system/platformSiteManage" icon="icon-branch"></platform.site.config>
+		<publish.user.distribution link="/system/publishUserDistributeManage" icon="icon-hand-right"></publish.user.distribution>
 	</system.manage>
 	<product.center icon="icon-cube-alt" sort="2">
 		<product.manage link="/product/productManage" icon="icon-cubes">

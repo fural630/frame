@@ -1,44 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
-<mapper namespace="com.module.system.dao.PlatformDao">  
-     
-    <insert id="insertPlatform" parameterType="Platform">  
-        insert into platform (
-        	name
+<mapper namespace="com.module.system.dao.PlatformSiteDao">  
+	
+	<select id="getPlatformSitePage" resultType="hashMap" parameterType="Page">
+		select * from platform_site t
+    	<where>
+    		<if test="params.platformId !=null and params.platformId !=''">
+	 			and t.platformId = #{params.platformId}
+	   		</if>
+	   		<if test="params.currencyId !=null and params.currencyId !=''">
+	 			and t.currencyId = #{params.currencyId}
+	   		</if>
+	   		<if test="params.language !=null and params.language !=''">
+	 			and t.language = #{params.language}
+	   		</if>
+	    	<choose>
+				<when test="params.siteNameCnLike!=null and params.siteNameCnLike!='' ">
+					and t.siteNameCn like CONCAT('%','${params.siteNameCn}','%')  
+				</when>
+				<when test="params.siteNameCn!=null and params.siteNameCn!=''">
+					and t.siteNameCn = #{params.siteNameCn}
+				</when> 		
+	   		</choose>
+	   		<choose>
+				<when test="params.siteNameEnLike!=null and params.siteNameEnLike!='' ">
+					and t.siteNameEn like CONCAT('%','${params.siteNameEn}','%')  
+				</when>
+				<when test="params.siteNameEn!=null and params.siteNameEn!=''">
+					and t.siteNameEn = #{params.siteNameEn}
+				</when>
+	   		</choose>
+   		</where>
+		order by t.id desc
+	</select>
+
+    <insert id="insertPlatformSite" parameterType="PlatformSite">  
+        insert into platform_site (
+        	platformId,
+        	currencyId,
+        	language,
+        	siteNameCn,
+        	siteNameEn
         ) values(
-        	#{name}
+        	#{platformId},
+        	#{currencyId},
+        	#{language},
+        	#{siteNameCn},
+        	#{siteNameEn}
         )  
     </insert>  
     
-    <update id="updatePlatform" parameterType="Platform">  
-        update platform
+    <update id="updatePlatformSite" parameterType="PlatformSite">  
+        update platform_site
         	<set>
-        		<if test="name !=null and name !=''">
-					name = #{name},
+        		<if test="platformId !=null and platformId !=''">
+					platformId = #{platformId},
+        		</if>
+        		<if test="currencyId !=null and currencyId !=''">
+					currencyId = #{currencyId},
+        		</if>
+        		<if test="language !=null and language !=''">
+					language = #{language},
+        		</if>
+        		<if test="siteNameCn !=null and siteNameCn !=''">
+					siteNameCn = #{siteNameCn},
+        		</if>
+        		<if test="siteNameEn !=null and siteNameEn !=''">
+					siteNameEn = #{siteNameEn},
         		</if>
         	</set>
         where id = #{id}   
     </update>  
     
-    <delete id="deletePlatformById" parameterType="int">  
-        delete from platform where id = #{id}  
-    </delete>  
-       
-    <select id="getPlatformById" parameterType="int" resultType="Platform">  
-        select * from platform where id = #{id}  
-    </select>
+  	<select id="checkeSiteNameEnExist" parameterType="string" resultType="PlatformSite">
+  		select * from platform_site where siteNameEn = #{siteNameEn}
+  	</select>
+  	
+  	<select id="checkSiteNameNoContainShelf" parameterType="hashMap" resultType="PlatformSite">
+  		select * from platform_site where siteNameEn = #{siteNameEn} and id != #{id}
+  	</select>
+  	
+  	<select id="getPlatformById" parameterType="int" resultType="PlatformSite">
+  		select * from platform_site where id = #{id}
+  	</select>
+  	
+  	<delete id="deletePlatformById" parameterType="int">
+  		delete from platform_site where id = #{id}  
+  	</delete>
     
-    <select id="getPlatformList" resultType="User">  
-        select * from platform  
-    </select>  
-    
-    <select id="getPlatformByName" resultType="Platform" parameterType="string">
-    	select * from platform where name = #{name}
-    </select>
-    
-    <select id="getPlatformByNameNeId" resultType="Platform" parameterType="hashMap">
-    	select * from platform where name = #{platformName} and id != #{id}
-    </select>
-    
-</mapper>  
+</mapper>   
