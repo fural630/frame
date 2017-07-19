@@ -53,9 +53,3 @@ package com.util;
 /* 53 */     return this.fullPath.substring(0, sep);
 /*    */   }
 /*    */ }
-
-/* Location:           /home/tomtop2028/.m2/repository/com/tomtop/jtomtoperp-system/1.1.9.0/jtomtoperp-system-1.1.9.0.jar
- * Qualified Name:     com.tomtop.system.libraries.util.Filename
- * Java Class Version: 8 (52.0)
- * JD-Core Version:    0.7.0.1
- */
