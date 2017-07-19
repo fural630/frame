@@ -88,5 +88,9 @@
   	<delete id="deletePlatformById" parameterType="int">
   		delete from platform_site where id = #{id}  
   	</delete>
+  	
+  	<select id="findAllSite" resultType="PlatformSite">
+  		select * from platform_site
+  	</select>
     
 </mapper>   

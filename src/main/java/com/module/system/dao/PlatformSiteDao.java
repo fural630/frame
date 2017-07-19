@@ -25,5 +25,7 @@ public interface PlatformSiteDao {
 	
 	public void deletePlatformById(Integer id);
 
+	public List<PlatformSite> findAllSite();
+
 
 }
