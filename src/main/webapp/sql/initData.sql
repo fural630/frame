@@ -1,1 +1,0 @@
-INSERT INTO `user` VALUES ('1', '老李', '2028', '2jwecGD86G4=', null, '1', null, null, '2016-12-05 19:46:01', '100');
