@@ -3,3 +3,5 @@
 .settings/
 src/main/webapp/.gitignore
 /target
+frame-common/target
+frame-admin/target
