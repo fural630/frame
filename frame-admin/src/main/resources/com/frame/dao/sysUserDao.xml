@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frame.dao.SysUserDao">
+
+<resultMap id="BaseResultMap" type="com.frame.entity.UserPO">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="birth_day" jdbcType="CHAR" property="birthDay" />
+    <result column="pass_word" jdbcType="VARCHAR" property="passWord" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="CHAR" property="phone" />
+    <result column="id_card" jdbcType="CHAR" property="idCard" />
+    <result column="avatar_id" jdbcType="VARCHAR" property="avatarId" />
+    <result column="department_cid" jdbcType="VARCHAR" property="departmentCid" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+</resultMap>
+  
+  <select id="selectAllUsers" resultMap="BaseResultMap">
+  	select * from system_user
+  </select>
+  
+</mapper>

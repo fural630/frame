@@ -78,14 +78,14 @@
 								<a href="">超链接</a>
 							</dd>
 						</dl></li>
-					<li class="layui-nav-item"><a data-url="/user/userManage">用户管理</a></li>
+					<li class="layui-nav-item"><a data-url="/user/list">用户管理</a></li>
 					<li class="layui-nav-item"><a data-url="">发布商品</a></li>
 				</ul>
 			</div>
 		</div>
 
 		<div class="layui-body">
-			<iframe src="/user/userManage" frameborder="0" class="mainframe" id="mainframe"></iframe>
+			<iframe src="/user/list" frameborder="0" class="mainframe" id="mainframe"></iframe>
 		</div>
 
 		<div class="layui-footer">
