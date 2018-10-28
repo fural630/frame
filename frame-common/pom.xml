@@ -8,16 +8,24 @@
 		<artifactId>frame</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+	
 	<artifactId>frame-common</artifactId>
 	<packaging>jar</packaging>
 	<name>frame-common</name>
-	<url>http://maven.apache.org</url>
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+		    <groupId>com.github.pagehelper</groupId>
+		    <artifactId>pagehelper-spring-boot-starter</artifactId>
+		    <version>1.2.9</version>
+		</dependency>
+		
 	</dependencies>
 	<build>
 		<finalName>frame-common</finalName>

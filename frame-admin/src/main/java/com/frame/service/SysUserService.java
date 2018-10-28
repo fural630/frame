@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.frame.dao.SysUserDao;
 import com.frame.entity.UserPO;
+import com.frame.page.Page;
+import com.frame.page.RePage;
+import com.github.pagehelper.PageHelper;
 
 @Service
 public class SysUserService {
@@ -16,6 +19,12 @@ public class SysUserService {
 	
 	public List<UserPO> getUserList() {
 		return sysUserDao.selectAllUsers();
+	}
+
+	public RePage<UserPO> getUserTable(Page page) {
+		PageHelper.startPage(page.getNowPage(), page.getPageSize());
+		List<UserPO> userPoList = sysUserDao.selectAllUsers();
+		return new RePage<UserPO>(page, userPoList);
 	}
 	
 }
