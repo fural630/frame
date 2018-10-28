@@ -1,11 +1,13 @@
 package com.frame.entity;
 
-public class UserPO {
+import java.util.Date;
+
+public class SysUserEntity {
     private String id;
 
     private String name;
 
-    private String birthDay;
+    private Date birthDay;
 
     private String passWord;
 
@@ -41,15 +43,15 @@ public class UserPO {
         this.name = name;
     }
 
-    public String getBirthDay() {
-        return birthDay;
-    }
+    public Date getBirthDay() {
+		return birthDay;
+	}
 
-    public void setBirthDay(String birthDay) {
-        this.birthDay = birthDay;
-    }
+	public void setBirthDay(Date birthDay) {
+		this.birthDay = birthDay;
+	}
 
-    public String getPassWord() {
+	public String getPassWord() {
         return passWord;
     }
 
@@ -120,4 +122,5 @@ public class UserPO {
     public void setStatus(Integer status) {
         this.status = status;
     }
+	
 }
