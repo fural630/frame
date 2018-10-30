@@ -35,10 +35,12 @@ function transDate(date, fmt) {
     }
 };
 
-function transDateTime(date) {
-	if (date) {
-		transDate(date, 'yyyy年MM月dd日');
-	} else {
-		return '';
+function transUserStatus (status) {
+	if (status == 1) {
+		return '<button class="layui-btn layui-btn-sm layui-btn-normal">正常</button>';
 	}
+	if (status == 0) {
+		return '<button class="layui-btn layui-btn-sm layui-btn-danger">禁用</button>';
+	}
+	return '';
 }

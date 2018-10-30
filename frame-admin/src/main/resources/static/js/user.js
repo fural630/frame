@@ -1,7 +1,8 @@
-new Vue({
+var app = new Vue({
   el: '#app',
   data: {
-    message: 'Hello Vue.js!'
+    message: 'Hello Vue.js!',
+    seen : true
   }
 })
 
@@ -36,18 +37,13 @@ layui.use('table', function() {
 		  }
 		  ,{field : 'birthDay', width : 120, title : '出生日期', 
 			  templet : function (d) {
-				  return transDate(d.birthDay)
+				  return transDate(d.birthDay, 'yyyy年MM月dd日')
 			  }
 		  }
 		  ,{field : 'departmentCid', minWidth : 100, title: '所属部门'}
 		  ,{field : 'status', width : 80, title : '状态', sort : true, 
 			  templet : function (d) {
-				  if (d.status == 0) {
-					  return '<button class="layui-btn layui-btn-sm layui-btn-danger">禁用</button>'
-				  } else if (d.status == 1) {
-					  return '<button class="layui-btn layui-btn-sm layui-btn-normal">正常</button>'
-				  }
-				  return '';
+				  return transUserStatus(d.status)
 			  }
 		  }
 		]]

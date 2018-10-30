@@ -25,7 +25,6 @@ public class SysUserService {
 	public RePage<SysUserEntity> getUserTable(Page page) {
 		PageHelper.startPage(page.getNowPage(), page.getPageSize());
 		List<SysUserEntity> sysUserList = sysUserDao.selectAllUsers();
-		Dumper.dump(sysUserList);
 		return new RePage<SysUserEntity>(page, sysUserList);
 	}
 	
