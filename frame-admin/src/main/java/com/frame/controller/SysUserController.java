@@ -1,19 +1,22 @@
 package com.frame.controller;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.frame.entity.SysUserEntity;
 import com.frame.page.Page;
 import com.frame.page.RePage;
 import com.frame.service.SysUserService;
+import com.frame.util.Dumper;
 
-@Controller
-@RequestMapping("/user")
+@RestController
+@RequestMapping("/sys/user")
 public class SysUserController {
     
     private static final Logger logger = LoggerFactory.getLogger(SysUserController.class);
@@ -21,9 +24,9 @@ public class SysUserController {
 	@Autowired
 	private SysUserService sysUserService;
 	
-	@RequestMapping("/getUserTable")
-	@ResponseBody
-	public RePage<SysUserEntity> getUserTable(Page page) {
+	@RequestMapping("/list")
+	public RePage<SysUserEntity> list(@RequestParam Map<String, Object> params, Page page) {
+		Dumper.dump(params);
 		return sysUserService.getUserTable(page);
 	}
 }

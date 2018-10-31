@@ -8,22 +8,21 @@
 </head>
 <body class="frame-body">
 	<div class="frame-fluid" id="app">
-		<p>{{ message }}</p>
 		<div class="frame-card">
 			<div class="layui-form frame-card-header layui-form-pane">
 				<div class="layui-form-item">
 					<label class="layui-form-label">姓名</label>
 					<div class="layui-input-inline">
-						<input type="text" name="title" autocomplete="off"
-							class="layui-input">
+						<input type="text" autocomplete="off"
+							class="layui-input" v-model.trim="name">
 					</div>
 					<label class="layui-form-label">所属部门</label>
 					<div class="layui-input-inline">
-						<input type="text" name="title" autocomplete="off"
-							class="layui-input">
+						<input type="text" autocomplete="off"
+							class="layui-input" v-model="deptId">
 					</div>
-					<button class="layui-btn"><i class="fa fa-search" aria-hidden="true"></i> 搜索</button>
-					<button class="layui-btn"><i class="fa fa-reply" aria-hidden="true"></i> 重置</button>
+					<button class="layui-btn" @click="search"><i class="fa fa-search" aria-hidden="true"></i> 搜索</button>
+					<button class="layui-btn" @click="reset"><i class="fa fa-reply" aria-hidden="true"></i> 重置</button>
 				</div>
 			</div>
 			<div class="layui-card-body">
@@ -32,7 +31,7 @@
 					<button class="layui-btn layui-btn-warm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> 修改</button>
 					<button class="layui-btn layui-btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> 删除</button>
 				</div>
-				<table class="layui-hide" id="userTable"></table>
+				<table class="layui-hide" id="userTable" lay-filter="userTable"></table>
 			</div>
 		</div>
 	</div>
