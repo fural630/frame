@@ -3,38 +3,34 @@ var vm = new Vue({
   data : {
 	  q : {
 		  name : '',
-		  departmentCid : '',
 		  status : ''
-	  },
-	  user : {
-		  username : '',
-		  deptName : '',
-		  email : '',
-		  mobile : '',
-		  roleIdList : [],
-		  status: 1
 	  },
 	  statusList : [
 		  { text : '正常', value : '1' },
 		  { text : '禁用', value : '0' }
 	  ],
 	  showList : true,
-	  title : ''
+	  title : '',
+	  user : {
+		  status : '1',
+		  username : '',
+		  email : '',
+		  deptName : ''
+	  }
   },
   methods : {
 	  query : function () {
-		  layui.table.reload('userTable', {
+		  layui.table.reload('demoTable', {
 			  where : {
-				  status : this.q.status === undefined ? '' : this.q.status,
 				  name : this.q.name,
-				  departmentCid : this.q.departmentCid
+				  status : this.q.status === undefined ? '' : this.q.status
 			  }
 		  });
 	  },
 	  add : function () {
 		  this.title = '添加';
+		  this.user.status = '1';
 		  this.showList = false;
-		  this.user.status = 1;
 	  },
 	  reload : function () {
 		  this.showList = true;
@@ -51,9 +47,9 @@ layui.use('table', function() {
 	var $ = layui.$;
 	
 	table.render({
-		elem: '#userTable'
-		,toolbar: '#userToolbar'
-		,url:'/sys/user/list'
+		elem: '#demoTable'
+		,toolbar: '#demoTable'
+		,url:'/sys/demo/list'
 		,autoSort : false
 		,request : {
 			pageName : 'nowPage',
@@ -67,21 +63,18 @@ layui.use('table', function() {
 		,cols: [[
 		  {type:'checkbox'}
 		  ,{field : 'id', width : 60, title : 'ID', sort : true }
-		  ,{field : 'name', width : 80, title : '姓名'}
-		  ,{field : 'account', width : 200, title : '账号'}
-		  ,{field : 'phone', width : 140, title : '电话'}
-		  ,{field : 'email', width : 180, title : '邮箱'}
+		  ,{field : 'userName', width : 80, title : '姓名'}
+		  ,{field : 'email', width : 200, title : '邮箱地址'}
 		  ,{field : 'sex', width : 70,  title : '性别', sort : true, 
 			  templet : function (d) {
 				  return transGender(d.sex)
 			  }
 		  }
-		  ,{field : 'birthDay', width : 120, title : '出生日期', 
+		  ,{field : 'birthDay', width : 160, title : '出生日期', 
 			  templet : function (d) {
 				  return transDate(d.birthDay, 'yyyy年MM月dd日')
 			  }
 		  }
-		  ,{field : 'departmentCid', minWidth : 100, title: '所属部门'}
 		  ,{field : 'status', width : 80, title : '状态', sort : true, 
 			  templet : function (d) {
 				  return transUserStatus(d.status)
@@ -91,8 +84,8 @@ layui.use('table', function() {
 		,page: true
 	});
 	
-	table.on('sort(userTable)', function (obj){
-		table.reload('userTable', {
+	table.on('sort(demoTable)', function (obj){
+		table.reload('demoTable', {
 		  initSort : obj,
 		  where : {
 			  field: obj.field,

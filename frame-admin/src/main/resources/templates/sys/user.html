@@ -62,14 +62,14 @@
 			            </form-item>
 			
 			            <form-item label="状态" prop="status">
-			                <radio-group v-model="user.status">
-			                    <radio label="0">
+			                <Radio-group v-model="user.status">
+			                    <Radio label="0">
 			                        <span>禁用</span>
-			                    </radio>
-			                    <radio label="1">
+			                    </Radio>
+			                    <Radio label="1">
 			                        <span>正常</span>
-			                    </radio>
-			                </radio-group>
+			                    </Radio>
+			                </Radio-group>
 			            </form-item>
 			            <form-item>
 			                <i-button type="primary" @click="handleSubmit('formValidate')">提交</i-button>
