@@ -1,32 +1,37 @@
 var app = new Vue({
   el: '#app',
   data : {
-	  name : null,
-	  deptId : null
+	  q : {
+		  name : '',
+		  departmentCid : '',
+		  status : ''
+	  },
+	  statusList : [
+		  { text : '正常', value : '1' },
+		  { text : '禁用', value : '0' }
+	  ]
   },
   methods : {
-	  search : function () {
+	  query : function () {
 		  layui.table.reload('userTable', {
 			  where : {
-				  name : this.name,
-				  deptId : this.deptId
+				  status : this.q.status === undefined ? '' : this.q.status,
+				  name : this.q.name,
+				  departmentCid : this.q.departmentCid
 			  }
 		  });
 	  },
-	  sortTable : function (field, type, obj) {
-		  layui.table.reload('userTable', {
-			  initSort : obj,
-			  where : {
-				  name : this.name,
-				  deptId : this.deptId,
-				  field : field,
-				  type : type
-			  }
-		  });
-	  },
-	  reset : function () {
-		  
-	  }
+      handleReset: function (name) {
+    	  this.$refs[name].resetFields()
+      },
+      show : function () {
+    	  this.visible = true
+      },
+      resetQuery : function () {
+    	  this.q.name = '';
+    	  this.q.departmentCid = '',
+    	  this.q.status = ''
+      }
   }
 });
 
@@ -77,10 +82,12 @@ layui.use('table', function() {
 	});
 	
 	table.on('sort(userTable)', function (obj){
-		var field = obj.field;
-		var type = obj.type;
-		if (type) {
-			app.sortTable(field, type, obj);
-		}
+		table.reload('userTable', {
+		  initSort : obj,
+		  where : {
+			  field: obj.field,
+			  order: obj.type
+		  }
+	  });
 	});
 });

@@ -44,3 +44,13 @@ function transUserStatus (status) {
 	}
 	return '';
 }
+
+
+/**
+ * 重置验证
+ * @param vue vue对象
+ * @param name
+ */
+function handleResetForm(vue, name) {
+    vue.$refs[name].resetFields();
+};
