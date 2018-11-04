@@ -9,13 +9,23 @@ var vm = new Vue({
 		  { text : '正常', value : '1' },
 		  { text : '禁用', value : '0' }
 	  ],
+	  hobbyList : [
+		  {text : '运动', value : '1'},
+		  {text : '美食', value : '2'},
+		  {text : '电影', value : '3'},
+		  {text : '看书', value : '4'}
+	  ],
 	  showList : true,
 	  title : '',
 	  user : {
 		  status : '1',
 		  username : '',
 		  email : '',
-		  deptName : ''
+		  deptName : '',
+		  hobby : [],
+		  desc : '',
+		  admin : false,
+		  birthDay : ''
 	  }
   },
   methods : {
@@ -65,6 +75,7 @@ layui.use('table', function() {
 		  ,{field : 'id', width : 60, title : 'ID', sort : true }
 		  ,{field : 'userName', width : 80, title : '姓名'}
 		  ,{field : 'email', width : 200, title : '邮箱地址'}
+		  ,{field : 'mobile', width : 200, title : '电话'}
 		  ,{field : 'sex', width : 70,  title : '性别', sort : true, 
 			  templet : function (d) {
 				  return transGender(d.sex)

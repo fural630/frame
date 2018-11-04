@@ -9,8 +9,10 @@ public class SysDemoEntity {
 	private String email;
 	private Integer status;
 	private Date birthDay;
+	private String mobile;
 	private Integer sex;
 	private String desc;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -40,6 +42,12 @@ public class SysDemoEntity {
 	}
 	public void setBirthDay(Date birthDay) {
 		this.birthDay = birthDay;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 	public Integer getSex() {
 		return sex;
