@@ -1,4 +1,4 @@
-package com.frame.controller;
+package com.frame.web.common.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
