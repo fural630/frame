@@ -38,13 +38,12 @@ public class CodeGenerator {
 		String serviceName = rb.getString("serviceName");
 		String serviceImplName = rb.getString("serviceImplName");
 		String controllerName = rb.getString("controllerName");
-		
-		
+
 		String url = rb.getString("url");
 		String driverName = rb.getString("driverName");
 		String username = rb.getString("username");
 		String password = rb.getString("password");
-		
+
 		String parent = rb.getString("parent");
 		String moduleName = rb.getString("moduleName");
 		String entity = rb.getString("entity");
@@ -53,6 +52,17 @@ public class CodeGenerator {
 		String mapper = rb.getString("mapper");
 		String xml = rb.getString("xml");
 		String controller = rb.getString("controller");
+		
+		String superEntityClass = rb.getString("superEntityClass");
+		String superEntityColumns = rb.getString("superEntityColumns");
+		String superControllerClass = rb.getString("superControllerClass");
+		boolean entityBooleanColumnRemoveIsPrefix = Boolean.parseBoolean(rb.getString("entityBooleanColumnRemoveIsPrefix"));
+		boolean restControllerStyle = Boolean.parseBoolean(rb.getString("restControllerStyle"));
+		boolean controllerMappingHyphenStyle = Boolean.parseBoolean(rb.getString("controllerMappingHyphenStyle"));
+		boolean entityTableFieldAnnotationEnable = Boolean.parseBoolean(rb.getString("entityTableFieldAnnotationEnable"));
+		String include = rb.getString("include");
+		String exclude = rb.getString("exclude");
+		String tablePrefix = rb.getString("tablePrefix");
 
 		// 全局配置
 		GlobalConfig gc = new GlobalConfig();
@@ -90,22 +100,19 @@ public class CodeGenerator {
 		dsc.setDriverName(driverName);
 		dsc.setUsername(username);
 		dsc.setPassword(password);
-		
+
 		mpg.setDataSource(dsc);
 
 		// 包配置
 		PackageConfig pc = new PackageConfig();
-		System.out.println(moduleName);
-		System.out.println(parent);
 		pc.setModuleName(moduleName);
-        pc.setParent(parent);
-        pc.setEntity(entity);
-        pc.setService(service);
-        pc.setServiceImpl(serviceImpl);
-        pc.setMapper(mapper);
-        pc.setXml(xml);
-        pc.setController(controller);
-		
+		pc.setParent(parent);
+		pc.setEntity(entity);
+		pc.setService(service);
+		pc.setServiceImpl(serviceImpl);
+		pc.setMapper(mapper);
+		pc.setXml(xml);
+		pc.setController(controller);
 		mpg.setPackageInfo(pc);
 
 		// 自定义配置
@@ -132,14 +139,25 @@ public class CodeGenerator {
 		StrategyConfig strategy = new StrategyConfig();
 		strategy.setNaming(NamingStrategy.underline_to_camel);
 		strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-		// strategy.setSuperEntityClass("com.baomidou.ant.common.BaseEntity");
-		// strategy.setEntityLombokModel(true);
-		strategy.setRestControllerStyle(true);
-		// strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
-		strategy.setInclude("sys_test");
-		strategy.setSuperEntityColumns("id");
-		strategy.setControllerMappingHyphenStyle(true);
-		strategy.setTablePrefix("sys_");
+		if (StringUtils.isNotBlank(superEntityClass)) {
+			strategy.setSuperEntityClass(superEntityClass);
+		}
+		if (StringUtils.isNotBlank(superEntityColumns)) {
+			strategy.setSuperEntityColumns(superEntityColumns);
+		}
+		if (StringUtils.isNotBlank(superControllerClass)) {
+			strategy.setSuperControllerClass(superControllerClass);
+		}
+		strategy.setRestControllerStyle(restControllerStyle);
+		strategy.setControllerMappingHyphenStyle(controllerMappingHyphenStyle);
+		strategy.setTablePrefix(tablePrefix);
+		if (StringUtils.isNotBlank(include)) {
+			strategy.setInclude(include);
+		} else {
+			strategy.setExclude(exclude);
+		}
+		strategy.entityTableFieldAnnotationEnable(entityTableFieldAnnotationEnable);
+		strategy.setEntityBooleanColumnRemoveIsPrefix(true);
 		mpg.setStrategy(strategy);
 		mpg.setTemplateEngine(new FreemarkerTemplateEngine());
 		mpg.execute();
