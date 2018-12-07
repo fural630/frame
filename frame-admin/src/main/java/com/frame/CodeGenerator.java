@@ -1,7 +1,9 @@
 package com.frame;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang3.StringUtils;
@@ -15,10 +17,12 @@ import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
+import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.frame.util.Dumper;
 
 public class CodeGenerator {
 
@@ -78,19 +82,19 @@ public class CodeGenerator {
 			gc.setEntityName(entityName);
 		}
 		if (StringUtils.isNoneBlank(mapperName)) {
-			gc.setEntityName(mapperName);
+			gc.setMapperName(mapperName);
 		}
 		if (StringUtils.isNoneBlank(xmlName)) {
-			gc.setEntityName(xmlName);
+			gc.setXmlName(xmlName);
 		}
 		if (StringUtils.isNoneBlank(serviceName)) {
-			gc.setEntityName(serviceName);
+			gc.setServiceName(serviceName);
 		}
 		if (StringUtils.isNoneBlank(serviceImplName)) {
-			gc.setEntityName(serviceImplName);
+			gc.setServiceImplName(serviceImplName);
 		}
 		if (StringUtils.isNoneBlank(controllerName)) {
-			gc.setEntityName(controllerName);
+			gc.setControllerName(controllerName);
 		}
 		mpg.setGlobalConfig(gc);
 
@@ -119,7 +123,11 @@ public class CodeGenerator {
 		InjectionConfig cfg = new InjectionConfig() {
 			@Override
 			public void initMap() {
-				// to do nothing
+				ConfigBuilder configBuilder = this.getConfig();
+				List<TableInfo> tableInfoList = configBuilder.getTableInfoList();
+				for (TableInfo tableInfo : tableInfoList) {
+					Dumper.dump(tableInfo);
+				}
 			}
 		};
 		List<FileOutConfig> focList = new ArrayList<>();
@@ -128,12 +136,30 @@ public class CodeGenerator {
 			public String outputFile(TableInfo tableInfo) {
 				// 自定义输入文件名称
 				return projectPath + "/src/main/resources/mapper/" + pc.getModuleName() + "/"
-						+ tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+						+ tableInfo.getMapperName() + StringPool.DOT_XML;
+			}
+		});
+		focList.add(new FileOutConfig("/templates/codeTemplates/controller.java.ftl") {
+			@Override
+			public String outputFile(TableInfo tableInfo) {
+				String parentPath = pc.getParent().replace(".", "/");
+				String path = projectPath + "/src/main/java/" + parentPath + "/" + pc.getController() + "/"
+						+ tableInfo.getControllerName() + StringPool.DOT_JAVA;
+				return path;
+			}
+		});
+		focList.add(new FileOutConfig("/templates/codeTemplates/serviceImpl.java.ftl") {
+			@Override
+			public String outputFile(TableInfo tableInfo) {
+				String parentPath = pc.getParent().replace(".", "/");
+				String path = projectPath + "/src/main/java/" + parentPath + "/" + pc.getServiceImpl().replace(".", "/") + "/"
+						+ tableInfo.getServiceImplName() + StringPool.DOT_JAVA;
+				return path;
 			}
 		});
 		cfg.setFileOutConfigList(focList);
 		mpg.setCfg(cfg);
-		mpg.setTemplate(new TemplateConfig().setXml(null));
+		mpg.setTemplate(new TemplateConfig().setXml(null).setController(null).setService(null).setServiceImpl(null));
 
 		// 策略配置
 		StrategyConfig strategy = new StrategyConfig();

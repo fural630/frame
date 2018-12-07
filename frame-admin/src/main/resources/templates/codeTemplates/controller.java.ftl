@@ -1,6 +1,8 @@
 package ${package.Controller};
 
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 <#if restControllerStyle>
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Controller;
 <#if superControllerClassPackage??>
 import ${superControllerClassPackage};
 </#if>
+import ${package.ServiceImpl}.${table.serviceImplName};
 
 /**
  * <p>
@@ -37,6 +40,11 @@ public class ${table.controllerName} extends ${superControllerClass} {
 <#else>
 public class ${table.controllerName} {
 </#if>
+
+	private static final Logger logger = LoggerFactory.getLogger(${table.controllerName}.class);
+
+	@Autowired
+	private ${table.serviceImplName} ${table.serviceImplName?uncap_first};
 
 }
 </#if>
