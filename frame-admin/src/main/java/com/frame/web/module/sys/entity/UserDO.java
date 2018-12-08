@@ -1,8 +1,15 @@
 package com.frame.web.module.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.frame.validator.group.AddGroup;
+import com.frame.validator.group.UpdateGroup;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
@@ -28,6 +35,7 @@ public class UserDO implements Serializable {
     /**
      * 用户名
      */
+    @NotNull(message = "用户名不能为空", groups = {AddGroup.class, UpdateGroup.class})
     private String name;
 
     /**

@@ -6,7 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.ConfigurableEnvironment;
+
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 
 @SpringBootApplication
 @MapperScan("com.frame")
@@ -20,5 +23,11 @@ public class ApplicationStart {
 		String[] activeProfiles = env.getActiveProfiles();
 		logger.debug("系统已启动，当前启动的 profile 是 ：{}", activeProfiles[0]);
 	}
+	
+	
+	@Bean
+    public PaginationInterceptor paginationInterceptor() {
+        return new PaginationInterceptor();
+    }
 
 }
