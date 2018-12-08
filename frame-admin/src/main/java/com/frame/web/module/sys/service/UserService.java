@@ -1,17 +1,17 @@
-package com.frame.module.sys.service;
+package com.frame.web.module.sys.service;
 
-import com.frame.module.sys.entity.UserDO;
-import com.frame.module.sys.dao.UserDao;
+import com.frame.web.module.sys.entity.UserDO;
+import com.frame.web.module.sys.dao.UserDao;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * 用户表 服务实现类11
+ * InnoDB free: 8192 kB 服务实现类11
  * </p>
  *
  * @author zhangzm
- * @since 2018-12-07
+ * @since 2018-12-08
  */
 @Service
 public class UserService extends ServiceImpl<UserDao, UserDO> {

@@ -1,4 +1,4 @@
-package com.frame.module.sys.entity;
+package com.frame.web.module.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -8,31 +8,46 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 用户表
+ * InnoDB free: 8192 kB
  * </p>
  *
  * @author zhangzm
- * @since 2018-12-07
+ * @since 2018-12-08
  */
 @TableName("sys_user")
 public class UserDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 用户ID
+     */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
+    /**
+     * 用户名
+     */
     private String name;
 
+    /**
+     * 出生日期
+     */
     private Date birthDay;
 
+    /**
+     * 密码
+     */
     private String passWord;
 
     /**
-     * 1-男、0-女、其他-未知
+     * 性别 1-男、0-女、其他-未知
      */
     private Integer sex;
 
+    /**
+     * 邮箱
+     */
     private String email;
 
     /**
@@ -41,22 +56,22 @@ public class UserDO implements Serializable {
     private String phone;
 
     /**
-     * 身份证
+     * 身份证号
      */
     private String idCard;
 
     /**
-     * 头像图片ID
+     * 头像ID
      */
     private Long avatarId;
 
     /**
-     * 部门编号ID
+     * 部门ID
      */
     private Long departmentCid;
 
     /**
-     * 账号
+     * 用户账号
      */
     private String account;
 
@@ -65,12 +80,24 @@ public class UserDO implements Serializable {
      */
     private Integer status;
 
+    /**
+     * 创建时间
+     */
     private Date createTime;
 
+    /**
+     * 修改时间
+     */
     private Date updateTime;
 
+    /**
+     * 创建人ID
+     */
     private Long createUserId;
 
+    /**
+     * 修改人ID
+     */
     private Long updateUserId;
 
     public Long getId() {
