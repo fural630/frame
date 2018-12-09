@@ -19,7 +19,7 @@ var vm = new Vue({
 		  { text : '禁用', value : '0' }
 	  ],
 	  ruleValidate : {
-		userName : [
+		name : [
 			{required: true, message: '用户名不能为空', trigger: 'blur'}
 		],
 	  },
@@ -39,7 +39,7 @@ var vm = new Vue({
 	  add : function () {
 		  this.title = '添加';
 		  this.showList = false;
-		  this.user.status = 1;
+		  this.user.status = '1';
 	  },
 	  saveOrUpdate : function () {
 		  alert(1123);

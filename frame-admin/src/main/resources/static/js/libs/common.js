@@ -54,3 +54,21 @@ function transUserStatus (status) {
 function handleResetForm(vue, name) {
     vue.$refs[name].resetFields();
 };
+
+
+/**
+ * 表单验证
+ * @param vue vue对象
+ * @param name 验证规则
+ * @param callback 验证通过回调函数
+ */
+function handleSubmitValidate(vue, name, callback) {
+    vue.$refs[name].validate(function (valid) {
+        if (valid) {
+            callback();
+        } else {
+            iview.Message.error('请填写完整信息!');
+            return false;
+        }
+    })
+};

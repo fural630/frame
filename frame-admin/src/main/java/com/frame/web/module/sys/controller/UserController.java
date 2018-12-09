@@ -1,6 +1,8 @@
 package com.frame.web.module.sys.controller;
 
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,18 +10,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.frame.util.Query;
 import com.frame.util.R;
 import com.frame.validator.ValidatorUtils;
 import com.frame.validator.group.AddGroup;
 import com.frame.validator.group.UpdateGroup;
-import com.frame.web.module.sys.dao.UserQuery;
 import com.frame.web.module.sys.entity.UserDO;
 import com.frame.web.module.sys.service.UserService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 /**
  * <p>
@@ -85,12 +87,11 @@ public class UserController {
 		return R.ok().put("user", userDO);
 	}
 	
-	@RequestMapping(value = "/list", method = RequestMethod.POST)
-	public R list(UserQuery query) {
-		Page<UserDO> page = new Page<UserDO>(1, 2);
-		QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
-		queryWrapper.likeRight("pass_word", "str");
-		IPage<UserDO> iPage = userService.page(page, queryWrapper);
-		return R.ok().put("page", iPage);
+	@RequestMapping(value = "/page", method = RequestMethod.GET)
+	public R page(@RequestParam Map<String, Object> params) {
+		Query query = new Query(params);
+		PageHelper.startPage(query.getPage(), query.getLimit());
+		PageInfo<UserDO> pageInfo = new PageInfo<UserDO>(userService.queryPage(query));
+		return R.ok().put("page", pageInfo);
 	}
 }

@@ -23,11 +23,4 @@ public class ApplicationStart {
 		String[] activeProfiles = env.getActiveProfiles();
 		logger.debug("系统已启动，当前启动的 profile 是 ：{}", activeProfiles[0]);
 	}
-	
-	
-	@Bean
-    public PaginationInterceptor paginationInterceptor() {
-        return new PaginationInterceptor();
-    }
-
 }
