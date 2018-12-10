@@ -87,6 +87,11 @@ public class UserController {
 		return R.ok().put("user", userDO);
 	}
 	
+	/**
+	 * 分页查询
+	 * @param params
+	 * @return R.ok().put("page", pageInfo);
+	 */
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
 	public R page(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);

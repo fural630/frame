@@ -46,12 +46,28 @@
 			<Row>
 		        <i-col span="12">
 					<i-form ref="formValidate" :model="user" :rules="ruleValidate" :label-width="80">
+			            <Form-item label="账号" prop="account">
+			                <i-input v-model="user.account" placeholder="账号"/>
+			            </Form-item>
 			            <Form-item label="用户名" prop="name">
-			                <i-input v-model="user.name" placeholder="登录账号"/>
+			                <i-input v-model="user.name" placeholder="用户名"/>
 			            </Form-item>
 			            <Form-item label="所属部门" prop="deptName">
 			                <i-input type="text" v-model="user.deptName" icon="ios-search" readonly="readonly"
 			                	readonly="readonly" placeholder="所属部门"/>
+			            </Form-item>
+			            <Form-item label="身份证号" prop="idCard">
+			                <i-input v-model="user.idCard" placeholder="身份证号"/>
+			            </Form-item>
+			            <Form-item label="出生年月" prop="birthDay">
+			                <i-input v-model="user.birthDay" placeholder="出生年月"/>
+			            </Form-item>
+			            <Form-item label="性别" prop="sex">
+			            	<Radio-group v-model="user.sex">
+			                	<Radio v-for="item in sexList" :label="item.value" :key="item.value">
+			                		<span>{{ item.text }}</span>
+			                	</Radio>
+			                </Radio-group>
 			            </Form-item>
 			            <Form-item label="邮箱" prop="email">
 			                <i-input v-model="user.email" placeholder="邮箱"/>
