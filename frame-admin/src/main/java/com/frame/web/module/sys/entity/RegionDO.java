@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * InnoDB free: 8192 kB
  * </p>
  *
  * @author zhangzm

@@ -18,8 +18,8 @@ import com.frame.util.R;
 import com.frame.validator.ValidatorUtils;
 import com.frame.validator.group.AddGroup;
 import com.frame.validator.group.UpdateGroup;
-import com.frame.web.module.sys.entity.RegionDO;
-import com.frame.web.module.sys.service.RegionService;
+import com.frame.web.module.sys.entity.BaryxxDO;
+import com.frame.web.module.sys.service.BaryxxService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -33,26 +33,25 @@ import com.github.pagehelper.PageInfo;
  */
  
 @RestController
-@RequestMapping("/sys/region")
-public class RegionController {
+@RequestMapping("/sys/baryxx")
+public class BaryxxController {
 
-	private static final Logger logger = LoggerFactory.getLogger(RegionController.class);
+	private static final Logger logger = LoggerFactory.getLogger(BaryxxController.class);
 
 	@Autowired
-	private RegionService regionService;
+	private BaryxxService baryxxService;
 	
 	/**
 	 * 新增
-	 * @param RegionDO
+	 * @param BaryxxDO
 	 * @return R.ok()
 	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public R save(@RequestBody RegionDO regionDO) {
-		ValidatorUtils.validateEntity(regionDO, AddGroup.class);
-		regionService.save(regionDO);
+	public R save(@RequestBody BaryxxDO baryxxDO) {
+		ValidatorUtils.validateEntity(baryxxDO, AddGroup.class);
+		baryxxService.save(baryxxDO);
 		return R.ok();
 	}
-	
 	
 	/**
 	 * 删除
@@ -60,8 +59,8 @@ public class RegionController {
 	 * @return R.ok()
 	 */
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public R delete(@PathVariable("id") String id) {
-		regionService.removeById(id);
+	public R delete(@PathVariable("id") Long id) {
+		baryxxService.removeById(id);
 		return R.ok();
 	}
 	
@@ -72,7 +71,7 @@ public class RegionController {
 	 */
 	@RequestMapping(value = "/deleteBatchByIds", method = RequestMethod.POST)
 	public R deleteBatchByIds(@RequestBody List<String> ids) {
-		regionService.removeByIds(ids);
+		baryxxService.removeByIds(ids);
 		return R.ok();
 	}
 	
@@ -82,21 +81,21 @@ public class RegionController {
 	 * @return R.ok()
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public R update(@RequestBody RegionDO regionDO) {
-		ValidatorUtils.validateEntity(regionDO, UpdateGroup.class);
-		regionService.updateById(regionDO);
+	public R update(@RequestBody BaryxxDO baryxxDO) {
+		ValidatorUtils.validateEntity(baryxxDO, UpdateGroup.class);
+		baryxxService.updateById(baryxxDO);
 		return R.ok();
 	}
 	
 	/**
 	 * 查询
 	 * @param id
-	 * @return R.ok().put("user", userDO)
+	 * @return R.ok().put("baryxx", baryxxDO)
 	 */
 	@RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
 	public R info(@PathVariable("id") String id) {
-		RegionDO regionDO = regionService.getById(id);
-		return R.ok().put("region", regionDO);
+		BaryxxDO baryxxDO = baryxxService.getById(id);
+		return R.ok().put("baryxx", baryxxDO);
 	}
 	
 	/**
@@ -108,7 +107,7 @@ public class RegionController {
 	public R page(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);
 		PageHelper.startPage(query.getPage(), query.getLimit());
-		PageInfo<RegionDO> pageInfo = new PageInfo<RegionDO>(regionService.queryPage(query));
+		PageInfo<BaryxxDO> pageInfo = new PageInfo<BaryxxDO>(baryxxService.queryPage(query));
 		return R.ok().put("page", pageInfo);
 	}
 

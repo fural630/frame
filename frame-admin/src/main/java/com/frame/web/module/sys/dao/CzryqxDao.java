@@ -1,9 +1,6 @@
 package com.frame.web.module.sys.dao;
 
-import com.frame.web.module.sys.entity.RegionDO;
-
-import java.util.List;
-
+import com.frame.web.module.sys.entity.CzryqxDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -14,7 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author zhangzm
  * @since 2018-12-10
  */
-public interface RegionDao extends BaseMapper<RegionDO> {
-	
-	List<RegionDO> selectByPid(String parentId);
+public interface CzryqxDao extends BaseMapper<CzryqxDO> {
+
 }

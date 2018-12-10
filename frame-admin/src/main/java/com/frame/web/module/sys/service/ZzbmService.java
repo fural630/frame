@@ -1,8 +1,8 @@
 package com.frame.web.module.sys.service;
 
-import com.frame.web.module.sys.entity.RegionDO;
+import com.frame.web.module.sys.entity.ZzbmDO;
 import com.frame.util.Query;
-import com.frame.web.module.sys.dao.RegionDao;
+import com.frame.web.module.sys.dao.ZzbmDao;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import java.util.List;
@@ -18,9 +18,10 @@ import org.springframework.stereotype.Service;
  * @since 2018-12-10
  */
 @Service
-public class RegionService extends ServiceImpl<RegionDao, RegionDO> {
+public class ZzbmService extends ServiceImpl<ZzbmDao, ZzbmDO> {
 
-	public List<RegionDO> queryPage(Query query) {
+	public List<ZzbmDO> queryPage(Query query) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

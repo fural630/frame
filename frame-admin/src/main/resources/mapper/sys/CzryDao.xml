@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frame.web.module.sys.dao.CzryDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.frame.web.module.sys.entity.CzryDO">
+        <id column="CZRY_ID" property="czryId" />
+        <result column="CZRY_DM" property="czryDm" />
+        <result column="CZRY_MC" property="czryMc" />
+        <result column="CZRY_PASS" property="czryPass" />
+        <result column="SZBM_ID" property="szbmId" />
+        <result column="EMAIL" property="email" />
+        <result column="SJHM" property="sjhm" />
+        <result column="XBDM" property="xbdm" />
+        <result column="JG" property="jg" />
+        <result column="MZ" property="mz" />
+        <result column="SFZHM" property="sfzhm" />
+        <result column="LZYG" property="lzyg" />
+        <result column="YGTX" property="ygtx" />
+        <result column="CZRY_ZH" property="czryZh" />
+        <result column="XZRQ" property="xzrq" />
+        <result column="QM" property="qm" />
+        <result column="PYM" property="pym" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        CZRY_ID, CZRY_DM, CZRY_MC, CZRY_PASS, SZBM_ID, EMAIL, SJHM, XBDM, JG, MZ, SFZHM, LZYG, YGTX, CZRY_ZH, XZRQ, QM, PYM
+    </sql>
+
+</mapper>

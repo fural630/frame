@@ -15,5 +15,9 @@
     <sql id="Base_Column_List">
         REGION_ID, REGION_NAME, PARENT_ID, TYPE, AGENCY_CODE
     </sql>
+    
+    <select id="selectByPid" parameterType="String" resultMap="BaseResultMap">
+    	select * from xt_region where PARENT_ID = #{parentId}
+    </select>
 
 </mapper>
