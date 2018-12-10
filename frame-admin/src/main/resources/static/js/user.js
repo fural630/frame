@@ -14,8 +14,7 @@ var vm = new Vue({
 			birthDay : '',
 			sex : '',
 			email : '',
-			mobile : '',
-			status : ''
+			phone : ''
 		},
 		sexList : constant.sexList,
 		statusList : constant.userStatusList,
@@ -30,15 +29,11 @@ var vm = new Vue({
 				message : '用户名不能为空',
 				trigger : 'blur'
 			} ],
-			deptName : [ {
-				required : true,
-				message : '所属部门不能为空',
-				trigger : 'blur'
-			} ],
 			status : [ {
 				required : true,
 				message : '状态必须设置',
-				trigger : 'blur'
+				trigger : 'change',
+				type : 'number'
 			} ],
 		},
 		showList : true,
@@ -65,17 +60,77 @@ var vm = new Vue({
 				birthDay : '',
 				sex : '',
 				email : '',
-				mobile : '',
-				status : '1',
+				phone : ''
 			}
+		},
+		update : function() {
+			var checkStatus = layui.table.checkStatus('userTable');
+			var length = checkStatus.data.length;
+			if (length == 0) {
+				iview.Message.warning('请勾选要修改的数据!');
+				return;
+			}
+			if (length > 1) {
+				iview.Message.warning('请只勾选一条要修改的数据!');
+				return;
+			}
+			this.title = '修改';
+			this.showList = false;
+
+			var userId = checkStatus.data[0].id;
+
+			Ajax.request({
+				url : "../sys/user/info/" + userId,
+				async : true,
+				successCallback : function(r) {
+					vm.user = r.user;
+				}
+			});
+
+		},
+		del : function () {
+			var checkStatus = layui.table.checkStatus('userTable');
+			var length = checkStatus.data.length;
+			if (length == 0) {
+				iview.Message.warning('请勾选要删除的数据!');
+				return;
+			}
+			var ids = [];
+			for (var i = 0 ; i < length; i++) {
+				ids.push(checkStatus.data[i].id);
+			}
+			confirm('确定要删除选中的记录？', function () {
+                Ajax.request({
+                    url: "../sys/user/deleteBatchByIds",
+                    params: JSON.stringify(ids),
+                    contentType: "application/json",
+                    type: 'POST',
+                    successCallback: function () {
+                        alert('操作成功', function (index) {
+                            vm.reload();
+                        });
+                    }
+                });
+            });
 		},
 		saveOrUpdate : function() {
 			var url = this.user.userId == null ? "../sys/user/save"
 					: "../sys/user/update";
-			
+			Ajax.request({
+				url : url,
+				params : JSON.stringify(vm.user),
+				contentType : "application/json",
+				type : 'POST',
+				successCallback : function() {
+					alert('操作成功', function(index) {
+						vm.reload();
+					});
+				}
+			});
 		},
 		reload : function() {
 			this.showList = true;
+			this.query();
 		},
 		handleSubmit : function(name) {
 			handleSubmitValidate(vm, name, function() {

@@ -1,6 +1,7 @@
 package com.frame.web.module.sys.controller;
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.baomidou.mybatisplus.core.injector.methods.DeleteBatchByIds;
 import com.frame.util.Query;
 import com.frame.util.R;
 import com.frame.validator.ValidatorUtils;
@@ -22,6 +24,7 @@ import com.frame.web.module.sys.entity.UserDO;
 import com.frame.web.module.sys.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.cache.LoadingCache;
 
 /**
  * <p>
@@ -61,6 +64,17 @@ public class UserController {
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public R delete(@PathVariable("id") Long id) {
 		userService.removeById(id);
+		return R.ok();
+	}
+	
+	/**
+	 * 批量删除
+	 * @param userIds
+	 * @return
+	 */
+	@RequestMapping(value = "/deleteBatchByIds", method = RequestMethod.POST)
+	public R deleteBatchByIds(@RequestBody List<Long> ids) {
+		userService.removeByIds(ids);
 		return R.ok();
 	}
 	

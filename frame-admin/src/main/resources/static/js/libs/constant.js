@@ -1,11 +1,11 @@
 var constant = {
 	sexList : [
-		{ text : '男', value : '1' },
-		{ text : '女', value : '0' }	
+		{ text : '男', key : 1 },
+		{ text : '女', key : 0 }	
 	],
 	userStatusList : [
-		{ text : '正常', value : '1' },
-		{ text : '禁用', value : '0' }	
+		{ text : '正常', key : 1 },
+		{ text : '禁用', key : 0 }	
 	],
 	
 	
