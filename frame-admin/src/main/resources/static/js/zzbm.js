@@ -1,84 +1,72 @@
+var setting = {
+    data: {
+        simpleData: {
+            enable: true,
+            idKey : "id",
+			pIdKey : "parentId",
+            rootPId: 0
+        },
+        key: {
+            url: "nourl"
+        }
+    },
+    callback: {
+		onClick: zTreeOnClick
+	},
+	view: {
+		selectedMulti: false
+	}
+};
+var ztree;
+
+function zTreeOnClick (event, treeId, treeNode) {
+	var title = vm.title;
+	if (title == '') {
+		return;
+	}
+	if (title == '修改') {
+		vm.update();
+	}
+	if (title == '添加') {
+		vm.add();
+	}
+}
+
 var vm = new Vue({
 	el : '#app',
 	data : {
 		zzbm : {
-			account : '',
-			name : '',
-			deptName : '',
-			idCard : '',
-			birthDay : '',
-			sex : '',
-			email : '',
-			phone : ''
+			qyid : '',
+			bmmc : '',
+			sjdwmc : '',
+			bmlx : '',
+			bmjc : '',
+			lxdz : '',
+			lxdh : '',
+			jkyh : '',
+			jkyhzh : '',
+			fydw1 : '',
+			fydw2 : '',
+			dfbm : '',
+			yb : ''
 		},
 		zzlxList : [
-			{text : '单位', key : '1'},
-			{text : '部门', key : '0'}
+			{text : '单位', key : 1},
+			{text : '部门', key : 2}
 		],
-		regionList : [{
-            value: 'beijing',
-            label: '北京',
-            children: [
-                {
-                    value: 'gugong',
-                    label: '故宫'
-                },
-                {
-                    value: 'tiantan',
-                    label: '天坛'
-                },
-                {
-                    value: 'wangfujing',
-                    label: '王府井'
-                }
-            ]
-        }, {
-            value: 'jiangsu',
-            label: '江苏',
-            children: [
-                {
-                    value: 'nanjing',
-                    label: '南京',
-                    children: [
-                        {
-                            value: 'fuzimiao',
-                            label: '夫子庙',
-                        }
-                    ]
-                },
-                {
-                    value: 'suzhou',
-                    label: '苏州',
-                    children: [
-                        {
-                            value: 'zhuozhengyuan',
-                            label: '拙政园',
-                        },
-                        {
-                            value: 'shizilin',
-                            label: '狮子林',
-                        }
-                    ]
-                }
-            ],
-        }],
-		sexList : constant.sexList,
-		statusList : constant.userStatusList,
+		cityList : constant.cityList,
 		ruleValidate : {
-			account : [ {
+			bmmc : [ {
 				required : true,
-				message : '账号不能为空',
-				trigger : 'blur'
+				message : '组织名称不能为空'
 			} ],
-			name : [ {
-				required : true,
-				message : '用户名不能为空',
-				trigger : 'blur'
+			qyid : [ {
+					required : true,
+					message : '管辖区域不能为空'
 			} ],
-			status : [ {
+			bmlx : [ {
 				required : true,
 				message : '状态必须设置',
-				trigger : 'change',
 				type : 'number'
 			} ],
 		},
@@ -86,97 +74,118 @@ var vm = new Vue({
 		title : ''
 	},
 	methods : {
-		query : function() {
-			layui.table.reload('userTable', {
-				where : {
-					status : this.q.status === undefined ? '' : this.q.status,
-					name : this.q.name,
-					departmentCid : this.q.departmentCid
-				}
-			});
+		reloadTree : function () {
+			Ajax.request({
+                url: '../sys/zzbm/list',
+                async: true,
+                successCallback: function (data) {
+                	var zNodes = [];
+                	var list = data.list;
+                	for (var i = 0; i < list.length; i++) {
+                		var zNode = {
+                			id : list[i].zzid,
+                			parentId : list[i].sjid,
+                			name : list[i].bmmc
+                		};
+                		zNodes.push(zNode);
+                	}
+                    ztree = $.fn.zTree.init($("#zzbmTree"), setting, zNodes);
+                }
+            });
 		},
 		add : function() {
 			this.title = '添加';
 			this.showList = false;
-			this.user = {
-				account : '',
-				name : '',
-				deptName : '',
-				idCard : '',
-				birthDay : '',
-				sex : '',
-				email : '',
-				phone : ''
+			var nodes = ztree.getSelectedNodes();
+			var sjdwmc = '';
+			var sjid = '0';
+			if (nodes.length > 0) {
+				sjdwmc = nodes[0].name;
+				sjid = nodes[0].id;
+			}
+			this.zzbm = {
+				qyid : '',
+				bmmc : '',
+				sjdwmc : sjdwmc,
+				sjid : sjid,
+				bmlx : '',
+				bmjc : '',
+				lxdz : '',
+				lxdh : '',
+				jkyh : '',
+				jkyhzh : '',
+				fydw1 : '',
+				fydw2 : '',
+				dfbm : '',
+				yb : ''
 			}
 		},
 		update : function() {
-			var checkStatus = layui.table.checkStatus('userTable');
-			var length = checkStatus.data.length;
-			if (length == 0) {
-				iview.Message.warning('请勾选要修改的数据!');
-				return;
-			}
-			if (length > 1) {
-				iview.Message.warning('请只勾选一条要修改的数据!');
+			var nodes = ztree.getSelectedNodes();
+			if (nodes.length == 0) {
+				iview.Message.warning('请选择要修改的数据!');
 				return;
 			}
 			this.title = '修改';
 			this.showList = false;
-
-			var userId = checkStatus.data[0].id;
-
+			var id = nodes[0].id;
 			Ajax.request({
-				url : "../sys/user/info/" + userId,
-				async : true,
-				successCallback : function(r) {
-					vm.user = r.user;
-				}
-			});
-
+                url: "../sys/zzbm/info/" + id,
+                async: true,
+                successCallback: function (r) {
+                    vm.zzbm = r.zzbm;
+                }
+            });
+			
 		},
 		del : function () {
-			var checkStatus = layui.table.checkStatus('userTable');
-			var length = checkStatus.data.length;
-			if (length == 0) {
-				iview.Message.warning('请勾选要删除的数据!');
+			var nodes = ztree.getSelectedNodes();
+			if (nodes.length == 0) {
+				iview.Message.warning('请选择要删除的数据!');
 				return;
-			}
-			var ids = [];
-			for (var i = 0 ; i < length; i++) {
-				ids.push(checkStatus.data[i].id);
 			}
 			confirm('确定要删除选中的记录？', function () {
                 Ajax.request({
-                    url: "../sys/user/deleteBatchByIds",
-                    params: JSON.stringify(ids),
-                    contentType: "application/json",
-                    type: 'POST',
+                    url: "../sys/zzbm/delete/" + nodes[0].id,
                     successCallback: function () {
                         alert('操作成功', function (index) {
-                            vm.reload();
+                        	var node = ztree.getSelectedNodes()[0];
+                        	ztree.removeNode(node);
                         });
                     }
                 });
             });
 		},
 		saveOrUpdate : function() {
-			var url = this.user.userId == null ? "../sys/user/save"
-					: "../sys/user/update";
+			var url = this.zzbm.zzid == undefined ? "../sys/zzbm/save"
+					: "../sys/zzbm/update";
 			Ajax.request({
 				url : url,
-				params : JSON.stringify(vm.user),
+				params : JSON.stringify(vm.zzbm),
 				contentType : "application/json",
 				type : 'POST',
-				successCallback : function() {
+				successCallback : function(data) {
 					alert('操作成功', function(index) {
-						vm.reload();
+						if (vm.zzbm.zzid == undefined) { //添加
+							var parentNode = ztree.getSelectedNodes()[0];
+							var newNode = {
+								id : data.id,
+								parentId : parentNode.id,
+								name : vm.zzbm.bmmc
+							};
+							ztree.addNodes(parentNode, newNode);
+						} else {
+							var newNode = ztree.getSelectedNodes()[0];
+							newNode.name = vm.zzbm.bmmc;
+							ztree.updateNode(newNode);
+						}
 					});
 				}
 			});
 		},
 		reload : function() {
-			this.showList = true;
-			this.query();
+//			this.showList = false;
+//			this.reloadTree();
 		},
 		handleSubmit : function(name) {
 			handleSubmitValidate(vm, name, function() {
@@ -186,6 +195,9 @@ var vm = new Vue({
 		handleReset : function(name) {
 			this.$refs[name].resetFields();
 		}
+	},
+	created : function () {
+		this.reloadTree();
 	}
 });
 

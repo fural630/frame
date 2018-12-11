@@ -1,6 +1,9 @@
 package com.frame.web.module.sys.dao;
 
 import com.frame.web.module.sys.entity.ZzbmDO;
+
+import java.util.List;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -12,5 +15,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2018-12-10
  */
 public interface ZzbmDao extends BaseMapper<ZzbmDO> {
+
+	String selectMaxZzbmDm(String bmid);
+	
+	List<ZzbmDO> selectByParentId(String zzid);
+	
+	ZzbmDO selectById(String zzid);
 
 }

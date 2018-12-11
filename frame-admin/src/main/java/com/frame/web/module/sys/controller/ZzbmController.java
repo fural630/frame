@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import org.springframework.web.bind.annotation.RestController;
+
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.frame.util.Query;
 import com.frame.util.R;
 import com.frame.validator.ValidatorUtils;
 import com.frame.validator.group.AddGroup;
 import com.frame.validator.group.UpdateGroup;
+import com.frame.web.module.sys.entity.ZzbmDO;
+import com.frame.web.module.sys.service.ZzbmService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-
-import com.frame.web.module.sys.service.ZzbmService;
-import com.frame.web.module.sys.entity.ZzbmDO;
 
 
 
@@ -53,7 +53,7 @@ public class ZzbmController {
 	public R save(@RequestBody ZzbmDO zzbmDO) {
 		ValidatorUtils.validateEntity(zzbmDO, AddGroup.class);
 		zzbmService.save(zzbmDO);
-		return R.ok();
+		return R.ok().put("id", zzbmDO.getZzid());
 	}
 	
 	/**
@@ -62,7 +62,11 @@ public class ZzbmController {
 	 * @return R.ok()
 	 */
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public R delete(@PathVariable("id") Long id) {
+	public R delete(@PathVariable("id") String id) {
+		List<ZzbmDO> zzbmDOList = zzbmService.selectByParentId(id);
+		if (CollectionUtils.isNotEmpty(zzbmDOList)) {
+			return R.error("该节点下有子节点， 请先删除子节点！");
+		}
 		zzbmService.removeById(id);
 		return R.ok();
 	}
@@ -112,6 +116,13 @@ public class ZzbmController {
 		PageHelper.startPage(query.getPage(), query.getLimit());
 		PageInfo<ZzbmDO> pageInfo = new PageInfo<ZzbmDO>(zzbmService.queryPage(query));
 		return R.ok().put("page", pageInfo);
+	}
+	
+	
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public R list() {
+		List<ZzbmDO> zzbmDOList = zzbmService.list(null);
+		return R.ok().put("list", zzbmDOList);
 	}
 
 }
