@@ -78,11 +78,74 @@
 		z.SSFY,
 		z.DFBM,
 		z.YB,
-		z.seq
+		z.SEQ
 		FROM XT_ZZJG_ZZBM z
 		LEFT JOIN XT_ZZJG_ZZBM zz ON z.SJID = zz.ZZID
 		LEFT JOIN XT_REGION re ON re.REGION_ID = z.QYID
 		where z.ZZID = #{zzid,jdbcType=VARCHAR}
 	</select>
+	
+	<select id="queryPage" resultMap="BaseResultMap">
+		SELECT
+		z.QYID,
+		re.REGION_NAME,
+		re.AGENCY_CODE,
+		re.TYPE,
+		z.ZZID,
+		z.BMMC,
+		z.BMDM,
+		z.BMLX,
+		z.SJID,
+		zz.BMMC SJDWMC,
+		zz.BMDM SJDWDM,
+		z.PYM,
+		z.SYBS,
+		z.LXDZ,
+		z.LXDH,
+		z.BMJC,
+		z.DWQZ,
+		z.JKYH,
+		z.JKYHZH,
+		z.FYDW1,
+		z.FYDW2,
+		z.SSFY,
+		z.DFBM,
+		z.YB,
+		z.SEQ
+		FROM XT_ZZJG_ZZBM z
+		LEFT JOIN XT_ZZJG_ZZBM zz ON z.SJID = zz.ZZID
+		LEFT JOIN XT_REGION re ON re.REGION_ID = z.QYID
+    	<where>
+    		<if test="qyid != null and qyid.trim() != ''">
+    			and z.QYID = #{qyid}
+    		</if>
+    		<if test="type != null and type.trim() != ''">
+    			and re.TYPE = #{type}
+    		</if>
+    		<if test="bmmc != null and bmmc.trim() != ''">
+    			and z.BMMC like concat('%',#{bmmc},'%')
+    		</if>
+    		<if test="bmdm != null and bmdm.trim() != ''">
+    			and z.BMDM = #{bmdm}
+    		</if>
+    		<if test="bmlx != null and bmlx.trim() != ''">
+    			and z.BMLX = #{bmlx}
+    		</if>
+    		<if test="sjdwmc != null and sjdwmc.trim() != ''">
+    			and zz.BMMC like concat('%',#{sjdwmc},'%')
+    		</if>
+    		<if test="sjdwdm != null and sjdwdm.trim() != ''">
+    			and zz.BMDM = #{sjdwdm}
+    		</if>
+    	</where>
+    	<choose>
+            <when test="field != null and field.trim() != ''">
+                order by ${field} ${order}
+            </when>
+            <otherwise>
+                order by z.SEQ
+            </otherwise>
+        </choose>
+    </select>
 
 </mapper>

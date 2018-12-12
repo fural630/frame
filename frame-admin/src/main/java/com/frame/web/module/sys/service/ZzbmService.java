@@ -35,8 +35,7 @@ public class ZzbmService extends ServiceImpl<ZzbmDao, ZzbmDO> {
 	private ZzbmDao zzbmDao;
 
 	public List<ZzbmDO> queryPage(Query query) {
-		// TODO Auto-generated method stub
-		return null;
+		return zzbmDao.queryPage(query);
 	}
 	
 	public boolean save(ZzbmDO zzbmDO) {

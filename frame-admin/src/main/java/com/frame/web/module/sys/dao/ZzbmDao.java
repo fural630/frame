@@ -1,10 +1,10 @@
 package com.frame.web.module.sys.dao;
 
-import com.frame.web.module.sys.entity.ZzbmDO;
-
 import java.util.List;
+import java.util.Map;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.frame.web.module.sys.entity.ZzbmDO;
 
 /**
  * <p>
@@ -21,5 +21,7 @@ public interface ZzbmDao extends BaseMapper<ZzbmDO> {
 	List<ZzbmDO> selectByParentId(String zzid);
 	
 	ZzbmDO selectById(String zzid);
+	
+	List<ZzbmDO> queryPage(Map<String, Object> query);
 
 }
