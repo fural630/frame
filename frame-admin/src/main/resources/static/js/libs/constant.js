@@ -1,19 +1,31 @@
 var constant = {
 	sexList : [ {
-		text : '男',
-		key : 1
+		label : '男',
+		value : 1
 	}, {
-		text : '女',
-		key : 0
+		label : '女',
+		value : 0
 	} ],
 	userStatusList : [ {
-		text : '正常',
-		key : 1
+		label : '正常',
+		value : 1
 	}, {
-		text : '禁用',
-		key : 0
+		label : '禁用',
+		value : 0
 	} ],
-
+	gwzzList : [
+		{ label : '行政机关负责人', value : '063cc024d65243158e8607872fe4834d'},
+		{ label : '承办机构负责人', value : '823ac51ebbcc4f78866151f8adcbff34'},
+		{ label : '法制工作机构负责人', value : 'c1a87261f04a48fd826b436a505dcfab'}
+	],
+	qxList : [
+		{ label : '执法人员', value : '2fcb67cdfb9f416b8aff4941754a3f18'},
+		{ label : '案件审批人员', value : 'fb7f6bb439a844a6946ed019c3d997fa'},
+		{ label : '复议应诉人员', value : '2c14010dc23c42248a7c3a08d0a9385c'},
+		{ label : '案件监督员', value : '4455a144391d4dfdac726ac62cf36151'},
+		{ label : '系统管理员', value : '631b566e833043c192daae4b2ec4cb20'},
+		{ label : '超级管理员', value : '7eb78d9ff294458eaa6709b585feb4b8'}
+	],
 	cityList : [ {
 		"value" : "2",
 		"label" : "广西壮族自治区"

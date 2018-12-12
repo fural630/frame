@@ -69,6 +69,36 @@ public class CzryDO implements Serializable {
 
     @TableField("PYM")
     private String pym;
+    
+    /**
+	 * 所在单位名称
+	 */
+    @TableField(exist = false)
+	private String dwmc;
+
+	/**
+	 * 所在单位编号
+	 */
+    @TableField(exist = false)
+	private String dwdm;
+
+	/**
+	 * 所在单位ID
+	 */
+    @TableField(exist = false)
+	private String dwid;
+
+	/**
+	 * 所在部门名称
+	 */
+    @TableField(exist = false)
+	private String bmmc;
+
+	/**
+	 * 所在部门代码
+	 */
+	@TableField(exist = false)
+	private String bmdm;
 
     public String getCzryId() {
         return czryId;
@@ -190,7 +220,47 @@ public class CzryDO implements Serializable {
         this.pym = pym;
     }
 
-    @Override
+    public String getDwmc() {
+		return dwmc;
+	}
+
+	public void setDwmc(String dwmc) {
+		this.dwmc = dwmc;
+	}
+
+	public String getDwdm() {
+		return dwdm;
+	}
+
+	public void setDwdm(String dwdm) {
+		this.dwdm = dwdm;
+	}
+
+	public String getDwid() {
+		return dwid;
+	}
+
+	public void setDwid(String dwid) {
+		this.dwid = dwid;
+	}
+
+	public String getBmmc() {
+		return bmmc;
+	}
+
+	public void setBmmc(String bmmc) {
+		this.bmmc = bmmc;
+	}
+
+	public String getBmdm() {
+		return bmdm;
+	}
+
+	public void setBmdm(String bmdm) {
+		this.bmdm = bmdm;
+	}
+
+	@Override
     public String toString() {
         return "CzryDO{" +
         "czryId=" + czryId +

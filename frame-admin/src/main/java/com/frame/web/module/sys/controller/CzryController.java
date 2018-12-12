@@ -61,7 +61,7 @@ public class CzryController {
 	 * @return R.ok()
 	 */
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public R delete(@PathVariable("id") Long id) {
+	public R delete(@PathVariable("id") String id) {
 		czryService.removeById(id);
 		return R.ok();
 	}

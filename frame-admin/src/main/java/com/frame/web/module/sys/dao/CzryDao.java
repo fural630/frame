@@ -1,7 +1,10 @@
 package com.frame.web.module.sys.dao;
 
-import com.frame.web.module.sys.entity.CzryDO;
+import java.util.List;
+import java.util.Map;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.frame.web.module.sys.entity.CzryDO;
 
 /**
  * <p>
@@ -12,5 +15,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2018-12-10
  */
 public interface CzryDao extends BaseMapper<CzryDO> {
+
+	List<CzryDO> queryPage(Map<String, Object> map);
+
+	CzryDO getById(String id);
 
 }

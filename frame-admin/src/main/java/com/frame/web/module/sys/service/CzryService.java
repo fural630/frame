@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,10 +20,16 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CzryService extends ServiceImpl<CzryDao, CzryDO> {
+	
+	@Autowired
+	private CzryDao czryDao;
 
 	public List<CzryDO> queryPage(Query query) {
-		// TODO Auto-generated method stub
-		return null;
+		return czryDao.queryPage(query);
+	}
+	
+	public CzryDO getById(String id) {
+		return czryDao.getById(id);
 	}
 
 }

@@ -147,5 +147,38 @@
             </otherwise>
         </choose>
     </select>
+    
+    <select id="selectAll" resultMap="BaseResultMap">
+    	SELECT
+			z.QYID,
+			re.REGION_NAME,
+			re.AGENCY_CODE,
+			re.TYPE,
+			z.ZZID,
+			z.BMMC,
+			z.BMDM,
+			z.BMLX,
+			z.SJID,
+			zz.BMMC SJDWMC,
+			zz.BMDM SJDWDM,
+			z.PYM,
+			z.SYBS,
+			z.LXDZ,
+			z.LXDH,
+			z.BMJC,
+			z.DWQZ,
+			z.JKYH,
+			z.JKYHZH,
+			z.FYDW1,
+			z.FYDW2,
+			z.SSFY,
+			z.DFBM,
+			z.YB,
+			z.SEQ
+			FROM XT_ZZJG_ZZBM z
+			LEFT JOIN XT_ZZJG_ZZBM zz ON z.SJID = zz.ZZID
+			LEFT JOIN XT_REGION re ON re.REGION_ID = z.QYID
+		order by z.BMLX desc
+    </select>
 
 </mapper>

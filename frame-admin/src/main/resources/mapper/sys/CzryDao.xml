@@ -21,11 +21,80 @@
         <result column="XZRQ" property="xzrq" />
         <result column="QM" property="qm" />
         <result column="PYM" property="pym" />
+        
+        <result column="BMMC" property="bmmc" />
+		<result column="BMDM" property="bmdm" />
+		<result column="DWID" property="dwid" />
+		<result column="DWMC" property="dwmc" />
+		<result column="DWDM" property="dwdm" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         CZRY_ID, CZRY_DM, CZRY_MC, CZRY_PASS, SZBM_ID, EMAIL, SJHM, XBDM, JG, MZ, SFZHM, LZYG, YGTX, CZRY_ZH, XZRQ, QM, PYM
     </sql>
+    
+    <select id="queryPage" resultMap="BaseResultMap">
+	    SELECT
+			c.BMMC DWMC,
+			c.BMDM DWDM,
+			c.ZZID DWID,
+			b.BMMC,
+			b.BMDM,
+			t.SZBM_ID,
+			t.CZRY_MC,
+			t.CZRY_DM,
+			t.CZRY_ID,
+			t.CZRY_ZH,
+			t.CZRY_PASS,
+			t.EMAIL,
+			t.SJHM,
+			t.XBDM,
+			t.JG,
+			t.MZ,
+			t.SFZHM,
+			t.LZYG,
+			t.YGTX,
+			t.XZRQ,
+			t.QM,
+			t.PYM
+			from
+		XT_ZZJG_CZRY t
+		LEFT JOIN XT_ZZJG_ZZBM b on t.SZBM_ID = b.ZZID
+		LEFT JOIN
+		XT_ZZJG_ZZBM c on b.SJID = c.ZZID
+    </select>
+    
+    <select id="getById" parameterType="String" resultMap="BaseResultMap">
+    	 SELECT
+			c.BMMC DWMC,
+			c.BMDM DWDM,
+			c.ZZID DWID,
+			b.BMMC,
+			b.BMDM,
+			t.SZBM_ID,
+			t.CZRY_MC,
+			t.CZRY_DM,
+			t.CZRY_ID,
+			t.CZRY_ZH,
+			t.CZRY_PASS,
+			t.EMAIL,
+			t.SJHM,
+			t.XBDM,
+			t.JG,
+			t.MZ,
+			t.SFZHM,
+			t.LZYG,
+			t.YGTX,
+			t.XZRQ,
+			t.QM,
+			t.PYM
+			from
+		XT_ZZJG_CZRY t
+		LEFT JOIN XT_ZZJG_ZZBM b on t.SZBM_ID = b.ZZID
+		LEFT JOIN
+		XT_ZZJG_ZZBM c on b.SJID = c.ZZID
+		where t.CZRY_ID = #{id}
+    </select>
 
 </mapper>

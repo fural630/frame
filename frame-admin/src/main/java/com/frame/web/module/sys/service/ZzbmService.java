@@ -97,4 +97,8 @@ public class ZzbmService extends ServiceImpl<ZzbmDao, ZzbmDO> {
 		return zzbmDao.selectById(zzid);
 	}
 
+	public List<ZzbmDO> selectAll() {
+		return zzbmDao.selectAll();
+	}
+
 }

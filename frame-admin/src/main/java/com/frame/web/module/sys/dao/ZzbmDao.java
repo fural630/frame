@@ -24,4 +24,6 @@ public interface ZzbmDao extends BaseMapper<ZzbmDO> {
 	
 	List<ZzbmDO> queryPage(Map<String, Object> query);
 
+	List<ZzbmDO> selectAll();
+
 }

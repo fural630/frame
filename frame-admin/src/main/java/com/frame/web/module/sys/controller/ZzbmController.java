@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
-import com.frame.util.Dumper;
 import com.frame.util.Query;
 import com.frame.util.R;
 import com.frame.validator.ValidatorUtils;
@@ -114,7 +112,6 @@ public class ZzbmController {
 	 */
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
 	public R page(@RequestParam Map<String, Object> params) {
-		Dumper.dump(params);
 		Query query = new Query(params);
 		PageHelper.startPage(query.getPage(), query.getLimit());
 		PageInfo<ZzbmDO> pageInfo = new PageInfo<ZzbmDO>(zzbmService.queryPage(query));
@@ -124,9 +121,7 @@ public class ZzbmController {
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public R list() {
-		QueryWrapper<ZzbmDO> wrapper = new QueryWrapper<ZzbmDO>();
-		wrapper.orderByDesc("bmlx");
-		List<ZzbmDO> zzbmDOList = zzbmService.list(wrapper);
+		List<ZzbmDO> zzbmDOList = zzbmService.selectAll();
 		return R.ok().put("list", zzbmDOList);
 	}
 
