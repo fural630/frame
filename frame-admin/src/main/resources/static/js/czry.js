@@ -75,11 +75,6 @@ var vm = new Vue({
 				trigger : 'change',
 				type : 'number'
 			} ],
-			gwzzid : [ {
-				required : true,
-				message : '岗位职责不能为空',
-				trigger : 'change'
-			} ],
 			jsIdList : [ {
 				required : true,
 				message : '角色不能为空',
