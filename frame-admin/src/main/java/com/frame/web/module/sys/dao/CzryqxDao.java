@@ -1,6 +1,9 @@
 package com.frame.web.module.sys.dao;
 
 import com.frame.web.module.sys.entity.CzryqxDO;
+
+import java.util.List;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -12,5 +15,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2018-12-10
  */
 public interface CzryqxDao extends BaseMapper<CzryqxDO> {
+
+	List<String> getCzryQx(String czryId);
+
+	void removeByCzryId(String czryId);
 
 }

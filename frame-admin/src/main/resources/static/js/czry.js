@@ -23,16 +23,16 @@ var agencyPng = '../plugins/ztree/css/metroStyle/img/agency.png';
 var department = '../plugins/ztree/css/metroStyle/img/department.png';
 
 function zTreeOnClick (event, treeId, treeNode) {
-	
+	vm.query();
 }
 
 var vm = new Vue({
 	el : '#app',
 	data : {
 		q : {
-			name : '',
-			departmentCid : '',
-			status : ''
+			czryMc : '',
+			czryZh : '',
+			gwzzid : ''
 		},
 		czry : {
 			czryMc : '',
@@ -44,7 +44,7 @@ var vm = new Vue({
 			sfzhm : '',
 			xbdm : '',
 			gwzzid : '',
-			js : [],
+			jsIdList : [],
 			zfzh : '',
 			zjyxksrq : '',
 			zjyxjzrq : ''
@@ -80,7 +80,7 @@ var vm = new Vue({
 				message : '岗位职责不能为空',
 				trigger : 'change'
 			} ],
-			js : [ {
+			jsIdList : [ {
 				required : true,
 				message : '角色不能为空',
 				trigger : 'change',
@@ -105,7 +105,7 @@ var vm = new Vue({
 		czryZh (newValue, oldValue) {
 　　　　		this.czry.sjhm = newValue
 	　　},
-	  'czry.js' : function (newValue, oldValue) {
+	  'czry.jsIdList' : function (newValue, oldValue) {
 		  this.czryJsOnChange(newValue);
 	  }
 	},
@@ -132,7 +132,7 @@ var vm = new Vue({
                 			parentId : list[i].sjid,
                 			name : list[i].bmmc,
                 			bmlx : list[i].bmlx,
-                			dwmc : list[i].dwmc,
+                			dwmc : list[i].sjdwmc,
                 			icon : icon
                 		};
                 		zNodes.push(zNode);
@@ -143,11 +143,24 @@ var vm = new Vue({
             });
 		},
 		query : function() {
+			var dwId = '';
+			var szbmId = '';
+			var nodes = ztree.getSelectedNodes();
+			if (nodes.length > 0) {
+				var node = nodes[0];
+				if (node.bmlx == '1') {
+					dwId = node.id;
+				} else if (node.bmlx == '2') {
+					szbmId = node.id;
+				}
+			}
 			layui.table.reload('czryTable', {
 				where : {
-					status : this.q.status === undefined ? '' : this.q.status,
-					name : this.q.name,
-					departmentCid : this.q.departmentCid
+					gwzzid : this.q.gwzzid === undefined ? '' : this.q.gwzzid,
+					czryMc : this.q.czryMc,
+					czryZh : this.q.czryZh,
+					dwId : dwId,
+					szbmId : szbmId
 				}
 			});
 		},
@@ -164,19 +177,23 @@ var vm = new Vue({
 			}
 			var bmmc = node.name;
 			var dwmc = node.dwmc;
+			var dwid = node.parentId;
+			var szbmId = node.id;
 			this.title = '添加';
 			this.showList = false;
 			this.czry = {
 				czryMc : '',
 				czryZh : '',
 				bmmc : bmmc,
-				dwmc : dwmc, 
+				dwmc : dwmc,
+				dwid : dwid,
+				szbmId : szbmId,
 				sjhm : '',
 				email : '',
 				sfzhm : '',
 				xbdm : '',
 				gwzzid : '',
-				js : [],
+				jsIdList : [],
 				zfzh : '',
 				zjyxksrq : '',
 				zjyxjzrq : ''
@@ -203,6 +220,8 @@ var vm = new Vue({
 				async : true,
 				successCallback : function(r) {
 					vm.czry = r.czry;
+					vm.czry.zjyxksrq = transDate(r.czry.zjyxksrq, 'yyyy-MM-dd');
+					vm.czry.zjyxjzrq = transDate(r.czry.zjyxjzrq, 'yyyy-MM-dd');
 				}
 			});
 
@@ -216,7 +235,7 @@ var vm = new Vue({
 			}
 			var ids = [];
 			for (var i = 0 ; i < length; i++) {
-				ids.push(checkStatus.data[i].id);
+				ids.push(checkStatus.data[i].czryId);
 			}
 			confirm('确定要删除选中的记录？', function () {
                 Ajax.request({
@@ -233,11 +252,11 @@ var vm = new Vue({
             });
 		},
 		saveOrUpdate : function() {
-			var url = this.user.userId == null ? "../sys/czry/save"
+			var url = this.czry.czryId == null ? "../sys/czry/save"
 					: "../sys/czry/update";
 			Ajax.request({
 				url : url,
-				params : JSON.stringify(vm.user),
+				params : JSON.stringify(vm.czry),
 				contentType : "application/json",
 				type : 'POST',
 				successCallback : function() {
@@ -288,29 +307,38 @@ layui.use('table', function() {
 			title : 'ID',
 			hide : true
 		}, {
+			field : 'czryDm',
+			title : '人员代码'
+		}, {
 			field : 'czryMc',
 			title : '姓名'
 		}, {
 			field : 'czryZh',
-			width : 200,
 			title : '账号'
 		}, {
 			field : 'dwmc',
-			width : 140,
 			title : '所在单位'
 		}, {
 			field : 'bmmc',
-			width : 180,
 			title : '所在部门'
 		}, {
-			field : 'gwmc',
-			minWidth : 100,
+			field : 'gwzzmc',
 			title : '岗位职责'
 		}, {
-			field : 'lzyg',
-			width : 100,
-			title : '离职状态',
-			sort : true
+			field : 'zfzh',
+			title : '执法证号'
+		}, {
+			field : 'zjyxksrq',
+			title : '执法证有效期起',
+			templet : function(d) {
+				return transDate(d.zjyxksrq, 'yyyy年MM月dd日')
+			}
+		}, {
+			field : 'zjyxjzrq',
+			title : '执法证有效期止',
+			templet : function(d) {
+				return transDate(d.zjyxjzrq, 'yyyy年MM月dd日')
+			}
 		} ] ],
 		page : true
 	});

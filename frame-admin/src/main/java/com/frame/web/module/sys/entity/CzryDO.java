@@ -2,6 +2,8 @@ package com.frame.web.module.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
+import java.util.List;
+
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
@@ -70,6 +72,18 @@ public class CzryDO implements Serializable {
     @TableField("PYM")
     private String pym;
     
+    @TableField(exist = false)
+    private String gwzzid;
+    
+    @TableField(exist = false)
+    private String zfzh;
+
+    @TableField(exist = false)
+    private Date zjyxjzrq;
+
+    @TableField(exist = false)
+    private Date zjyxksrq;
+    
     /**
 	 * 所在单位名称
 	 */
@@ -99,6 +113,15 @@ public class CzryDO implements Serializable {
 	 */
 	@TableField(exist = false)
 	private String bmdm;
+	
+	/**
+	 * 岗位职责名称
+	 */
+	@TableField(exist = false)
+	private String gwzzmc;
+	
+	@TableField(exist = false)
+	private List<String> jsIdList;
 
     public String getCzryId() {
         return czryId;
@@ -259,6 +282,38 @@ public class CzryDO implements Serializable {
 	public void setBmdm(String bmdm) {
 		this.bmdm = bmdm;
 	}
+	
+	public String getGwzzid() {
+		return gwzzid;
+	}
+
+	public void setGwzzid(String gwzzid) {
+		this.gwzzid = gwzzid;
+	}
+
+	public String getZfzh() {
+		return zfzh;
+	}
+
+	public void setZfzh(String zfzh) {
+		this.zfzh = zfzh;
+	}
+
+	public Date getZjyxjzrq() {
+		return zjyxjzrq;
+	}
+
+	public void setZjyxjzrq(Date zjyxjzrq) {
+		this.zjyxjzrq = zjyxjzrq;
+	}
+
+	public Date getZjyxksrq() {
+		return zjyxksrq;
+	}
+
+	public void setZjyxksrq(Date zjyxksrq) {
+		this.zjyxksrq = zjyxksrq;
+	}
 
 	@Override
     public String toString() {
@@ -282,4 +337,21 @@ public class CzryDO implements Serializable {
         ", pym=" + pym +
         "}";
     }
+
+	public List<String> getJsIdList() {
+		return jsIdList;
+	}
+
+	public void setJsIdList(List<String> jsIdList) {
+		this.jsIdList = jsIdList;
+	}
+
+	public String getGwzzmc() {
+		return gwzzmc;
+	}
+
+	public void setGwzzmc(String gwzzmc) {
+		this.gwzzmc = gwzzmc;
+	}
+	
 }

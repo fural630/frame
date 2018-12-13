@@ -19,25 +19,26 @@
 			<i-col span="20">
 				<Card>
 					<div class="frame-card-header">
-						<i-form ref="queryForm" :model="q">
-							<Row :gutter="16">
-<!-- 								<i-col span="3"> -->
-<!-- 									<form-item prop="name"> -->
-<!-- 										<i-input v-model="q.name" @on-enter="query" placeholder="姓名"></i-input> -->
-<!-- 									</form-item> -->
-<!-- 								</i-col> -->
-<!-- 								<i-col span="3"> -->
-<!-- 									<form-item prop="departmentCid"> -->
-<!-- 										<i-input v-model="q.departmentCid" placeholder="所属部门"></i-input> -->
-<!-- 									</form-item> -->
-<!-- 								</i-col> -->
-<!-- 								<i-col span="3"> -->
-<!-- 									<form-item prop="status"> -->
-<!-- 										<i-select v-model="q.status" placeholder="状态" clearable ref="status"> -->
-<!-- 											<i-option v-for="item in statusList" :value="item.key" :key="item.key">{{ item.text }}</i-option> -->
-<!-- 										</i-select> -->
-<!-- 									</form-item> -->
-<!-- 								</i-col> -->
+						<i-form ref="queryForm" :model="q" :label-width="70">
+							<Row>
+								<i-col span="4">
+									<form-item prop="czryMc" label="人员姓名">
+										<i-input v-model="q.czryMc" clearable placeholder="模糊查询"></i-input>
+									</form-item>
+								</i-col>
+								<i-col span="4">
+									<form-item prop="czryZh" label="人员账号">
+										<i-input v-model="q.czryZh" clearable placeholder="精确查询"></i-input>
+									</form-item>
+								</i-col>
+								<i-col span="4">
+									<form-item prop="gwzzid" label="岗位职责">
+										<i-select v-model="q.gwzzid" clearable>
+											<i-option v-for="item in gwzzList" :value="item.value" :key="item.value">{{ item.label }}</i-option>
+										</i-select>
+									</form-item>
+								</i-col>
+								&nbsp;&nbsp;
 								<i-button type="success" @click="query"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;查询</i-button>
 		             	 		<i-button @click="handleReset('queryForm')"><i class="fa fa-reply" aria-hidden="true"></i></i>&nbsp;重置</i-button>
 							</Row>
@@ -116,8 +117,8 @@
 				            </Form-item>
 				        </Row>
 				        <Row>
-				        	<Form-item label="角色" prop="js">
-				        		<Checkbox-Group v-model="czry.js">
+				        	<Form-item label="角色" prop="jsIdList">
+				        		<Checkbox-Group v-model="czry.jsIdList">
 							        <Checkbox v-for="item in qxList" :label="item.value" :key="item.value">{{ item.label }}</Checkbox>
 							    </Checkbox-Group>
 				        	</Form-item>
@@ -132,12 +133,12 @@
 				        <Row v-show="zfzhForm">
 					        <i-col span="12">
 					        	<Form-item label="执法证效期" prop="zjyxksrq">
-					                <i-input v-model="czry.zjyxksrq" placeholder="开始 格式：yyyy/mm/dd"/>
+					                <i-input v-model="czry.zjyxksrq" placeholder="开始 格式：yyyy-mm-dd"/>
 					            </Form-item>
 					        </i-col>
 					        <i-col span="12">
 					        	  <Form-item label="至" prop="zjyxjzrq">
-					                <i-input v-model="czry.zjyxjzrq" placeholder="截止 格式：yyyy/mm/dd"/>
+					                <i-input v-model="czry.zjyxjzrq" placeholder="截止 格式：yyyy-mm-dd"/>
 					            </Form-item>
 					        </i-col>
 				        </Row>

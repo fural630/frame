@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import org.springframework.web.bind.annotation.RestController;
+
 import com.frame.util.Query;
 import com.frame.util.R;
 import com.frame.validator.ValidatorUtils;
 import com.frame.validator.group.AddGroup;
 import com.frame.validator.group.UpdateGroup;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.frame.web.module.sys.entity.CzryDO;
 import com.frame.web.module.sys.service.CzryService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 
 
@@ -51,7 +51,12 @@ public class CzryController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public R save(@RequestBody CzryDO czryDO) {
 		ValidatorUtils.validateEntity(czryDO, AddGroup.class);
-		czryService.save(czryDO);
+		int count = czryService.isUniqueAccoumt(czryDO);
+		// 如果大于零则账号不允许使用
+		if (count > 0) {
+			return R.error("该账号已存在，请填写另外的账号！");
+		}
+		czryService.insert(czryDO);
 		return R.ok();
 	}
 	
@@ -85,6 +90,11 @@ public class CzryController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public R update(@RequestBody CzryDO czryDO) {
 		ValidatorUtils.validateEntity(czryDO, UpdateGroup.class);
+		int count = czryService.isUniqueAccoumt(czryDO);
+		// 如果大于零则账号不允许使用
+		if (count > 0) {
+			return R.error("该账号已存在，请填写另外的账号！");
+		}
 		czryService.updateById(czryDO);
 		return R.ok();
 	}

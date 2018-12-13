@@ -13,5 +13,9 @@
     <sql id="Base_Column_List">
         CZRYID, GWZZID, BMID
     </sql>
+    
+    <update id="updateByCzryIdDwId">
+    	update xt_zzjg_czry_gwzz set GWZZID = #{gwzzid} where CZRYID = #{czryId} and BMID = #{dwId}
+    </update>
 
 </mapper>

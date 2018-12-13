@@ -12,5 +12,13 @@
     <sql id="Base_Column_List">
         CZRY_ID, JSID
     </sql>
+    
+    <select id="getCzryQx" parameterType="String" resultType="String">
+    	select JSID from xt_zzjg_czryqx where CZRY_ID = #{czryId}
+    </select>
+    
+    <delete id="removeByCzryId" parameterType="String">
+    	delete from xt_zzjg_czryqx where CZRY_ID = #{czryId}
+    </delete>
 
 </mapper>
