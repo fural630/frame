@@ -2,7 +2,6 @@ package com.frame.web.module.sys.service;
 
 import com.frame.web.module.sys.entity.UserDO;
 import com.frame.web.module.sys.dao.UserDao;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import java.util.List;
 import java.util.Map;
@@ -19,13 +18,34 @@ import org.springframework.stereotype.Service;
  * @since 2018-12-08
  */
 @Service
-public class UserService extends ServiceImpl<UserDao, UserDO> {
+public class UserService {
 	
 	@Autowired
 	private UserDao userDao;
 
+	public void insert(UserDO userDO) {
+		userDao.insert(userDO);
+	}
+
+	public void deleteById(String id) {
+		userDao.deleteById(id);
+	}
+
+	public void deleteBatchIds(List<String> ids) {
+		userDao.deleteBatchIds(ids);
+	}
+
+	public void updateById(UserDO userDO) {
+		userDao.updateById(userDO);
+	}
+
+	public UserDO selectById(String id) {
+		return userDao.selectById(id);
+	}
+	
 	public List<UserDO> queryPage(Map<String, Object> query) {
 		return userDao.queryPage(query);
 	}
+	
 
 }
