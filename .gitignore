@@ -5,3 +5,5 @@ src/main/webapp/.gitignore
 /target
 frame-common/target
 frame-admin/target
+frame-common/.factorypath
+frame-admin/.factorypath

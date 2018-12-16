@@ -1,6 +1,5 @@
 package com.frame.web.module.sys.controller;
 
-
 import java.util.List;
 import java.util.Map;
 
@@ -12,19 +11,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.baomidou.mybatisplus.core.injector.methods.DeleteBatchByIds;
+import org.springframework.web.bind.annotation.RestController;
 import com.frame.util.Query;
 import com.frame.util.R;
 import com.frame.validator.ValidatorUtils;
 import com.frame.validator.group.AddGroup;
 import com.frame.validator.group.UpdateGroup;
-import com.frame.web.module.sys.entity.UserDO;
-import com.frame.web.module.sys.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.google.common.cache.LoadingCache;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+import com.frame.web.module.sys.service.UserService;
+import com.frame.web.module.sys.entity.UserDO;
+
+
 
 /**
  * <p>
@@ -32,11 +35,12 @@ import com.google.common.cache.LoadingCache;
  * </p>
  *
  * @author zhangzm
- * @since 2018-12-08
+ * @since 2018-12-16
  */
  
 @RestController
 @RequestMapping("/sys/user")
+@Api(tags = {"用户管理"})
 public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -46,13 +50,14 @@ public class UserController {
 	
 	/**
 	 * 新增
-	 * @param userDO
+	 * @param UserDO
 	 * @return R.ok()
 	 */
+    @ApiOperation(value="修改用户密码", notes="根据用户id修改密码")
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public R save(@RequestBody UserDO userDO) {
 		ValidatorUtils.validateEntity(userDO, AddGroup.class);
-		userService.save(userDO);
+		userService.insert(userDO);
 		return R.ok();
 	}
 	
@@ -63,24 +68,24 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public R delete(@PathVariable("id") Long id) {
-		userService.removeById(id);
+		userService.deleteById(id);
 		return R.ok();
 	}
 	
 	/**
 	 * 批量删除
-	 * @param userIds
+	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(value = "/deleteBatchByIds", method = RequestMethod.POST)
 	public R deleteBatchByIds(@RequestBody List<Long> ids) {
-		userService.removeByIds(ids);
+		userService.deleteBatchIds(ids);
 		return R.ok();
 	}
 	
 	/**
 	 * 修改
-	 * @param userDO
+	 * @param UserDO
 	 * @return R.ok()
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -97,7 +102,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
 	public R info(@PathVariable("id") Long id) {
-		UserDO userDO = userService.getById(id);
+		UserDO userDO = userService.selectById(id);
 		return R.ok().put("user", userDO);
 	}
 	
@@ -113,4 +118,5 @@ public class UserController {
 		PageInfo<UserDO> pageInfo = new PageInfo<UserDO>(userService.queryPage(query));
 		return R.ok().put("page", pageInfo);
 	}
+
 }

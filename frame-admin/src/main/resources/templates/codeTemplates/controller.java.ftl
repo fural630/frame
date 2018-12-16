@@ -49,6 +49,20 @@ import ${package.Entity}.${entity};
 </#if>
 <#assign className = table.controllerName?replace("Controller", "") />
 <#assign classname = className?lower_case>
+<#assign serviceName = table.serviceImplName />
+<#assign servicename = table.serviceImplName?uncap_first />
+<#assign entityName = table.entityName />
+<#assign entityname = table.entityName?uncap_first />
+<#assign pkName = ''/>
+<#assign comment = ''/>
+<#assign columnType = ''/>
+<#list table.fields as field>
+	<#if field.keyIdentityFlag>
+		<#assign pkName = field.propertyName/>
+		<#assign comment = field.comment/>
+		<#assign columnType = field.columnType?lower_case?cap_first />
+	</#if>
+</#list>
 @RequestMapping("<#if package.ModuleName??>/${package.ModuleName}</#if>/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${classname}</#if>")
 <#if kotlin>
 class ${table.controllerName}<#if superControllerClass??> : ${superControllerClass}()</#if>
@@ -62,63 +76,63 @@ public class ${table.controllerName} {
 	private static final Logger logger = LoggerFactory.getLogger(${table.controllerName}.class);
 
 	@Autowired
-	private ${table.serviceImplName} ${table.serviceImplName?uncap_first};
+	private ${serviceName} ${servicename};
 	
 	/**
 	 * 新增
-	 * @param ${table.entityName}
+	 * @param ${entityName}
 	 * @return R.ok()
 	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public R save(@RequestBody ${table.entityName} ${table.entityName?uncap_first}) {
-		ValidatorUtils.validateEntity(${table.entityName?uncap_first}, AddGroup.class);
-		${table.serviceImplName?uncap_first}.save(${table.entityName?uncap_first});
+	public R save(@RequestBody ${entityName} ${entityname}) {
+		ValidatorUtils.validateEntity(${entityname}, AddGroup.class);
+		${servicename}.insert(${entityname});
 		return R.ok();
 	}
 	
 	/**
 	 * 删除
-	 * @param id
+	 * @param ${pkName}
 	 * @return R.ok()
 	 */
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public R delete(@PathVariable("id") Long id) {
-		${table.serviceImplName?uncap_first}.removeById(id);
+	public R delete(@PathVariable("id") ${columnType} ${pkName}) {
+		${servicename}.deleteById(id);
 		return R.ok();
 	}
 	
 	/**
 	 * 批量删除
-	 * @param ids
+	 * @param ${pkName}s
 	 * @return
 	 */
 	@RequestMapping(value = "/deleteBatchByIds", method = RequestMethod.POST)
-	public R deleteBatchByIds(@RequestBody List<String> ids) {
-		${table.serviceImplName?uncap_first}.removeByIds(ids);
+	public R deleteBatchByIds(@RequestBody List<${columnType}> ${pkName}s) {
+		${servicename}.deleteBatchIds(${pkName}s);
 		return R.ok();
 	}
 	
 	/**
 	 * 修改
-	 * @param ${table.entityName}
+	 * @param ${entityName}
 	 * @return R.ok()
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public R update(@RequestBody ${table.entityName} ${table.entityName?uncap_first}) {
-		ValidatorUtils.validateEntity(${table.entityName?uncap_first}, UpdateGroup.class);
-		${table.serviceImplName?uncap_first}.updateById(${table.entityName?uncap_first});
+	public R update(@RequestBody ${entityName} ${entityname}) {
+		ValidatorUtils.validateEntity(${entityname}, UpdateGroup.class);
+		${servicename}.updateById(${entityname});
 		return R.ok();
 	}
 	
 	/**
 	 * 查询
-	 * @param id
-	 * @return R.ok().put("${classname}", ${table.entityName?uncap_first})
+	 * @param ${pkName}
+	 * @return R.ok().put("${classname}", ${entityname})
 	 */
 	@RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
-	public R info(@PathVariable("id") String id) {
-		${table.entityName} ${table.entityName?uncap_first} = ${table.serviceImplName?uncap_first}.getById(id);
-		return R.ok().put("${classname}", ${table.entityName?uncap_first});
+	public R info(@PathVariable("id") ${columnType} ${pkName}) {
+		${entityName} ${entityname} = ${servicename}.selectById(${pkName});
+		return R.ok().put("${classname}", ${entityname});
 	}
 	
 	/**
@@ -130,7 +144,7 @@ public class ${table.controllerName} {
 	public R page(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);
 		PageHelper.startPage(query.getPage(), query.getLimit());
-		PageInfo<${table.entityName}> pageInfo = new PageInfo<${table.entityName}>(${table.serviceImplName?uncap_first}.queryPage(query));
+		PageInfo<${entityName}> pageInfo = new PageInfo<${entityName}>(${servicename}.queryPage(query));
 		return R.ok().put("page", pageInfo);
 	}
 
