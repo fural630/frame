@@ -23,6 +23,7 @@ import com.github.pagehelper.PageInfo;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 import com.frame.web.module.sys.service.UserService;
 import com.frame.web.module.sys.entity.UserDO;
@@ -53,7 +54,7 @@ public class UserController {
 	 * @param UserDO
 	 * @return R.ok()
 	 */
-    @ApiOperation(value="修改用户密码", notes="根据用户id修改密码")
+    @ApiOperation(value="添加用户")
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public R save(@RequestBody UserDO userDO) {
 		ValidatorUtils.validateEntity(userDO, AddGroup.class);
@@ -88,8 +89,9 @@ public class UserController {
 	 * @param UserDO
 	 * @return R.ok()
 	 */
+	@ApiOperation(value="修改用户")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public R update(@RequestBody UserDO userDO) {
+	public R update(@RequestBody @ApiParam(name="用户对象",value="传入json格式",required=true)UserDO userDO) {
 		ValidatorUtils.validateEntity(userDO, UpdateGroup.class);
 		userService.updateById(userDO);
 		return R.ok();

@@ -3,6 +3,10 @@ package com.frame.web.module.sys.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.frame.validator.group.AddGroup;
 import com.frame.validator.group.UpdateGroup;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 
@@ -22,6 +26,7 @@ import java.io.Serializable;
  * @since 2018-12-08
  */
 @TableName("sys_user")
+@ApiModel(value = "user对象", description = "用户对象")
 public class UserDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,6 +41,7 @@ public class UserDO implements Serializable {
      * 用户名
      */
     @NotNull(message = "用户名不能为空", groups = {AddGroup.class, UpdateGroup.class})
+    @ApiModelProperty(value="用户名",name="username",example="xingguo")
     private String name;
 
     /**
@@ -51,6 +57,7 @@ public class UserDO implements Serializable {
     /**
      * 性别 1-男、0-女、其他-未知
      */
+    @ApiModelProperty(value="性别",name="sex",required=true)
     private Integer sex;
 
     /**
