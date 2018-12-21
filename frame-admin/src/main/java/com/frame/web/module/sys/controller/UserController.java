@@ -88,7 +88,7 @@ public class UserController {
 	 * @param UserDO
 	 * @return R.ok()
 	 */
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public R update(@RequestBody UserDO userDO) {
 		ValidatorUtils.validateEntity(userDO, UpdateGroup.class);
 		userService.updateById(userDO);

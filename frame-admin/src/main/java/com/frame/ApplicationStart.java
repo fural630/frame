@@ -19,6 +19,6 @@ public class ApplicationStart {
 		ConfigurableApplicationContext context = SpringApplication.run(ApplicationStart.class, args);
 		ConfigurableEnvironment env = context.getEnvironment();
 		String[] activeProfiles = env.getActiveProfiles();
-		logger.debug("系统已启动，当前启动的 profile 是 ：{}", activeProfiles[0]);
+		logger.debug("系统已启动，当前启动的 profile 是 ：{} , port : {}", activeProfiles[0], env.getProperty("server.port"));
 	}
 }

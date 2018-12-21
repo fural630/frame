@@ -25,7 +25,7 @@
 						<i-col span="3">
 							<form-item prop="status">
 								<i-select v-model="q.status" placeholder="状态" clearable ref="status">
-									<i-option v-for="item in statusList" :value="item.key" :key="item.key">{{ item.text }}</i-option>
+									<i-option v-for="item in statusList" :value="item.value" :key="item.value">{{ item.label }}</i-option>
 								</i-select>
 							</form-item>
 						</i-col>
@@ -64,8 +64,8 @@
 			            </Form-item>
 			            <Form-item label="性别" prop="sex">
 			            	<Radio-group v-model="user.sex">
-			                	<Radio v-for="item in sexList" :label="item.key" :key="item.key">
-			                		<span>{{ item.text }}</span>
+			                	<Radio v-for="item in sexList" :label="item.value" :key="item.value">
+			                		<span>{{ item.label }}</span>
 			                	</Radio>
 			                </Radio-group>
 			            </Form-item>
@@ -77,8 +77,8 @@
 			            </Form-item>
 			            <Form-item label="状态" prop="status">
 			                <Radio-group v-model="user.status">
-			                	<Radio v-for="item in statusList" :label="item.key" :key="item.key">
-			                		{{ item.text }}
+			                	<Radio v-for="item in statusList" :label="item.value" :key="item.value">
+			                		{{ item.label }}
 			                	</Radio>
 			                </Radio-group>
 			            </Form-item>

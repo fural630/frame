@@ -114,13 +114,15 @@ var vm = new Vue({
             });
 		},
 		saveOrUpdate : function() {
-			var url = this.user.userId == null ? "../sys/user/save"
+			var url = this.user.id == undefined ? "../sys/user/save"
 					: "../sys/user/update";
+			var type = this.user.id == undefined ? "POST"
+					: "PUT";
 			Ajax.request({
 				url : url,
 				params : JSON.stringify(vm.user),
 				contentType : "application/json",
-				type : 'POST',
+				type : type,
 				successCallback : function() {
 					alert('操作成功', function(index) {
 						vm.reload();

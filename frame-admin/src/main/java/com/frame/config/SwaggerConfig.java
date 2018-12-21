@@ -28,7 +28,7 @@ public class SwaggerConfig {
 				// 扫描的路径包
 				.apis(RequestHandlerSelectors.basePackage("com.frame.web.module"))
 				// 指定路径处理PathSelectors.any()代表所有的路径
-				.paths(PathSelectors.any()).build().pathMapping("/");
+				.build().pathMapping("/");
 	}
 
 	private ApiInfo apiInfo() {
